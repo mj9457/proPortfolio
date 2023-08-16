@@ -9,6 +9,11 @@ export const ModalBackground = css`
 	background-color: rgba(0, 0, 0, 0.7);
 `;
 
+export const bodyContainer = css`
+	margin: 0 auto;
+	width: 1080px;
+`;
+
 export const flexCenter = css`
 	display: flex;
 	justify-content: center;
