@@ -11,27 +11,27 @@ const GlobalStyles = createGlobalStyle`
 
     @font-face {
         font-family: 'Pretendard-ExtraLight';
-        src: url('./Assets/Font/Pretendard-ExtraLight.otf') format('opentype');
+        src: url('./assets/font/Pretendard-ExtraLight.otf') format('opentype');
     }
 
     @font-face {
         font-family: 'Pretendard-Light';
-        src: url('./Assets/Font/Pretendard-Light.otf') format('opentype');
+        src: url('./assets/font/Pretendard-Light.otf') format('opentype');
     }
 
     @font-face {
         font-family: 'Pretendard-Regular';
-        src: url('./Assets/Font/Pretendard-Regular.otf') format('opentype');
+        src: url('./assets/font/Pretendard-Regular.otf') format('opentype');
     }
 
     @font-face {
         font-family: 'Pretendard-Medium';
-        src: url('./Assets/Font/Pretendard-Medium.otf') format('opentype');
+        src: url('./assets/font/Pretendard-Medium.otf') format('opentype');
     }
 
     @font-face {
         font-family: 'Pretendard-Bold';
-        src: url('./Assets/Font/Pretendard-Bold.otf') format('opentype');
+        src: url('./assets/font/Pretendard-Bold.otf') format('opentype');
     }    
 
     * {
