@@ -2,9 +2,6 @@ import styled from 'styled-components';
 import { bodyContainer } from '../../../styles/common';
 
 export const Wrapper = styled.div`
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 1rem;
 	border-top: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	padding: 1.875rem 0 2.5rem 0;
 `;
@@ -17,7 +14,6 @@ export const IntroWrapper = styled.div`
 	display: flex;
 	padding-left: 0px;
 	flex-direction: column;
-	align-items: flex-start;
 	gap: 1rem;
 `;
 
@@ -30,7 +26,6 @@ export const Image = styled.img`
 export const Intro = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
 	gap: 0.25rem;
 
 	& span {
@@ -49,7 +44,6 @@ export const IncIntroWrapper = styled.div`
 	display: flex;
 	padding-left: 0px;
 	flex-direction: column;
-	align-items: flex-start;
 	gap: 1rem;
 
 	& span {
@@ -59,7 +53,6 @@ export const IncIntroWrapper = styled.div`
 	& div {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
 		gap: 0.25rem;
 
 		& span {

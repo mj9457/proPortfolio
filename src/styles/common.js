@@ -24,9 +24,3 @@ export const flexAlignCenter = css`
 	display: flex;
 	align-items: center;
 `;
-
-export const title = css`
-	font-size: 48px;
-	line-height: 16px;
-	font-weight: bold;
-`;
