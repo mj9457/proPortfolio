@@ -1,11 +1,10 @@
+import * as M from './Home.styles';
 function Home() {
 	return (
 		<>
-			<div>home</div>
-			<ul>
-				<li>ff</li>
-				<li>ffe</li>
-			</ul>
+			<div className="Wrap">
+				<div className="content"></div>
+			</div>
 		</>
 	);
 }
