@@ -1,25 +1,25 @@
-import * as H from './Header.styles';
+import * as S from './Header.styles';
 
 function Header() {
 	return (
-		<H.Wrapper>
-			<H.ImgWrapper>
-				<H.Image src="./assets/img/logo/logo.svg" />
-			</H.ImgWrapper>
+		<S.Wrapper>
+			<S.ImgWrapper>
+				<S.Image src="./assets/img/logo/logo.svg" />
+			</S.ImgWrapper>
 
-			<H.NavWrapper>
-				<H.NavBar>
+			<S.NavWrapper>
+				<S.NavBar>
 					<span>홈</span>
 					<span>포트폴리오 리뷰</span>
 					<span>프로젝트 / 스터디 모집</span>
-				</H.NavBar>
+				</S.NavBar>
 
-				<H.LoginBar>
+				<S.LoginBar>
 					<span>로그인</span>
 					<span>회원가입</span>
-				</H.LoginBar>
-			</H.NavWrapper>
-		</H.Wrapper>
+				</S.LoginBar>
+			</S.NavWrapper>
+		</S.Wrapper>
 	);
 }
 
