@@ -1,5 +1,5 @@
 import * as S from './StudyPage.styles';
-import PopularCard from '../../components/studyPage/PopularCard/PopularCard';
+import PopularCard from '../../components/StudyPage/PopularCard/PopularCard';
 
 function StudyPage() {
 	return (
