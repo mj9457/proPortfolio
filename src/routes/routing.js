@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../Components/Layout';
-import Home from '../Pages/Home/Home';
-import AdminCategory from '../Pages/Admin/Category/AdminCategory';
-import AdminHome from '../Pages/Admin/Home/Admin';
-import AdminLayout from '../Components/Admin';
+import Layout from '../components/Layout';
+import Home from '../pages/Home/Home';
+import AdminCategory from '../pages/Admin/Category/AdminCategory';
+import AdminHome from '../pages/Admin/Home/Admin';
+import AdminLayout from '../components/Admin';
 import Portfolio from '../pages/PofolReview/PofolReview';
 import StudyPage from '../pages/StudyPage/StudyPage';
 

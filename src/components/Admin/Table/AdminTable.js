@@ -1,7 +1,7 @@
 import React from 'react';
 import { MyTable } from './AdminTable.styles';
 import { Pagination } from 'antd';
-import { PaginationWrap } from '../../../Pages/Admin/Home/Admin.styles';
+import { PaginationWrap } from '../../../pages/Admin/Home/Admin.styles';
 
 const AdminTable = ({ dataSource, columns }) => {
 	return (

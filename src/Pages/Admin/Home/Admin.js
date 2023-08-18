@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Space, theme } from 'antd';
-import AdminTable from '../../../Components/Admin/Table/AdminTable';
+import AdminTable from '../../../components/Admin/Table/AdminTable';
 import { AdminContent, Removetag } from './Admin.styles';
-import Searchbar from '../../../Components/Admin/Searchbar/Searchbar';
+import Searchbar from '../../../components/Admin/Searchbar/Searchbar';
 const AdminHome = () => {
 	const data = [
 		{

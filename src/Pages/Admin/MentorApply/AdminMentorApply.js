@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { SearchInput } from '../../../Components/Admin/Searchbar/Searchbar.styles';
-import AdminTable from '../../../Components/Admin/Table/AdminTable';
+import { SearchInput } from '../../../components/Admin/Searchbar/Searchbar.styles';
+import AdminTable from '../../../components/Admin/Table/AdminTable';
 import { AdminContent, Removetag } from '../Home/Admin.styles';
 import { Space, theme } from 'antd';
 import { Atags } from '../Category/AdminCategory.styles';
