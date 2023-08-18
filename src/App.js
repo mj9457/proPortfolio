@@ -3,7 +3,7 @@ import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import GlobalStyles from './styles/global';
-import router from './Routes/routing';
+import router from './routes/routing';
 
 function App() {
 	return (

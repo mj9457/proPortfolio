@@ -1,4 +1,4 @@
-import * as S from './studyPage.styles';
+import * as S from './StudyPage.styles';
 import PopularCard from '../../components/studyPage/PopularCard/PopularCard';
 
 function StudyPage() {
