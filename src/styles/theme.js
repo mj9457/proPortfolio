@@ -30,11 +30,11 @@ const FONT_SIZE = {
 };
 
 const FONT_WEIGHT = {
-	extraLight: 'Pretendard-ExtraLight',
-	light: 'Pretendard-Light',
-	regular: 'Pretendard-Regular',
-	medium: 'Pretendard-Medium',
-	bold: 'Pretendard-Bold',
+	extraLight: 'Pretendard-ExtraLight', // 200
+	light: 'Pretendard-Light', // 300
+	regular: 'Pretendard-Regular', // 400
+	medium: 'Pretendard-Medium', // 500
+	bold: 'Pretendard-Bold', // 700
 };
 
 const theme = {
