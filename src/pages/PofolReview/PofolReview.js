@@ -1,3 +1,4 @@
+import PopularCard from '../../components/Card/Card';
 import * as S from './PofolReview.styles';
 
 function Portfolio() {
@@ -6,7 +7,7 @@ function Portfolio() {
 			<S.PortfolioContainer>
 				<S.BannerWrapper>
 					{/* banner */}
-					<S.BannerImage src="./assets/img/banner/portpolio.svg" />
+					<S.BannerImage src="./assets/img/banner/portfolio.svg" />
 				</S.BannerWrapper>
 
 				<S.ButtonWrapper>
@@ -25,94 +26,37 @@ function Portfolio() {
 
 				<S.PopularMento>
 					{/* 지금 인기 있는 멘토들 제목 */}
-					<span>✨ 지금 인기 있는 멘토</span>
+					<S.PopularTitle>✨ 지금 인기 있는 멘토</S.PopularTitle>
 
 					{/* 지금 인기 있는 멘토들 목록 */}
 					<S.PopularMentoCardWrapper>
-						<S.PopularMentoCard>
-							<div>
-								<div>
-									<span>👊 코칭 30회</span>
-								</div>
-								<div>
-									<img src="./assets/img/profile/profile.png" />
-								</div>
-								<div>
-									<div>
-										<span>Naver</span>
-									</div>
-									<div></div>
-								</div>
-								<div>{'경력 엔년차 코칭해 줌'}</div>
-							</div>
-						</S.PopularMentoCard>
-						<S.PopularMentoCard>
-							<div>
-								<div>
-									<span>👊 코칭 30회</span>
-								</div>
-								<div>
-									<img src="./assets/img/profile/profile.png" />
-								</div>
-								<div>
-									<div>
-										<span>Naver</span>
-									</div>
-									<div></div>
-								</div>
-								<div>{'경력 엔년차 코칭해 줌'}</div>
-							</div>
-						</S.PopularMentoCard>
-						<S.PopularMentoCard>
-							<div>
-								<div>
-									<span>👊 코칭 30회</span>
-								</div>
-								<div>
-									<img src="./assets/img/profile/profile.png" />
-								</div>
-								<div>
-									<div>
-										<span>Naver</span>
-									</div>
-									<div>{'프론트엔드 개발자'}</div>
-									<div>{'경력 7년'}</div>
-								</div>
-								<div>{'경력 엔년차 코칭해 줌'}</div>
-							</div>
-						</S.PopularMentoCard>
-						<S.PopularMentoCard>
-							<div>
-								<div>
-									<span>👊 코칭 30회</span>
-								</div>
-								<div>
-									<img src="./assets/img/profile/profile.png" />
-								</div>
-								<div>
-									<div>
-										<span>Naver</span>
-									</div>
-									<div></div>
-								</div>
-								<div>{'경력 엔년차 코칭해 줌'}</div>
-							</div>
-						</S.PopularMentoCard>
+						<PopularCard background={'blueBackground'} />
+						<PopularCard background={'blueBackground'} />
+						<PopularCard background={'blueBackground'} />
+						<PopularCard background={'blueBackground'} />
 					</S.PopularMentoCardWrapper>
 				</S.PopularMento>
 
-				<div>
-					<div>
-						{/* 모든 멘토 제목 */}
-						<span></span>
-						<input />
-					</div>
+				<S.Line></S.Line>
 
-					<div>
+				<S.EveryMentoContainer>
+					<S.EveryMentoWrapper>
+						{/* 모든 멘토 제목 */}
+						<S.EveryMento>🌟 모든 멘토</S.EveryMento>
+						<S.Input placeholder="검색어를 입력하세요." />
+					</S.EveryMentoWrapper>
+
+					<S.PopularMentoCardWrapper>
 						{/* 모든 멘토 목록 */}
-						<div></div>
-					</div>
-				</div>
+						<PopularCard background={'whiteBackground'} />
+						<PopularCard background={'whiteBackground'} />
+						<PopularCard background={'whiteBackground'} />
+						<PopularCard background={'whiteBackground'} />
+						<PopularCard background={'whiteBackground'} />
+						<PopularCard background={'whiteBackground'} />
+						<PopularCard background={'whiteBackground'} />
+					</S.PopularMentoCardWrapper>
+				</S.EveryMentoContainer>
 			</S.PortfolioContainer>
 		</>
 	);

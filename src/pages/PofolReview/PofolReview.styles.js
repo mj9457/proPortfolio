@@ -55,26 +55,46 @@ export const WriteButtons = styled.button`
 	color: white;
 `;
 
-export const PopularMento = styled.div`
-	& span {
-		font-size: 24px;
-	}
+export const PopularMento = styled.div``;
+
+export const PopularTitle = styled.div`
+	font-size: 24px;
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	margin: 0 0 32px 0;
 `;
 
 export const PopularMentoCardWrapper = styled.div`
-	display: flex;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: repeat(4, 1fr);
 `;
 
-export const PopularMentoCard = styled.div`
+export const Line = styled.div`
+	height: 1px;
+	margin: 64px 0;
+	background-color: ${({ theme }) => theme.PALETTE.gray[200]};
+`;
+
+export const EveryMentoWrapper = styled.div`
 	display: flex;
-	height: 320px;
-	padding: 20px;
-	flex-direction: column;
-	justify-content: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
 	align-items: center;
-	gap: 16px;
-	flex: 1 0 0;
-	border-radius: 10px;
-	background: #e3edff;
-	box-shadow: 1px 4px 4px 0px rgba(67, 108, 255, 0.25);
+	margin: 0 0 19px 0;
+`;
+
+export const EveryMento = styled.span`
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+`;
+
+export const Input = styled.input`
+	width: 300px;
+	height: 42px;
+	padding: 0 0 0 12px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+export const EveryMentoContainer = styled.div`
+	margin: 0 0 120px 0;
 `;
