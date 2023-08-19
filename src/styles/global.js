@@ -41,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
     }
     
     body {
-        font-family: ${({ theme }) => theme.FONT_WEIGHT.extraLight};
+        font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
     }
 
     button {

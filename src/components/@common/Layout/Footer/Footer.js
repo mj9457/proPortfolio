@@ -1,24 +1,24 @@
-import * as F from './Footer.styles';
+import * as S from './Footer.styles';
 
 function Footer() {
 	return (
 		<>
-			<F.Wrapper>
-				<F.Container>
-					<F.IntroWrapper>
-						<F.Image src="./assets/img/logo/logo.svg" />
+			<S.Wrapper>
+				<S.Container>
+					<S.IntroWrapper>
+						<S.Image src="./assets/img/logo/logo.svg" />
 
-						<F.Intro>
+						<S.Intro>
 							<span>최고의 멘토들의 코칭을 경험해 보세요.</span>
 							<span>
 								Experience the Coaching of the Best Mentors.
 							</span>
-						</F.Intro>
-					</F.IntroWrapper>
+						</S.Intro>
+					</S.IntroWrapper>
 
-					<F.Line></F.Line>
+					<S.Line></S.Line>
 
-					<F.IncIntroWrapper>
+					<S.IncIntroWrapper>
 						<span>@ 2023 포폴, Inc. All rights reserved.</span>
 						<div>
 							<span>
@@ -29,9 +29,9 @@ function Footer() {
 								서울특별시 성동구 아차산로17길 48 포폴
 							</span>
 						</div>
-					</F.IncIntroWrapper>
-				</F.Container>
-			</F.Wrapper>
+					</S.IncIntroWrapper>
+				</S.Container>
+			</S.Wrapper>
 		</>
 	);
 }
