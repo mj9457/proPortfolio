@@ -11,11 +11,11 @@ function Home() {
 					<M.RecommendedMentor>
 						<M.Title>👀 000님에게 추천하는 멘토</M.Title>
 						<M.RecommendCards>
-							<RecommendCard></RecommendCard>
-							<RecommendCard></RecommendCard>
-							<RecommendCard></RecommendCard>
-							<RecommendCard></RecommendCard>
-							<RecommendCard></RecommendCard>
+							<RecommendCard />
+							<RecommendCard />
+							<RecommendCard />
+							<RecommendCard />
+							<RecommendCard />
 						</M.RecommendCards>
 					</M.RecommendedMentor>
 					<M.NewStudy>
