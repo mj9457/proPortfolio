@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import MentoringPage from '../../../../components/MyPage/RightContent/Mentor/MentoringPage';
+import MentoringPage from '../../../../components/pages/MyPage/RightContent/Mentor/MentoringPage';
 import * as M from './MentoringListPage.styles';
-import CardList from '../../../../components/MyPage/RightContent/Mentor/CardList/CardList';
+import CardList from '../../../../components/pages/MyPage/RightContent/Mentor/CardList/CardList';
 
 function MentoringListPage() {
 	const [totalCoaching, setTotalCoaching] = useState(0);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AdminContent } from '../Home/Admin.styles';
-import AdminTable from '../../../components/Admin/Table/AdminTable';
+import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { Button, Input, Space, theme } from 'antd';
 import {
 	Atags,

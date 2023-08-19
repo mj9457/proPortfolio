@@ -1,5 +1,5 @@
 import * as M from './Home.styles';
-import RecommendCard from '../../components/Home/RecommendCard/RecommendCard';
+import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCard';
 function Home() {
 	return (
 		<>

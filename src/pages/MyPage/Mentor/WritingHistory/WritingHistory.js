@@ -1,4 +1,4 @@
-import InfoViewModal from '../../../../components/MyPage/RightContent/Mentor/Modal/InfoViewModal/InfoViewModal';
+import InfoViewModal from '../../../../components/pages/MyPage/RightContent/Mentor/Modal/InfoViewModal/InfoViewModal';
 
 function WritingHistory() {
 	return (

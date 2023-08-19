@@ -1,4 +1,4 @@
-import Select from '../../../components/Select/Select';
+import Select from '../../../components/@common/Select/Select';
 import * as S from './MentoringApply.styles';
 
 function Apply() {

@@ -1,4 +1,4 @@
-import PopularCard from '../../components/Card/Card';
+import PopularCard from '../../components/@common/Card/Card';
 import * as S from './PofolReview.styles';
 
 function Portfolio() {
