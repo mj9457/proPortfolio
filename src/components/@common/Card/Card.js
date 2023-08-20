@@ -2,7 +2,7 @@ import * as S from './Card.styles';
 
 function PopularCard({ background }) {
 	return (
-		<S.PopularCard background={background}>
+		<S.PopularCard background={background} href="/apply">
 			<S.NbrCoach>
 				<span>👊 코칭 30회</span>
 			</S.NbrCoach>

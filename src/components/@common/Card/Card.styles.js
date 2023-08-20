@@ -10,7 +10,7 @@ const backgroundCSS = {
 	`,
 };
 
-export const PopularCard = styled.div`
+export const PopularCard = styled.a`
 	${({ background }) => backgroundCSS[background]}
 	display: flex;
 	width: 255px;
@@ -21,6 +21,11 @@ export const PopularCard = styled.div`
 	gap: 16px;
 	flex: 1 0 0;
 	border-radius: 10px;
+	text-decoration: none;
+
+	&:visited {
+		color: ${({ theme }) => theme.PALETTE.black};
+	}
 `;
 
 export const NbrCoach = styled.div`
