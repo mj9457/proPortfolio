@@ -55,6 +55,9 @@ export const DetailInfoWrapper = styled.div`
 	> div {
 		display: flex;
 		gap: 8px;
+		> span {
+			color: #7d7d7d;
+		}
 	}
 `;
 

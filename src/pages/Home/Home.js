@@ -2,7 +2,7 @@ import * as H from './Home.styles';
 import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCard';
 import PopularCard from '../../components/@common/Card/Card';
 import RollingSlider from './SlideBanner/SlideBanner';
-import StudyInfoCard from '../../components/pages/Home/StudyInfoCard/StudyInfoCard';
+import Slider from '../../components/@common/Sllider/Slider';
 
 function Home() {
 	return (
@@ -40,7 +40,7 @@ function Home() {
 							</H.ViewAll>
 						</H.TitleBox>
 						<H.SlideStudyCard>
-							<StudyInfoCard />
+							<Slider />
 						</H.SlideStudyCard>
 					</H.NewStudy>
 					<H.PopularMento>
