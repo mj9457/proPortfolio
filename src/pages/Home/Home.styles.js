@@ -9,24 +9,14 @@ export const Content = styled.div`
 	${bodyContainer}
 `;
 
-export const SlideBanner = styled.div`
-	width: 100%;
-	height: 300px;
-	margin-top: 40px;
-	margin-bottom: 64px;
-
-	> img {
-		width: 100%;
-	}
-`;
-
-export const RecommendedMentor = styled.div`
+export const RecommendMentor = styled.div`
 	width: 100%;
 	margin-bottom: 64px;
 `;
 export const RecommendCards = styled.div`
 	width: 100%;
 	display: flex;
+	gap: 20px;
 `;
 export const NewStudy = styled.div`
 	width: 100%;
@@ -44,15 +34,28 @@ export const Title = styled.span`
 `;
 export const ViewAll = styled.a`
 	color: ${({ theme }) => theme.PALETTE.mainColor};
+	> svg {
+		margin-left: 8px;
+	}
+	font-size: ${({ theme }) => theme.FONT_SIZE.md};
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
+	cursor: pointer;
+	text-decoration: none;
 `;
 
 export const SlideStudyCard = styled.div`
 	width: 100%;
-	height: 200px;
-	background-color: lightgrey;
+	display: flex;
+	gap: 20px;
 `;
 
 export const PopularMento = styled.div`
 	width: 100%;
 	margin-bottom: 100px;
+`;
+
+export const PopularCards = styled.div`
+	width: 100%;
+	display: flex;
+	gap: 20px;
 `;
