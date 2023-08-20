@@ -72,13 +72,6 @@ export const Inputs = styled.input`
 	padding: 0 0 0 12px;
 `;
 
-export const Textarea = styled.textarea`
-	width: 400px;
-	height: 130px;
-	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
-	padding: 12px;
-`;
-
 export const Button = styled.button`
 	width: 400px;
 	height: 48px;

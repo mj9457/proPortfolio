@@ -1,4 +1,5 @@
 import Select from '../../../components/@common/Select/Select';
+import { Textarea } from '../../../components/@common/Textarea/Textarea.styles';
 import * as S from './MentoringApply.styles';
 
 function Apply() {
@@ -48,7 +49,12 @@ function Apply() {
 
 					<S.BasicInfo>
 						<span>3. 멘토링 소개 내용을 작성해 주세요.</span>
-						<S.Textarea placeholder="내용을 작성해 주세요." />
+						<Textarea
+							size={'regular'}
+							placeholder={
+								'소개글 및 경력은 필수로 입력해 주세요.'
+							}
+						/>
 					</S.BasicInfo>
 				</S.ApplyContent>
 				<S.Button>등록하기</S.Button>
