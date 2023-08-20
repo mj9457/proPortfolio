@@ -1,10 +1,11 @@
+import Line from '../../Line/Line';
 import * as S from './Footer.styles';
 
 function Footer() {
 	return (
 		<S.Footer>
 			<S.Container>
-				<S.IntroWrapper>
+				<S.IntroBox>
 					<a href="/">
 						<S.Image src="./assets/img/logo/logo.svg" />
 					</a>
@@ -15,12 +16,13 @@ function Footer() {
 							Experience the Coaching of the Best Mentors.
 						</span>
 					</S.Intro>
-				</S.IntroWrapper>
+				</S.IntroBox>
 
-				<S.Line />
+				<Line size={'small'} />
 
-				<S.CoIntroWrapper>
+				<S.IntroBox>
 					<span>@ 2023 포폴, Inc. All rights reserved.</span>
+
 					<S.Intro>
 						<span>
 							대표자 이름: 김현규 | 대표 번호: 02-0814-1999
@@ -30,7 +32,7 @@ function Footer() {
 							서울특별시 성동구 아차산로17길 48 포폴
 						</span>
 					</S.Intro>
-				</S.CoIntroWrapper>
+				</S.IntroBox>
 			</S.Container>
 		</S.Footer>
 	);

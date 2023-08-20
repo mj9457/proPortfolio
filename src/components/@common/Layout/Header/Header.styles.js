@@ -11,7 +11,7 @@ export const Header = styled.header`
 	padding: 15px 0 20px 0;
 `;
 
-export const ImgWrapper = styled.a`
+export const ImgBox = styled.a`
 	${flexCenter}
 	cursor: pointer;
 `;
@@ -21,7 +21,7 @@ export const Image = styled.img`
 	height: 50px;
 `;
 
-export const NavWrapper = styled.div`
+export const NavBox = styled.div`
 	${flexAlignCenter}
 	justify-content: space-between;
 `;
@@ -37,7 +37,6 @@ export const LoginBar = styled.div`
 		cursor: pointer;
 
 		&:visited {
-			text-decoration: none;
 			color: ${({ theme }) => theme.PALETTE.black};
 		}
 	}

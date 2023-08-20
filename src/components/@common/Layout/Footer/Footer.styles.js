@@ -8,12 +8,18 @@ export const Footer = styled.footer`
 
 export const Container = styled.div`
 	${bodyContainer}
+	${flexColumn}
+	gap: 16px;
 `;
 
-export const IntroWrapper = styled.div`
+export const IntroBox = styled.div`
 	${flexColumn}
 	padding: 0 0 0 10px;
 	gap: 16px;
+
+	& span {
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	}
 `;
 
 export const Image = styled.img`
@@ -25,20 +31,4 @@ export const Image = styled.img`
 export const Intro = styled.div`
 	${flexColumn}
 	gap: 4px;
-
-	& span {
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
-`;
-
-export const Line = styled.div`
-	height: 1px;
-	margin: 16px 0;
-	background-color: ${({ theme }) => theme.PALETTE.gray[200]};
-`;
-
-export const CoIntroWrapper = styled(IntroWrapper)`
-	& span {
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
 `;

@@ -3,11 +3,11 @@ import * as S from './Header.styles';
 function Header() {
 	return (
 		<S.Header>
-			<S.ImgWrapper href="/">
+			<S.ImgBox href="/">
 				<S.Image src="./assets/img/logo/logo.svg" />
-			</S.ImgWrapper>
+			</S.ImgBox>
 
-			<S.NavWrapper>
+			<S.NavBox>
 				<S.NavBar>
 					<a href="/">홈</a>
 					<a href="/portfolio">포트폴리오 리뷰</a>
@@ -19,7 +19,7 @@ function Header() {
 					<a href="/register">회원가입</a>
 					<S.Button>멘토 전환</S.Button>
 				</S.LoginBar>
-			</S.NavWrapper>
+			</S.NavBox>
 		</S.Header>
 	);
 }
