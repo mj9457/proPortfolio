@@ -5,15 +5,13 @@ import {
 	flexCenter,
 } from '../../../../styles/common';
 
-export const Wrapper = styled.div`
+export const Header = styled.header`
 	${bodyContainer}
 	height: 115px;
-	flex-direction: column;
-	align-items: center;
 	padding: 15px 0 20px 0;
 `;
 
-export const ImgWrapper = styled.div`
+export const ImgWrapper = styled.a`
 	${flexCenter}
 	cursor: pointer;
 `;
@@ -26,30 +24,39 @@ export const Image = styled.img`
 export const NavWrapper = styled.div`
 	${flexAlignCenter}
 	justify-content: space-between;
-	align-content: center;
-	row-gap: 518px;
-	flex-wrap: wrap;
-`;
-
-export const NavBar = styled.div`
-	display: flex;
-	width: 315px;
-	justify-content: space-between;
-
-	& span {
-		font-size: ${({ theme }) => theme.FONT_SIZE.md};
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
-		cursor: pointer;
-	}
 `;
 
 export const LoginBar = styled.div`
 	${flexCenter}
 	gap: 20px;
 
-	& span {
+	& a {
 		font-size: ${({ theme }) => theme.FONT_SIZE.md};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		text-decoration: none;
 		cursor: pointer;
+
+		&:visited {
+			text-decoration: none;
+			color: ${({ theme }) => theme.PALETTE.black};
+		}
 	}
+`;
+
+export const NavBar = styled(LoginBar)`
+	width: 315px;
+
+	& a {
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
+	}
+`;
+
+export const Button = styled.button`
+	height: 30px;
+	padding: 0 15px;
+	border-radius: 4px;
+	color: ${({ theme }) => theme.PALETTE.fontColor};
+	background-color: ${({ theme }) => theme.PALETTE.mainColor};
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
+	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 `;

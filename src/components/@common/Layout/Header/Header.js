@@ -2,24 +2,25 @@ import * as S from './Header.styles';
 
 function Header() {
 	return (
-		<S.Wrapper>
-			<S.ImgWrapper>
+		<S.Header>
+			<S.ImgWrapper href="/">
 				<S.Image src="./assets/img/logo/logo.svg" />
 			</S.ImgWrapper>
 
 			<S.NavWrapper>
 				<S.NavBar>
-					<span>홈</span>
-					<span>포트폴리오 리뷰</span>
-					<span>프로젝트 / 스터디 모집</span>
+					<a href="/">홈</a>
+					<a href="/portfolio">포트폴리오 리뷰</a>
+					<a href="/study">프로젝트 / 스터디 모집</a>
 				</S.NavBar>
 
 				<S.LoginBar>
-					<span>로그인</span>
-					<span>회원가입</span>
+					<a href="/signup">로그인</a>
+					<a href="/register">회원가입</a>
+					<S.Button>멘토 전환</S.Button>
 				</S.LoginBar>
 			</S.NavWrapper>
-		</S.Wrapper>
+		</S.Header>
 	);
 }
 
