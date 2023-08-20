@@ -16,8 +16,8 @@ import AdminHome from '../pages/Admin/Home/Admin';
 import AdminLayout from '../components/pages/Admin';
 
 import Portfolio from '../pages/Portfolio/Portfolio';
-import Apply from '../pages/Portfolio/MentoringApply/MentoringApply';
-import PofolPost from '../pages/Portfolio/PofolPost/PofolPost';
+import PortfolioApply from '../pages/Portfolio/PortfolioApply/PortfolioApply';
+import PortfolioPost from '../pages/Portfolio/PortfolioPost/PortfolioPost';
 
 import StudyPage from '../pages/StudyPage/StudyPage';
 import StudyPost from '../pages/StudyPage/StudyPost/StudyPost';
@@ -63,11 +63,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'apply',
-				element: <Apply />,
+				element: <PortfolioApply />,
 			},
 			{
 				path: 'post',
-				element: <PofolPost />,
+				element: <PortfolioPost />,
 			},
 			{
 				path: 'study',

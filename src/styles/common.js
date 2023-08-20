@@ -29,3 +29,9 @@ export const flexColumn = css`
 	display: flex;
 	flex-direction: column;
 `;
+
+export const flexSpaceBetweenCenter = css`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+`;
