@@ -1,4 +1,4 @@
-import S from './PostCard.styles';
+import * as S from './PostCard.styles';
 
 function PostCard() {
 	return (
