@@ -7,7 +7,7 @@ function Footer() {
 			<S.Container>
 				<S.IntroBox>
 					<a href="/">
-						<S.Image src="./assets/img/logo/logo.svg" />
+						<S.Image src="/assets/img/logo/logo.svg" />
 					</a>
 
 					<S.Intro>

@@ -4,7 +4,7 @@ function Header() {
 	return (
 		<S.Header>
 			<S.ImgBox href="/">
-				<S.Image src="./assets/img/logo/logo.svg" />
+				<S.Image src="/assets/img/logo/logo.svg" />
 			</S.ImgBox>
 
 			<S.NavBox>
