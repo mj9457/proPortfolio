@@ -52,6 +52,7 @@ export const InfoBox = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 2rem;
+	width: 100%;
 `;
 
 export const InfoSubTitleBox = styled.div`

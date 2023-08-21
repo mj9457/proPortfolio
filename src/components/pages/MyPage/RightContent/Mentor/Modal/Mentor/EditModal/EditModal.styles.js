@@ -20,18 +20,20 @@ export const Modal = styled.div`
 	right: 0;
 	top: 0;
 	bottom: 0;
+
+	& form {
+		display: flex;
+		padding: 3.75rem 6.25rem;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 4rem;
+		border-radius: 0.625rem;
+		background: var(--grey-white, #fff);
+	}
 `;
 
-export const ModalWrapper = styled.div`
-	display: flex;
-	padding: 3.75rem 6.25rem;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 4rem;
-	border-radius: 0.625rem;
-	background: var(--grey-white, #fff);
-`;
+export const ModalWrapper = styled.div``;
 
 export const InfoWrapper = styled.div`
 	display: flex;

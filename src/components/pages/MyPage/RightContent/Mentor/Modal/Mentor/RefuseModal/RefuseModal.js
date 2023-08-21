@@ -1,12 +1,32 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RM from './RefuseModal.styles';
+import axios from 'axios';
 
+// 멘토 - 멘토링 거절 사유 작성 모달
 function RefuseModal({ setRefuseModalOpenState }) {
-	const [textareaValue, setTextareaValue] = useState(''); // text
+	const [textValue, setTextValue] = useState({
+		content: '',
+	});
 
-	// textarea 수정
-	const textareaHandle = e => {
-		setTextareaValue(e.target.value);
+	// 유저가 입력한 정보 change
+	const handleChange = e => {
+		const { name, value } = e.target;
+		setTextValue({
+			...textValue,
+			[name]: value,
+		});
+	};
+
+	// 유저가 입력한 정보 submit => post로 서버에 전달
+	const handleSubmit = e => {
+		e.preventDefault();
+		axios
+			.post('https://jsonplaceholder.typicode.com/posts', textValue)
+			.then(res => {
+				console.log(res.data);
+				alert(`거절되었습니다. 사유는 ${res.data.content}입니다.`);
+				closeModal();
+			});
 	};
 
 	// 모달 끄기
@@ -32,7 +52,7 @@ function RefuseModal({ setRefuseModalOpenState }) {
 	return (
 		<>
 			<RM.Modal>
-				<RM.ModalWrapper>
+				<form onSubmit={handleSubmit}>
 					<RM.InfoWrapper>
 						<RM.InfoTitle>거절 사유 작성</RM.InfoTitle>
 						<RM.InfoBox>
@@ -40,8 +60,8 @@ function RefuseModal({ setRefuseModalOpenState }) {
 								<RM.InfoSubTitle>거절사유</RM.InfoSubTitle>
 								<textarea
 									placeholder="사유를 적어주세요."
-									value={textareaValue}
-									onChange={textareaHandle}
+									name="content"
+									onChange={handleChange}
 								></textarea>
 							</RM.InfoSubTitleBox>
 						</RM.InfoBox>
@@ -50,16 +70,11 @@ function RefuseModal({ setRefuseModalOpenState }) {
 						<RM.CancleButton onClick={closeModal}>
 							취소
 						</RM.CancleButton>
-						<RM.CompleteButton
-							onClick={() => {
-								console.log('완료된 내용: ' + textareaValue);
-								closeModal();
-							}}
-						>
+						<RM.CompleteButton type="submit">
 							완료
 						</RM.CompleteButton>
 					</RM.ButtonBox>
-				</RM.ModalWrapper>
+				</form>
 			</RM.Modal>
 		</>
 	);

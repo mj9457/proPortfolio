@@ -1,29 +1,36 @@
+import { useEffect, useState } from 'react';
 import * as MHL from './MentoringHistoryList.styles';
+import axios from 'axios';
+import ListView from '../ListView/ListView';
 
 // 멘토 코칭 페이지
 function MentoringHistoryList() {
-	const UserMetoringData = [
-		{
-			category: '프로젝트',
-			title: '나랑 같이 게더 타운 같은 웹 사이트 만들어 볼 사람 중에 백엔드 구함',
-			date: '2023-08-13',
-		},
-		{
-			category: '스터디',
-			title: '나랑 같이 게더 타운 같은 웹 사이트 만들어 볼 사람 중에 백엔드 구함',
-			date: '2023-08-14',
-		},
-		{
-			category: '프로젝트',
-			title: '나랑 같이 게더 타운 같은 웹 사이트 만들어 볼 사람 중에 백엔드 구함',
-			date: '2023-08-15',
-		},
-		{
-			category: '스터디',
-			title: '나랑 같이 게더 타운 같은 웹 사이트 만들어 볼 사람 중에 백엔드 구함',
-			date: '2023-08-16',
-		},
-	];
+	const [mentoringList, setMentoringList] = useState([]); // get 요청으로 받은 데이터 담을 state
+	const [error, setError] = useState(null); // 에러 state
+
+	// 서버통신 (GET)
+	useEffect(() => {
+		async function getMentoringList() {
+			try {
+				const response = await axios.get(
+					'https://jsonplaceholder.typicode.com/todos',
+				);
+				setMentoringList(response.data);
+			} catch (err) {
+				setError(err);
+			}
+		}
+		getMentoringList();
+	}, []);
+
+	const onDelete = targetId => {
+		console.log(targetId);
+		const newMentoringList = mentoringList.filter(
+			data => data.id !== targetId,
+		);
+		setMentoringList(newMentoringList);
+		console.log(newMentoringList);
+	};
 
 	return (
 		<>
@@ -34,34 +41,15 @@ function MentoringHistoryList() {
 				<MHL.ContentBox>
 					<MHL.SubTitle>작성한 글 내역</MHL.SubTitle>
 					<MHL.ContentListBox>
-						{UserMetoringData.length === 0 ? (
+						{mentoringList.length === 0 ? (
 							<MHL.NothingContentList>
 								내역이 없습니다.
 							</MHL.NothingContentList>
 						) : (
-							<>
-								{UserMetoringData.map((element, index) => (
-									<MHL.ContentList key={index}>
-										<MHL.ContentNumber>
-											{index + 1}
-										</MHL.ContentNumber>
-										<MHL.ContentCategory>
-											{element.category}
-										</MHL.ContentCategory>
-										<MHL.ContentTitle>
-											{element.title}
-										</MHL.ContentTitle>
-										<MHL.ContentDate>
-											{`~ ${element.date}`}
-										</MHL.ContentDate>
-										<MHL.ButtonBox>
-											<MHL.DeleteButton>
-												삭제
-											</MHL.DeleteButton>
-										</MHL.ButtonBox>
-									</MHL.ContentList>
-								))}
-							</>
+							<ListView
+								mentoringList={mentoringList}
+								onDelete={onDelete}
+							/>
 						)}
 					</MHL.ContentListBox>
 				</MHL.ContentBox>

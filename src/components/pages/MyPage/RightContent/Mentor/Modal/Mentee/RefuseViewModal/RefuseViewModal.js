@@ -1,8 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RVM from './RefuseViewModal.styles';
+import axios from 'axios';
 
+// 멘티 - 거절 사유 보기 모달
 function RefuseViewModal({ setRefuseViewModalOpenState }) {
 	const [textareaValue, setTextareaValue] = useState(''); // 서버에 저장된 거절 사유 받아오기
+	const [error, setError] = useState(null); // 에러 state
+
+	// 서버통신 (GET)
+	useEffect(() => {
+		async function getRefuseValue() {
+			try {
+				const response = await axios.get(
+					'https://jsonplaceholder.typicode.com/todos/1',
+				);
+				setTextareaValue(response.data);
+			} catch (err) {
+				setError(err);
+			}
+		}
+		getRefuseValue();
+	}, []);
 
 	// 모달 끄기
 	const closeModal = () => {
@@ -34,8 +52,9 @@ function RefuseViewModal({ setRefuseViewModalOpenState }) {
 							<RVM.InfoSubTitleBox>
 								<RVM.InfoSubTitle>거절사유</RVM.InfoSubTitle>
 								<textarea
+									readOnly
+									value={`거절 사유: ${textareaValue.title}`}
 									placeholder="거절 사유 입니다."
-									value={textareaValue}
 								></textarea>
 							</RVM.InfoSubTitleBox>
 						</RVM.InfoBox>

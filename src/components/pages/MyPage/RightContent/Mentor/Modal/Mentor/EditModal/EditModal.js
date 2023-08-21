@@ -1,12 +1,45 @@
 import { useState, useRef, useEffect } from 'react';
 import * as EM from './EditModal.styles';
+import axios from 'axios';
 
-function InfoViewModal({ setEditModalOpenState }) {
-	const [textareaValue, setTextareaValue] = useState(''); // text
+function EditModal({ setEditModalOpenState }) {
+	const [textareaValue, setTextareaValue] = useState({ content: '' });
+	const [mentoringValue, setMentoringValue] = useState([]); // get 요청으로 받은 데이터 담을 state
+	const [error, setError] = useState(null); // 에러 state
 
-	// textarea 수정
-	const textareaHandle = e => {
-		setTextareaValue(e.target.value);
+	// 서버통신 (GET)
+	useEffect(() => {
+		async function getMentoringValue() {
+			try {
+				const response = await axios.get(
+					'https://jsonplaceholder.typicode.com/todos/1',
+				);
+				setMentoringValue(response.data);
+				console.log(response.data);
+			} catch (err) {
+				setError(err);
+			}
+		}
+		getMentoringValue();
+	}, []);
+
+	// 유저가 입력한 정보 change
+	const handleChange = e => {
+		const { name, value } = e.target;
+		setTextareaValue({
+			...textareaValue,
+			[name]: value,
+		});
+	};
+
+	// 유저가 입력한 정보 submit => post로 서버에 전달
+	const handleSubmit = e => {
+		e.preventDefault();
+		axios
+			.post('https://jsonplaceholder.typicode.com/posts', textareaValue)
+			.then(res => console.log(res))
+			.then(alert('수정 완료되었습니다.'))
+			.then(closeModal);
 	};
 
 	// 모달 끄기
@@ -32,37 +65,35 @@ function InfoViewModal({ setEditModalOpenState }) {
 	return (
 		<>
 			<EM.Modal>
-				<EM.ModalWrapper>
+				<form onSubmit={handleSubmit}>
 					<EM.InfoWrapper>
 						<EM.InfoTitle>첨삭 하기</EM.InfoTitle>
 						<EM.InfoBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>신청 제목</EM.InfoSubTitle>
-								<span>신입입니다. 잘부탁드립니다</span>
+								<span>{mentoringValue.title}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>질문 내용</EM.InfoSubTitle>
-								<span>
-									안녕하세요. 김현규입니다. 포트폴리오가 잘
-									작성되었는지 무언가 부족한 부분은 없는지
-									알려주시면 좋겠습니다. 잘부탁드립니다.
-								</span>
+								<span>{mentoringValue.title}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>이메일 주소</EM.InfoSubTitle>
-								<span>sdfsdfsdfsdf@naver.com</span>
+								<span>{mentoringValue.title}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>
 									포트폴리오 주소
 								</EM.InfoSubTitle>
-								<span>http://github......</span>
+								<span>{mentoringValue.title}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>첨삭 내용</EM.InfoSubTitle>
 								<textarea
-									value={textareaValue}
-									onChange={textareaHandle}
+									name="content"
+									value={textareaValue.content}
+									placeholder="첨삭 내용 작성"
+									onChange={handleChange}
 								></textarea>
 							</EM.InfoSubTitleBox>
 						</EM.InfoBox>
@@ -71,19 +102,14 @@ function InfoViewModal({ setEditModalOpenState }) {
 						<EM.CancleButton onClick={closeModal}>
 							취소
 						</EM.CancleButton>
-						<EM.CompleteButton
-							onClick={e => {
-								console.log('완료된 내용: ' + textareaValue);
-								closeModal();
-							}}
-						>
+						<EM.CompleteButton type="submit">
 							완료
 						</EM.CompleteButton>
 					</EM.ButtonBox>
-				</EM.ModalWrapper>
+				</form>
 			</EM.Modal>
 		</>
 	);
 }
 
-export default InfoViewModal;
+export default EditModal;

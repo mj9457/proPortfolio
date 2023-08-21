@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import * as IEM from './InfoEditModal.styles';
+import axios from 'axios';
 
+// 멘티 - 멘토링 신청 모달
 function InfoEditModal({ setInfoModalOpenState }) {
 	// 유저가 입력한 정보 state
 	const [textValue, setTextValue] = useState({
@@ -12,16 +14,20 @@ function InfoEditModal({ setInfoModalOpenState }) {
 
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
+		const { name, value } = e.target;
 		setTextValue({
 			...textValue,
-			[e.target.name]: e.target.value,
+			[name]: value,
 		});
 	};
 
-	// 유저가 입력한 정보 submit
-	const handleSubmit = () => {
-		alert(JSON.stringify(textValue, null, 2));
-		// 여기서 백엔드와 통신(POST로 textValue값 넘겨주기)
+	// 유저가 입력한 정보 submit => post로 서버에 전달
+	const handleSubmit = e => {
+		e.preventDefault();
+		axios
+			.post('https://jsonplaceholder.typicode.com/posts', textValue)
+			.then(res => console.log(res))
+			.then(alert('수정 완료되었습니다.'));
 	};
 
 	// 모달 끄기
@@ -38,6 +44,7 @@ function InfoEditModal({ setInfoModalOpenState }) {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	});
+
 	const handleClickOutside = event => {
 		if (event.target === wrapperRef.current) {
 			setInfoModalOpenState(false);
@@ -46,7 +53,7 @@ function InfoEditModal({ setInfoModalOpenState }) {
 	return (
 		<>
 			<IEM.Modal>
-				<IEM.ModalWrapper>
+				<form onSubmit={handleSubmit}>
 					<IEM.InfoWrapper>
 						<IEM.InfoTitle>신청 정보</IEM.InfoTitle>
 						<IEM.InfoBox>
@@ -95,16 +102,11 @@ function InfoEditModal({ setInfoModalOpenState }) {
 						<IEM.CancleButton onClick={closeModal}>
 							닫기
 						</IEM.CancleButton>
-						<IEM.CompleteButton
-							onClick={() => {
-								handleSubmit();
-								closeModal();
-							}}
-						>
+						<IEM.CompleteButton type="submit">
 							수정
 						</IEM.CompleteButton>
 					</IEM.ButtonBox>
-				</IEM.ModalWrapper>
+				</form>
 			</IEM.Modal>
 		</>
 	);
