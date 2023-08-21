@@ -5,7 +5,7 @@ import Layout from '../components/@common/Layout';
 import Home from '../pages/Home/Home';
 
 import MyPage from '../pages/MyPage/MyPage';
-import WritingHistory from '../pages/MyPage/Mentor/WritingHistory/WritingHistory';
+import MentoringHistory from '../pages/MyPage/Mentor/MentoringHistory/MentoringHistory';
 import AccountManage from '../pages/MyPage/AccountManage/AccountManage';
 import AccountWithdrawal from '../pages/MyPage/AccountWithdrawal/AccountWithdrawal';
 import MyPageLayout from '../components/pages/MyPage/MyPageLayout/MyPageLayout';
@@ -44,8 +44,8 @@ const router = createBrowserRouter([
 						element: <MentoringListPage />,
 					},
 					{
-						path: 'writinghistory',
-						element: <WritingHistory />,
+						path: 'mentoringhistory',
+						element: <MentoringHistory />,
 					},
 					{
 						path: 'AccountManage',

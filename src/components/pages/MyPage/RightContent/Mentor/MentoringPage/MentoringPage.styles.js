@@ -37,7 +37,7 @@ export const DetailOnborad = styled.div`
 	align-self: stretch;
 
 	border-radius: 0.625rem;
-	border: 1px solid rgba(204, 204, 204, 0.8);
+	border: 1px solid #000000;
 `;
 
 export const DetailOnboradBox = styled.div`

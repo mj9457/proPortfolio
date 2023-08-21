@@ -7,9 +7,8 @@ function SideMenu({ userState }) {
 	const navigate = useNavigate();
 
 	// 버튼 클릭시 페이지 전환
-	const handleClickButton = e => {
-		const key = e.target.id;
-		navigate(`/mypage/${key}`);
+	const handleClickButton = path => {
+		navigate(`/mypage/${[path]}`);
 	};
 
 	return (
@@ -18,20 +17,21 @@ function SideMenu({ userState }) {
 
 			<SM.SubTitleWrapper>
 				<SM.History>
-					<button onClick={handleClickButton} id={'mentoringlist'}>
+					<button onClick={() => handleClickButton('mentoringlist')}>
 						멘토링 신청 받은 내역
 					</button>
-					<button onClick={handleClickButton} id={'writinghistory'}>
+					<button
+						onClick={() => handleClickButton('mentoringhistory')}
+					>
 						글 작성 내역
 					</button>
 				</SM.History>
 				<SM.Info>
-					<button onClick={handleClickButton} id={'AccountManage'}>
+					<button onClick={() => handleClickButton('AccountManage')}>
 						내 정보 관리
 					</button>
 					<button
-						onClick={handleClickButton}
-						id={'AccountWithdrawal'}
+						onClick={() => handleClickButton('AccountWithdrawal')}
 					>
 						회원 탈퇴
 					</button>

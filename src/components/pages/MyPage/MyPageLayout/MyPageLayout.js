@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import SideMenu from '../SideMenu/SideMenu';
-import * as M from '../MyPageLayout/MyPageLayout.Styles';
+import * as M from './MyPageLayout.Styles';
 
 function MyPageLayout() {
 	return (
