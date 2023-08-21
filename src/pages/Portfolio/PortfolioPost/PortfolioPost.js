@@ -1,6 +1,7 @@
 import Line from '../../../components/@common/Line/Line';
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
 import Review from '../../../components/pages/Portfolio/Review/Review';
+import ReviewComment from '../../../components/pages/Portfolio/Review/ReviewComment/ReviewComment';
 import * as S from './PortfolioPost.styles';
 
 function PortfolioPost() {
@@ -30,6 +31,10 @@ function PortfolioPost() {
 				<Line size={'small'} />
 
 				<Review />
+
+				<ReviewComment />
+				<ReviewComment />
+				<ReviewComment />
 			</S.ContentsBox>
 		</S.PostBox>
 	);

@@ -62,11 +62,11 @@ const router = createBrowserRouter([
 				element: <Portfolio />,
 			},
 			{
-				path: 'apply',
+				path: 'portfolio/apply',
 				element: <PortfolioApply />,
 			},
 			{
-				path: 'post',
+				path: 'portfolio/post',
 				element: <PortfolioPost />,
 			},
 			{

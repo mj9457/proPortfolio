@@ -11,7 +11,9 @@ function Buttons() {
 				<S.Button>IOS</S.Button>
 			</div>
 			<div>
-				<S.WriteButton>작성하기</S.WriteButton>
+				<a href="/apply">
+					<S.WriteButton>작성하기</S.WriteButton>
+				</a>
 			</div>
 		</S.ButtonBox>
 	);
