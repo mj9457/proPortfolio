@@ -22,6 +22,9 @@ import PortfolioPost from '../pages/Portfolio/PortfolioPost/PortfolioPost';
 import StudyPage from '../pages/StudyPage/StudyPage';
 import StudyEditPost from '../pages/StudyPage/StudyEditPost/StudyEditPost';
 import StudyPostDetail from '../pages/StudyPage/StudyPostDetail/StudyPostDetail';
+import AdminMentorApply from '../pages/Admin/MentorApply/AdminMentorApply';
+import AdminStudyProject from '../pages/Admin/StudyProject/AdminStudyProject';
+import AdminMentorBoardList from '../pages/Admin/MentorBoardList/AdminMentorBoardList';
 
 const router = createBrowserRouter([
 	{
@@ -93,12 +96,24 @@ const router = createBrowserRouter([
 		element: <AdminLayout />,
 		children: [
 			{
-				path: '',
+				path: 'user',
 				element: <AdminHome />,
 			},
 			{
 				path: 'category',
 				element: <AdminCategory />,
+			},
+			{
+				path: 'mentorapply',
+				element: <AdminMentorApply />,
+			},
+			{
+				path: 'studyproject',
+				element: <AdminStudyProject />,
+			},
+			{
+				path: 'mentorboard',
+				element: <AdminMentorBoardList />,
 			},
 		],
 	},

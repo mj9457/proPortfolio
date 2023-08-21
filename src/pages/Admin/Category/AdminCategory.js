@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { AdminContent } from '../Home/Admin.styles';
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { Button, Input, Space, theme } from 'antd';
+
+import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
+import {
+	AdminContent,
+	Removetag,
+} from '../../../components/pages/Admin/Common/Common.styles';
+import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import {
 	Atags,
 	CancelButton,
-	Removetag,
 	SaveButton,
-	SearchInput,
 	TableInput,
 } from './AdminCategory.styles';
-
 const AdminCategory = () => {
 	const data = [
 		{
@@ -42,8 +44,6 @@ const AdminCategory = () => {
 	const [editingKey, setEditingKey] = useState(null);
 	const [tableData, setTableData] = useState(data);
 	const [tempData, setTempData] = useState({});
-	const [inputValue, setInputValue] = useState('');
-
 	const columns = [
 		{
 			title: '카테고리 명',
@@ -148,7 +148,7 @@ const AdminCategory = () => {
 				type={'ADD'}
 				// value={set}
 				placeholder="추가 할 카테고리를 입력하세요."
-			/> */}
+			/>  */}
 			<AdminTable
 				columns={columns}
 				dataSource={tableData}
