@@ -1,9 +1,16 @@
 import * as S from './Textarea.styles';
 
 function Textarea(props) {
-	const { size, placeholder } = props;
+	const { size, placeholder, name, ...rest } = props;
 
-	return <S.TextSpace size={size} placeholder={placeholder} />;
+	return (
+		<S.TextSpace
+			name={name}
+			size={size}
+			placeholder={placeholder}
+			{...rest}
+		/>
+	);
 }
 
 export default Textarea;

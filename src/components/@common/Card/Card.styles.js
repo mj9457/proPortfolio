@@ -70,6 +70,9 @@ export const TitleBox = styled.div`
 	${flexCenter}
 
 	& span {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.light};
 		color: ${({ theme }) => theme.PALETTE.black};
 	}

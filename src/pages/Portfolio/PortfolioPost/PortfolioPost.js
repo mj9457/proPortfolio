@@ -14,7 +14,7 @@ function PortfolioPost() {
 			<S.ContentsBox>
 				<S.MentorBox>
 					<S.NameBox>
-						<img src="./assets/img/profile/profile.png" />
+						<img src="/assets/img/profile/profile.png" />
 						<strong>산마루</strong>
 
 						<Line size={'height'} />

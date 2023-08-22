@@ -20,5 +20,6 @@ export const TextSpace = styled.textarea`
 	padding: 12px;
 	border-radius: 4px;
 	resize: none;
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 `;

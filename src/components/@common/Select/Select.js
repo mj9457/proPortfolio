@@ -1,7 +1,7 @@
 import * as S from './Select.styles';
 
 function Select(props) {
-	const { options, size, font } = props;
+	const { options, size, font, ...rest } = props;
 
 	const option = options.map(option => (
 		<option key={option.value} value={option.value}>
@@ -11,7 +11,7 @@ function Select(props) {
 
 	return (
 		<>
-			<S.Selected size={size} font={font}>
+			<S.Selected size={size} font={font} {...rest}>
 				{option}
 			</S.Selected>
 		</>

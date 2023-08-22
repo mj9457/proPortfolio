@@ -1,38 +1,50 @@
 import * as S from './Card.styles';
 
-function PopularCard({ background }) {
+function PopularCard(props) {
+	const { background, mentorData } = props;
+
 	return (
-		<S.PopularCard background={background} href="/post">
-			<S.CoachNumBox>
-				<span>👊 코칭 30회</span>
-			</S.CoachNumBox>
+		<>
+			{mentorData.map((mentor, idx) => (
+				<S.PopularCard
+					background={background}
+					href="/portfolio/post"
+					key={idx}
+				>
+					<S.CoachNumBox>
+						<span>👊 코칭 {mentor.numCoaching}회</span>
+					</S.CoachNumBox>
 
-			<S.ImgBox>
-				<img src="./assets/img/profile/profile.png" />
-			</S.ImgBox>
+					<S.ImgBox>
+						<img src="/assets/img/profile/profile.png" />
+					</S.ImgBox>
 
-			<S.ContentsBox>
-				<div>
-					<S.Name>산마루</S.Name>
-				</div>
+					<S.ContentsBox>
+						<div>
+							<S.Name>{mentor.name}</S.Name>
+						</div>
 
-				<S.Contents>
-					<div>
-						<S.ContentSpan>Naver</S.ContentSpan>
-					</div>
-					<div>
-						<S.ContentSpan>프론트엔드 개발자</S.ContentSpan>
-					</div>
-					<div>
-						<S.ContentSpan>경력 15년</S.ContentSpan>
-					</div>
-				</S.Contents>
-			</S.ContentsBox>
+						<S.Contents>
+							<div>
+								<S.ContentSpan>{mentor.company}</S.ContentSpan>
+							</div>
+							<div>
+								<S.ContentSpan>{mentor.job}</S.ContentSpan>
+							</div>
+							<div>
+								<S.ContentSpan>
+									경력 {mentor.career}년
+								</S.ContentSpan>
+							</div>
+						</S.Contents>
+					</S.ContentsBox>
 
-			<S.TitleBox>
-				<span>&quot;경력 엔년차 코칭해 줌&quot;</span>
-			</S.TitleBox>
-		</S.PopularCard>
+					<S.TitleBox>
+						&quot;<span>{mentor.title}</span>&quot;
+					</S.TitleBox>
+				</S.PopularCard>
+			))}
+		</>
 	);
 }
 
