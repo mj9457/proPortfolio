@@ -10,15 +10,15 @@ function SignUp() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const code = new URL(window.location.href).searchParams.get('code');
-		getAccessToken(code).then(accessToken => {
+		const UserCode = new URL(window.location.href).searchParams.get('code');
+		getAccessToken(UserCode).then(accessToken => {
 			getUserProfile(accessToken).then(profile => {
 				saveProfileToDB(profile);
 			});
 		});
 	}, []);
 
-	async function getAccessToken(code) {
+	async function getAccessToken(UserCode) {
 		const clientId = '2PS45SPgV6uwdkglbWit';
 		const clientSecret = '8GFl9lkE_Y';
 
@@ -31,7 +31,7 @@ function SignUp() {
 						grant_type: 'authorization_code',
 						client_id: clientId,
 						client_secret: clientSecret,
-						code: code,
+						code: UserCode,
 					},
 				},
 			);
