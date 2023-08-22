@@ -12,18 +12,18 @@ export const StudyInfoCard = styled.a`
 	height: 200px;
 	flex-direction: column;
 	justify-content: center;
-	border-radius: 10px;
-	background: #e3edff;
 	cursor: pointer;
 	text-decoration: none;
 	padding: 30px;
+	border-radius: 10px;
+	background-color: ${({ theme }) => theme.PALETTE.primary[100]};
 `;
 export const Category = styled.p`
 	color: #fff;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	padding: 6px 15px;
-	background-color: #37f;
+	background-color: ${({ theme }) => theme.PALETTE.mainColor};
 	border-radius: 15px;
 	margin-bottom: 16px;
 	width: 80px;
