@@ -1,4 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const backgroundCSS = {
+	whiteBackground: css`
+		background: ${({ theme }) => theme.PALETTE.white};
+		border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
+		width: 258px;
+		height: 199px;
+	`,
+
+	lightBlueBackground: css`
+		background-color: ${({ theme }) => theme.PALETTE.primary[100]};
+		width: 530px;
+		height: 200px;
+	`,
+};
 
 export const Container = styled.div`
 	/* :hover {
@@ -7,19 +22,17 @@ export const Container = styled.div`
 `;
 
 export const StudyInfoCard = styled.a`
+	${({ background }) => backgroundCSS[background]}
 	display: flex;
-	width: 530px;
-	height: 200px;
 	flex-direction: column;
 	justify-content: center;
 	cursor: pointer;
 	text-decoration: none;
 	padding: 30px;
 	border-radius: 10px;
-	background-color: ${({ theme }) => theme.PALETTE.primary[100]};
 `;
 export const Category = styled.p`
-	color: #fff;
+	color: ${({ theme }) => theme.PALETTE.white};
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	padding: 6px 15px;
@@ -30,7 +43,7 @@ export const Category = styled.p`
 	text-align: center;
 `;
 export const Title = styled.p`
-	color: #000;
+	color: ${({ theme }) => theme.PALETTE.black};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	margin-bottom: 32px;

@@ -42,18 +42,10 @@ function Home() {
 							<H.Title>🔥 방금 올라온 스터디/ 프로젝트</H.Title>
 							<H.ViewAll href="/study">
 								전체보기
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="5"
-									height="11"
-									viewBox="0 0 5 11"
-									fill="none"
-								>
-									<path
-										d="M0 10.5V0.5L5 5.5L0 10.5Z"
-										fill="#3377FF"
-									/>
-								</svg>
+								<img
+									src="/assets/img/icons/bluearrow.svg"
+									alt="파란화살표"
+								/>
 							</H.ViewAll>
 						</H.TitleBox>
 						<H.SlideStudyCard>
@@ -65,18 +57,10 @@ function Home() {
 							<H.Title>✨ 지금 인기 있는 멘토</H.Title>
 							<H.ViewAll href="/portfolio">
 								전체보기
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="5"
-									height="11"
-									viewBox="0 0 5 11"
-									fill="none"
-								>
-									<path
-										d="M0 10.5V0.5L5 5.5L0 10.5Z"
-										fill="#3377FF"
-									/>
-								</svg>
+								<img
+									src="/assets/img/icons/bluearrow.svg"
+									alt="파란화살표"
+								/>
 							</H.ViewAll>
 						</H.TitleBox>
 						<H.PopularCards>

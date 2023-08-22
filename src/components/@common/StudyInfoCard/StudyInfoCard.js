@@ -17,10 +17,11 @@ export default function StudyInfoCard({
 	position,
 	deadline,
 	link,
+	background,
 }) {
 	return (
 		<H.Container>
-			<H.StudyInfoCard href={link}>
+			<H.StudyInfoCard href={link} background={background}>
 				<H.Category>{category}</H.Category>
 				<H.Title>{title}</H.Title>
 				<H.LanguagesWrapper>

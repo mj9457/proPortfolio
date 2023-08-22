@@ -34,7 +34,7 @@ export const Title = styled.span`
 `;
 export const ViewAll = styled.a`
 	color: ${({ theme }) => theme.PALETTE.mainColor};
-	> svg {
+	> img {
 		margin-left: 8px;
 	}
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};

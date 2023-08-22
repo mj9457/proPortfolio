@@ -27,8 +27,7 @@ export const RegisterForm = styled.form`
 			font-size: 16px;
 			font-weight: 400;
 		}
-		> input,
-		select {
+		> select {
 			width: 360px;
 			height: 42px;
 			padding: 0 12px 0 6px;

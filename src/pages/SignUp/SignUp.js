@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import * as S from './SignUp.styles';
 import Button from '../../components/@common/Button/Button';
+import Input from '../../components/@common/Input/Input';
 
 function SignUp() {
 	const [name, setName] = useState('');
@@ -24,12 +25,9 @@ function SignUp() {
 	async function sendCodeToServer(UserCode) {
 		console.log(UserCode);
 		try {
-			const response = await axios.post(
-				'http://localhost:8080/login/naver/callback ',
-				{
-					UserCode,
-				},
-			);
+			const response = await axios.post('http://localhost:8080/signup', {
+				UserCode,
+			});
 			const accessToken = response.data.access_token;
 			console.log('발급된 액세스 토큰:', accessToken);
 		} catch (error) {
@@ -91,18 +89,29 @@ function SignUp() {
 					<p>회원 가입</p>
 					<div>
 						<label>이름</label>
-						<input type="text" value={name} readOnly />
+						<Input
+							type="text"
+							value={name}
+							readOnly
+							size={'medium'}
+						/>
 					</div>
 					<div>
 						<label>이메일</label>
-						<input type="text" value={email} readOnly />
+						<Input
+							type="text"
+							value={email}
+							readOnly
+							size={'medium'}
+						/>
 					</div>
 					<div>
 						<label>닉네임</label>
-						<input
+						<Input
 							type="text"
 							value={nickname}
 							onChange={handleNicknameChange}
+							size={'medium'}
 						/>
 					</div>
 					<div>
@@ -117,13 +126,14 @@ function SignUp() {
 						</select>
 					</div>
 					<Button variant={'primary'} shape={'default'} size={'big'}>
-						가입완료하기
+						가입 완료하기
 					</Button>
 				</S.RegisterForm>
 			</S.Wrap>
 		</>
 	);
 }
-// 주석 처리
+// ddsfsdf
+// sdfsdfsd
 
 export default SignUp;
