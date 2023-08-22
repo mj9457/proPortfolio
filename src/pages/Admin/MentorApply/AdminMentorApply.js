@@ -7,7 +7,7 @@ import {
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import { Atags } from './AdminMentorApply.styles';
-import ApplyModal from '../ApplyModals/ApplyModal';
+import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
 
 const AdminMentorApply = () => {
 	const data = [
@@ -94,24 +94,37 @@ const AdminMentorApply = () => {
 			),
 		},
 	];
-	// 거절
+	// 모달 열기
+
 	const [isOpen, setIsOpen] = useState(false);
+	const [selectedKey, setSelectedKey] = useState(null);
+	// 자세히 보기
+	const openApplyModal = key => {
+		setSelectedKey(key);
+		setIsOpen(true);
+	};
+	const closeModal = () => {
+		setSelectedKey(null);
+		setIsOpen(false);
+	};
 	const refuseHandler = key => {
 		// Todo
 		// 거절 후 filter로 재배열
 		// 처리한 신청서는 없어져야함
 		console.log(key);
 		// setTableData(data => data.filter(items => items.key !== key));
+		// 모든 처리 후
+		setSelectedKey(null);
+		setIsOpen(false);
 	};
-	// 자세히 보기
-	const openApplyModal = () => {
-		setIsOpen(true);
-		console.log('OPEN');
-	};
-	const approveHandler = () => {
+	const approveHandler = key => {
+		console.log(key);
 		// Todo
 		// 승인 후 filter로 재배열
 		// 처리한 신청서는 없어져야함
+		// 모든 처리 후
+		setSelectedKey(null);
+		setIsOpen(false);
 	};
 	const modifiedData = data.map((item, index) => ({
 		...item,
@@ -123,19 +136,28 @@ const AdminMentorApply = () => {
 	const [tableData, setTableData] = useState(modifiedData);
 
 	return (
-		<AdminContent background={colorBgContainer}>
-			<SearchInput
-				enterButton="검색"
-				placeholder=""
-				// onSearch={e => addCategoryHandler(e)}
-			/>
-			<AdminTable
-				columns={columns}
-				dataSource={tableData}
-				totalPages={0}
-			/>
-			{isOpen && <ApplyModal />}
-		</AdminContent>
+		<>
+			{isOpen && (
+				<AdminApplyModal
+					onClose={closeModal}
+					id={selectedKey}
+					approveHandler={approveHandler}
+					refuseHandler={refuseHandler}
+				/>
+			)}
+			<AdminContent background={colorBgContainer}>
+				<SearchInput
+					enterButton="검색"
+					placeholder=""
+					// onSearch={e => addCategoryHandler(e)}
+				/>
+				<AdminTable
+					columns={columns}
+					dataSource={tableData}
+					totalPages={0}
+				/>
+			</AdminContent>
+		</>
 	);
 };
 export default AdminMentorApply;

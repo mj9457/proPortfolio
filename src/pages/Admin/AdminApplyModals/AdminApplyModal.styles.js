@@ -1,13 +1,21 @@
 import { styled } from 'styled-components';
 
+const Modal = styled.div`
+	position: fixed;
+	background: rgba(0, 0, 0, 0.2);
+	z-index: 99;
+	width: 100%;
+	height: 100vh;
+`;
+
 const ApplyModalWrap = styled.div`
 	position: relative;
 	background-color: #fff;
 	width: 600px;
 	margin: 0 auto;
-	height: 836px;
 	border-radius: 10px;
-	padding: 100px 100px 60px;
+	padding: 90px 90px 40px;
+	top: 25px;
 `;
 const ContentArea = styled.div``;
 const MainTitle = styled.h2`
@@ -29,6 +37,7 @@ const IconBox = styled.div`
 	top: 40px;
 `;
 const CloseIcon = styled.i`
+	cursor: pointer;
 	background: url('/assets/img/icons/close-icon.svg') no-repeat;
 	display: inline-block;
 	width: 20px;
@@ -45,11 +54,9 @@ const TextArea = styled.div`
 		font-weight: 700;
 		line-height: normal;
 	}
-	${props =>
-		props.long &&
-		`
-			width: 100%;
-		`}
+	&:last-child {
+		width: 100%;
+	}
 `;
 const TextWrap = styled.div`
 	margin-bottom: 34px;
@@ -80,6 +87,7 @@ const ButtonArea = styled.div`
 		background-color: ${({ theme }) => theme.PALETTE.gray[200]};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+		cursor: pointer;
 	}
 	> button:last-child {
 		margin-left: 16px;
@@ -99,4 +107,5 @@ export {
 	TextWrap,
 	ImgBox,
 	ButtonArea,
+	Modal,
 };

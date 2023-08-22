@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
 	ApplyModalWrap,
 	ButtonArea,
@@ -7,24 +7,36 @@ import {
 	IconBox,
 	ImgBox,
 	MainTitle,
+	Modal,
 	SubTitle,
 	TextArea,
 	TextWrap,
-} from './ApplyModal.styles';
+} from './AdminApplyModal.styles';
 // import IMG from 'assets/img/banner/banner01.png';
 
-const ApplyModal = () => {
-	const [isOpen, setIsOpen] = useState(false);
+const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
+	const outside = useRef();
+	console.log('Modal');
+
+	// const [isOpen, setIsOpen] = useState(false);
 	return (
-		<div>
+		<Modal
+			ref={outside}
+			onClick={e => {
+				if (e.target === outside.current) onClose();
+			}}
+		>
 			<ApplyModalWrap>
+				<IconBox>
+					<CloseIcon onClick={onClose} />
+				</IconBox>
 				<MainTitle>멘토 전환 신청서</MainTitle>
 				<ContentArea>
 					<TextWrap>
 						<TextArea>
 							<SubTitle>이름</SubTitle>
 						</TextArea>
-						<span>김기범</span>
+						<span>{id.name}</span>
 						<TextWrap></TextWrap>
 						<TextArea>
 							<SubTitle>닉네임</SubTitle>
@@ -56,7 +68,7 @@ const ApplyModal = () => {
 						<span>3년차</span>
 					</TextWrap>
 					<TextWrap>
-						<TextArea long>
+						<TextArea>
 							<SubTitle>사원증 및 재직증명서</SubTitle>
 						</TextArea>
 					</TextWrap>
@@ -69,15 +81,24 @@ const ApplyModal = () => {
 						/>
 					</ImgBox>
 					<ButtonArea>
-						<button>거절</button>
-						<button>승인</button>
+						<button
+							onClick={() => {
+								refuseHandler(id);
+							}}
+						>
+							거절
+						</button>
+						<button
+							onClick={() => {
+								approveHandler(id);
+							}}
+						>
+							승인
+						</button>
 					</ButtonArea>
 				</ContentArea>
-				<IconBox>
-					<CloseIcon />
-				</IconBox>
 			</ApplyModalWrap>
-		</div>
+		</Modal>
 	);
 };
-export default ApplyModal;
+export default AdminApplyModal;

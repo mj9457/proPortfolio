@@ -94,7 +94,11 @@ const Sidebar = () => {
 					background: colorBgContainer,
 				}}
 			>
-				<LogoBox>
+				<LogoBox
+					onClick={() => {
+						navigate('/');
+					}}
+				>
 					<img src="/assets/img/logo/logo.svg" alt="Logo"></img>
 				</LogoBox>
 				{/* <div className="demo-logo-vertical" /> */}
