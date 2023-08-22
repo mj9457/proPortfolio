@@ -20,7 +20,7 @@ const variantCSS = {
 		}
 	`,
 	add: css`
-		background: ${({ theme }) => theme.PALETTE.gray[300]};
+		background: ${({ theme }) => theme.PALETTE.black};
 		color: ${({ theme }) => theme.PALETTE.fontColor};
 	`,
 	reverse: css`
@@ -49,6 +49,11 @@ const sizeCSS = {
 	`,
 	big: css`
 		padding: 1rem 4.25rem;
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	`,
+	full: css`
+		width: 100%;
+		padding: 0.94rem 10.75rem;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 };
