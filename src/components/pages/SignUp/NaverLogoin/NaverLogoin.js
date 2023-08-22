@@ -10,7 +10,7 @@ const Naver = () => {
 		window.location.href = NAVER_AUTH_URL;
 	};
 	return (
-		<button onClick={NaverLogin}>
+		<button onClick={NaverLogin} id="naverIdLogin">
 			<img src="./assets/img/icons/naverlogo.png" alt="네이버로고" />
 		</button>
 	);

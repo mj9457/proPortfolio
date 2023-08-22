@@ -26,14 +26,13 @@ function Header() {
 				</S.NavBar>
 
 				<S.LoginBar>
-					{/* <a href="/login">로그인</a> */}
+					<a href="/login">로그아웃</a>
 					<a onClick={handleSignupClick}>로그인/회원가입</a>
 					<S.Button>멘토 전환</S.Button>
 				</S.LoginBar>
 			</S.NavBox>
 			{openModal && <SignupModal onClose={handleSignupClose} />}
 		</S.Header>
-
 	);
 }
 
