@@ -22,6 +22,7 @@ export const PopularCard = styled.a`
 	gap: 16px;
 	border-radius: 10px;
 	text-decoration: none;
+	color: ${({ theme }) => theme.PALETTE.black};
 
 	&:visited {
 		color: ${({ theme }) => theme.PALETTE.black};

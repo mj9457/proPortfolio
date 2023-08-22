@@ -1,13 +1,15 @@
-import PopularCard from '../../components/@common/Card/Card';
-import Buttons from '../../components/pages/Portfolio/Buttons/Buttons';
-import Line from '../../components/@common/Line/Line';
-import * as S from './Portfolio.styles';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import * as S from './Portfolio.styles';
+
+import PopularCard from '../../components/@common/Card/Card';
+import Line from '../../components/@common/Line/Line';
+import Buttons from '../../components/pages/Portfolio/Buttons/Buttons';
 
 function Portfolio() {
-	const [mentorData, setMentorData] = useState([]);
-	const [popularData, setPopularData] = useState([]);
+	const [mentorData, setMentorData] = useState([]); // every mentor data
+	const [popularData, setPopularData] = useState([]); // popular mentor data
 
 	useEffect(() => {
 		const getMentor = async () => {
@@ -43,7 +45,7 @@ function Portfolio() {
 					{/* 지금 인기 있는 멘토들 목록 */}
 					<S.MentorCardBox>
 						<PopularCard
-							background={'blueBackground'}
+							background="blueBackground"
 							mentorData={popularData}
 						/>
 					</S.MentorCardBox>
@@ -71,11 +73,3 @@ function Portfolio() {
 }
 
 export default Portfolio;
-
-// (
-// 	<PopularCard
-// 		background={'whiteBackground'}
-// 		mentor={mentor}
-// 		key={idx}
-// 	/>
-// )

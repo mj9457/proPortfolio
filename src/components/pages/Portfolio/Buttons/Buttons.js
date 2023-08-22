@@ -11,7 +11,7 @@ function Buttons() {
 				<S.Button>IOS</S.Button>
 			</div>
 			<div>
-				<a href="/apply">
+				<a href="/portfolio/apply">
 					<S.WriteButton>작성하기</S.WriteButton>
 				</a>
 			</div>

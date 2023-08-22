@@ -8,7 +8,7 @@ function PopularCard(props) {
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
 					background={background}
-					href="/portfolio/post"
+					href={`/portfolio/post/${mentor.postId}`}
 					key={idx}
 				>
 					<S.CoachNumBox>
@@ -16,7 +16,7 @@ function PopularCard(props) {
 					</S.CoachNumBox>
 
 					<S.ImgBox>
-						<img src="/assets/img/profile/profile.png" />
+						<img src="/assets/img/profile/profile4.png" />
 					</S.ImgBox>
 
 					<S.ContentsBox>

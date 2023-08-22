@@ -1,42 +1,83 @@
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import * as S from './PortfolioPost.styles';
+
 import Line from '../../../components/@common/Line/Line';
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
 import Review from '../../../components/pages/Portfolio/Review/Review';
 import ReviewComment from '../../../components/pages/Portfolio/Review/ReviewComment/ReviewComment';
-import * as S from './PortfolioPost.styles';
+import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 
 function PortfolioPost() {
+	const location = useLocation();
+	const path = location.pathname.split('/')[3];
+
+	const [contents, setContents] = useState({});
+	const [openModal, setOpenModal] = useState(false);
+
+	useEffect(() => {
+		const getContent = async () => {
+			const res = await axios.get('/mock/mentor.json');
+			const data = res.data.mentor;
+
+			const newData = [...data];
+			const dataIndex = newData.find(data => data.postId === path);
+
+			setContents(dataIndex);
+		};
+
+		getContent();
+	}, []);
+
+	const handleOpenModal = () => {
+		setOpenModal(prev => !prev);
+	};
+
+	const { name, title, createdAt } = contents;
+
 	return (
-		<S.PostBox>
-			<S.TitleBox>
-				<span>경력 엔년차! 코칭을 해드립니다. 믿고 맡겨 주세요!</span>
-			</S.TitleBox>
+		<>
+			{contents && (
+				<S.PostBox>
+					<S.TitleBox>
+						<span>{title}</span>
+					</S.TitleBox>
 
-			<S.ContentsBox>
-				<S.MentorBox>
-					<S.NameBox>
-						<img src="/assets/img/profile/profile.png" />
-						<strong>산마루</strong>
+					<S.ContentsBox>
+						<S.MentorBox>
+							<S.NameBox>
+								<img src="/assets/img/profile/profile3.png" />
+								<strong>{name}</strong>
 
-						<Line size={'height'} />
+								<Line size={'height'} />
 
-						<span>2023.08.16 오후 10:00</span>
-					</S.NameBox>
-					<S.Button>신청하기</S.Button>
-				</S.MentorBox>
+								<span>{createdAt}</span>
+							</S.NameBox>
 
-				<Line size={'small'} />
+							{openModal && <InfoEditModal />}
 
-				<IntroContents />
+							<S.Button onClick={handleOpenModal}>
+								신청하기
+							</S.Button>
+						</S.MentorBox>
 
-				<Line size={'small'} />
+						<Line size={'small'} />
 
-				<Review />
+						<IntroContents contents={contents} />
 
-				<ReviewComment />
-				<ReviewComment />
-				<ReviewComment />
-			</S.ContentsBox>
-		</S.PostBox>
+						<Line size={'small'} />
+
+						<Review />
+
+						<ReviewComment />
+						<ReviewComment />
+						<ReviewComment />
+					</S.ContentsBox>
+				</S.PostBox>
+			)}
+		</>
 	);
 }
 

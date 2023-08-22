@@ -75,7 +75,7 @@ const router = createBrowserRouter([
 				element: <PortfolioApply />,
 			},
 			{
-				path: 'portfolio/post',
+				path: 'portfolio/post/:postId',
 				element: <PortfolioPost />,
 			},
 			// 스터디 프로젝트 페이지
