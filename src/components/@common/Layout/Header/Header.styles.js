@@ -33,6 +33,7 @@ export const LoginBar = styled.div`
 	& a {
 		font-size: ${({ theme }) => theme.FONT_SIZE.md};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		color: ${({ theme }) => theme.PALETTE.black};
 		text-decoration: none;
 		cursor: pointer;
 
