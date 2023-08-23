@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './StudyPage.styles';
-import PopularCard from '../../components/pages/StudyPage/PopularCard/PopularCard';
+// import PopularCard from '../../components/pages/StudyPage/PopularCard/PopularCard';
 import PostCard from '../../components/pages/StudyPage/PostCard/PostCard';
-import Slider from '../../components/pages/StudyPage/Slider/Slider';
+// import Slider from '../../components/pages/StudyPage/Slider/Slider';
 import Button from '../../components/@common/Button/Button';
 
 function StudyPage() {
@@ -26,7 +26,7 @@ function StudyPage() {
 					</S.TitleWrapper>
 
 					<S.PopularCardWrapper>
-						<Slider />
+						{/* <Slider /> */}
 						{/* <PopularCard />
 						<PopularCard />
 						<PopularCard />
