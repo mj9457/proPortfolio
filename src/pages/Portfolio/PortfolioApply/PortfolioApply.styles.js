@@ -6,7 +6,7 @@ export const ApplyBox = styled.div`
 	${flexColumn}
 	align-items: center;
 	gap: 64px;
-	padding: 120px 0;
+	padding: 100px 0;
 `;
 
 export const TitleBox = styled.div`
