@@ -23,10 +23,13 @@ const Title = styled.h2`
 const SubTitle = styled.h3``;
 
 const PopularCardWrapper = styled.div`
+	/* 
 	${flexAlignCenter}
-	justify-content: space-between;
-	overflow: hidden;
-	gap: 0.98rem;
+	justify-content: space-between; */
+	/* overflow: hidden; */
+	/* display: grid;
+	grid-template-rows: repeat(4, 1fr); */
+	/* gap: 0.98rem; */
 `;
 
 const TitleWrapper = styled.div`
@@ -75,15 +78,7 @@ const PositionCategoryItem = styled.button`
 	}
 `;
 
-const WritePostButton = styled.button`
-	width: 7.5rem;
-	height: 2.625rem;
-	cursor: pointer;
-	color: ${({ theme }) => theme.PALETTE.white};
-	background-color: ${({ theme }) => theme.PALETTE.black};
-	border-radius: 0.25rem;
-	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-`;
+const WritePostButton = styled.div``;
 
 const CategoryBottomList = styled.div`
 	margin-bottom: 3.5rem;

@@ -56,24 +56,6 @@ export const Input = styled.input`
 	margin-left: auto;
 `;
 
-export const PostInput = styled.input`
-	font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
-	font-size: 1.875rem;
-	width: 100%;
-	outline: none;
-	border: none;
-	margin-bottom: 2.58rem;
-`;
-
-export const PostTextarea = styled.textarea`
-	width: 100%;
-	height: 35.5rem;
-	padding: 0.75rem;
-	border: 1px solid ${({ theme }) => theme.PALETTE.gray[100]};
-	margin-bottom: 5.5rem;
-	resize: none;
-`;
-
 export const BasicInfoBox = styled.div``;
 
 export const PostBox = styled.div``;
