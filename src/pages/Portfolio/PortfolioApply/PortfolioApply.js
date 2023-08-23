@@ -1,3 +1,4 @@
+import Button from '../../../components/@common/Button/Button';
 import Textarea from '../../../components/@common/Textarea/Textarea';
 import Information from '../../../components/pages/Portfolio/Information/Information';
 import * as S from './PortfolioApply.styles';
@@ -29,7 +30,9 @@ function PortfolioApply() {
 					/>
 				</S.ContentsBox>
 
-				<S.Button>등록하기</S.Button>
+				<Button variant={'primary'} size={'full'} shape={'default'}>
+					등록하기
+				</Button>
 			</S.InfoContentsBox>
 		</S.ApplyBox>
 	);

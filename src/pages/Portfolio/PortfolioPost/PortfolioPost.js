@@ -4,11 +4,12 @@ import axios from 'axios';
 
 import * as S from './PortfolioPost.styles';
 
-import Line from '../../../components/@common/Line/Line';
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
 import Review from '../../../components/pages/Portfolio/Review/Review';
-import ReviewComment from '../../../components/pages/Portfolio/Review/ReviewComment/ReviewComment';
+
+import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
+import Button from '../../../components/@common/Button/Button';
 
 function PortfolioPost() {
 	const location = useLocation();
@@ -58,9 +59,14 @@ function PortfolioPost() {
 
 							{openModal && <InfoEditModal />}
 
-							<S.Button onClick={handleOpenModal}>
+							<Button
+								variant={'primary'}
+								shape={'default'}
+								size={'normal'}
+								onClick={handleOpenModal}
+							>
 								신청하기
-							</S.Button>
+							</Button>
 						</S.MentorBox>
 
 						<Line size={'small'} />
@@ -70,10 +76,6 @@ function PortfolioPost() {
 						<Line size={'small'} />
 
 						<Review />
-
-						<ReviewComment />
-						<ReviewComment />
-						<ReviewComment />
 					</S.ContentsBox>
 				</S.PostBox>
 			)}

@@ -1,36 +1,43 @@
-import Line from '../../../../@common/Line/Line';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import * as S from './ReviewComment.styles';
+import Line from '../../../../@common/Line/Line';
+import Textarea from '../../../../@common/Textarea/Textarea';
 
-function ReviewComment() {
+function ReviewComment(props) {
+	const { review } = props;
+
+	const [input, setInput] = useState(false);
+
 	return (
-		<S.CommentBox>
-			<S.TopBox>
-				<S.NamingBox>
-					<strong>마라탕</strong>
-					<span>2023-08-23 10:50:44</span>
-				</S.NamingBox>
+		<>
+			{review.map((review, idx) => (
+				<S.CommentBox key={idx}>
+					<S.TopBox>
+						<S.NamingBox>
+							<strong>{review.nickName}</strong>
+							<span>{review.createdAt}</span>
+						</S.NamingBox>
 
-				<S.Buttons>
-					<button>수정</button>
-					<button>삭제</button>
-				</S.Buttons>
-			</S.TopBox>
+						<S.Buttons>
+							<button>{input ? '완료' : '수정'}</button>
+							<button>삭제</button>
+						</S.Buttons>
+					</S.TopBox>
 
-			<div>
-				<S.Contents>
-					세세하게 코치 해주시고 너무 좋았습니다. 정리를 잘해주세요.
-					ㄱㅅ. 세세하게 코치 해주시고 너무 좋았습니다. 정리를
-					잘해주세요. ㄱㅅ. 세세하게 코치 해주시고 너무 좋았습니다.
-					정리를 잘해주세요. ㄱㅅ. 세세하게 코치 해주시고 너무
-					좋았습니다. 정리를 잘해주세요. ㄱㅅ. 세세하게 코치 해주시고
-					너무 좋았습니다. 정리를 잘해주세요. ㄱㅅ. 세세하게 코치
-					해주시고 너무 좋았습니다. 정리를 잘해주세요. ㄱㅅ. 세세하게
-					코치 해주시고 너무 좋았습니다. 정리를 잘해주세요. ㄱㅅ.
-				</S.Contents>
-			</div>
+					<div>
+						{input ? (
+							<Textarea size={'full'} value={review.content} />
+						) : (
+							<S.Contents>{review.content}</S.Contents>
+						)}
+					</div>
 
-			<Line size={'small'} />
-		</S.CommentBox>
+					<Line size={'small'} />
+				</S.CommentBox>
+			))}
+		</>
 	);
 }
 

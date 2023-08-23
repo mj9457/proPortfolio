@@ -22,12 +22,10 @@ export const TopBox = styled.div`
 export const LastBox = styled.div`
 	${flexAlignCenter}
 	justify-content: end;
+`;
 
-	& button {
-		width: 120px;
-		height: 42px;
-		border-radius: 10px;
-		color: ${({ theme }) => theme.PALETTE.white};
-		background: ${({ theme }) => theme.PALETTE.black};
-	}
+export const CommentBox = styled.div`
+	${flexColumn}
+	margin-top: 32px;
+	gap: 32px;
 `;

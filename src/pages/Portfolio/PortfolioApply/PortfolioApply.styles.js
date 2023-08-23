@@ -38,10 +38,3 @@ export const Inputs = styled.input`
 	border-radius: 4px;
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 `;
-
-export const Button = styled.button`
-	height: 48px;
-	border-radius: 4px;
-	color: ${({ theme }) => theme.PALETTE.fontColor};
-	background-color: ${({ theme }) => theme.PALETTE.mainColor};
-`;

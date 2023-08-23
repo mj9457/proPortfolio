@@ -47,14 +47,3 @@ export const NameBox = styled.div`
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	}
 `;
-
-export const Button = styled.button`
-	width: 160px;
-	height: 50px;
-	padding: 0 50px;
-	border-radius: 4px;
-	color: ${({ theme }) => theme.PALETTE.fontColor};
-	background: ${({ theme }) => theme.PALETTE.mainColor};
-	font-size: ${({ theme }) => theme.FONT_SIZE.md};
-	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-`;

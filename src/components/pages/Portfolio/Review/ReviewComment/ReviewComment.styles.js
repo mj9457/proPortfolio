@@ -47,3 +47,7 @@ export const Contents = styled.div`
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;
+
+export const Input = styled.input`
+	width: 100%;
+`;
