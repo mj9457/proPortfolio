@@ -13,6 +13,11 @@ export const Container = styled.a`
 	margin-top: 32px;
 	cursor: pointer;
 	text-decoration: none;
+	&:hover {
+		transform: scale(1.05);
+		transition: 0.5s;
+		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+	}
 `;
 export const ProfileImage = styled.img`
 	width: 80px;

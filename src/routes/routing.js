@@ -6,6 +6,7 @@ const Layout = lazy(() => import('../components/@common/Layout'));
 
 const Home = lazy(() => import('../pages/Home/Home'));
 const SignUp = lazy(() => import('../pages/SignUp/SignUp'));
+const SignUpDone = lazy(() => import('../pages/SignUp/SignUpDone/SignUpDone'));
 
 // my page
 const MyPage = lazy(() => import('../pages/MyPage/MyPage'));
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
 			{
 				path: '/signup',
 				element: <SignUp />,
+			},
+			{
+				path: '/signupdone',
+				element: <SignUpDone />,
 			},
 			{
 				path: '/usermentorapply',

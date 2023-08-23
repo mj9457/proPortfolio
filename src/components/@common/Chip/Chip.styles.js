@@ -19,7 +19,6 @@ export const ChipBox = styled.div`
   ${props =>
 		props.category === 'study' &&
 		css`
-			background-color: ${({ theme }) => theme.PALETTE.white};
 			border: 1px solid ${({ theme }) => theme.PALETTE.mainColor};
 			color: ${({ theme }) => theme.PALETTE.mainColor};
 		`}

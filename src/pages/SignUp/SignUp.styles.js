@@ -7,7 +7,7 @@ export const Wrap = styled.div`
 `;
 
 export const RegisterForm = styled.form`
-	margin: 100px 0 150px;
+	margin: 120px 0 150px;
 	width: 360px;
 	text-align: center;
 

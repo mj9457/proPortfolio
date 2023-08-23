@@ -9,6 +9,7 @@ const SliderWrapper = styled.div`
 	justify-content: center;
 	gap: 20px;
 	margin: auto;
+	overflow: hidden;
 `;
 
 const Controls = styled.div`
@@ -56,6 +57,8 @@ function Slider() {
 
 	return (
 		<SliderWrapper>
+			<StudyInfoCard background="lightBlueBackground" />
+			<StudyInfoCard background="lightBlueBackground" />
 			<StudyInfoCard background="lightBlueBackground" />
 			<StudyInfoCard background="lightBlueBackground" />
 			<Controls>

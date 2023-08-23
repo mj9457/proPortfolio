@@ -13,40 +13,37 @@ function SignUp() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const UserCode = new URL(window.location.href).searchParams.get('code');
-		sendCodeToServer(UserCode).then(accessToken => {
-			getUserProfile(accessToken).then(profile => {
-				setName(profile.name);
-				setEmail(profile.email);
-			});
-		});
+		const urlParams = new URLSearchParams(window.location.search);
+		const userCode = urlParams.get('code');
+		if (userCode) {
+			getAccessToken(userCode);
+		}
 	}, []);
 
-	async function sendCodeToServer(UserCode) {
-		console.log(UserCode);
+	async function getAccessToken(userCode) {
 		try {
-			const response = await axios.post('http://localhost:8080/signup', {
-				UserCode,
+			const response = await axios.post('/your-backend-endpoint/token', {
+				code: userCode,
 			});
 			const accessToken = response.data.access_token;
-			console.log('발급된 액세스 토큰:', accessToken);
+			getUserProfile(accessToken);
 		} catch (error) {
 			console.error('액세스 토큰을 받아오는데 실패했습니다.', error);
 		}
 	}
+
 	async function getUserProfile(accessToken) {
 		try {
-			const response = await axios.get(
-				'https://openapi.naver.com/v1/nid/me',
-				{
-					headers: {
-						Authorization: `Bearer ${accessToken}`,
-					},
+			const response = await axios.get('/your-backend-endpoint/user', {
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
 				},
-			);
-			return response.data.response;
+			});
+			const profile = response.data;
+			setName(profile.name);
+			setEmail(profile.email);
 		} catch (error) {
-			console.error('프로필을 가져오는데 실패했습니다.', error);
+			console.error('사용자 프로필을 가져오는데 실패했습니다.', error);
 		}
 	}
 
@@ -83,57 +80,43 @@ function SignUp() {
 	}
 
 	return (
-		<>
-			<S.Wrap>
-				<S.RegisterForm onSubmit={handleSubmit}>
-					<p>회원 가입</p>
-					<div>
-						<label>이름</label>
-						<Input
-							type="text"
-							value={name}
-							readOnly
-							size={'medium'}
-						/>
-					</div>
-					<div>
-						<label>이메일</label>
-						<Input
-							type="text"
-							value={email}
-							readOnly
-							size={'medium'}
-						/>
-					</div>
-					<div>
-						<label>닉네임</label>
-						<Input
-							type="text"
-							value={nickname}
-							onChange={handleNicknameChange}
-							size={'medium'}
-						/>
-					</div>
-					<div>
-						<label>직무</label>
-						<select value={position} onChange={handleJobChange}>
-							<option value="">선택하세요</option>
-							<option value="backend">백엔드 개발자</option>
-							<option value="frontend">프론트엔드 개발자</option>
-							<option value="fullstack">풀스택 개발자</option>
-							<option value="android">안드로이드 개발자</option>
-							<option value="ios">iOS 개발자</option>
-						</select>
-					</div>
-					<Button variant={'primary'} shape={'default'} size={'big'}>
-						가입 완료하기
-					</Button>
-				</S.RegisterForm>
-			</S.Wrap>
-		</>
+		<S.Wrap>
+			<S.RegisterForm onSubmit={handleSubmit}>
+				<p>회원 가입</p>
+				<div>
+					<label>이름</label>
+					<Input type="text" value={name} readOnly size={'medium'} />
+				</div>
+				<div>
+					<label>이메일</label>
+					<Input type="text" value={email} readOnly size={'medium'} />
+				</div>
+				<div>
+					<label>닉네임</label>
+					<Input
+						type="text"
+						value={nickname}
+						onChange={handleNicknameChange}
+						size={'medium'}
+					/>
+				</div>
+				<div>
+					<label>직무</label>
+					<select value={position} onChange={handleJobChange}>
+						<option value="">선택하세요</option>
+						<option value="backend">백엔드 개발자</option>
+						<option value="frontend">프론트엔드 개발자</option>
+						<option value="fullstack">풀스택 개발자</option>
+						<option value="android">안드로이드 개발자</option>
+						<option value="ios">iOS 개발자</option>
+					</select>
+				</div>
+				<Button variant={'primary'} shape={'default'} size={'big'}>
+					가입 완료하기
+				</Button>
+			</S.RegisterForm>
+		</S.Wrap>
 	);
 }
-// ddsfsdf
-// sdfsdfsd
 
 export default SignUp;
