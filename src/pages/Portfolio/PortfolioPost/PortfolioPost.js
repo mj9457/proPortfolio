@@ -21,7 +21,7 @@ function PortfolioPost() {
 	useEffect(() => {
 		const getContent = async () => {
 			const res = await axios.get('/mock/mentor.json');
-			const data = res.data.mentor;
+			const data = res.data.data;
 
 			const newData = [...data];
 			const dataIndex = newData.find(data => data.postId === path);

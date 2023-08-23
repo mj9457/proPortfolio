@@ -13,7 +13,7 @@ function Review() {
 	useEffect(() => {
 		const getReview = async () => {
 			const res = await axios.get('/mock/review.json');
-			const data = res.data.review;
+			const data = res.data.data;
 
 			setReview([...data]);
 		};

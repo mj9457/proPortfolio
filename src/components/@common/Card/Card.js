@@ -1,13 +1,34 @@
+import { useEffect, useState } from 'react';
+
 import * as S from './Card.styles';
+import axios from 'axios';
 
 function PopularCard(props) {
-	const { background, mentorData } = props;
+	const { variant, url } = props;
+
+	const [mentorData, setMentorData] = useState([]);
+
+	useEffect(() => {
+		const getMentor = async () => {
+			try {
+				const res = await axios.get(`${url}`);
+				const data = res.data.data;
+
+				setMentorData([...data]);
+			} catch (err) {
+				// handleError(err);
+				console.log(err);
+			}
+		};
+
+		getMentor();
+	}, []);
 
 	return (
 		<>
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
-					background={background}
+					variant={variant}
 					href={`/portfolio/post/${mentor.postId}`}
 					key={idx}
 				>

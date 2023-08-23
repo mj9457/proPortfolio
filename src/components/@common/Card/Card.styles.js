@@ -1,19 +1,19 @@
 import styled, { css } from 'styled-components';
 import { flexCenter, flexColumn } from '../../../styles/common';
 
-const backgroundCSS = {
-	blueBackground: css`
+const variantCSS = {
+	blue: css`
 		background: ${({ theme }) => theme.PALETTE.primary[100]};
 		box-shadow: 1px 4px 4px 0px rgba(67, 108, 255, 0.25);
 	`,
 
-	whiteBackground: css`
+	white: css`
 		background-color: ${({ theme }) => theme.PALETTE.hover};
 	`,
 };
 
 export const PopularCard = styled.a`
-	${({ background }) => backgroundCSS[background]}
+	${({ variant }) => variantCSS[variant]}
 	${flexColumn}
 	width: 255px;
 	height: 320px;
