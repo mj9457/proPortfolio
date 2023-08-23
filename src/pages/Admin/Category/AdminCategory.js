@@ -14,6 +14,7 @@ import {
 	TableInput,
 } from './AdminCategory.styles';
 const AdminCategory = () => {
+	// Todo API 호출
 	const data = [
 		{
 			key: 1,

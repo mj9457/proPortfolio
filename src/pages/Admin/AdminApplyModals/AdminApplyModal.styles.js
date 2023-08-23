@@ -14,8 +14,8 @@ const ApplyModalWrap = styled.div`
 	width: 600px;
 	margin: 0 auto;
 	border-radius: 10px;
-	padding: 90px 90px 40px;
-	top: 25px;
+	padding: 30px 90px 30px;
+	top: 10px;
 `;
 const ContentArea = styled.div``;
 const MainTitle = styled.h2`
@@ -96,6 +96,37 @@ const ButtonArea = styled.div`
 		font-size: ${({ theme }) => theme.FONT_SIZE.md};
 	}
 `;
+const ImageModal = styled.div`
+	position: fixed;
+	background: rgba(0, 0, 0, 0.2);
+	z-index: 100;
+	width: 100%;
+	height: 100vh;
+	top: 0;
+`;
+const OriginalImageWrap = styled.div`
+	/* z-index: 100;
+	position: fixed;
+	background: rgba(0, 0, 0, 0.2); */
+	/* right: calc(50% - 100px); */
+	/* width: 100%;
+	height: 100vh; */
+	position: relative;
+	width: 1080px;
+	margin: 0 auto;
+`;
+const OriginalImageBox = styled.div`
+	position: absolute;
+	top: 250px;
+	> div:first-child {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+`;
+const OriginalImage = styled.img`
+	width: 100%;
+`;
 export {
 	ApplyModalWrap,
 	MainTitle,
@@ -108,4 +139,8 @@ export {
 	ImgBox,
 	ButtonArea,
 	Modal,
+	OriginalImage,
+	OriginalImageBox,
+	OriginalImageWrap,
+	ImageModal,
 };

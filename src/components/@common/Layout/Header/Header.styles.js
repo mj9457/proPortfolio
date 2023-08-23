@@ -59,4 +59,5 @@ export const Button = styled.button`
 	background-color: ${({ theme }) => theme.PALETTE.mainColor};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	cursor: pointer;
 `;

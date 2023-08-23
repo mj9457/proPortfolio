@@ -1,13 +1,17 @@
-import { useRef, useState } from 'react';
+import { createElement, useRef, useState } from 'react';
 import {
 	ApplyModalWrap,
 	ButtonArea,
 	CloseIcon,
 	ContentArea,
 	IconBox,
+	ImageModal,
 	ImgBox,
 	MainTitle,
 	Modal,
+	OriginalImage,
+	OriginalImageBox,
+	OriginalImageWrap,
 	SubTitle,
 	TextArea,
 	TextWrap,
@@ -16,7 +20,14 @@ import {
 
 const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
 	const outside = useRef();
+	const imageOutside = useRef();
 	console.log('Modal');
+
+	const [isImageModalVisible, setIsImageModalVisible] = useState(false);
+
+	const imageClickHandler = () => {
+		setIsImageModalVisible(true);
+	};
 
 	// const [isOpen, setIsOpen] = useState(false);
 	return (
@@ -75,9 +86,7 @@ const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
 					<ImgBox>
 						<img
 							src="/assets/img/banner/banner01.png"
-							onClick={() => {
-								console.log('CLICK');
-							}}
+							onClick={imageClickHandler}
 						/>
 					</ImgBox>
 					<ButtonArea>
@@ -98,6 +107,28 @@ const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
 					</ButtonArea>
 				</ContentArea>
 			</ApplyModalWrap>
+			{isImageModalVisible && (
+				<ImageModal
+					ref={imageOutside}
+					onClick={e => {
+						if (e.target === imageOutside.current)
+							setIsImageModalVisible(false);
+					}}
+				>
+					<OriginalImageWrap>
+						<OriginalImageBox>
+							<IconBox>
+								<CloseIcon
+									onClick={() => {
+										setIsImageModalVisible(false);
+									}}
+								/>
+							</IconBox>
+							<OriginalImage src="/assets/img/banner/banner01.png" />
+						</OriginalImageBox>
+					</OriginalImageWrap>
+				</ImageModal>
+			)}
 		</Modal>
 	);
 };
