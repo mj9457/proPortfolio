@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import * as S from './Card.styles';
 import axios from 'axios';
 
-function PopularCard(props) {
+function MentorCard(props) {
 	const { variant, url } = props;
 
 	const [mentorData, setMentorData] = useState([]);
@@ -69,4 +69,4 @@ function PopularCard(props) {
 	);
 }
 
-export default PopularCard;
+export default MentorCard;

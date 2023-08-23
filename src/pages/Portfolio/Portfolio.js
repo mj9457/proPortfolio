@@ -1,8 +1,8 @@
 import * as S from './Portfolio.styles';
 
-import PopularCard from '../../components/@common/Card/Card';
-import Line from '../../components/@common/Line/Line';
 import Buttons from '../../components/pages/Portfolio/Buttons/Buttons';
+import Line from '../../components/@common/Line/Line';
+import MentorCard from '../../components/@common/Card/Card';
 
 function Portfolio() {
 	return (
@@ -23,7 +23,7 @@ function Portfolio() {
 
 					{/* 지금 인기 있는 멘토들 목록 */}
 					<S.MentorCardBox>
-						<PopularCard
+						<MentorCard
 							variant={'blue'}
 							url={'/mock/bestMentor.json'}
 						/>
@@ -40,7 +40,7 @@ function Portfolio() {
 					</S.MentorTitleBox>
 
 					<S.MentorCardBox>
-						<PopularCard
+						<MentorCard
 							variant={'white'}
 							url={'/mock/mentor.json'}
 						/>
