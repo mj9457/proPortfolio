@@ -118,13 +118,15 @@ function CardListLayout({ total, fun, category }) {
 					<p>총 {total}건</p>
 				</CL.SubContentBar>
 
-				<CL.SubContentListBox>
-					{total === 0 ? (
-						`내역이 없습니다. ${category}탭입니다`
-					) : (
+				{total === 0 ? (
+					<CL.NonSubContentListBox>
+						{`내역이 없습니다. ${category}탭입니다`}
+					</CL.NonSubContentListBox>
+				) : (
+					<CL.SubContentListBox>
 						<ApplicationCard category={category}></ApplicationCard>
-					)}
-				</CL.SubContentListBox>
+					</CL.SubContentListBox>
+				)}
 			</CL.SubContentBox>
 		</>
 	);

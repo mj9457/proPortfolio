@@ -135,6 +135,17 @@ export const NonClicked = styled.button`
 
 export const SubContentListBox = styled.div`
 	display: flex;
+	width: 52.5rem;
+	justify-content: space-between;
+	align-items: flex-start;
+	align-content: flex-start;
+	row-gap: 1.25rem;
+	flex-wrap: wrap;
+	min-heigth: 10rem;
+`;
+
+export const NonSubContentListBox = styled.div`
+	display: flex;
 	padding: 5rem 0.625rem;
 	justify-content: center;
 	align-items: center;

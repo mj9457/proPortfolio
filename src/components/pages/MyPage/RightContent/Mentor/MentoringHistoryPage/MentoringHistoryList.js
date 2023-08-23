@@ -3,7 +3,7 @@ import * as MHL from './MentoringHistoryList.styles';
 import axios from 'axios';
 import ListView from '../ListView/ListView';
 
-// 멘토 코칭 페이지
+// 멘토 - 멘토링 게시글 내역 페이지
 function MentoringHistoryList() {
 	const [mentoringList, setMentoringList] = useState([]); // get 요청으로 받은 데이터 담을 state
 	const [error, setError] = useState(null); // 에러 state
@@ -14,6 +14,7 @@ function MentoringHistoryList() {
 			try {
 				const response = await axios.get(
 					'https://jsonplaceholder.typicode.com/todos',
+					mentoringList,
 				);
 				setMentoringList(response.data);
 			} catch (err) {
@@ -24,12 +25,32 @@ function MentoringHistoryList() {
 	}, []);
 
 	const onDelete = targetId => {
-		console.log(targetId);
-		const newMentoringList = mentoringList.filter(
-			data => data.id !== targetId,
-		);
-		setMentoringList(newMentoringList);
-		console.log(newMentoringList);
+		async function deleteList() {
+			try {
+				const response = await axios.delete(
+					`https://jsonplaceholder.typicode.com/posts/${targetId}`,
+					// {
+					// 	headers: {
+					// 		Authorization: 'token',
+					// 	},
+					// 	data: {
+					// 		targetId,
+					// 	},
+					// },
+				);
+				console.log(response);
+				console.log(response.data);
+				const newMentoringList = response.data.filter(
+					data => data.id !== targetId,
+				);
+				console.log(newMentoringList);
+				setMentoringList(newMentoringList);
+			} catch (err) {
+				console.log(err);
+				setError(err);
+			}
+		}
+		deleteList();
 	};
 
 	return (

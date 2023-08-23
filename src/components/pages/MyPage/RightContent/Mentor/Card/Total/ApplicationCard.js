@@ -6,6 +6,8 @@ import InfoViewModal from '../../Modal/Mentor/InfoViewModal/InfoViewModal';
 import RefuseViewModal from '../../Modal/Mentee/RefuseViewModal/RefuseViewModal';
 import InfoEditModal from '../../Modal/Mentee/InfoEditModal/InfoEditModal';
 import EditViewModal from '../../Modal/Mentee/EditViewModal/EditViewModal';
+import { useRecoilValue } from 'recoil';
+import { mentoringItem } from '../../../../../../../recoil/atoms/myPage/myPage.atom';
 
 // 카드 리스트
 function ApplicationCard({ category }) {
@@ -25,49 +27,72 @@ function ApplicationCard({ category }) {
 		setRefuseModalOpenState(true);
 	};
 
+	const mentoringData = [...useRecoilValue(mentoringItem)];
+	console.log(mentoringData);
+
 	return (
 		<>
-			{category === 'apply' ? (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showEditModal={showEditModal}
-					editModalOpenState={editModalOpenState}
-					setEditModalOpenState={setEditModalOpenState}
-					category={category}
-				></CardLayout>
-			) : category === 'completed' ? (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showEditModal={showEditModal}
-					editModalOpenState={editModalOpenState}
-					setEditModalOpenState={setEditModalOpenState}
-					category={category}
-				></CardLayout>
-			) : category === 'refuse' ? (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					category={category}
-				></CardLayout>
-			) : (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showRefuseModal={showRefuseModal}
-					refuseModalOpenState={refuseModalOpenState}
-					setRefuseModalOpenState={setRefuseModalOpenState}
-					category={category}
-					showEditModal={showEditModal} // 여긴 지워야함
-					editModalOpenState={editModalOpenState} // 여긴 지워야함
-					setEditModalOpenState={setEditModalOpenState} // 여긴 지워야함
-				></CardLayout>
-			)}
+			{category === 'apply'
+				? mentoringData.map((item, index) => {
+						return (
+							<CardLayout
+								key={index}
+								showInfoModal={showInfoModal}
+								infoModalOpenState={infoModalOpenState}
+								setInfoModalOpenState={setInfoModalOpenState}
+								showEditModal={showEditModal}
+								editModalOpenState={editModalOpenState}
+								setEditModalOpenState={setEditModalOpenState}
+								category={category}
+							></CardLayout>
+						);
+				  })
+				: category === 'completed'
+				? mentoringData.map((item, index) => {
+						return (
+							<CardLayout
+								key={index}
+								showInfoModal={showInfoModal}
+								infoModalOpenState={infoModalOpenState}
+								setInfoModalOpenState={setInfoModalOpenState}
+								showEditModal={showEditModal}
+								editModalOpenState={editModalOpenState}
+								setEditModalOpenState={setEditModalOpenState}
+								category={category}
+							></CardLayout>
+						);
+				  })
+				: category === 'refuse'
+				? mentoringData.map((item, index) => {
+						return (
+							<CardLayout
+								key={index}
+								showInfoModal={showInfoModal}
+								infoModalOpenState={infoModalOpenState}
+								setInfoModalOpenState={setInfoModalOpenState}
+								category={category}
+							></CardLayout>
+						);
+				  })
+				: mentoringData.map((item, index) => {
+						return (
+							<CardLayout
+								key={index}
+								showInfoModal={showInfoModal}
+								infoModalOpenState={infoModalOpenState}
+								setInfoModalOpenState={setInfoModalOpenState}
+								showRefuseModal={showRefuseModal}
+								refuseModalOpenState={refuseModalOpenState}
+								setRefuseModalOpenState={
+									setRefuseModalOpenState
+								}
+								category={category}
+								showEditModal={showEditModal} // 여긴 지워야함
+								editModalOpenState={editModalOpenState} // 여긴 지워야함
+								setEditModalOpenState={setEditModalOpenState} // 여긴 지워야함
+							></CardLayout>
+						);
+				  })}
 		</>
 	);
 }
