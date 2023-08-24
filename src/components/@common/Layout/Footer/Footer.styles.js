@@ -17,6 +17,10 @@ export const IntroBox = styled.div`
 	padding: 0 0 0 10px;
 	gap: 16px;
 
+	& a {
+		width: 100px;
+	}
+
 	& span {
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	}

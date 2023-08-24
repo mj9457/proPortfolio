@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import * as S from './Header.styles';
+
 import SignupModal from '../../../pages/SignUp/Modal/SignUpModal';
-import { Link, useNavigate } from 'react-router-dom';
+import Button from '../../Button/Button';
 
 function Header() {
 	const [openModal, setOpenModal] = useState(false);
@@ -30,13 +33,16 @@ function Header() {
 				<S.LoginBar>
 					<a href="/login">로그아웃</a>
 					<a onClick={handleSignupClick}>로그인 / 회원가입</a>
-					<S.Button
+					<Button
+						variant={'primary'}
+						shape={'default'}
+						size={'small'}
 						onClick={() => {
 							navigate('/usermentorapply');
 						}}
 					>
 						멘토 전환
-					</S.Button>
+					</Button>
 				</S.LoginBar>
 			</S.NavBox>
 			{openModal && <SignupModal onClose={handleSignupClose} />}
