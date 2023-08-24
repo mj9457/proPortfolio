@@ -13,8 +13,8 @@ export const Indicator = styled.button`
 	height: 8px;
 	margin: 0 5px;
 	padding: 0;
-	background-color: ${({ active }) => (active ? '#3377FF' : '#C8C8C8')};
-	border: 1px solid ${({ active }) => (active ? '#3377FF' : '#C8C8C8')};
+	background-color: ${({ $active }) => ($active ? '#3377FF' : '#C8C8C8')};
+	border: 1px solid ${({ $active }) => ($active ? '#3377FF' : '#C8C8C8')};
 	border-radius: 50%;
 	cursor: pointer;
 	outline: none;
@@ -36,8 +36,8 @@ export const SliderItem = styled.div`
 	height: 300px;
 	overflow: hidden;
 	transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-	${({ active }) =>
-		active &&
+	${({ $active }) =>
+		$active &&
 		css`
 			left: 0;
 			display: block;

@@ -6,7 +6,7 @@ StudyInfoCard.defaultProps = {
 	languages: ['React', 'JavaScript', 'Vue'],
 	title: '성수역 모각코 하실분 구합니다.',
 	numberPeople: '10',
-	position: '프론트엔드',
+	position: ['프론트엔드 개발, 백엔드 개발'],
 	deadline: 2,
 };
 
@@ -41,7 +41,11 @@ export default function StudyInfoCard({
 					<div>
 						<H.NumberPeople>{numberPeople}명</H.NumberPeople>
 						<span>|</span>
-						<H.Position>{position}</H.Position>
+						{position.map((pos, idx) => (
+							<H.Position key={`${pos}-${idx}-${title}`}>
+								{pos}
+							</H.Position>
+						))}
 					</div>
 					<H.Deadline>마감 {deadline}일 전</H.Deadline>
 				</H.DetailInfoWrapper>

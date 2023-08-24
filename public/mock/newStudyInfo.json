@@ -1,0 +1,68 @@
+{
+	"data": [
+		{
+			"category": "study",
+			"title": "스터디 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "project",
+			"title": "프로젝트 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "study",
+			"title": "스터디 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "project",
+			"title": "프로젝트 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "study",
+			"title": "스터디 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "project",
+			"title": "프로젝트 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "study",
+			"title": "스터디 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		},
+		{
+			"category": "project",
+			"title": "프로젝트 모집",
+			"languages": ["React", "JavaScript", "Vue"],
+			"numberPeople": 10,
+			"position": ["프론트엔드 개발, 백엔드 개발"],
+			"deadline": "3"
+		}
+	]
+}

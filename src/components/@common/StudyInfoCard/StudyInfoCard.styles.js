@@ -16,9 +16,10 @@ const backgroundCSS = {
 };
 
 export const Container = styled.div`
-	/* :hover {
+	box-sizing: border-box;
+	&:hover {
 		box-shadow: 0px 8px 24px 0px rgba(149, 157, 165, 0.2);
-	} */
+	}
 `;
 
 export const StudyInfoCard = styled.a`

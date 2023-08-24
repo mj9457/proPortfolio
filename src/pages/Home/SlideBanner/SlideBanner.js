@@ -24,8 +24,8 @@ const RollingSlider = () => {
 			{images.map((src, index) => (
 				<H.SliderItem
 					key={src}
-					active={index === activeIndex}
-					prev={index === prevIndex}
+					$active={index === activeIndex}
+					$prev={index === prevIndex}
 				>
 					<img src={src} alt={`배너이미지 ${index + 1}`} />
 				</H.SliderItem>
@@ -34,7 +34,7 @@ const RollingSlider = () => {
 				{images.map((_, index) => (
 					<H.Indicator
 						key={index}
-						active={index === activeIndex}
+						$active={index === activeIndex}
 						onClick={() => {
 							setPrevIndex(activeIndex);
 							setActiveIndex(index);

@@ -24,6 +24,7 @@ function MentorCard(props) {
 		getMentor();
 	}, []);
 
+
 	return (
 		<>
 			{mentorData.map((mentor, idx) => (
