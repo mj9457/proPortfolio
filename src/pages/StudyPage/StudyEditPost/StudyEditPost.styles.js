@@ -33,6 +33,38 @@ export const SelectWrapper = styled.div`
 
 export const SelectBox = styled.div`
 	${flexAlignCenter}
+
+	.react-datepicker-wrapper {
+		width: 400px;
+		height: 42px;
+		border: 1px solid #e9e9e9;
+		border-radius: 4px;
+		padding-left: 5px;
+
+		.react-datepicker__view-calendar-icon input {
+			padding: 0 0 0 5px;
+		}
+
+		.react-datepicker__input-container {
+			${flexAlignCenter}
+			.react-datepicker__calendar-icon {
+				padding: 0;
+				position: static;
+			}
+			> input {
+				padding: 12px 5px;
+				width: 100%;
+				border: none;
+				font-size: 0.875rem;
+				font-family: Pretendard-Regular;
+				cursor: pointer;
+
+				&:focus-visible {
+					outline: none;
+				}
+			}
+		}
+	}
 `;
 
 export const SelectTitle = styled.span`

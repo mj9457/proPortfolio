@@ -24,6 +24,8 @@ export const SelectBox = styled.div`
 `;
 
 export const CheckBoxContainer = styled.div`
+	z-index: 10;
+	background-color: ${({ theme }) => theme.PALETTE.white};
 	${flexColumn}
 	width: 400px;
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};

@@ -18,7 +18,12 @@ export const STUDYOPTIONS = {
 			value: 'offline',
 			name: '오프라인',
 		},
+		{
+			value: 'onoffline',
+			name: '온/오프라인',
+		},
 	],
+	// 이부분은 데이터로 받음 임시 작성
 	POSITION: [
 		{
 			value: 'frontend',
@@ -68,21 +73,21 @@ export const STUDYOPTIONS = {
 		},
 		{
 			value: 'etc',
-			name: '기타',
+			name: '7명 이상',
 		},
 	],
 	CONTACT: [
 		{
-			value: 'discord',
-			name: '디스코드',
+			value: 'email',
+			name: '이메일',
 		},
 		{
 			value: 'openchat',
 			name: '오픈채팅',
 		},
 		{
-			value: 'etc',
-			name: '기타',
+			value: 'google',
+			name: '구글폼',
 		},
 	],
 };

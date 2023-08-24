@@ -6,6 +6,7 @@ import * as S from './StudyPage.styles';
 import PostCard from '../../components/pages/StudyPage/PostCard/PostCard';
 // import Slider from '../../components/pages/StudyPage/Slider/Slider';
 import Button from '../../components/@common/Button/Button';
+import Category from '../../components/@common/Category/Category';
 
 function StudyPage() {
 	const navigate = useNavigate();
@@ -27,10 +28,6 @@ function StudyPage() {
 
 					<S.PopularCardWrapper>
 						{/* <Slider /> */}
-						{/* <PopularCard />
-						<PopularCard />
-						<PopularCard />
-						<PopularCard /> */}
 					</S.PopularCardWrapper>
 
 					{/* 스터디, 프로젝트 목록 */}
@@ -49,14 +46,12 @@ function StudyPage() {
 					</S.CategoryList>
 
 					<S.CategoryBottomList>
-						{/* // 컴포넌트 분리 */}
 						<S.PositionCategoryList>
-							<S.PositionCategoryItem>
-								전체
-							</S.PositionCategoryItem>
-							<S.PositionCategoryItem>
-								프론트엔드
-							</S.PositionCategoryItem>
+							<Category
+								variant={'reverse'}
+								shape={'round'}
+								size={'small'}
+							/>
 						</S.PositionCategoryList>
 						{/*  */}
 						<Button

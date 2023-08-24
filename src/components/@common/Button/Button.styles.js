@@ -25,6 +25,7 @@ const variantCSS = {
 	`,
 	reverse: css`
 		border: 1px solid ${({ theme }) => theme.PALETTE.mainColor};
+		background: ${({ theme }) => theme.PALETTE.white};
 		color: ${({ theme }) => theme.PALETTE.mainColor};
 	`,
 };
@@ -51,7 +52,7 @@ const sizeCSS = {
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	medium: css`
-		padding: 10px 50px;
+		padding: 14px 30px;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	big: css`
@@ -71,5 +72,4 @@ export const Button = styled.button`
 	${({ variant }) => variantCSS[variant]}
 	${({ shape }) => shapeCSS[shape]}
   ${({ size }) => sizeCSS[size]}
-	border: none;
 `;
