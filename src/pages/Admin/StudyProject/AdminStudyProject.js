@@ -103,7 +103,7 @@ const AdminStudyProject = () => {
 			),
 		},
 		{
-			title: '버튼',
+			title: '',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">

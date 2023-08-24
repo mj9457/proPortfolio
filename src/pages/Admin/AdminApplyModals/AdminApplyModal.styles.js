@@ -14,8 +14,8 @@ const ApplyModalWrap = styled.div`
 	width: 600px;
 	margin: 0 auto;
 	border-radius: 10px;
-	padding: 30px 90px 30px;
-	top: 10px;
+	padding: 100px 100px 60px;
+	top: 40px;
 `;
 const ContentArea = styled.div``;
 const MainTitle = styled.h2`
@@ -69,17 +69,28 @@ const TextWrap = styled.div`
 	}
 `;
 const ImgBox = styled.div`
-	width: 260px;
-	height: 180px;
+	width: 400px;
+	height: 200px;
 	background-color: #fff;
+
 	> img {
 		width: 100%;
 		height: 100%;
 		cursor: pointer;
+		image-rendering: -moz-crisp-edges; /* Firefox */
+		image-rendering: -o-crisp-edges; /* Opera */
+		image-rendering: -webkit-optimize-contrast; /* Webkit 표준 X */
+		image-rendering: crisp-edges;
+		-ms-interpolation-mode: nearest-neighbor;
+		-moz-backface-visibility: hidden; // firefox
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
 	}
 `;
 const ButtonArea = styled.div`
 	margin-top: 32px;
+	display: flex;
+	justify-content: space-between;
 	> button {
 		border-radius: 4px;
 		width: 192px;
@@ -90,7 +101,6 @@ const ButtonArea = styled.div`
 		cursor: pointer;
 	}
 	> button:last-child {
-		margin-left: 16px;
 		background-color: ${({ theme }) => theme.PALETTE.mainColor};
 		color: ${({ theme }) => theme.PALETTE.white};
 		font-size: ${({ theme }) => theme.FONT_SIZE.md};

@@ -6,24 +6,24 @@ import { Button, Input } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { styled } from 'styled-components';
 
-const PaginationWrap = styled.div`
-	text-align: center;
-	margin-top: 30px;
-`;
+// const PaginationWrap = styled.div`
+// 	text-align: center;
+// 	margin-top: 30px;
+// `;
 
-const Atags = styled.a`
-	display: inline-block;
-	vertical-align: middle;
-	color: black;
-	&::after {
-		content: '|';
-		display: inline-block;
-		color: black;
-		padding: 0 10px;
-	}
-`;
+// const Atags = styled.a`
+// 	display: inline-block;
+// 	vertical-align: middle;
+// 	color: black;
+// 	&::after {
+// 		content: '|';
+// 		display: inline-block;
+// 		color: black;
+// 		padding: 0 10px;
+// 	}
+// `;
 const TableInput = styled(Input)`
-	width: 500px;
+	width: 200px;
 `;
 const SaveButton = styled(Button)`
 	position: absolute;
@@ -34,4 +34,4 @@ const CancelButton = styled(Button)`
 	right: 85px;
 `;
 
-export { Atags, TableInput, SaveButton, CancelButton };
+export { TableInput, SaveButton, CancelButton };

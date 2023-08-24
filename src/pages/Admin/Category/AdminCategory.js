@@ -2,17 +2,10 @@ import { useEffect, useState } from 'react';
 import { Button, Input, Space, theme } from 'antd';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import {
-	AdminContent,
-	Removetag,
-} from '../../../components/pages/Admin/Common/Common.styles';
+import { AdminContent } from '../../../components/pages/Admin/Common/Common.styles';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
-import {
-	Atags,
-	CancelButton,
-	SaveButton,
-	TableInput,
-} from './AdminCategory.styles';
+import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 const AdminCategory = () => {
 	// Todo API 호출
 	const data = [
@@ -75,21 +68,34 @@ const AdminCategory = () => {
 		},
 
 		{
-			title: '버튼',
+			title: '',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
 					<div>
-						<Atags
+						{/* <Atags
 							onClick={() => {
 								handleEdit(record.key);
 							}}
 						>
 							수정
-						</Atags>
-						<Removetag onClick={() => removeHandler(record.key)}>
+						</Atags> */}
+						<HandlerButton
+							onClick={() => {
+								handleEdit(record.key);
+							}}
+							type="primary"
+						>
+							수정
+						</HandlerButton>
+						<HandlerButton
+							onClick={() => removeHandler(record.key)}
+						>
 							삭제
-						</Removetag>
+						</HandlerButton>
+						{/* <Removetag onClick={() => removeHandler(record.key)}>
+							삭제
+						</Removetag> */}
 					</div>
 				</Space>
 			),

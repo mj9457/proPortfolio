@@ -16,21 +16,19 @@ import {
 } from './UserMentorApply.styles';
 import { useSetRecoilState } from 'recoil';
 import { includeFooterState } from '../../recoil/atoms/index.atom';
-import { v4 } from 'uuid';
 
 const UserMentorApply = () => {
 	const setIncludeFooter = useSetRecoilState(includeFooterState);
 	const [selectedFile, setSelectedFile] = useState(null);
-	const [imageSrc, setImageSrc] = useState(null);
+	const [imageUrl, setImageUrl] = useState(null);
 	const fileInputRef = useRef(null);
 	AWS.config.update({
 		region: process.env.REACT_APP_REGION,
 		accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
 		secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
 	});
+	// 현재 mile
 
-	const UUID = v4();
-	// console.log(v4());
 	useEffect(() => {
 		setIncludeFooter(false);
 		return () => {
@@ -49,34 +47,36 @@ const UserMentorApply = () => {
 			if (file === undefined) {
 				return;
 			}
-			alert('jpg,png,jpg 파일만 업로드 가능합니다.');
+			alert('JPEG, JPG, PNG 파일만 업로드 가능합니다.');
 			return;
 		}
+		console.log(fileExt);
+		setSelectedFile(file);
+	};
+	const handleSubmit = async () => {
+		if (selectedFile === null) {
+			alert('이미지를 첨부해주세요.');
+			return;
+		}
+		console.log(selectedFile?.name);
 
+		const now = new Date();
+		const getMilliseconds = now.getTime();
 		const upload = new AWS.S3.ManagedUpload({
 			params: {
 				Bucket: 'pofol-bucket',
-				// Key: `upload/${file.name}`,
-				Key: `${UUID + '_' + file.name}`,
-				Body: file,
+				Key: `${getMilliseconds + '_' + selectedFile?.name}`,
+				Body: selectedFile,
 			},
 		});
 		console.log(upload);
-		// upload.promise().then(data => {
-		// 	console.log(data);
-		// });
 		try {
 			const result = await upload.promise();
 			console.log(result.Location);
+			// TODO API
 		} catch (error) {
 			console.log(error);
 		}
-		// promise.then((data)=> {
-		//     console.log(data);
-		// }).catch(e)
-		//     console.log(e);
-
-		// reader.readAsDataURL(file);
 	};
 	return (
 		<>
@@ -123,6 +123,7 @@ const UserMentorApply = () => {
 								size="big"
 								variant="primary"
 								shape="default"
+								onClick={handleSubmit}
 							>
 								등록하기
 							</Button>

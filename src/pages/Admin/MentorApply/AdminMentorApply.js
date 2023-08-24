@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Space, theme } from 'antd';
+import { Button, Space, theme } from 'antd';
 import {
 	AdminContent,
 	Removetag,
 } from '../../../components/pages/Admin/Common/Common.styles';
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
-import { Atags } from './AdminMentorApply.styles';
+import { Atags, HandlerButton } from './AdminMentorApply.styles';
 import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
 
 const AdminMentorApply = () => {
@@ -74,21 +74,33 @@ const AdminMentorApply = () => {
 			),
 		},
 		{
-			title: '버튼',
+			title: '',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
 					<div>
-						<Atags
+						{/* <Atags
+							onClick={() => {
+								approveHandler(record.key);
+							}}
+						>
+						</Atags> */}
+						<HandlerButton
+							type="primary"
 							onClick={() => {
 								approveHandler(record.key);
 							}}
 						>
 							승인
-						</Atags>
-						<Removetag onClick={() => refuseHandler(record.key)}>
+						</HandlerButton>
+						{/* <Removetag onClick={() => refuseHandler(record.key)}>
 							거절
-						</Removetag>
+						</Removetag> */}
+						<HandlerButton
+							onClick={() => refuseHandler(record.key)}
+						>
+							거절
+						</HandlerButton>
 					</div>
 				</Space>
 			),
