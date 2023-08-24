@@ -31,10 +31,3 @@ export const ContentsBox = styled.div`
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	}
 `;
-
-export const Inputs = styled.input`
-	height: 42px;
-	padding: 0 0 0 12px;
-	border-radius: 4px;
-	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
-`;

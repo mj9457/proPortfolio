@@ -13,6 +13,8 @@ export const PortfolioBox = styled.div`
 
 export const BannerBox = styled.div`
 	margin: 40px 0 0 0;
+	${flexColumn}
+	gap: 32px;
 `;
 
 export const BannerImage = styled.img`
@@ -49,4 +51,10 @@ export const Input = styled.input`
 	height: 42px;
 	padding: 0 0 0 12px;
 	border: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+export const ApplyBox = styled.div`
+	display: flex;
+	gap: 16px;
+	justify-content: right;
 `;

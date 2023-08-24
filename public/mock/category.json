@@ -1,0 +1,19 @@
+{
+	"category": [
+		{
+			"categoryName": "프론트엔드"
+		},
+		{
+			"categoryName": "백엔드"
+		},
+		{
+			"categoryName": "웹 퍼블리셔"
+		},
+		{
+			"categoryName": "Android"
+		},
+		{
+			"categoryName": "IOS"
+		}
+	]
+}
