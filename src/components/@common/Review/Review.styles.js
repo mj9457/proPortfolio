@@ -3,7 +3,7 @@ import {
 	flexAlignCenter,
 	flexColumn,
 	flexSpaceBetweenCenter,
-} from '../../../../styles/common';
+} from '../../../styles/common';
 
 export const ReviewBox = styled.div`
 	margin: 70px 0 10px 0;
@@ -69,6 +69,8 @@ export const Buttons = styled.div`
 		background: none;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		color: ${({ theme }) => theme.PALETTE.gray[300]};
+		cursor: pointer;
 	}
 `;
 

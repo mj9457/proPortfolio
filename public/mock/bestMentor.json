@@ -1,7 +1,7 @@
 {
 	"data": [
 		{
-			"postId": "13",
+			"portfolioId": "13",
 			"name": "한인호",
 			"career": "20",
 			"job": "백엔드 개발",
@@ -12,7 +12,7 @@
 			"createdAt": "2023.12.26"
 		},
 		{
-			"postId": "14",
+			"portfolioId": "14",
 			"name": "박인수",
 			"career": "10",
 			"job": "프론트엔드 개발",
@@ -23,7 +23,7 @@
 			"createdAt": "2023.12.26"
 		},
 		{
-			"postId": "6",
+			"portfolioId": "6",
 			"name": "문수민",
 			"career": "6",
 			"job": "프론트엔드 개발",
@@ -34,7 +34,7 @@
 			"createdAt": "2023.08.20"
 		},
 		{
-			"postId": "7",
+			"portfolioId": "7",
 			"name": "이남경",
 			"career": "10",
 			"job": "IOS 개발",

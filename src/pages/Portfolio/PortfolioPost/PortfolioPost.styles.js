@@ -47,3 +47,9 @@ export const NameBox = styled.div`
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	}
 `;
+
+export const ButtonBox = styled.div`
+	display: flex;
+	justify-content: right;
+	gap: 8px;
+`;

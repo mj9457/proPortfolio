@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
-import Button from '../Button/Button';
-import * as S from './Category.styles';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+import * as S from './Category.styles';
+
+import Button from '../Button/Button';
 
 function Category(props) {
 	const { variant, shape, size } = props;

@@ -4,6 +4,7 @@ import UserMentorApply from '../pages/UserMentoApply/UserMentorApply';
 
 const Layout = lazy(() => import('../components/@common/Layout'));
 
+// home and signup page
 const Home = lazy(() => import('../pages/Home/Home'));
 const SignUp = lazy(() => import('../pages/SignUp/SignUp'));
 const SignUpDone = lazy(() => import('../pages/SignUp/SignUpDone/SignUpDone'));
@@ -59,6 +60,9 @@ const AdminStudyProject = lazy(() =>
 const AdminMentorBoardList = lazy(() =>
 	import('../pages/Admin/MentorBoardList/AdminMentorBoardList'),
 );
+
+// error page
+const Error = lazy(() => import('../pages/Error/Error'));
 
 const router = createBrowserRouter([
 	{
@@ -116,7 +120,7 @@ const router = createBrowserRouter([
 				element: <PortfolioApply />,
 			},
 			{
-				path: 'portfolio/post/:postId',
+				path: 'portfolio/post/:portfolioId',
 				element: <PortfolioPost />,
 			},
 			// 스터디 프로젝트 페이지
@@ -134,6 +138,10 @@ const router = createBrowserRouter([
 			{
 				path: 'study/detail',
 				element: <StudyPostDetail />,
+			},
+			{
+				path: 'error',
+				element: <Error />,
 			},
 		],
 	},

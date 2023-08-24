@@ -1,11 +1,15 @@
-import * as S from './Review.styles';
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Line from '../../../@common/Line/Line';
-import Textarea from '../../../@common/Textarea/Textarea';
 
-function Review() {
+import * as S from './Review.styles';
+
+import Line from '../Line/Line';
+
+function Review(props) {
+	// 댓글 페이지네이션 처리 필요
+	// 댓글도 댓글 작성자인 경우만 수정/삭제 버튼 오픈
+
+	const { title } = props;
 	const [review, setReview] = useState([]);
 
 	useEffect(() => {
@@ -19,10 +23,27 @@ function Review() {
 		getReview();
 	}, []);
 
+	const handleDelete = async () => {
+		const and = title === '후기' ? '를' : '을';
+
+		if (confirm(`${title}${and} 삭제하시겠습니까?`) === true) {
+			await axios.delete('');
+		}
+	};
+
+	const handleEdit = async e => {
+		const { name, value } = e.target;
+
+		setReview(prevState => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
 	return (
 		<S.ReviewBox>
 			<S.TopBox>
-				<strong>후기</strong>
+				<strong>{title}</strong>
 				<span>{review.length}</span>
 			</S.TopBox>
 
@@ -37,13 +58,12 @@ function Review() {
 
 							<S.Buttons>
 								<button>수정</button>
-								<button>삭제</button>
+								<button onClick={handleDelete}>삭제</button>
 							</S.Buttons>
 						</S.MiddleBox>
 
 						<div>
 							{/* <Textarea size={'full'} value={review.content} /> */}
-
 							<S.Contents>{review.content}</S.Contents>
 						</div>
 

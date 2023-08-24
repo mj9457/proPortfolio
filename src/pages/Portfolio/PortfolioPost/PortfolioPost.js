@@ -1,32 +1,44 @@
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import * as S from './PortfolioPost.styles';
+import useFooter from '../../../hooks/useFooter';
 
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
-import Review from '../../../components/pages/Portfolio/Review/Review';
-
+import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
 
 function PortfolioPost() {
-	const location = useLocation();
-	const path = location.pathname.split('/')[3];
+	useFooter();
+
+	// user role 확인 후 멘토의 경우 수정/삭제 버튼 보여주고 / 일반 유저의 경우 신청하기 버튼 오픈
+	// 멘토 중에서도 작성자의 경우만 수정/삭제 버튼이 활성화 되게 로직 작성
+	// 일반 유저가 신청하기를 하고 모달로 post를 보냈을 경우 신청하기 버튼 비활성화
+
+	const params = useParams();
+	const path = params.portfolioId;
 
 	const [contents, setContents] = useState({});
 	const [openModal, setOpenModal] = useState(false);
 
 	useEffect(() => {
 		const getContent = async () => {
-			const res = await axios.get('/mock/mentor.json');
-			const data = res.data.data;
+			try {
+				const res = await axios.get('/mock/mentor.json');
+				const data = res.data.data;
 
-			const newData = [...data];
-			const dataIndex = newData.find(data => data.postId === path);
+				const newData = [...data];
+				const dataIndex = newData.find(
+					data => data.portfolioId === path,
+				);
 
-			setContents(dataIndex);
+				setContents(dataIndex);
+			} catch (err) {
+				console.log(err);
+			}
 		};
 
 		getContent();
@@ -34,6 +46,12 @@ function PortfolioPost() {
 
 	const handleOpenModal = () => {
 		setOpenModal(prev => !prev);
+	};
+
+	const handleDelete = async () => {
+		if (confirm('게시글을 삭제하시겠습니까?') === true) {
+			await axios.delete('', path);
+		}
 	};
 
 	const { name, title, createdAt } = contents;
@@ -75,7 +93,25 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						<Review />
+						<S.ButtonBox>
+							<Button
+								variant={'primary'}
+								shape={'default'}
+								size={'normal'}
+							>
+								수정
+							</Button>
+							<Button
+								variant={'cancel'}
+								shape={'default'}
+								size={'normal'}
+								onClick={handleDelete}
+							>
+								삭제
+							</Button>
+						</S.ButtonBox>
+
+						<Review title={'후기'} />
 					</S.ContentsBox>
 				</S.PostBox>
 			)}

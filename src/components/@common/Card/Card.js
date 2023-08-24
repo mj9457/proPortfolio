@@ -24,13 +24,12 @@ function MentorCard(props) {
 		getMentor();
 	}, []);
 
-
 	return (
 		<>
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
 					variant={variant}
-					href={`/portfolio/post/${mentor.postId}`}
+					href={`/portfolio/post/${mentor.portfolioId}`}
 					key={idx}
 				>
 					<S.CoachNumBox>
