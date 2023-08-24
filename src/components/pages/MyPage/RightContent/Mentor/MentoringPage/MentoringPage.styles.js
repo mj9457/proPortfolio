@@ -18,12 +18,8 @@ export const MainTitleBox = styled.div`
 `;
 
 export const MainTitle = styled.div`
-	color: #000;
-	font-family: Pretendard;
-	font-size: 1.5rem;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
 export const DetailOnborad = styled.div`
@@ -51,11 +47,8 @@ export const DetailOnboradSubTitle = styled.span`
 	width: 5rem;
 	color: #616161;
 	text-align: center;
-	font-family: Pretendard;
-	font-size: 0.75rem;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.light};
+	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 `;
 
 export const DetailOnboradSubTitleCount = styled.span`
@@ -65,76 +58,8 @@ export const DetailOnboradSubTitleCount = styled.span`
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
-`;
 
-export const SubContentBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 2rem;
-	align-self: stretch;
-`;
-
-export const SubContentBar = styled.div`
-	display: inline-flex;
-	justify-content: space-between;
-	align-items: center;
-	align-content: center;
-	flex-wrap: wrap;
-	width: 100%;
-	border-bottom: 1px solid #ccc;
-`;
-
-export const SubTitleFlexBox = styled.div`
-	display: flex;
-	align-items: flex-start;
-`;
-
-export const SubTitle = styled.div`
-	display: flex;
-	width: 7.5rem;
-	padding: 0.625rem 1rem;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
-`;
-
-export const Clicked = styled.div`
-	display: flex;
-	width: 7.5rem;
-	padding: 0.625rem 1rem;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
-	color: #000;
-	font-family: Pretendard;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-	border-bottom: 1px solid #000;
-`;
-
-export const NonClicked = styled.div`
-	display: flex;
-	width: 7.5rem;
-	padding: 0.625rem 1rem;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
-	color: #ccc;
-	font-family: Pretendard;
-	font-size: 0.875rem;
-	font-style: normal;
-	font-weight: 700;
-	line-height: normal;
-`;
-
-export const SubContentListBox = styled.div`
-	display: flex;
-	padding: 5rem 0.625rem;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
-	align-self: stretch;
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+	// font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+	font-size: 1.875rem;
 `;

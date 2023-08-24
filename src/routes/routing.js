@@ -10,14 +10,14 @@ const SignUpDone = lazy(() => import('../pages/SignUp/SignUpDone/SignUpDone'));
 
 // my page
 const MyPage = lazy(() => import('../pages/MyPage/MyPage'));
-const MentoringHistory = lazy(() =>
-	import('../pages/MyPage/Mentor/MentoringHistory/MentoringHistory'),
+const PostListPage = lazy(() =>
+	import('../components/pages/MyPage/RightContent/Mentor/PostList/PostList'),
 );
-const AccountManage = lazy(() =>
-	import('../pages/MyPage/AccountManage/AccountManage'),
+const AccountManagePage = lazy(() =>
+	import('../pages/MyPage/AccountManagePage/AccountManagePage'),
 );
-const AccountWithdrawal = lazy(() =>
-	import('../pages/MyPage/AccountWithdrawal/AccountWithdrawal'),
+const AccountWithdrawalPage = lazy(() =>
+	import('../pages/MyPage/AccountWithdrawalPage/AccountWithdrawalPage'),
 );
 const MyPageLayout = lazy(() =>
 	import('../components/pages/MyPage/MyPageLayout/MyPageLayout'),
@@ -94,16 +94,16 @@ const router = createBrowserRouter([
 						element: <MentoringListPage />,
 					},
 					{
-						path: 'mentoringhistory',
-						element: <MentoringHistory />,
+						path: 'postlist',
+						element: <PostListPage />,
 					},
 					{
 						path: 'AccountManage',
-						element: <AccountManage />,
+						element: <AccountManagePage />,
 					},
 					{
 						path: 'AccountWithdrawal',
-						element: <AccountWithdrawal />,
+						element: <AccountWithdrawalPage />,
 					},
 				],
 			},

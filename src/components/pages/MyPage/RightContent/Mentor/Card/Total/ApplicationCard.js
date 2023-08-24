@@ -1,16 +1,20 @@
 import EditModal from '../../Modal/Mentor/EditModal/EditModal';
 import RefuseModal from '../../Modal/Mentor/RefuseModal/RefuseModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as CCS from './ApplicationCard.styles';
 import InfoViewModal from '../../Modal/Mentor/InfoViewModal/InfoViewModal';
 import RefuseViewModal from '../../Modal/Mentee/RefuseViewModal/RefuseViewModal';
 import InfoEditModal from '../../Modal/Mentee/InfoEditModal/InfoEditModal';
 import EditViewModal from '../../Modal/Mentee/EditViewModal/EditViewModal';
 import { useRecoilValue } from 'recoil';
-import { mentoringItem } from '../../../../../../../recoil/atoms/myPage/myPage.atom';
+import {
+	mentoringItem,
+	userData,
+} from '../../../../../../../recoil/atoms/myPage/myPage.atom';
+import axios from 'axios';
 
 // 카드 리스트
-function ApplicationCard({ category }) {
+function ApplicationCard({ categoryKey }) {
 	// 모달창 노출 여부 state
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 	const [editModalOpenState, setEditModalOpenState] = useState(false);
@@ -27,13 +31,55 @@ function ApplicationCard({ category }) {
 		setRefuseModalOpenState(true);
 	};
 
-	const mentoringData = [...useRecoilValue(mentoringItem)];
-	console.log(mentoringData);
+	const mentoringData = useRecoilValue(mentoringItem);
+	const totalData = mentoringData.total;
+	const applyData = mentoringData.apply;
+	const completedData = mentoringData.completed;
+	const refuseData = mentoringData.refuse;
+
+	const newUser = { ...useRecoilValue(userData) };
+	newUser.role = 'mentor';
+
+	const [mData, setMData] = useState('');
+
+	// 게시글 삭제
+	const onDelete = targetId => {
+		async function deleteList() {
+			try {
+				if (newUser.role === 'mentor') {
+					const response = await axios.delete(
+						`https://jsonplaceholder.typicode.com/posts/:${targetId}`, // 요청 주소 다르게
+					);
+					console.log(response);
+					console.log(response.data);
+					// const newpostList = mData.filter(
+					// 	data => data.id !== targetId,
+					// );
+					// console.log(newpostList);
+					// setMData(newpostList);
+				} else {
+					const response = await axios.delete(
+						`https://jsonplaceholder.typicode.com/posts/:${targetId}`, // 요청 주소를 다르게
+					);
+					console.log(response);
+					console.log(response.data);
+					// const newpostList = mData.filter(
+					// 	data => data.id !== targetId,
+					// );
+					// console.log(newpostList);
+					// setMData(newpostList);
+				}
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		deleteList();
+	};
 
 	return (
 		<>
-			{category === 'apply'
-				? mentoringData.map((item, index) => {
+			{categoryKey === 'apply'
+				? applyData.map((item, index) => {
 						return (
 							<CardLayout
 								key={index}
@@ -43,12 +89,13 @@ function ApplicationCard({ category }) {
 								showEditModal={showEditModal}
 								editModalOpenState={editModalOpenState}
 								setEditModalOpenState={setEditModalOpenState}
-								category={category}
+								categoryKey={categoryKey}
+								onDelete={onDelete}
 							></CardLayout>
 						);
 				  })
-				: category === 'completed'
-				? mentoringData.map((item, index) => {
+				: categoryKey === 'completed'
+				? completedData.map((item, index) => {
 						return (
 							<CardLayout
 								key={index}
@@ -58,23 +105,24 @@ function ApplicationCard({ category }) {
 								showEditModal={showEditModal}
 								editModalOpenState={editModalOpenState}
 								setEditModalOpenState={setEditModalOpenState}
-								category={category}
+								categoryKey={categoryKey}
 							></CardLayout>
 						);
 				  })
-				: category === 'refuse'
-				? mentoringData.map((item, index) => {
+				: categoryKey === 'refuse'
+				? refuseData.map((item, index) => {
 						return (
 							<CardLayout
 								key={index}
 								showInfoModal={showInfoModal}
 								infoModalOpenState={infoModalOpenState}
 								setInfoModalOpenState={setInfoModalOpenState}
-								category={category}
+								categoryKey={categoryKey}
+								onDelete={onDelete}
 							></CardLayout>
 						);
 				  })
-				: mentoringData.map((item, index) => {
+				: totalData.map((item, index) => {
 						return (
 							<CardLayout
 								key={index}
@@ -86,10 +134,8 @@ function ApplicationCard({ category }) {
 								setRefuseModalOpenState={
 									setRefuseModalOpenState
 								}
-								category={category}
-								showEditModal={showEditModal} // 여긴 지워야함
-								editModalOpenState={editModalOpenState} // 여긴 지워야함
-								setEditModalOpenState={setEditModalOpenState} // 여긴 지워야함
+								categoryKey={categoryKey}
+								onDelete={onDelete}
 							></CardLayout>
 						);
 				  })}
@@ -109,8 +155,10 @@ function CardLayout({
 	setInfoModalOpenState,
 	setEditModalOpenState,
 	setRefuseModalOpenState,
-	category,
+	categoryKey,
+	onDelete,
 }) {
+	console.log(onDelete);
 	return (
 		<CCS.CardWrapper>
 			<CCS.Wrapper>
@@ -131,37 +179,39 @@ function CardLayout({
 				</CCS.UserBox>
 
 				<CCS.ButtonBox>
-					{category === 'apply' ? (
+					{categoryKey === 'apply' ? (
 						<>
 							<CCS.OneButton onClick={showEditModal}>
 								첨삭하기
 							</CCS.OneButton>
 							{editModalOpenState && (
 								<EditModal
+									categoryKey={categoryKey}
 									setEditModalOpenState={
 										setEditModalOpenState
 									}
 								/>
 							)}
 						</>
-					) : category === 'completed' ? (
+					) : categoryKey === 'completed' ? (
 						<>
 							<CCS.OneButton onClick={showEditModal}>
 								수정하기
 							</CCS.OneButton>
 							{editModalOpenState && (
 								<EditModal
+									categoryKey={categoryKey}
 									setEditModalOpenState={
 										setEditModalOpenState
 									}
 								/>
 							)}
 						</>
-					) : category === 'refuse' ? (
+					) : categoryKey === 'refuse' ? (
 						<>
 							<CCS.OneButton
 								onClick={() => {
-									console.log('거절을 취소하시겠습니까?');
+									alert('거절을 취소하시겠습니까?');
 								}}
 							>
 								거절 취소하기
@@ -169,31 +219,24 @@ function CardLayout({
 						</>
 					) : (
 						<>
-							<CCS.TwoButton onClick={showRefuseModal}>
+							<CCS.RefuseButton onClick={showRefuseModal}>
 								거절하기
-							</CCS.TwoButton>
+							</CCS.RefuseButton>
 							{refuseModalOpenState && (
 								<RefuseModal
 									setRefuseModalOpenState={
 										setRefuseModalOpenState
 									}
+									onDelete={onDelete}
 								/>
 							)}
-							<CCS.TwoButton
+							<CCS.ApplyButton
 								onClick={() => {
-									showEditModal();
-									console.log('수락하시겠습니까?');
+									alert('수락하시겠습니까?');
 								}}
 							>
 								수락하기
-							</CCS.TwoButton>
-							{editModalOpenState && (
-								<EditViewModal
-									setEditModalOpenState={
-										setEditModalOpenState
-									}
-								/>
-							)}
+							</CCS.ApplyButton>
 						</>
 					)}
 				</CCS.ButtonBox>

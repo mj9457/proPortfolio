@@ -1,14 +1,17 @@
 import * as CL from './CardList.styles';
 import ApplicationCard from '../Card/Total/ApplicationCard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { mentoringItem } from '../../../../../../recoil/atoms/myPage/myPage.atom';
 
 // 카드 리스트
-function CardList({
-	totalCoaching,
-	applyCoaching,
-	completedCoaching,
-	refuseCoaching,
-}) {
+function CardList() {
+	const mentoringData = useRecoilValue(mentoringItem);
+	const totalLength = mentoringData.total.length;
+	const applyLength = mentoringData.apply.length;
+	const completedLength = mentoringData.completed.length;
+	const refuseLength = mentoringData.refuse.length;
+
 	const [category, setCategory] = useState('');
 	const buttonHandler = e => {
 		setCategory(e.target.id);
@@ -18,27 +21,27 @@ function CardList({
 		<>
 			{category === 'apply' ? (
 				<CardListLayout
-					total={applyCoaching}
+					length={applyLength}
 					fun={buttonHandler}
-					category={category}
+					categoryKey={category}
 				/>
 			) : category === 'completed' ? (
 				<CardListLayout
-					total={completedCoaching}
+					length={completedLength}
 					fun={buttonHandler}
-					category={category}
+					categoryKey={category}
 				/>
 			) : category === 'refuse' ? (
 				<CardListLayout
-					total={refuseCoaching}
+					length={refuseLength}
 					fun={buttonHandler}
-					category={category}
+					categoryKey={category}
 				/>
 			) : (
 				<CardListLayout
-					total={totalCoaching}
+					length={totalLength}
 					fun={buttonHandler}
-					category={category}
+					categoryKey={category}
 				/>
 			)}
 		</>
@@ -47,13 +50,13 @@ function CardList({
 
 export default CardList;
 
-function CardListLayout({ total, fun, category }) {
+function CardListLayout({ length, fun, categoryKey }) {
 	return (
 		<>
 			<CL.SubContentBox>
 				<CL.SubContentBar>
 					<CL.SubTitleFlexBox>
-						{category === 'apply' ? (
+						{categoryKey === 'apply' ? (
 							<>
 								<CL.NonClicked id={'total'} onClick={fun}>
 									신청 받은 건
@@ -68,7 +71,7 @@ function CardListLayout({ total, fun, category }) {
 									신청 거절 건
 								</CL.NonClicked>
 							</>
-						) : category === 'completed' ? (
+						) : categoryKey === 'completed' ? (
 							<>
 								<CL.NonClicked id={'total'} onClick={fun}>
 									신청 받은 건
@@ -83,7 +86,7 @@ function CardListLayout({ total, fun, category }) {
 									신청 거절 건
 								</CL.NonClicked>
 							</>
-						) : category === 'refuse' ? (
+						) : categoryKey === 'refuse' ? (
 							<>
 								<CL.NonClicked id={'total'} onClick={fun}>
 									신청 받은 건
@@ -115,16 +118,18 @@ function CardListLayout({ total, fun, category }) {
 							</>
 						)}
 					</CL.SubTitleFlexBox>
-					<p>총 {total}건</p>
+					<p>총 {length}건</p>
 				</CL.SubContentBar>
 
-				{total === 0 ? (
+				{length === 0 ? (
 					<CL.NonSubContentListBox>
-						{`내역이 없습니다. ${category}탭입니다`}
+						{`내역이 없습니다. ${categoryKey}탭입니다`}
 					</CL.NonSubContentListBox>
 				) : (
 					<CL.SubContentListBox>
-						<ApplicationCard category={category}></ApplicationCard>
+						<ApplicationCard
+							categoryKey={categoryKey}
+						></ApplicationCard>
 					</CL.SubContentListBox>
 				)}
 			</CL.SubContentBox>

@@ -7,11 +7,6 @@ import { mentoringItem } from '../../../../recoil/atoms/myPage/myPage.atom';
 import { useRecoilState } from 'recoil';
 
 function MentoringListPage() {
-	const [totalCoaching, setTotalCoaching] = useState(0);
-	const [applyCoaching, setApplyCoaching] = useState(0);
-	const [completedCoaching, setCompletedCoaching] = useState(0);
-	const [refuseCoaching, setRefuseCoaching] = useState(0);
-
 	const [userData, setUserData] = useRecoilState(mentoringItem); // 멘토링 신청 받은 총 내역
 	const [error, setError] = useState(null); // 에러 state
 
@@ -22,13 +17,28 @@ function MentoringListPage() {
 				const response = await axios.get(
 					'https://jsonplaceholder.typicode.com/posts',
 				);
-				const dummyData = response.data.filter(
-					(item, index) => index % 25 === 0,
+				const totalData = response.data.filter(
+					// (item, index) => item.state === 'total',
+					(item, index) => index % 86 === 1,
 				);
-				setUserData(dummyData);
-				setTotalCoaching(dummyData.length);
-				// setUserData(response.data);
-				// setTotalCoaching(response.data.length);
+				const applyData = response.data.filter(
+					// (item, index) => item.state === 'apply',
+					(item, index) => index % 20 === 1,
+				);
+				const completedData = response.data.filter(
+					// (item, index) => item.state === 'completed',
+					(item, index) => index % 50 === 1,
+				);
+				const refuseData = response.data.filter(
+					// (item, index) => item.state === 'refuse',
+					(item, index) => index % 30 === 1,
+				);
+				setUserData({
+					total: totalData,
+					apply: applyData,
+					completed: completedData,
+					refuse: refuseData,
+				});
 			} catch (err) {
 				setError(err);
 			}
@@ -39,19 +49,8 @@ function MentoringListPage() {
 	return (
 		<M.Wrapper>
 			<M.LightContent>
-				<MentoringPage
-					totalCoaching={totalCoaching}
-					applyCoaching={applyCoaching}
-					completedCoaching={completedCoaching}
-					refuseCoaching={refuseCoaching}
-				></MentoringPage>
-
-				<CardList
-					totalCoaching={totalCoaching}
-					applyCoaching={applyCoaching}
-					completedCoaching={completedCoaching}
-					refuseCoaching={refuseCoaching}
-				></CardList>
+				<MentoringPage></MentoringPage>
+				<CardList></CardList>
 			</M.LightContent>
 		</M.Wrapper>
 	);

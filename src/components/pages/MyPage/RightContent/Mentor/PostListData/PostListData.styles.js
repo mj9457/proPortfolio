@@ -40,6 +40,7 @@ export const ContentTitle = styled.div`
 	flex: 1 0 0;
 	text-decoration-line: underline;
 	cursor: pointer;
+	color: #000;
 `;
 
 export const ContentDate = styled.div`

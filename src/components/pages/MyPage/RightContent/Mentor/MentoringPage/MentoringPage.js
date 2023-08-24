@@ -1,17 +1,18 @@
+import { useRecoilValue } from 'recoil';
 import * as MP from './MentoringPage.styles';
+import { mentoringItem } from '../../../../../../recoil/atoms/myPage/myPage.atom';
 
 // 멘토 코칭 페이지
-function MentoringPage({
-	totalCoaching,
-	applyCoaching,
-	completedCoaching,
-	refuseCoaching,
-}) {
+function MentoringPage() {
+	const mentoringData = useRecoilValue(mentoringItem);
 	const ApplicationArr = [
-		{ subtitle: '신청 받은 건', prop: `${totalCoaching}` },
-		{ subtitle: '신청 수락 건', prop: `${applyCoaching}` },
-		{ subtitle: '진행 완료 건', prop: `${completedCoaching}` },
-		{ subtitle: '신청 거절 건', prop: `${refuseCoaching}` },
+		{ subtitle: '신청 받은 건', length: `${mentoringData.total.length}` },
+		{ subtitle: '신청 수락 건', length: `${mentoringData.apply.length}` },
+		{
+			subtitle: '진행 완료 건',
+			length: `${mentoringData.completed.length}`,
+		},
+		{ subtitle: '신청 거절 건', length: `${mentoringData.refuse.length}` },
 	];
 
 	return (
@@ -27,7 +28,7 @@ function MentoringPage({
 									{element.subtitle}
 								</MP.DetailOnboradSubTitle>
 								<MP.DetailOnboradSubTitleCount>
-									{element.prop}
+									{element.length}
 								</MP.DetailOnboradSubTitleCount>
 							</MP.DetailOnboradBox>
 						))}

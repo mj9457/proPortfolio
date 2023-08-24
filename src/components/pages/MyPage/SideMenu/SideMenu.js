@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import * as SM from './SideMenu.styles';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userData } from '../../../../recoil/atoms/myPage/myPage.atom';
 
 // 왼쪽 메뉴
 function SideMenu({ userState }) {
@@ -11,6 +12,11 @@ function SideMenu({ userState }) {
 		navigate(`/mypage/${[path]}`);
 	};
 
+	const user = useRecoilValue(userData);
+	// 데이터 정상적으로 불러와지면 삭제
+	const newUser = { ...user };
+	newUser.role = 'mentor';
+
 	return (
 		<SM.Wrapper>
 			<SM.MainTitle>{userState}</SM.MainTitle>
@@ -18,12 +24,12 @@ function SideMenu({ userState }) {
 			<SM.SubTitleWrapper>
 				<SM.History>
 					<button onClick={() => handleClickButton('mentoringlist')}>
-						멘토링 신청 받은 내역
+						{newUser.role === 'mentor'
+							? '멘토링 신청 받은 내역'
+							: '멘토링 신청 내역'}
 					</button>
-					<button
-						onClick={() => handleClickButton('mentoringhistory')}
-					>
-						글 작성 내역
+					<button onClick={() => handleClickButton('postlist')}>
+						게시물 작성 내역
 					</button>
 				</SM.History>
 				<SM.Info>
