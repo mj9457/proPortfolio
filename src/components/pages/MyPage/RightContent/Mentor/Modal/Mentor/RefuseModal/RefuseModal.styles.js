@@ -1,66 +1,59 @@
 import styled from 'styled-components';
+import {
+	ModalBackground,
+	flexCenter,
+	flexColumn,
+} from '../../../../../../../../styles/common';
 
 export const Modal = styled.div`
-	display: flex;
-	width: 120rem;
-	min-height: 67.5rem;
-	heigth: 100vh;
-	padding: 0.625rem;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
-
-	z-index: 999;
-
-	background: rgba(0, 0, 0, 0.2);
-
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-
+	${flexCenter}
+	${ModalBackground}
+	
 	& form {
-		display: flex;
-		padding: 3.75rem 6.25rem;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 4rem;
+		${flexColumn}
+		padding: 6.25rem;
 		border-radius: 0.625rem;
-		background: var(--grey-white, #fff);
+		background: ${({ theme }) => theme.PALETTE.white};
+		gap: 2rem;
 	}
 `;
 
-export const ModalWrapper = styled.div``;
+export const ModalWrapper = styled.form``;
 
 export const InfoWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	${flexColumn}
+	width: 100%;
 	align-items: center;
 	gap: 2rem;
+	align-items: center;
+	* {
+		width: 100%;
+	}
 `;
 
 export const InfoTitle = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+	text-align: center;
 `;
 
 export const InfoBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 2rem;
+	${flexColumn}
+	gap: 1rem;
 `;
 
-export const InfoSubTitleBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 1rem;
-	width: 25rem;
+export const InfoSubTitleBox = styled(InfoBox)`
+	& input {
+		height: 42px;
+		width: 100%;
+		padding: 0 12px;
+		border-radius: 4px;
+		border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
+
+		color: ${({ theme }) => theme.PALETTE.black};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	}
 
 	& textarea {
 		width: 100%;
@@ -78,43 +71,26 @@ export const InfoSubTitleBox = styled.div`
 export const InfoSubTitle = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
-
-	& span {
-		color: #757575;
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
 `;
 
 export const ButtonBox = styled.div`
 	display: flex;
-	width: 25rem;
-	align-items: flex-start;
-	gap: 1rem;
+	gap: 16px;
 `;
 
-export const CancleButton = styled.button`
-	width: 12rem;
-	height: 3rem;
-	flex-shrink: 0;
+export const CancelButton = styled.button`
+	width: 192px;
+	height: 48px;
 	cursor: pointer;
-	border-radius: 0.25rem;
-	background: #e9e9e9;
-
-	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-	font-size: ${({ theme }) => theme.FONT_SIZE.md};
-	color: #000;
-`;
-
-export const CompleteButton = styled.button`
-	width: 12rem;
-	height: 3rem;
-	flex-shrink: 0;
-	background: #37f;
 	border-radius: 4px;
-	cursor: pointer;
+	color: ${({ theme }) => theme.PALETTE.black};
+	background: ${({ theme }) => theme.PALETTE.gray[200]};
 
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
-	color: #fff;
+`;
+
+export const CompleteButton = styled(CancelButton)`
+	background: ${({ theme }) => theme.PALETTE.mainColor};
+	color: ${({ theme }) => theme.PALETTE.white};
 `;

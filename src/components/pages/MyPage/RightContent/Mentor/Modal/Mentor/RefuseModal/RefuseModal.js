@@ -67,9 +67,9 @@ function RefuseModal({ setRefuseModalOpenState }) {
 						</RM.InfoBox>
 					</RM.InfoWrapper>
 					<RM.ButtonBox>
-						<RM.CancleButton onClick={closeModal}>
+						<RM.CancelButton onClick={closeModal}>
 							취소
-						</RM.CancleButton>
+						</RM.CancelButton>
 						<RM.CompleteButton type="submit">
 							완료
 						</RM.CompleteButton>
