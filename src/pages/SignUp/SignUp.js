@@ -32,6 +32,8 @@ function SignUp() {
 		}
 	}
 
+	
+
 	async function getUserProfile(accessToken) {
 		try {
 			const response = await axios.get('/your-backend-endpoint/user', {
