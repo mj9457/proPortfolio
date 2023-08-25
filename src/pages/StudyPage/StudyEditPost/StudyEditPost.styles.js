@@ -47,12 +47,14 @@ export const SelectBox = styled.div`
 
 		.react-datepicker__input-container {
 			${flexAlignCenter}
+			width: 100%;
+			height: 100%;
 			.react-datepicker__calendar-icon {
 				padding: 0;
 				position: static;
 			}
 			> input {
-				padding: 12px 5px;
+				padding-left: 12px;
 				width: 100%;
 				border: none;
 				font-size: 0.875rem;
@@ -84,8 +86,8 @@ export const Input = styled.input`
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[100]};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	padding: 1rem 0.65rem;
 	margin-left: auto;
+	padding: 16px 12px;
 `;
 
 export const BasicInfoBox = styled.div``;

@@ -8,10 +8,15 @@ import {
 export const Container = styled.div`
 	cursor: pointer;
 	width: 100%;
+	height: 267px;
 	padding: 1.875rem;
 	border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
 	${flexColumn}
 	border-radius: 15px;
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
 `;
 
 export const ChipWrapper = styled.div`
@@ -25,7 +30,6 @@ export const ChipBox = styled.div`
 	padding: 0.45rem 0.9rem;
 	border-radius: 0.9375rem;
 	width: fit-content;
-	margin-bottom: 1rem;
 `;
 
 export const ChipText = styled.p`
@@ -39,11 +43,20 @@ export const Title = styled.span`
 	font-size: ${({ theme }) => theme.FONT_SIZE.big};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	margin-bottom: 1.56rem;
+	display: block;
 `;
 
 export const PostText = styled.p`
+	display: -webkit-box;
+	word-wrap: break-word;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	line-height: 1.5;
+	height: 67px;
 	margin-bottom: 25px;
 `;
 
@@ -63,7 +76,21 @@ export const Person = styled.p`
 `;
 
 export const Position = styled.p`
-	padding-left: 8px;
+	padding: 0 8px;
+	border-right: 1px solid ${({ theme }) => theme.PALETTE.gray[300]};
+	color: ${({ theme }) => theme.PALETTE.gray[300]};
+`;
+
+export const PositionBox = styled.div`
+	${flexAlignCenter}
+
+	&:first-of-type >p {
+		padding-left: 0;
+	}
+
+	&:last-of-type > p {
+		border: none;
+	}
 `;
 
 export const Day = styled.p`

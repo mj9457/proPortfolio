@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './StudyEditPost.styles';
@@ -16,31 +17,35 @@ function StudyEditPost() {
 	const [selectedOptions, setSelectedOptions] = useState({
 		category: '',
 		proceed: '',
-		position: '',
+		position: [],
 		personnel: '',
 		contact: '',
 		link: '',
 		deadline: new Date(),
 	});
+	const { postId } = useParams();
+
+	console.log('편집 페이지 PostId 확인', postId);
+
+	// 게시글 수정
+	useEffect(() => {
+		if (postId) {
+			const loadPostDataForEdit = async () => {
+				try {
+					// const postData = await getPostForEdit(postId);
+					// setSelectedOptions(postData);
+				} catch (error) {
+					console.error(error);
+				}
+			};
+			loadPostDataForEdit();
+		}
+	}, [postId]);
 
 	const handleOptionChange = (name, value) => {
-		if (name === 'positions') {
-			setSelectedOptions(prevOptions => ({
-				...prevOptions,
-				position: value,
-			}));
-		} else {
-			setSelectedOptions(prevOptions => ({
-				...prevOptions,
-				[name]: value,
-			}));
-		}
-	};
-
-	const handleDateChange = date => {
 		setSelectedOptions(prevOptions => ({
 			...prevOptions,
-			deadline: date,
+			[name]: value,
 		}));
 	};
 
@@ -105,9 +110,10 @@ function StudyEditPost() {
 						<S.SelectBox>
 							<S.SelectTitle>모집 직무</S.SelectTitle>
 							<MultiSelectDropdown
-								onPositionsChange={positions =>
-									handleOptionChange('positions', positions)
-								}
+								onPositionsChange={position => {
+									handleOptionChange('position', position);
+								}}
+								name="position"
 							/>
 						</S.SelectBox>
 
@@ -132,10 +138,13 @@ function StudyEditPost() {
 							<S.Deadline>모집 마감일</S.Deadline>
 							<DatePicker
 								selected={selectedOptions.deadline}
-								onChange={handleDateChange}
+								onChange={e =>
+									handleOptionChange('deadline', e)
+								}
 								dateFormat="yyyy-MM-dd"
 								minDate={new Date()}
 								popperPlacement="bottom"
+								name="deadline"
 							/>
 						</S.SelectBox>
 

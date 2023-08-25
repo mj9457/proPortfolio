@@ -1,18 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './StudyPage.styles';
 // import PopularCard from '../../components/pages/StudyPage/PopularCard/PopularCard';
 import PostCard from '../../components/pages/StudyPage/PostCard/PostCard';
 // import Slider from '../../components/pages/StudyPage/Slider/Slider';
+import Slider from '../../components/@common/Slider/Slider';
 import Button from '../../components/@common/Button/Button';
 import Category from '../../components/@common/Category/Category';
 
 function StudyPage() {
 	const navigate = useNavigate();
+	const [studyData, setStudyData] = useState([]);
+
+	const URL = '/mock/study.json';
+	useEffect(() => {
+		const getPost = async () => {
+			try {
+				const res = await axios.get(URL);
+				const data = res.data.data;
+				// console.log(data);
+
+				setStudyData([...data]);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+
+		getPost();
+	}, []);
 
 	const onClickAddPost = () => {
-		navigate('/study/edit');
+		navigate('/study/post');
 	};
 	return (
 		<>
@@ -20,14 +40,17 @@ function StudyPage() {
 				<S.PopularContents>
 					{/* 인기 스터디, 프로젝트 */}
 					<S.TitleWrapper>
-						<S.Title>🔥 인기 스터디/ 프로젝트</S.Title>
+						<S.Title>🔥 프론트엔드 추천 스터디/ 프로젝트</S.Title>
 						<S.SubTitle>
-							지금 인기 있는 스터디, 프로젝트를 확인해보세요!
+							포지션에 맞는 스터디, 프로젝트를 확인해보세요!
 						</S.SubTitle>
 					</S.TitleWrapper>
 
 					<S.PopularCardWrapper>
-						{/* <Slider /> */}
+						<Slider
+							background="whiteBackground"
+							url={'/mock/studyInfo.json'}
+						/>
 					</S.PopularCardWrapper>
 
 					{/* 스터디, 프로젝트 목록 */}
@@ -66,9 +89,9 @@ function StudyPage() {
 
 					{/* 하단 글 리스트 영역 */}
 					<S.PostCardContainer>
-						<PostCard />
-						<PostCard />
-						<PostCard />
+						{studyData.map((studyData, idx) => (
+							<PostCard data={studyData} key={idx} />
+						))}
 					</S.PostCardContainer>
 				</S.StudyContents>
 			</S.Container>

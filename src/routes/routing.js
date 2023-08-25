@@ -131,12 +131,17 @@ const router = createBrowserRouter([
 			},
 			// 스터디 게시글 작성
 			{
-				path: 'study/edit',
+				path: 'study/post',
+				element: <StudyEditPost />,
+			},
+			// 스터디 게시글 수정
+			{
+				path: 'study/edit/:postId',
 				element: <StudyEditPost />,
 			},
 			// 스터디 게시글 상세
 			{
-				path: 'study/detail',
+				path: 'study/detail/:postId',
 				element: <StudyPostDetail />,
 			},
 			{

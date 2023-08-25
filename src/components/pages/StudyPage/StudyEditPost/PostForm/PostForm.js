@@ -49,7 +49,7 @@ function PostForm({ selectedOptions }) {
 		},
 	];
 
-	const onClickAddPost = async e => {
+	const handleSubmit = async e => {
 		const validationFailures = validationChecks.filter(
 			condition => condition.check,
 		);
@@ -57,6 +57,7 @@ function PostForm({ selectedOptions }) {
 		if (validationFailures.length > 0) {
 			const errorMessage = validationFailures[0].message;
 			alert(errorMessage);
+			return;
 		}
 
 		try {
@@ -105,7 +106,7 @@ function PostForm({ selectedOptions }) {
 					variant={'primary'}
 					shape={'default'}
 					size={'normal'}
-					onClick={onClickAddPost}
+					onClick={handleSubmit}
 				>
 					작성하기
 				</Button>

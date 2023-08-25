@@ -71,7 +71,11 @@ export const PostDetailBasic = styled.div`
 	padding-bottom: 8rem;
 `;
 
-export const PostDetailMainTextBox = styled.div``;
+export const PostDetailMainTextBox = styled.div`
+	padding-bottom: 135px;
+	border-bottom: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
+	margin-bottom: 32px;
+`;
 
 export const PostDetailMainText = styled.p`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
@@ -99,13 +103,39 @@ export const PostDetailBasicItem = styled.li`
 	${flexAlignCenter}
 	gap: 2rem;
 
-	span {
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
-		font-size: ${({ theme }) => theme.FONT_SIZE.big};
-	}
-
 	p {
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		font-size: ${({ theme }) => theme.FONT_SIZE.big};
+	}
+`;
+
+export const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: end;
+	gap: 8px;
+`;
+
+export const ContactBox = styled.div`
+	${flexAlignCenter}
+	gap: 5px;
+
+	.material-symbols-outlined {
+		padding-top: 3px;
+		font-size: 20px;
+		cursor: pointer;
+	}
+`;
+
+export const ContactText = styled.p`
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	font-size: ${({ theme }) => theme.FONT_SIZE.big};
+`;
+
+export const IconBox = styled.div``;
+
+export const PostDetailBasicItemTitle = styled.div`
+	> p {
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 		font-size: ${({ theme }) => theme.FONT_SIZE.big};
 	}
 `;

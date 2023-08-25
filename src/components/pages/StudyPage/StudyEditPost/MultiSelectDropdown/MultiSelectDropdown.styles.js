@@ -15,6 +15,7 @@ export const SelectBox = styled.div`
 	border-radius: 4px;
 
 	> select {
+		padding-left: 12px;
 		width: 100%;
 		height: 42px;
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
@@ -31,12 +32,7 @@ export const CheckBoxContainer = styled.div`
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	border-radius: 4px;
 	position: absolute;
-	/* 애니메이션 주는 경우 ************* */
-	/* opacity: ${({ expanded }) => (expanded ? '1' : '0')};
-	transition: opacity 0.2s ease; */
-
-	/* 애니메이션 안 주는 경우 ************* */
-	display: ${({ expanded }) => (expanded ? 'block' : 'none')};
+	display: ${({ $expanded }) => ($expanded ? 'block' : 'none')};
 `;
 export const Label = styled.label`
 	${flexAlignCenter}

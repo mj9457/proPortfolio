@@ -5,7 +5,6 @@ export const ChipBox = styled.div`
 	padding: 0.45rem 0.9rem;
 	border-radius: 0.9375rem;
 	width: fit-content;
-	margin-bottom: 1rem;
 
 	/* 프로젝트*/
 	${props =>
