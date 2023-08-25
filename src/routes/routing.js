@@ -122,7 +122,7 @@ const router = createBrowserRouter([
 				element: <PortfolioApply />,
 			},
 			{
-				path: 'portfolio/post/:portfolioId',
+				path: 'portfolio/post/:_id',
 				element: <PortfolioPost />,
 			},
 			{

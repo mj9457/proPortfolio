@@ -12,7 +12,8 @@ function MentorCard(props) {
 		const getMentor = async () => {
 			try {
 				const res = await axios.get(`${url}`);
-				const data = res.data.data;
+				const data = res.data;
+				console.log(data);
 
 				setMentorData([...data]);
 			} catch (err) {
@@ -29,20 +30,26 @@ function MentorCard(props) {
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
 					variant={variant}
-					href={`/portfolio/post/${mentor.portfolioId}`}
+					href={`/portfolio/post/${mentor._id}`}
 					key={idx}
 				>
 					<S.CoachNumBox>
-						<span>👊 코칭 {mentor.numCoaching}회</span>
+						<span>👊 코칭 {mentor.coachingCount}회</span>
 					</S.CoachNumBox>
 
 					<S.ImgBox>
-						<img src="/assets/img/profile/profile4.png" />
+						<img
+							src={
+								!mentor.profileImageUrl
+									? '/assets/img/profile/profileImage.png'
+									: mentor.profileImageUrl
+							}
+						/>
 					</S.ImgBox>
 
 					<S.ContentsBox>
 						<div>
-							<S.Name>{mentor.name}</S.Name>
+							<S.Name>{mentor.nickName}</S.Name>
 						</div>
 
 						<S.Contents>
@@ -50,7 +57,7 @@ function MentorCard(props) {
 								<S.ContentSpan>{mentor.company}</S.ContentSpan>
 							</div>
 							<div>
-								<S.ContentSpan>{mentor.job}</S.ContentSpan>
+								<S.ContentSpan>{mentor.position}</S.ContentSpan>
 							</div>
 							<div>
 								<S.ContentSpan>

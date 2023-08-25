@@ -22,6 +22,18 @@ const MESSAGE = {
 		COMMUNICATION: '연락 가능한 링크를 입력해 주세요.',
 		ALL: '모든 항목을 선택해 주세요.',
 	},
+	POST: {
+		COMPLETE: '게시글 작성이 완료되었습니다.',
+		EDIT: '작성한 게시글을 수정하시겠습니까?',
+		DELETE: '작성한 게시글을 삭제하시겠습니까?',
+	},
+	COMMENT: {
+		COMPLETE: '댓글을 작성하시겠습니까?',
+		EDIT: '',
+	},
+	REJECT: {
+		COMPLETE: '거절 사유 작성이 완료되었습니다.',
+	},
 };
 
 export default MESSAGE;

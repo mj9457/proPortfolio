@@ -10,6 +10,7 @@ import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
+import MESSAGE from '../../../constants/message';
 
 function PortfolioPost() {
 	useFooter();
@@ -18,26 +19,25 @@ function PortfolioPost() {
 	// 멘토 중에서도 작성자의 경우만 수정/삭제 버튼이 활성화 되게 로직 작성
 	// 일반 유저가 신청하기를 하고 모달로 post를 보냈을 경우 신청하기 버튼 비활성화
 
+	// id 값
 	const params = useParams();
-	const path = params.portfolioId;
+	const path = params._id;
 
 	const navigate = useNavigate();
 
 	const [contents, setContents] = useState({});
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
+	// axios 통신
 	useEffect(() => {
 		const getContent = async () => {
 			try {
-				const res = await axios.get('/mock/mentor.json');
-				const data = res.data.data;
-
-				const newData = [...data];
-				const dataIndex = newData.find(
-					data => data.portfolioId === path,
+				const res = await axios.get(
+					`http://localhost:8080/api/portfolio/${path}`,
 				);
+				const data = res.data;
 
-				setContents(dataIndex);
+				setContents(data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -46,21 +46,34 @@ function PortfolioPost() {
 		getContent();
 	}, []);
 
+	// 모달 open
 	const handleOpenModal = () => {
 		setInfoModalOpenState(true);
 	};
 
+	// 수정하기
 	const handleEdit = () => {
-		navigate(`/portfolio/edit/${path}`);
-	};
-
-	const handleDelete = async () => {
-		if (confirm('게시글을 삭제하시겠습니까?') === true) {
-			await axios.delete('', path);
+		if (confirm(MESSAGE.POST.EDIT)) {
+			navigate(`/portfolio/edit/${path}`);
 		}
 	};
 
-	const { name, title, createdAt } = contents;
+	// 삭제하기
+	const handleDelete = async () => {
+		if (confirm(MESSAGE.POST.DELETE)) {
+			await axios.delete(`http://localhost:8080/api/portfolio/${path}`);
+			navigate(-1);
+		}
+	};
+
+	// contents 구조분해할당
+	const { nickName, title, updatedAt, profileImageUrl } = contents;
+
+	// date & profileImage
+	const date = String(updatedAt).slice(0, 19).split('T');
+	const profileImage = !profileImageUrl
+		? '/assets/img/profile/profileImage.png'
+		: profileImageUrl;
 
 	return (
 		<>
@@ -73,12 +86,14 @@ function PortfolioPost() {
 					<S.ContentsBox>
 						<S.MentorBox>
 							<S.NameBox>
-								<img src="/assets/img/profile/profile3.png" />
-								<strong>{name}</strong>
+								<img src={profileImage} />
+								<strong>{nickName}</strong>
 
 								<Line size={'height'} />
 
-								<span>{createdAt}</span>
+								<span>
+									{date[0]} {date[1]}
+								</span>
 							</S.NameBox>
 
 							{infoModalOpenState && (
