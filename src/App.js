@@ -8,13 +8,13 @@ import theme from './styles/theme';
 import GlobalStyles from './styles/global';
 
 import router from './routes/routing';
+import Loading from './components/@common/Loading/Loading';
+import ErrorFallback from './components/@common/Error/ErrorFallback';
 
 function App() {
-	const loading = () => <p>loading...중입니다람지렁이가노래를한다</p>;
-
 	return (
-		<ErrorBoundary FallbackComponent={''}>
-			<Suspense fallback={loading()}>
+		<ErrorBoundary FallbackComponent={ErrorFallback}>
+			<Suspense fallback={Loading()}>
 				<RecoilRoot>
 					<ThemeProvider theme={theme}>
 						<GlobalStyles />

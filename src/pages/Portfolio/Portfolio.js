@@ -7,9 +7,7 @@ import Category from '../../components/@common/Category/Category';
 
 function Portfolio() {
 	// 어딘가에 저장된 user role을 가져와서 mentor의 경우만 작성하기 버튼 확인 가능
-
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
-
 	// infinite scroll
 
 	return (
@@ -41,7 +39,12 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 */}
 				<S.MentorCardBox>
-					<MentorCard variant={'blue'} url={''} />
+					<MentorCard
+						variant={'blue'}
+						url={
+							'http://localhost:8080/api/portfolio/recommend/topMentor'
+						}
+					/>
 				</S.MentorCardBox>
 			</div>
 

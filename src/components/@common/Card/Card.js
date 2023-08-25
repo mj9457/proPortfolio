@@ -13,11 +13,9 @@ function MentorCard(props) {
 			try {
 				const res = await axios.get(`${url}`);
 				const data = res.data;
-				console.log(data);
 
 				setMentorData([...data]);
 			} catch (err) {
-				// handleError(err);
 				console.log(err);
 			}
 		};

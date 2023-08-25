@@ -66,12 +66,11 @@ function PortfolioPost() {
 		}
 	};
 
-	// contents 구조분해할당
 	const { nickName, title, updatedAt, profileImageUrl } = contents;
 
 	// date & profileImage
 	const date = String(updatedAt).slice(0, 19).split('T');
-	const profileImage = !profileImageUrl
+	const image = !profileImageUrl
 		? '/assets/img/profile/profileImage.png'
 		: profileImageUrl;
 
@@ -86,7 +85,7 @@ function PortfolioPost() {
 					<S.ContentsBox>
 						<S.MentorBox>
 							<S.NameBox>
-								<img src={profileImage} />
+								<img src={image} />
 								<strong>{nickName}</strong>
 
 								<Line size={'height'} />

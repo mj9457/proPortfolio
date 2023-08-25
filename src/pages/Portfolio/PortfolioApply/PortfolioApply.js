@@ -21,20 +21,18 @@ function PortfolioApply() {
 
 	const [mentorPost, setMentorPost] = useState({
 		position: '',
-		nickName: 'ㅎㅎ',
+		nickName: 'ㅎㅎ', // 유저 정보 받아 와서 넣어주면 됨
 		name: '문수민',
 		company: '',
-		career: 5,
+		career: 5, // 유저 정보 받아 와서 넣어주면 됨
 		title: '',
 		description: '',
-		coachingCount: 13,
-		profileImageUrl: '',
+		coachingCount: 13, // 유저 정보 받아 와서 넣어주면 됨
+		profileImageUrl: '', // 유저 정보 받아 와서 넣어주면 됨
 	});
 
 	const handleChange = e => {
 		const { name, value } = e.target;
-
-		console.log(name, value);
 
 		setMentorPost(prevState => ({
 			...prevState,
@@ -42,6 +40,7 @@ function PortfolioApply() {
 		}));
 	};
 
+	// 유효성 검사를 어디로 빼야 할지 의문
 	const check = [
 		{
 			checked: mentorPost.position.length === 0,
@@ -66,6 +65,7 @@ function PortfolioApply() {
 	];
 
 	const checkParams = async () => {
+		// 글 수정시 들어갈 로직
 		// if (params.portfolioId) {
 		// 	await axios.put(
 		// 		`https://localhost:8080/api/portfolio/${params._id}`,
