@@ -50,3 +50,5 @@ const MESSAGE = {
 		NOFILE: '이미지를 첨부해 주세요.',
 	},
 };
+
+export default MESSAGE;
