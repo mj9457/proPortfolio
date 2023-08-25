@@ -27,7 +27,10 @@ function Review(props) {
 		const and = title === '후기' ? '를' : '을';
 
 		if (confirm(`${title}${and} 삭제하시겠습니까?`) === true) {
-			await axios.delete('');
+			await axios.delete(
+				'https://jsonplaceholder.typicode.com/delete',
+				review.reviewId,
+			);
 		}
 	};
 
@@ -49,7 +52,7 @@ function Review(props) {
 
 			<S.BottomBox>
 				{review.map((review, idx) => (
-					<S.CommentBox key={idx}>
+					<S.CommentBox key={idx} id={review.reviewId}>
 						<S.MiddleBox>
 							<S.NamingBox>
 								<strong>{review.nickName}</strong>

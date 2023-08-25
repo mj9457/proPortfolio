@@ -62,7 +62,9 @@ const AdminMentorBoardList = lazy(() =>
 );
 
 // error page
-const Error = lazy(() => import('../pages/Error/Error'));
+const ErrorFallback = lazy(() =>
+	import('../components/@common/Error/ErrorFallback'),
+);
 
 const router = createBrowserRouter([
 	{
@@ -123,6 +125,10 @@ const router = createBrowserRouter([
 				path: 'portfolio/post/:portfolioId',
 				element: <PortfolioPost />,
 			},
+			{
+				path: 'portfolio/edit/:portfolioId',
+				element: <PortfolioApply />,
+			},
 			// 스터디 프로젝트 페이지
 			// 스터디 페이지 메인
 			{
@@ -145,8 +151,8 @@ const router = createBrowserRouter([
 				element: <StudyPostDetail />,
 			},
 			{
-				path: 'error',
-				element: <Error />,
+				path: '/*',
+				element: <ErrorFallback />,
 			},
 		],
 	},

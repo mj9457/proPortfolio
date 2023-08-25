@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -21,8 +21,10 @@ function PortfolioPost() {
 	const params = useParams();
 	const path = params.portfolioId;
 
+	const navigate = useNavigate();
+
 	const [contents, setContents] = useState({});
-	const [openModal, setOpenModal] = useState(false);
+	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
 	useEffect(() => {
 		const getContent = async () => {
@@ -45,7 +47,11 @@ function PortfolioPost() {
 	}, []);
 
 	const handleOpenModal = () => {
-		setOpenModal(prev => !prev);
+		setInfoModalOpenState(true);
+	};
+
+	const handleEdit = () => {
+		navigate(`/portfolio/edit/${path}`);
 	};
 
 	const handleDelete = async () => {
@@ -75,7 +81,17 @@ function PortfolioPost() {
 								<span>{createdAt}</span>
 							</S.NameBox>
 
-							{openModal && <InfoEditModal />}
+							{infoModalOpenState && (
+								<InfoEditModal
+									setInfoModalOpenState={
+										setInfoModalOpenState
+									}
+									postAddress={
+										'https://jsonplaceholder.typicode.com/posts'
+									}
+									action={'완료'}
+								/>
+							)}
 
 							<Button
 								variant={'primary'}
@@ -98,6 +114,7 @@ function PortfolioPost() {
 								variant={'primary'}
 								shape={'default'}
 								size={'normal'}
+								onClick={handleEdit}
 							>
 								수정
 							</Button>

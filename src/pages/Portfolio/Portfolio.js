@@ -41,10 +41,7 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 */}
 				<S.MentorCardBox>
-					<MentorCard
-						variant={'blue'}
-						url={'/mock/bestMentor.json'}
-					/>
+					<MentorCard variant={'blue'} url={'/api/portfolio'} />
 				</S.MentorCardBox>
 			</div>
 
