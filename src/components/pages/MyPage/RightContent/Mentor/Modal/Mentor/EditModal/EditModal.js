@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import * as EM from './EditModal.styles';
 import axios from 'axios';
+import Textarea from '../../../../../../../@common/Textarea/Textarea';
 
 function EditModal({ categoryKey, setEditModalOpenState }) {
 	const [textareaValue, setTextareaValue] = useState({ content: '' }); // 작성한 첨삭 내용 (멘토)
@@ -73,21 +74,6 @@ function EditModal({ categoryKey, setEditModalOpenState }) {
 		setEditModalOpenState(false);
 	};
 
-	// 모달창 가장 바깥쪽 태그를 감싸주는 역할
-	const wrapperRef = useRef();
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	});
-	const handleClickOutside = event => {
-		if (event.target === wrapperRef.current) {
-			setEditModalOpenState(false);
-		}
-	};
-
 	return (
 		<>
 			<EM.Modal>
@@ -115,12 +101,13 @@ function EditModal({ categoryKey, setEditModalOpenState }) {
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>첨삭 내용</EM.InfoSubTitle>
-								<textarea
-									name="content"
+								<Textarea
+									name={'content'}
+									size={'regular'}
+									placeholder={'첨삭 내용 작성'}
 									defaultValue={mentoringData.title}
-									placeholder="첨삭 내용 작성"
 									onChange={handleChange}
-								></textarea>
+								/>
 							</EM.InfoSubTitleBox>
 						</EM.InfoBox>
 					</EM.InfoWrapper>

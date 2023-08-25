@@ -13,13 +13,13 @@ function InfoViewModal({ setEditModalOpenState }) {
 			try {
 				const response = await axios.get(
 					'https://jsonplaceholder.typicode.com/todos/1',
-				); // axios로 비동기 get으로 받은 데이터
-				setMentoringValue(response.data); // get요청으로 받은 데이터 담기
+				);
+				setMentoringValue(response.data);
 			} catch (err) {
-				setError(err); // 에러 state에 담기
+				setError(err);
 			}
 		}
-		getMentoringValue(); // 해당 컴포넌트가 브라우저에 그려질때 1회실행
+		getMentoringValue();
 	}, []);
 
 	// 모달 끄기
@@ -27,25 +27,10 @@ function InfoViewModal({ setEditModalOpenState }) {
 		setEditModalOpenState(false);
 	};
 
-	// 모달창 가장 바깥쪽 태그를 감싸주는 역할
-	const wrapperRef = useRef();
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	});
-	const handleClickOutside = event => {
-		if (event.target === wrapperRef.current) {
-			setEditModalOpenState(false);
-		}
-	};
-
 	return (
 		<>
-			<EVM.Modal ref={wrapperRef}>
-				<EVM.ModalWrapper>
+			<EVM.Modal>
+				<form>
 					<EVM.InfoWrapper>
 						<EVM.InfoTitle>첨삭 하기</EVM.InfoTitle>
 						<EVM.InfoBox>
@@ -76,7 +61,7 @@ function InfoViewModal({ setEditModalOpenState }) {
 						</EVM.InfoBox>
 					</EVM.InfoWrapper>
 					<EVM.ModalButton onClick={closeModal}>닫기</EVM.ModalButton>
-				</EVM.ModalWrapper>
+				</form>
 			</EVM.Modal>
 		</>
 	);

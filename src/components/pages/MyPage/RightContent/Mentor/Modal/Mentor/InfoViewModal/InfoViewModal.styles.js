@@ -1,58 +1,39 @@
 import styled from 'styled-components';
+import {
+	ModalBackground,
+	flexCenter,
+	flexColumn,
+} from '../../../../../../../../styles/common';
 
 export const Modal = styled.div`
-	display: flex;
-	width: 120rem;
-	min-height: 67.5rem;
-	heigth: 100vh;
-	padding: 0.625rem;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
+	${flexCenter}
+	${ModalBackground}
 
-	z-index: 999;
-
-	background: rgba(0, 0, 0, 0.2);
-
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-`;
-
-export const ModalWrapper = styled.div`
-	display: flex;
-	padding: 3.75rem 6.25rem;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 4rem;
-	border-radius: 0.625rem;
-	background: var(--grey-white, #fff);
+	& form {
+		${flexColumn}
+		padding: 60px 100px;
+		border-radius: 10px;
+		background: ${({ theme }) => theme.PALETTE.white};
+		gap: 4rem;
+	}
 `;
 
 export const InfoWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	${flexColumn}
+	width: 400px;
 	align-items: center;
-	gap: 2rem;
-	width: 25rem;
+	gap: 32px;
 `;
 
 export const InfoTitle = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
-	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 `;
 
 export const InfoBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 2rem;
 	width: 100%;
+	${flexColumn}
+	gap: 2rem;
 `;
 
 export const InfoSubTitleBox = styled.div`
@@ -60,16 +41,22 @@ export const InfoSubTitleBox = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 1rem;
+
+	& span {
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+		color: #757575;
+	}
 `;
 
 export const InfoSubTitle = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
+`;
 
-	& span : {
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
+export const ButtonBox = styled.div`
+	display: flex;
+	gap: 16px;
 `;
 
 export const ModalButton = styled.button`

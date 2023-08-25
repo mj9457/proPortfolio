@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import * as IEM from './InfoEditModal.styles';
+import Textarea from '../../../../../../../@common/Textarea/Textarea';
+import Input from '../../../../../../../@common/Input/Input';
 import axios from 'axios';
 
-// 멘티 - 멘토링 신청 모달
-function InfoEditModal({ setInfoModalOpenState }) {
+function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 	// 유저가 입력한 정보 state
 	const [textValue, setTextValue] = useState({
 		title: '',
@@ -14,20 +15,32 @@ function InfoEditModal({ setInfoModalOpenState }) {
 
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
-		const { name, value } = e.target;
 		setTextValue({
 			...textValue,
-			[name]: value,
+			[e.target.name]: e.target.value,
 		});
 	};
 
-	// 유저가 입력한 정보 submit => post로 서버에 전달
+	// 유저가 입력한 정보 submit
 	const handleSubmit = e => {
 		e.preventDefault();
-		axios
-			.post('https://jsonplaceholder.typicode.com/posts', textValue)
-			.then(res => console.log(res))
-			.then(alert('수정 완료되었습니다.'));
+
+		// 빈값 체크
+		if (
+			!textValue.title ||
+			!textValue.content ||
+			!textValue.email ||
+			!textValue.portfolio
+		) {
+			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
+		} else {
+			// 유저 작성한 신청서 post로 전달
+			axios
+				.post(postAddress, textValue)
+				.then(res => console.log(res))
+				.then(alert(`${action} 완료되었습니다.`))
+				.then(closeModal);
+		}
 	};
 
 	// 모달 끄기
@@ -35,7 +48,7 @@ function InfoEditModal({ setInfoModalOpenState }) {
 		setInfoModalOpenState(false);
 	};
 
-	// 모달창 가장 바깥쪽 태그를 감싸주는 역할
+	// 모달창 가장 바깥쪽 태그를 감싸주는 역할 (일단 사용 안함)
 	const wrapperRef = useRef();
 
 	useEffect(() => {
@@ -59,29 +72,32 @@ function InfoEditModal({ setInfoModalOpenState }) {
 						<IEM.InfoBox>
 							<IEM.InfoSubTitleBox>
 								<IEM.InfoSubTitle>신청 제목</IEM.InfoSubTitle>
-								<input
+								<Input
 									type="text"
 									name="title"
-									placeholder="신입입니다. 잘부탁드립니다"
+									size={'regular'}
+									placeholder="신청 제목"
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
 							<IEM.InfoSubTitleBox>
 								<IEM.InfoSubTitle>질문 내용</IEM.InfoSubTitle>
-								<textarea
-									name="content"
-									placeholder=" 안녕하세요. 김현규입니다. 포트폴리오가 잘
-									작성되었는지 무언가 부족한 부분은 없는지
-									알려주시면 좋겠습니다. 잘부탁드립니다."
+								<Textarea
+									name={'content'}
+									size={'regular'}
+									placeholder={
+										'질문할 내용을 자세하게 적어주세요!'
+									}
 									onChange={handleChange}
-								></textarea>
+								/>
 							</IEM.InfoSubTitleBox>
 							<IEM.InfoSubTitleBox>
 								<IEM.InfoSubTitle>이메일 주소</IEM.InfoSubTitle>
-								<input
+								<Input
 									type="email"
 									name="email"
-									placeholder="sdfsdfsdfsdf@naver.com"
+									size={'regular'}
+									placeholder="exIEMple@naver.com"
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
@@ -89,21 +105,22 @@ function InfoEditModal({ setInfoModalOpenState }) {
 								<IEM.InfoSubTitle>
 									포트폴리오 주소
 								</IEM.InfoSubTitle>
-								<input
+								<Input
 									type="text"
 									name="portfolio"
-									placeholder="http://github......"
+									size={'regular'}
+									placeholder="https://github/exIEMple"
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
 						</IEM.InfoBox>
 					</IEM.InfoWrapper>
 					<IEM.ButtonBox>
-						<IEM.CancleButton onClick={closeModal}>
+						<IEM.CancelButton onClick={closeModal}>
 							닫기
-						</IEM.CancleButton>
+						</IEM.CancelButton>
 						<IEM.CompleteButton type="submit">
-							수정
+							{action}
 						</IEM.CompleteButton>
 					</IEM.ButtonBox>
 				</form>

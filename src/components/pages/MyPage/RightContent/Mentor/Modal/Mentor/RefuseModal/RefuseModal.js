@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RM from './RefuseModal.styles';
 import axios from 'axios';
+import Textarea from '../../../../../../../@common/Textarea/Textarea';
 
 // 멘토 - 멘토링 거절 사유 작성 모달
 function RefuseModal({ setRefuseModalOpenState }) {
@@ -17,36 +18,28 @@ function RefuseModal({ setRefuseModalOpenState }) {
 		});
 	};
 
-	// 유저가 입력한 정보 submit => post로 서버에 전달
+	// 유저가 입력한 정보 submit
 	const handleSubmit = e => {
 		e.preventDefault();
-		axios
-			.post('https://jsonplaceholder.typicode.com/posts', textValue)
-			.then(res => {
-				console.log(res.data);
-				alert(`거절되었습니다. 사유는 ${res.data.content}입니다.`);
-				closeModal();
-			});
+
+		// 빈값 체크
+		if (!textValue.content) {
+			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
+		} else {
+			// 유저 작성한 신청서 post로 전달
+			axios
+				.post('https://jsonplaceholder.typicode.com/posts', textValue)
+				.then(res => {
+					console.log(res.data);
+					alert(`거절되었습니다. 사유는 ${res.data.content}입니다.`);
+					closeModal();
+				});
+		}
 	};
 
 	// 모달 끄기
 	const closeModal = () => {
 		setRefuseModalOpenState(false);
-	};
-
-	// 모달창 가장 바깥쪽 태그를 감싸주는 역할
-	const wrapperRef = useRef();
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	});
-	const handleClickOutside = event => {
-		if (event.target === wrapperRef.current) {
-			setRefuseModalOpenState(false);
-		}
 	};
 
 	return (
@@ -57,12 +50,13 @@ function RefuseModal({ setRefuseModalOpenState }) {
 						<RM.InfoTitle>거절 사유 작성</RM.InfoTitle>
 						<RM.InfoBox>
 							<RM.InfoSubTitleBox>
-								<RM.InfoSubTitle>거절사유</RM.InfoSubTitle>
-								<textarea
-									placeholder="사유를 적어주세요."
-									name="content"
+								<RM.InfoSubTitle>거절 사유</RM.InfoSubTitle>
+								<Textarea
+									name={'content'}
+									size={'regular'}
+									placeholder={'거절 사유를 적어주세요'}
 									onChange={handleChange}
-								></textarea>
+								/>
 							</RM.InfoSubTitleBox>
 						</RM.InfoBox>
 					</RM.InfoWrapper>

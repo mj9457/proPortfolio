@@ -1,14 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import * as IM from './InfoViewModal.styles';
 import axios from 'axios';
+import Input from '../../../../../../../@common/Input/Input';
+import Textarea from '../../../../../../../@common/Textarea/Textarea';
 
+// 멘토 - 멘토링 신청서 보기 모달
 function InfoViewModal({ setInfoModalOpenState }) {
-	const [textareaValue, setTextareaValue] = useState(''); // 서버에 저장된 거절 사유 받아오기
+	const [textareaValue, setTextareaValue] = useState(''); //
 	const [error, setError] = useState(null); // 에러 state
 
 	// 서버통신 (GET)
 	useEffect(() => {
-		async function getRefuseValue() {
+		async function getInfo() {
 			try {
 				const response = await axios.get(
 					'https://jsonplaceholder.typicode.com/todos/1',
@@ -19,7 +22,7 @@ function InfoViewModal({ setInfoModalOpenState }) {
 				setError(err);
 			}
 		}
-		getRefuseValue();
+		getInfo();
 	}, []);
 
 	// 모달 끄기
@@ -27,31 +30,16 @@ function InfoViewModal({ setInfoModalOpenState }) {
 		setInfoModalOpenState(false);
 	};
 
-	// 모달창 가장 바깥쪽 태그를 감싸주는 역할
-	const wrapperRef = useRef();
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	});
-	const handleClickOutside = event => {
-		if (event.target === wrapperRef.current) {
-			setInfoModalOpenState(false);
-		}
-	};
-
 	return (
 		<>
-			<IM.Modal ref={wrapperRef}>
-				<IM.ModalWrapper>
+			<IM.Modal>
+				<form>
 					<IM.InfoWrapper>
 						<IM.InfoTitle>신청 정보</IM.InfoTitle>
 						<IM.InfoBox>
 							<IM.InfoSubTitleBox>
 								<IM.InfoSubTitle>신청 제목</IM.InfoSubTitle>
-								<span>{textareaValue.title}</span>
+								<span>{textareaValue.title || undefined}</span>
 							</IM.InfoSubTitleBox>
 							<IM.InfoSubTitleBox>
 								<IM.InfoSubTitle>질문 내용</IM.InfoSubTitle>
@@ -70,7 +58,7 @@ function InfoViewModal({ setInfoModalOpenState }) {
 						</IM.InfoBox>
 					</IM.InfoWrapper>
 					<IM.ModalButton onClick={closeModal}>닫기</IM.ModalButton>
-				</IM.ModalWrapper>
+				</form>
 			</IM.Modal>
 		</>
 	);

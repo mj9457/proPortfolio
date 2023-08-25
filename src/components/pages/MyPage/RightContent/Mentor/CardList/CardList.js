@@ -2,7 +2,11 @@ import * as CL from './CardList.styles';
 import ApplicationCard from '../Card/Total/ApplicationCard';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { mentoringItem } from '../../../../../../recoil/atoms/myPage/myPage.atom';
+import {
+	mentoringItem,
+	userData,
+} from '../../../../../../recoil/atoms/myPage/myPage.atom';
+import MESSAGE from '../../../../../../constants/message';
 
 // 카드 리스트
 function CardList() {
@@ -11,6 +15,21 @@ function CardList() {
 	const applyLength = mentoringData.apply.length;
 	const completedLength = mentoringData.completed.length;
 	const refuseLength = mentoringData.refuse.length;
+
+	const subTitles = {
+		mentor: {
+			total: MESSAGE.MYPAGE.MENTOR.SUBTITLE.TOTAL,
+			apply: MESSAGE.MYPAGE.MENTOR.SUBTITLE.APPLY,
+			completed: MESSAGE.MYPAGE.MENTOR.SUBTITLE.COMPLETED,
+			refuse: MESSAGE.MYPAGE.MENTOR.SUBTITLE.REFUSE,
+		},
+		mentee: {
+			total: MESSAGE.MYPAGE.MENTEE.SUBTITLE.TOTAL,
+			apply: MESSAGE.MYPAGE.MENTEE.SUBTITLE.APPLY,
+			completed: MESSAGE.MYPAGE.MENTEE.SUBTITLE.COMPLETED,
+			refuse: MESSAGE.MYPAGE.MENTEE.SUBTITLE.REFUSE,
+		},
+	};
 
 	const [category, setCategory] = useState('');
 	const buttonHandler = e => {
@@ -24,24 +43,28 @@ function CardList() {
 					length={applyLength}
 					fun={buttonHandler}
 					categoryKey={category}
+					subTitles={subTitles}
 				/>
 			) : category === 'completed' ? (
 				<CardListLayout
 					length={completedLength}
 					fun={buttonHandler}
 					categoryKey={category}
+					subTitles={subTitles}
 				/>
 			) : category === 'refuse' ? (
 				<CardListLayout
 					length={refuseLength}
 					fun={buttonHandler}
 					categoryKey={category}
+					subTitles={subTitles}
 				/>
 			) : (
 				<CardListLayout
 					length={totalLength}
 					fun={buttonHandler}
 					categoryKey={category}
+					subTitles={subTitles}
 				/>
 			)}
 		</>
@@ -50,7 +73,10 @@ function CardList() {
 
 export default CardList;
 
-function CardListLayout({ length, fun, categoryKey }) {
+function CardListLayout({ length, fun, categoryKey, subTitles }) {
+	const user = useRecoilValue(userData);
+	const users = { ...user };
+	users.role = 'mentor';
 	return (
 		<>
 			<CL.SubContentBox>
@@ -59,61 +85,93 @@ function CardListLayout({ length, fun, categoryKey }) {
 						{categoryKey === 'apply' ? (
 							<>
 								<CL.NonClicked id={'total'} onClick={fun}>
-									신청 받은 건
+									{users.role === 'mentor'
+										? subTitles.mentor.total
+										: subTitles.mentee.total}
 								</CL.NonClicked>
 								<CL.Clicked id={'apply'} onClick={fun}>
-									신청 수락 건
+									{users.role === 'mentor'
+										? subTitles.mentor.apply
+										: subTitles.mentee.apply}
 								</CL.Clicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									리뷰 완료 건
+									{users.role === 'mentor'
+										? subTitles.mentor.completed
+										: subTitles.mentee.completed}
 								</CL.NonClicked>
 								<CL.NonClicked id={'refuse'} onClick={fun}>
-									신청 거절 건
+									{users.role === 'mentor'
+										? subTitles.mentor.refuse
+										: subTitles.mentee.refuse}
 								</CL.NonClicked>
 							</>
 						) : categoryKey === 'completed' ? (
 							<>
 								<CL.NonClicked id={'total'} onClick={fun}>
-									신청 받은 건
+									{users.role === 'mentor'
+										? subTitles.mentor.total
+										: subTitles.mentee.total}
 								</CL.NonClicked>
 								<CL.NonClicked id={'apply'} onClick={fun}>
-									신청 수락 건
+									{users.role === 'mentor'
+										? subTitles.mentor.apply
+										: subTitles.mentee.apply}
 								</CL.NonClicked>
 								<CL.Clicked id={'completed'} onClick={fun}>
-									리뷰 완료 건
+									{users.role === 'mentor'
+										? subTitles.mentor.completed
+										: subTitles.mentee.completed}
 								</CL.Clicked>
 								<CL.NonClicked id={'refuse'} onClick={fun}>
-									신청 거절 건
+									{users.role === 'mentor'
+										? subTitles.mentor.refuse
+										: subTitles.mentee.refuse}
 								</CL.NonClicked>
 							</>
 						) : categoryKey === 'refuse' ? (
 							<>
 								<CL.NonClicked id={'total'} onClick={fun}>
-									신청 받은 건
+									{users.role === 'mentor'
+										? subTitles.mentor.total
+										: subTitles.mentee.total}
 								</CL.NonClicked>
 								<CL.NonClicked id={'apply'} onClick={fun}>
-									신청 수락 건
+									{users.role === 'mentor'
+										? subTitles.mentor.apply
+										: subTitles.mentee.apply}
 								</CL.NonClicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									리뷰 완료 건
+									{users.role === 'mentor'
+										? subTitles.mentor.completed
+										: subTitles.mentee.completed}
 								</CL.NonClicked>
 								<CL.Clicked id={'refuse'} onClick={fun}>
-									신청 거절 건
+									{users.role === 'mentor'
+										? subTitles.mentor.refuse
+										: subTitles.mentee.refuse}
 								</CL.Clicked>
 							</>
 						) : (
 							<>
 								<CL.Clicked id={'total'} onClick={fun}>
-									신청 받은 건
+									{users.role === 'mentor'
+										? subTitles.mentor.total
+										: subTitles.mentee.total}
 								</CL.Clicked>
 								<CL.NonClicked id={'apply'} onClick={fun}>
-									신청 수락 건
+									{users.role === 'mentor'
+										? subTitles.mentor.apply
+										: subTitles.mentee.apply}
 								</CL.NonClicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									리뷰 완료 건
+									{users.role === 'mentor'
+										? subTitles.mentor.completed
+										: subTitles.mentee.completed}
 								</CL.NonClicked>
 								<CL.NonClicked id={'refuse'} onClick={fun}>
-									신청 거절 건
+									{users.role === 'mentor'
+										? subTitles.mentor.refuse
+										: subTitles.mentee.refuse}
 								</CL.NonClicked>
 							</>
 						)}
@@ -123,13 +181,19 @@ function CardListLayout({ length, fun, categoryKey }) {
 
 				{length === 0 ? (
 					<CL.NonSubContentListBox>
-						{`내역이 없습니다. ${categoryKey}탭입니다`}
+						{MESSAGE.NODATA.LIST}
 					</CL.NonSubContentListBox>
 				) : (
 					<CL.SubContentListBox>
-						<ApplicationCard
-							categoryKey={categoryKey}
-						></ApplicationCard>
+						{users.role === 'mentor' ? (
+							<ApplicationCard
+								categoryKey={categoryKey}
+							></ApplicationCard>
+						) : (
+							<ApplicationCard
+								categoryKey={categoryKey}
+							></ApplicationCard>
+						)}
 					</CL.SubContentListBox>
 				)}
 			</CL.SubContentBox>

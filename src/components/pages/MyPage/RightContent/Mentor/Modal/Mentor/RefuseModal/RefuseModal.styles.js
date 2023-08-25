@@ -54,18 +54,6 @@ export const InfoSubTitleBox = styled(InfoBox)`
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	}
-
-	& textarea {
-		width: 100%;
-		height: 6.25em;
-		border: 1px solid rgba(0, 0, 0, 0.1);
-		resize: none;
-		padding-top: 0.81rem;
-		padding-left: 0.75rem;
-
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
 `;
 
 export const InfoSubTitle = styled.div`

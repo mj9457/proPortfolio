@@ -1,31 +1,58 @@
 import { useRecoilValue } from 'recoil';
 import * as MP from './MentoringPage.styles';
-import { mentoringItem } from '../../../../../../recoil/atoms/myPage/myPage.atom';
+import {
+	mentoringItem,
+	userData,
+} from '../../../../../../recoil/atoms/myPage/myPage.atom';
+import MESSAGE from '../../../../../../constants/message';
 
 // 멘토 코칭 페이지
 function MentoringPage() {
 	const mentoringData = useRecoilValue(mentoringItem);
 	const ApplicationArr = [
-		{ subtitle: '신청 받은 건', length: `${mentoringData.total.length}` },
-		{ subtitle: '신청 수락 건', length: `${mentoringData.apply.length}` },
 		{
-			subtitle: '진행 완료 건',
+			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.TOTAL,
+			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.TOTAL,
+			length: `${mentoringData.total.length}`,
+		},
+		{
+			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.APPLY,
+			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.APPLY,
+			length: `${mentoringData.apply.length}`,
+		},
+		{
+			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.COMPLETED,
+			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.COMPLETED,
 			length: `${mentoringData.completed.length}`,
 		},
-		{ subtitle: '신청 거절 건', length: `${mentoringData.refuse.length}` },
+		{
+			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.REFUSE,
+			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.REFUSE,
+			length: `${mentoringData.refuse.length}`,
+		},
 	];
+
+	const user = useRecoilValue(userData);
+	const users = { ...user };
+	users.role = 'mentor';
 
 	return (
 		<>
 			<MP.DetailOnboradWrapper>
 				<MP.MainTitleBox>
-					<MP.MainTitle>멘토링 신청 받은 내역</MP.MainTitle>
+					<MP.MainTitle>
+						{users.role === 'mentor'
+							? MESSAGE.MYPAGE.MENTOR.TITLE
+							: MESSAGE.MYPAGE.MENTEE.TITLE}
+					</MP.MainTitle>
 
 					<MP.DetailOnborad>
 						{ApplicationArr.map((element, index) => (
 							<MP.DetailOnboradBox key={index}>
 								<MP.DetailOnboradSubTitle>
-									{element.subtitle}
+									{users.role === 'mentor'
+										? element.subtitleMentor
+										: element.subtitleMentee}
 								</MP.DetailOnboradSubTitle>
 								<MP.DetailOnboradSubTitleCount>
 									{element.length}

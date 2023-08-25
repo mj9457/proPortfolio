@@ -66,6 +66,7 @@ export const SubContentListBox = styled.div`
 	align-content: flex-start;
 	row-gap: 1.25rem;
 	flex-wrap: wrap;
+	margin-bottom: 2rem;
 `;
 
 export const NonSubContentListBox = styled.div`
