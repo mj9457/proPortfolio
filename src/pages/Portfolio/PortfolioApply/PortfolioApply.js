@@ -9,21 +9,26 @@ import Button from '../../../components/@common/Button/Button';
 import Textarea from '../../../components/@common/Textarea/Textarea';
 import Input from '../../../components/@common/Input/Input';
 import MESSAGE from '../../../constants/message';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function PortfolioApply() {
 	useFooter();
 	const navigate = useNavigate();
+	const params = useParams();
 
 	// 유저 정보 중에서 이름, 직무, 회사만 get으로 불러온 후 이름 제외 나머지는 수정 가능하게 처리 후 post로 보내기
 	// 정보가 다 들어갔는지 빈칸이 있으면 보내지 못하게 처리 → 우선 성공
 
 	const [mentorPost, setMentorPost] = useState({
-		select: '',
-		name: '',
+		position: '',
+		nickName: 'ㅎㅎ',
+		name: '문수민',
 		company: '',
+		career: 5,
 		title: '',
-		contents: '',
+		description: '',
+		coachingCount: 13,
+		profileImageUrl: '',
 	});
 
 	const handleChange = e => {
@@ -39,7 +44,7 @@ function PortfolioApply() {
 
 	const check = [
 		{
-			checked: mentorPost.select.length === 0,
+			checked: mentorPost.position.length === 0,
 			message: MESSAGE.CHECK.POSITION,
 		},
 		{
@@ -55,10 +60,27 @@ function PortfolioApply() {
 			message: MESSAGE.CHECK.TITLE,
 		},
 		{
-			checked: mentorPost.contents.length === 0,
+			checked: mentorPost.description.length === 0,
 			message: MESSAGE.CHECK.DESCRIPTION,
 		},
 	];
+
+	const checkParams = async () => {
+		// if (params.portfolioId) {
+		// 	await axios.put(
+		// 		`https://localhost:8080/api/portfolio/${params._id}`,
+		// 		mentorPost,
+		// 	);
+		// } else {
+		await axios({
+			url: 'http://localhost:8080/api/portfolio',
+			method: 'post',
+			data: mentorPost,
+		}).then(res => console.log(res));
+		alert(MESSAGE.POST.COMPLETE);
+		navigate('/portfolio');
+		// }
+	};
 
 	const handleSubmit = async () => {
 		const fail = check.filter(el => el.checked);
@@ -67,13 +89,7 @@ function PortfolioApply() {
 			const errorMessage = fail[0].message;
 			alert(errorMessage);
 		} else {
-			await axios
-				.post('https://jsonplaceholder.typicode.com/posts', {
-					mentorPost,
-				})
-				.then(res => console.log(res));
-			alert('게시글 작성이 완료되었습니다.');
-			navigate(-1);
+			checkParams();
 		}
 	};
 
@@ -87,7 +103,10 @@ function PortfolioApply() {
 				<S.ContentsBox>
 					<span>1. 멘토 님의 기본 정보를 작성해 주세요.</span>
 
-					<Information onChange={handleChange} />
+					<Information
+						onChange={handleChange}
+						name={mentorPost.name}
+					/>
 				</S.ContentsBox>
 
 				<S.ContentsBox>
@@ -106,7 +125,7 @@ function PortfolioApply() {
 						size={'regular'}
 						placeholder={'소개 글 및 경력은 필수로 입력해 주세요.'}
 						onChange={handleChange}
-						name="contents"
+						name="description"
 					/>
 				</S.ContentsBox>
 

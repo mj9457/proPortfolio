@@ -4,7 +4,7 @@ import Input from '../../../@common/Input/Input';
 import Select from '../../../@common/Select/Select';
 
 function Information(props) {
-	const { onChange } = props;
+	const { onChange, name } = props;
 
 	return (
 		<S.InfoBox>
@@ -14,7 +14,7 @@ function Information(props) {
 					size={'regular'}
 					font={'regular'}
 					onChange={onChange}
-					name="select"
+					name="position"
 				>
 					<option hidden>선택</option>
 					<option value="frontend">프론트엔드 개발</option>
@@ -32,7 +32,7 @@ function Information(props) {
 					placeholder="이름을 입력해 주세요."
 					onChange={onChange}
 					name="name"
-					value={'김민수'}
+					value={name}
 					readOnly
 				/>
 			</S.Contents>

@@ -62,7 +62,7 @@ function PortfolioPost() {
 	const handleDelete = async () => {
 		if (confirm(MESSAGE.POST.DELETE)) {
 			await axios.delete(`http://localhost:8080/api/portfolio/${path}`);
-			navigate(-1);
+			navigate('/portfolio');
 		}
 	};
 
