@@ -36,7 +36,7 @@ function Slider({ background, url }) {
 			<H.SliderWrapper>
 				<H.SlideContainer
 					style={{
-						transform: `translateX(-${currentIndex * 50.8}%)`,
+						transform: `translateX(-${currentIndex * 50.7}%)`,
 					}}
 				>
 					{studyInfoList.map((studyInfo, index) => (

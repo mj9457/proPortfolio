@@ -52,6 +52,7 @@ export const Title = styled.p`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	margin-bottom: 32px;
 	white-space: nowrap;
+	margin-top: 16px;
 	text-overflow: ellipsis;
 	width: 218px;
 `;
