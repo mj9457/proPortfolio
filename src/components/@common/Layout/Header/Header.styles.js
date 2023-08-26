@@ -42,6 +42,9 @@ export const LoginBar = styled.div`
 		color: ${({ theme }) => theme.PALETTE.black};
 		text-decoration: none;
 		cursor: pointer;
+		> img {
+			width: 24px;
+		}
 
 		&:visited {
 			color: ${({ theme }) => theme.PALETTE.black};
