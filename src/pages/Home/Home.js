@@ -75,7 +75,10 @@ function Home() {
 						</H.ViewAll>
 					</H.TitleBox>
 					<H.PopularCards>
-						<MentorCard variant={'white'} url={'/api/portfolio'} />
+						<MentorCard
+							variant={'white'}
+							url={'/api/portfolio/recommend/topMentor'}
+						/>
 					</H.PopularCards>
 				</H.PopularMento>
 			</H.Content>

@@ -42,7 +42,7 @@ function SignUp() {
 
 		try {
 			const response = await axios.post(
-				'http://localhost:8080/api/auth/signup',
+				'http://34.64.245.195/api/auth/signup',
 				{
 					name,
 					email,
