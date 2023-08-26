@@ -73,7 +73,12 @@ function SignUp() {
 				</div>
 				<div>
 					<label>이름</label>
-					<Input type="text" value={name} size={'medium'} />
+					<Input
+						type="text"
+						value={name}
+						size={'medium'}
+						onChange={handleNameChange}
+					/>
 				</div>
 				<div>
 					<label>닉네임</label>
