@@ -18,13 +18,13 @@ const useApi = ({
 	data: initData = {}, // 초기 데이터 (선택사항)
 	shouldFetch = false, // 컴포넌트 마운트 시 자동으로 요청
 }) => {
-	const [isLoading, setIsLoding] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [result, setResult] = useState({});
 
 	const initFetch = useCallback(async () => {
 		try {
-			setIsLoding(true);
+			setIsLoading(true);
 			const fetchResult = await mapMethodToFetcher[initMethod](
 				path,
 				initData,
@@ -33,7 +33,7 @@ const useApi = ({
 		} catch (err) {
 			setError(err);
 		}
-		setIsLoding(false);
+		setIsLoading(false);
 	}, [initMethod, initData, path]);
 
 	const trigger = useCallback(
@@ -42,7 +42,7 @@ const useApi = ({
 			data: triggerData = initData,
 		}) => {
 			try {
-				setIsLoding(true);
+				setIsLoading(true);
 				const triggerResult = await mapMethodToFetcher[triggerMethod](
 					path,
 					triggerData,
@@ -51,7 +51,7 @@ const useApi = ({
 			} catch (err) {
 				setError(err);
 			}
-			setIsLoding(false);
+			setIsLoading(false);
 		},
 		[initMethod, initData, path],
 	);
