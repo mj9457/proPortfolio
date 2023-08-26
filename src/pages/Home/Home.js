@@ -9,7 +9,7 @@ import { getCookie } from '../../utils/cookie';
 
 function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);
-	const userName = getCookie('name');
+	const userName = getCookie('userName');
 	console.log(userName);
 
 	useEffect(() => {
@@ -75,12 +75,7 @@ function Home() {
 						</H.ViewAll>
 					</H.TitleBox>
 					<H.PopularCards>
-						<MentorCard
-							variant={'white'}
-							url={
-								'http://localhost:8080/api/portfolio/recommend/topMentor'
-							}
-						/>
+						<MentorCard variant={'white'} url={'/api/portfolio'} />
 					</H.PopularCards>
 				</H.PopularMento>
 			</H.Content>

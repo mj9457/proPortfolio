@@ -16,12 +16,13 @@ function SignUp() {
 	useEffect(() => {
 		async function fetchUserData() {
 			try {
-				const name = getCookie('name');
-				const email = getCookie('email');
+				const name = getCookie('userName');
+				const email = decodeURIComponent(getCookie('email'));
 				setEmail(email);
 				setName(name);
 
-				console.log(name, email);
+				console.log(name);
+				console.log(email);
 			} catch (error) {
 				console.error('사용자 정보를 가져오는데 실패했습니다.', error);
 			}
