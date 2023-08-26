@@ -12,11 +12,15 @@ function Header() {
 	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const navigate = useNavigate();
 
+	const handleTokenChange = () => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	};
+
 	console.log(isLoggedIn);
 
 	useEffect(() => {
-		const tokenStatus = checkToken();
-		setIsLoggedIn(tokenStatus);
+		handleTokenChange();
 	}, []);
 
 	const handleSignupClick = () => {
@@ -28,6 +32,7 @@ function Header() {
 
 	const handleLogoutClick = () => {
 		clearToken();
+		handleTokenChange();
 		navigate('/');
 	};
 
