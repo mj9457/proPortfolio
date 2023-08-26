@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkToken, clearToken } from '../../../../utils/cookie';
 
@@ -9,10 +9,15 @@ import Button from '../../Button/Button';
 
 function Header() {
 	const [openModal, setOpenModal] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const navigate = useNavigate();
-	const isLoggedIn = checkToken();
 
 	console.log(isLoggedIn);
+
+	useEffect(() => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	}, []);
 
 	const handleSignupClick = () => {
 		setOpenModal(true);
@@ -43,7 +48,7 @@ function Header() {
 					{isLoggedIn ? (
 						<>
 							<a onClick={handleLogoutClick}>로그아웃</a>
-							<a href="#">마이페이지</a>
+							<a href="/mypage">마이페이지</a>
 							<a href="#">
 								<img
 									src="/assets/img/icons/bell.png"

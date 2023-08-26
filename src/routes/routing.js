@@ -88,7 +88,7 @@ const router = createBrowserRouter([
 				element: <UserMentorApply />,
 			},
 			{
-				path: 'MyPage',
+				path: 'mypage',
 				element: <MyPageLayout />,
 				children: [
 					{
