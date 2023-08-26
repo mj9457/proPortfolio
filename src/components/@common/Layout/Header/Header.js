@@ -12,17 +12,19 @@ function Header() {
 	const navigate = useNavigate();
 	const isLoggedIn = checkToken();
 
-	function handleSignupClick() {
-		setOpenModal(true);
-	}
-	function handleSignupClose() {
-		setOpenModal(false);
-	}
+	console.log(isLoggedIn);
 
-	function handleLogoutClick() {
+	const handleSignupClick = () => {
+		setOpenModal(true);
+	};
+	const handleSignupClose = () => {
+		setOpenModal(false);
+	};
+
+	const handleLogoutClick = () => {
 		clearToken();
 		navigate('/');
-	}
+	};
 
 	return (
 		<S.Header>
