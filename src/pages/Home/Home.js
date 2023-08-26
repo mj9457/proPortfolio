@@ -11,7 +11,6 @@ function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);
 	const userName = getCookie('userName');
 	console.log(userName);
-	HTMLFormControlsCollection(document.cookie);
 
 	useEffect(() => {
 		const getRecommendedMentors = async () => {
