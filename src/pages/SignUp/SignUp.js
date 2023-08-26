@@ -93,11 +93,11 @@ function SignUp() {
 					<label>직무</label>
 					<select value={position} onChange={handleJobChange}>
 						<option value="">선택하세요</option>
-						<option value="backend">백엔드 개발자</option>
-						<option value="frontend">프론트엔드 개발자</option>
-						<option value="android">안드로이드 개발자</option>
-						<option value="ios">iOS 개발자</option>
-						<option value="publisher">웹 퍼블리셔</option>
+						<option value="백엔드 개발">백엔드 개발</option>
+						<option value="프론트엔드 개발">프론트엔드 개발</option>
+						<option value="안드로이드 개발">안드로이드 개발</option>
+						<option value="IOS 개발">IOS 개발</option>
+						<option value="웹 퍼블리셔">웹 퍼블리셔</option>
 					</select>
 				</div>
 				<Button
