@@ -5,9 +5,12 @@ import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCa
 import MentorCard from '../../components/@common/Card/Card';
 import RollingSlider from './SlideBanner/SlideBanner';
 import Slider from '../../components/@common/Slider/Slider';
+import { getCookie } from '../../utils/cookie';
 
 function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);
+	const userName = getCookie('name');
+	console.log(userName);
 
 	useEffect(() => {
 		const getRecommendedMentors = async () => {
@@ -26,7 +29,7 @@ function Home() {
 			<H.Content>
 				<RollingSlider />
 				<H.RecommendMentor>
-					<H.Title>👀 000님에게 추천하는 멘토</H.Title>
+					<H.Title>👀 {userName}님에게 추천하는 멘토</H.Title>
 					<H.RecommendCards>
 						{recommendedMentors.map((mentor, idx) => (
 							<RecommendCard
