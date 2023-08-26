@@ -16,8 +16,10 @@ import {
 } from './UserMentorApply.styles';
 import { useSetRecoilState } from 'recoil';
 import { includeFooterState } from '../../recoil/atoms/index.atom';
+import useFooter from '../../hooks/useFooter';
 
 const UserMentorApply = () => {
+	useFooter();
 	const setIncludeFooter = useSetRecoilState(includeFooterState);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [imageUrl, setImageUrl] = useState(null);
@@ -27,20 +29,12 @@ const UserMentorApply = () => {
 		accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
 		secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
 	});
-	// 현재 mile
-
-	useEffect(() => {
-		setIncludeFooter(false);
-		return () => {
-			setIncludeFooter(true);
-		};
-	}, [setIncludeFooter]);
 	const fileUploadHandler = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
 		}
 	};
-	const handleFileChange = async e => {
+	const handleFileChange = e => {
 		const file = e.target.files[0];
 		const fileExt = file?.name.split('.').pop();
 		if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {

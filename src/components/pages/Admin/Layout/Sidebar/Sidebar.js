@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
 	AuditOutlined,
 	FormOutlined,
@@ -42,7 +42,7 @@ const Sidebar = () => {
 	const url = location.pathname.split('/');
 	const formUrl = url[url.length - 1];
 	let tab = formUrl.charAt(0).toUpperCase() + formUrl.slice(1).toLowerCase();
-	console.log(tab);
+	// console.log(tab);
 	/**
 	 *
 	 * Todo Refactoring 필요

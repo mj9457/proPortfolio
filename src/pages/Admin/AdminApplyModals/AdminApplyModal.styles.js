@@ -9,13 +9,13 @@ const Modal = styled.div`
 `;
 
 const ApplyModalWrap = styled.div`
-	position: relative;
 	background-color: #fff;
-	width: 600px;
-	margin: 0 auto;
 	border-radius: 10px;
-	padding: 100px 100px 60px;
-	top: 40px;
+	padding: 50px 100px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `;
 const ContentArea = styled.div``;
 const MainTitle = styled.h2`
@@ -33,8 +33,8 @@ const SubTitle = styled.h2`
 `;
 const IconBox = styled.div`
 	position: absolute;
-	right: 40px;
-	top: 40px;
+	right: 30px;
+	top: 30px;
 `;
 const CloseIcon = styled.i`
 	cursor: pointer;
