@@ -11,6 +11,7 @@ import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
 import MESSAGE from '../../../constants/message';
+import useApi from '../../../hooks/useApi';
 
 function PortfolioPost() {
 	useFooter();
@@ -59,10 +60,16 @@ function PortfolioPost() {
 	};
 
 	// 삭제하기
-	const handleDelete = async () => {
+	const { trigger, isLoading, error } = useApi({
+		path: `/api/portfolio/${path}`,
+		method: 'delete',
+	});
+
+	const handleDelete = () => {
 		if (confirm(MESSAGE.POST.DELETE)) {
-			await axios.delete(`http://localhost:8080/api/portfolio/${path}`);
+			trigger({});
 			navigate('/portfolio');
+			alert(MESSAGE.POST.DELETECOMPLETE);
 		}
 	};
 

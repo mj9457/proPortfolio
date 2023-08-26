@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import useFooter from '../../../hooks/useFooter';
 
@@ -10,6 +9,7 @@ import Textarea from '../../../components/@common/Textarea/Textarea';
 import Input from '../../../components/@common/Input/Input';
 import MESSAGE from '../../../constants/message';
 import { useNavigate, useParams } from 'react-router-dom';
+import useApi from '../../../hooks/useApi';
 
 function PortfolioApply() {
 	useFooter();
@@ -64,7 +64,12 @@ function PortfolioApply() {
 		},
 	];
 
-	const checkParams = async () => {
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/api/portfolio',
+		method: 'post',
+	});
+
+	const checkParams = () => {
 		// 글 수정시 들어갈 로직
 		// if (params.portfolioId) {
 		// 	await axios.put(
@@ -72,13 +77,16 @@ function PortfolioApply() {
 		// 		mentorPost,
 		// 	);
 		// } else {
-		await axios({
-			url: 'http://localhost:8080/api/portfolio',
-			method: 'post',
+		//  axios({
+		// 	url: 'http://localhost:8080/api/portfolio',
+		// 	method: 'post',
+		// 	data: mentorPost,
+		// }).then(res => console.log(res));
+		trigger({
 			data: mentorPost,
-		}).then(res => console.log(res));
+		});
 		alert(MESSAGE.POST.COMPLETE);
-		navigate('/portfolio');
+		// navigate('/portfolio');
 		// }
 	};
 

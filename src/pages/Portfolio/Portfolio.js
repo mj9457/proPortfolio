@@ -4,11 +4,15 @@ import Line from '../../components/@common/Line/Line';
 import MentorCard from '../../components/@common/Card/Card';
 import Button from '../../components/@common/Button/Button';
 import Category from '../../components/@common/Category/Category';
+import { useRef } from 'react';
 
 function Portfolio() {
 	// 어딘가에 저장된 user role을 가져와서 mentor의 경우만 작성하기 버튼 확인 가능
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
-	// infinite scroll
+	// infinite scroll → intersection observer 사용...? 모르겠음
+
+	const ref = useRef();
+	// if(scrollTo)
 
 	return (
 		<S.PortfolioBox>
@@ -41,9 +45,7 @@ function Portfolio() {
 				<S.MentorCardBox>
 					<MentorCard
 						variant={'blue'}
-						url={
-							'http://localhost:8080/api/portfolio/recommend/topMentor'
-						}
+						url={'/api/portfolio/recommend/topMentor'}
 					/>
 				</S.MentorCardBox>
 			</div>
@@ -59,6 +61,7 @@ function Portfolio() {
 
 				<S.MentorCardBox>
 					<MentorCard
+						ref={ref}
 						variant={'white'}
 						url={'http://localhost:8080/api/portfolio'}
 					/>

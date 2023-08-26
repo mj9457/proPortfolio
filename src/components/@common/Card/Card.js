@@ -1,30 +1,28 @@
 import { useEffect, useState } from 'react';
 
 import * as S from './Card.styles';
-import axios from 'axios';
+import useApi from '../../../hooks/useApi';
 
 function MentorCard(props) {
 	const { variant, url } = props;
 
 	const [mentorData, setMentorData] = useState([]);
 
+	const { result, trigger, isLoading, error } = useApi({
+		path: `${url}`,
+		shouldFetch: true,
+	});
+
 	useEffect(() => {
-		const getMentor = async () => {
-			try {
-				const res = await axios.get(`${url}`);
-				const data = res.data;
-
-				setMentorData([...data]);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		getMentor();
-	}, []);
+		if (result && result.length > 0) {
+			setMentorData([...result]);
+			console.log(error);
+		}
+	}, [result]);
 
 	return (
 		<>
+			{isLoading && <h2>로딩 중입니다.</h2>}
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
 					variant={variant}

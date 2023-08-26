@@ -23,6 +23,7 @@ const MESSAGE = {
 		COMPLETE: '게시글 작성이 완료되었습니다.',
 		EDIT: '작성한 글을 수정하시겠습니까?',
 		DELETE: '게시글을 삭제하시겠습니까?',
+		DELETECOMPLETE: '게시글 삭제가 완료되었습니다.',
 	},
 	STUDY: {
 		DEADLINE:
