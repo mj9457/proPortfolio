@@ -12,6 +12,8 @@ function Home() {
 	useEffect(() => {
 		const getRecommendedMentors = async () => {
 			const res = await axios.get('/mock/recommendMentor.json');
+
+			console.log(res);
 			const recommendedMentors = res.data.data;
 			setRecommendedMentors(recommendedMentors);
 		};
@@ -29,9 +31,9 @@ function Home() {
 						{recommendedMentors.map((mentor, idx) => (
 							<RecommendCard
 								key={idx}
-								postId={mentor.postId}
-								profileimage={mentor.profileimage}
-								name={mentor.name}
+								postId={mentor.portfolioId}
+								profileimage={mentor.profileImageUrl}
+								nickName={mentor.nickName}
 								company={mentor.company}
 								position={mentor.job}
 								career={mentor.career}
@@ -54,6 +56,7 @@ function Home() {
 						<Slider
 							background="lightBlueBackground"
 							url={'/mock/studyInfo.json'}
+							itemsPerPage={2}
 						/>
 					</H.SlideStudyCard>
 				</H.NewStudy>
@@ -71,7 +74,9 @@ function Home() {
 					<H.PopularCards>
 						<MentorCard
 							variant={'white'}
-							url={'/mock/bestMentor.json'}
+							url={
+								'http://localhost:8080/api/portfolio/recommend/topMentor'
+							}
 						/>
 					</H.PopularCards>
 				</H.PopularMento>

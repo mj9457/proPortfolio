@@ -4,67 +4,50 @@ import axios from 'axios';
 import * as S from './SignUp.styles';
 import Button from '../../components/@common/Button/Button';
 import Input from '../../components/@common/Input/Input';
+import { getCookie } from '../../utils/cookie';
 
 function SignUp() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
-	const [nickname, setNickname] = useState('');
+	const [nickName, setNickName] = useState('');
 	const [position, setPosition] = useState('');
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const urlParams = new URLSearchParams(window.location.search);
-		const userCode = urlParams.get('code');
-		if (userCode) {
-			getAccessToken(userCode);
+		async function fetchUserData() {
+			try {
+				const userName = getCookie('name');
+				const email = getCookie('email');
+				setEmail(email);
+				setName(userName);
+
+				console.log(userName, email);
+			} catch (error) {
+				console.error('사용자 정보를 가져오는데 실패했습니다.', error);
+			}
 		}
+
+		fetchUserData();
 	}, []);
 
-	async function getAccessToken(userCode) {
-		try {
-			const response = await axios.post('/your-backend-endpoint/token', {
-				code: userCode,
-			});
-			const accessToken = response.data.access_token;
-			getUserProfile(accessToken);
-		} catch (error) {
-			console.error('액세스 토큰을 받아오는데 실패했습니다.', error);
-		}
-	}
-
-	
-
-	async function getUserProfile(accessToken) {
-		try {
-			const response = await axios.get('/your-backend-endpoint/user', {
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-				},
-			});
-			const profile = response.data;
-			setName(profile.name);
-			setEmail(profile.email);
-		} catch (error) {
-			console.error('사용자 프로필을 가져오는데 실패했습니다.', error);
-		}
-	}
-
 	function handleNicknameChange(event) {
-		setNickname(event.target.value);
+		setNickName(event.target.value);
 	}
 
 	function handleJobChange(event) {
 		setPosition(event.target.value);
 	}
 
-	async function handleSubmit() {
+	async function handleSubmit(event) {
+		event.preventDefault();
+
 		try {
 			const response = await axios.post(
 				'http://localhost:8080/api/auth/signup',
 				{
 					name,
 					email,
-					nickname,
+					nickName,
 					position,
 				},
 			);
@@ -97,7 +80,7 @@ function SignUp() {
 					<label>닉네임</label>
 					<Input
 						type="text"
-						value={nickname}
+						value={nickName}
 						onChange={handleNicknameChange}
 						size={'medium'}
 					/>
@@ -108,12 +91,17 @@ function SignUp() {
 						<option value="">선택하세요</option>
 						<option value="backend">백엔드 개발자</option>
 						<option value="frontend">프론트엔드 개발자</option>
-						<option value="fullstack">풀스택 개발자</option>
 						<option value="android">안드로이드 개발자</option>
 						<option value="ios">iOS 개발자</option>
+						<option value="publisher">웹 퍼블리셔</option>
 					</select>
 				</div>
-				<Button variant={'primary'} shape={'default'} size={'big'}>
+				<Button
+					variant={'primary'}
+					shape={'default'}
+					size={'big'}
+					type="submit"
+				>
 					가입 완료하기
 				</Button>
 			</S.RegisterForm>

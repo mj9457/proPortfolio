@@ -2,7 +2,7 @@
 	"data": [
 		{
 			"category": "study",
-			"title": "스터디 모집",
+			"title": "스터디 모집1",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -10,7 +10,7 @@
 		},
 		{
 			"category": "project",
-			"title": "투두리스트 만들기",
+			"title": "투두리스트 만들기2",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -18,7 +18,7 @@
 		},
 		{
 			"category": "study",
-			"title": "성수역 모각코 스터디",
+			"title": "성수역 모각코 스터디3",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -26,7 +26,7 @@
 		},
 		{
 			"category": "project",
-			"title": "나만의 영양메이트 사이트 만들기",
+			"title": "나만의 영양메이트 사이트 만들기4",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -34,7 +34,7 @@
 		},
 		{
 			"category": "study",
-			"title": "스터디 모집",
+			"title": "스터디 모집5",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -42,7 +42,7 @@
 		},
 		{
 			"category": "project",
-			"title": "투두리스트 만들기",
+			"title": "투두리스트 만들6",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -50,7 +50,7 @@
 		},
 		{
 			"category": "study",
-			"title": "성수역 모각코 스터디",
+			"title": "성수역 모각코 스터디7",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],
@@ -58,7 +58,7 @@
 		},
 		{
 			"category": "project",
-			"title": "나만의 영양메이트 사이트 만들기",
+			"title": "나만의 영양메이트 사이트 만들기8",
 			"languages": ["React", "JavaScript", "Vue"],
 			"numberPeople": 10,
 			"position": ["프론트엔드 개발, 백엔드 개발"],

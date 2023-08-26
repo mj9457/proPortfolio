@@ -17,7 +17,7 @@ export const SlideContainer = styled.div`
 	justify-content: flex-start;
 	transition: transform 0.5s ease-in-out;
 	> div {
-		margin-right: 20px;
+		margin-right: 19px;
 	}
 `;
 

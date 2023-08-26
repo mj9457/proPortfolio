@@ -13,7 +13,7 @@ function Slider({ background, url }) {
 		}
 	};
 	const handleNext = () => {
-		if (currentIndex <= 1) {
+		if (currentIndex < studyInfoList.length - 1) {
 			setCurrentIndex(prevIndex => prevIndex + 1);
 		}
 	};
@@ -36,7 +36,7 @@ function Slider({ background, url }) {
 			<H.SliderWrapper>
 				<H.SlideContainer
 					style={{
-						transform: `translateX(-${currentIndex * 50.7}%)`,
+						transform: `translateX(-${currentIndex * 100}%)`,
 					}}
 				>
 					{studyInfoList.map((studyInfo, index) => (
