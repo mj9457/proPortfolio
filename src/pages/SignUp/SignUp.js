@@ -16,13 +16,8 @@ function SignUp() {
 	useEffect(() => {
 		async function fetchUserData() {
 			try {
-				const name = getCookie('userName');
 				const email = decodeURIComponent(getCookie('email'));
 				setEmail(email);
-				setName(name);
-
-				console.log(name);
-				console.log(email);
 			} catch (error) {
 				console.error('사용자 정보를 가져오는데 실패했습니다.', error);
 			}
@@ -31,6 +26,9 @@ function SignUp() {
 		fetchUserData();
 	}, []);
 
+	function handleNameChange(event) {
+		setName(event.target.value);
+	}
 	function handleNicknameChange(event) {
 		setNickName(event.target.value);
 	}
@@ -70,12 +68,12 @@ function SignUp() {
 			<S.RegisterForm onSubmit={handleSubmit}>
 				<p>회원 가입</p>
 				<div>
-					<label>이름</label>
-					<Input type="text" value={name} readOnly size={'medium'} />
-				</div>
-				<div>
 					<label>이메일</label>
 					<Input type="text" value={email} readOnly size={'medium'} />
+				</div>
+				<div>
+					<label>이름</label>
+					<Input type="text" value={name} size={'medium'} />
 				</div>
 				<div>
 					<label>닉네임</label>
