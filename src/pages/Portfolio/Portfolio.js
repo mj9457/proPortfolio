@@ -63,7 +63,7 @@ function Portfolio() {
 					<MentorCard
 						ref={ref}
 						variant={'white'}
-						url={'http://localhost:8080/api/portfolio'}
+						url={'/api/portfolio'}
 					/>
 				</S.MentorCardBox>
 			</S.MentorBox>
