@@ -14,7 +14,9 @@ export const getCookie = targetKey => {
 
 // 쿠키에서 토큰의 존재 여부를 확인하는 함수
 export const checkToken = () => {
-	const token = getCookie('token');
+	const tokenMatch = document.cookie.match(/(^|; )isToken=([^;]*)/);
+	const token = tokenMatch ? tokenMatch[2] : undefined;
+
 	console.log('Token value:', token);
 	return !!token;
 };
