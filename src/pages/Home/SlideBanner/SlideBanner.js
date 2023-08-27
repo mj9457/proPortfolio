@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import * as H from './SlideBanner.styles';
 
+const images = [
+	'./assets/img/banner/banner01.png',
+	'./assets/img/banner/banner02.png',
+	'./assets/img/banner/banner03.png',
+	'./assets/img/banner/banner04.png',
+];
+
 const RollingSlider = () => {
-	const images = [
-		'./assets/img/banner/banner01.png',
-		'./assets/img/banner/banner02.png',
-		'./assets/img/banner/banner03.png',
-		'./assets/img/banner/banner04.png',
-	];
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [prevIndex, setPrevIndex] = useState(images.length - 1);
 

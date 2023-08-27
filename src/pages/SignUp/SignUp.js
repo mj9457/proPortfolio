@@ -26,16 +26,16 @@ function SignUp() {
 		fetchUserData();
 	}, []);
 
-	function handleNameChange(event) {
+	const handleNameChange = event => {
 		setName(event.target.value);
-	}
-	function handleNicknameChange(event) {
+	};
+	const handleNicknameChange = event => {
 		setNickName(event.target.value);
-	}
+	};
 
-	function handleJobChange(event) {
+	const handleJobChange = event => {
 		setPosition(event.target.value);
-	}
+	};
 
 	async function handleSubmit(event) {
 		event.preventDefault();

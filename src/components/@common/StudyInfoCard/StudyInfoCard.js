@@ -10,7 +10,7 @@ StudyInfoCard.defaultProps = {
 	deadline: 2,
 };
 
-export default function StudyInfoCard({
+function StudyInfoCard({
 	category,
 	title,
 	languages,
@@ -53,3 +53,5 @@ export default function StudyInfoCard({
 		</H.Container>
 	);
 }
+
+export default StudyInfoCard;
