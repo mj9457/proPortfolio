@@ -53,7 +53,7 @@ function SignUp() {
 
 			if (response.status === 200 || response.status === 201) {
 				alert('회원가입이 성공적으로 완료되었습니다!');
-				navigate('/');
+				navigate('/signupdone');
 			} else {
 				alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
 			}

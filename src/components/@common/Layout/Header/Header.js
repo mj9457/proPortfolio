@@ -15,14 +15,13 @@ function Header() {
 	const handleTokenChange = () => {
 		const tokenStatus = checkToken();
 		setIsLoggedIn(tokenStatus);
+
 		console.log('isLoggedIn updated:', tokenStatus);
 	};
 
 	useEffect(() => {
-		console.log('useEffect called');
-
 		handleTokenChange();
-	}, []);
+	}, [isLoggedIn]);
 
 	const handleSignupClick = () => {
 		setOpenModal(true);
@@ -35,7 +34,6 @@ function Header() {
 		clearToken();
 		handleTokenChange();
 		navigate('/');
-		console.log(isLoggedIn);
 	};
 
 	return (
