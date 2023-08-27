@@ -31,5 +31,7 @@ export const Selected = styled.select`
 	${({ font }) => fontCSS[font]}
 	${({ size }) => sizeCSS[size]}
 	height: 42px;
+	padding: 0 8px;
+	border-radius: 4px;
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 `;

@@ -1,52 +1,59 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Space, theme } from 'antd';
+import {
+	AdminContent,
+	Removetag,
+} from '../../../components/pages/Admin/Common/Common.styles';
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import { AdminContent, Removetag } from './Admin.styles';
 import Searchbar from '../../../components/pages/Admin/Searchbar/Searchbar';
+import axios from 'axios';
+import { api } from '../../../utils/api';
+import useApi from '../../../hooks/useApi';
+
 const AdminHome = () => {
-	const data = [
-		{
-			key: '1',
-			name: '김현규',
-			nickname: '닉넴1',
-			email: 'eilce1@naver.com',
-		},
-		{
-			key: '2',
-			name: '김기범',
-			nickname: '닉넴2',
-			email: 'eilce2@naver.com',
-		},
-		{
-			key: '3',
-			name: '조아연',
-			nickname: '닉넴3',
-			email: 'eilce3@naver.com',
-		},
-		{
-			key: '4',
-			name: '이헤진',
-			nickname: '닉넴4',
-			email: 'eilce4@naver.com',
-		},
-		{
-			key: '5',
-			name: '예은선',
-			nickname: '닉넴5',
-			email: 'eilce5@naver.com',
-		},
-		{
-			key: '6',
-			name: '박민준',
-			nickname: '닉넴6',
-			email: 'eilce@naver.com',
-		},
-	];
+	// const data = [
+	// 	{
+	// 		key: '1',
+	// 		name: '김현규',
+	// 		nickname: '닉넴1',
+	// 		email: 'eilce1@naver.com',
+	// 	},
+	// 	{
+	// 		key: '2',
+	// 		name: '김기범',
+	// 		nickname: '닉넴2',
+	// 		email: 'eilce2@naver.com',
+	// 	},
+	// 	{
+	// 		key: '3',
+	// 		name: '조아연',
+	// 		nickname: '닉넴3',
+	// 		email: 'eilce3@naver.com',
+	// 	},
+	// 	{
+	// 		key: '4',
+	// 		name: '이헤진',
+	// 		nickname: '닉넴4',
+	// 		email: 'eilce4@naver.com',
+	// 	},
+	// 	{
+	// 		key: '5',
+	// 		name: '예은선',
+	// 		nickname: '닉넴5',
+	// 		email: 'eilce5@naver.com',
+	// 	},
+	// 	{
+	// 		key: '6',
+	// 		name: '박민준',
+	// 		nickname: '닉넴6',
+	// 		email: 'eilce@naver.com',
+	// 	},
+	// ];
 	const columns = [
 		{
 			title: '번호',
-			dataIndex: 'key',
-			key: 'key',
+			dataIndex: 'id',
+			key: 'id',
 		},
 		{
 			title: '이름',
@@ -55,8 +62,8 @@ const AdminHome = () => {
 		},
 		{
 			title: '닉네임',
-			dataIndex: 'nickname',
-			key: 'nickname',
+			dataIndex: 'username',
+			key: 'username',
 		},
 		{
 			title: '이메일',
@@ -64,31 +71,72 @@ const AdminHome = () => {
 			key: 'email',
 		},
 		{
-			title: '버튼',
+			title: '',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<Removetag onClick={() => removeHandler(record.key)}>
+					<Removetag onClick={() => removeHandler(record.id)}>
 						삭제
 					</Removetag>
 				</Space>
 			),
 		},
 	];
-	const modifiedData = data.map((item, index) => ({
-		...item,
-		key: String(index + 1), // 번호 값을 index로부터 생성
-	}));
-	const [tableData, setTableData] = useState(modifiedData);
+	const [userData, setUsersData] = useState([]);
+	// const [tableData, setTableData] = useState([]);
+
+	/**
+	 * 사용 예시
+	 */
+	// const { result, trigger, isLoading, error } = useApi({
+	// 	path: '/users',
+	// 	shouldFetch: true,
+	// });
 
 	// useEffect(() => {
-	// 	console.log('RENDER');
-	// 	// setTableData(modifiedData);
-	// }, [data]);
+	// 	if (result && result.length > 0) {
+	// 		const modifiedData = result.map((item, index) => ({
+	// 			...item,
+	// 			key: index,
+	// 			// id: item.id, // 번호 값을 index로부터 생성
+	// 		}));
+	// 		setUsersData(modifiedData);
+	// 	}
+	// }, [result]);
 
-	const removeHandler = key => {
-		console.log(key);
-		setTableData(data => data.filter(items => items.key !== key));
+	// useEffect(() => {
+	// 	console.log('useApi error :: \n', error);
+	// }, [error]);
+
+	// if (test1) {
+	// }
+
+	const getUserList = async () => {
+		try {
+			const response = await axios.get(
+				'https://jsonplaceholder.typicode.com/users',
+			);
+			console.log(response.data);
+			const modifiedData = response.data.map((item, index) => ({
+				...item,
+				key: index,
+				// id: item.id, // 번호 값을 index로부터 생성
+			}));
+			setUsersData(modifiedData);
+		} catch (error) {
+			console.error('API 호출 중 오류:', error);
+		}
+	};
+	useEffect(() => {
+		getUserList();
+	}, []);
+
+	// console.log(userData);
+	// console.log(data);
+
+	const removeHandler = id => {
+		console.log(id);
+		setUsersData(data => data.filter(items => items.id !== id));
 	};
 
 	const {
@@ -97,10 +145,12 @@ const AdminHome = () => {
 
 	return (
 		<AdminContent background={colorBgContainer}>
-			<Searchbar />
+			<Searchbar type={'Search'} />
+			{/* /로딩 컴포넌트 교체 예정 */}
+			{/* {isLoading && <h2>IsLoading</h2>} */}
 			<AdminTable
 				columns={columns}
-				dataSource={tableData}
+				dataSource={userData}
 				totalPages={0}
 			/>
 		</AdminContent>

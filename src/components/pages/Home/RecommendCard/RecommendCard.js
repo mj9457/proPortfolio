@@ -1,29 +1,20 @@
-import * from './Recommend.styles';
+import * as H from './Recommend.styles';
 
-RecommendCard.defaultProps = {
-	profileimage: './assets/img/profile/profile.png',
-	nickname: '마라탕',
-	company: '네이버',
-	position: '프론트엔드 개발',
-	career: 9,
-};
-
-export default function RecommendCard({
-	profileimage,
-	nickname,
-	company,
-	position,
-	career,
-}) {
+export default function RecommendCard(props) {
 	return (
-		<>
-			<Container>
-				<ProfileImage src={profileimage} alt="프로필 이미지" />
-				<NickName>{nickname}</NickName>
-				<Company>{company}</Company>
-				<Position>{position}</Position>
-				<Career>경력 {career}년</Career>
-			</Container>
-		</>
+		<H.Container href={`/portfolio/post/${props.postId}`}>
+			<H.ProfileImage
+				src={
+					!props.profileImageUrl
+						? '/assets/img/profile/profileImage.png'
+						: props.profileImageUrl
+				}
+				alt="프로필 이미지"
+			/>
+			<H.NickName>{props.nickName}</H.NickName>
+			<H.Company>{props.company}</H.Company>
+			<H.Position>{props.position}</H.Position>
+			<H.Career>경력 {props.career}년</H.Career>
+		</H.Container>
 	);
 }

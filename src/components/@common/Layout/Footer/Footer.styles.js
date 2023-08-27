@@ -1,62 +1,38 @@
 import styled from 'styled-components';
-import { bodyContainer } from '../../../../styles/common';
+import { bodyContainer, flexColumn } from '../../../../styles/common';
 
-export const Wrapper = styled.div`
+export const Footer = styled.footer`
 	border-top: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
-	padding: 1.875rem 0 2.5rem 0;
+	padding: 30px 0 40px 0;
 `;
 
 export const Container = styled.div`
 	${bodyContainer}
+	${flexColumn}
+	gap: 16px;
 `;
 
-export const IntroWrapper = styled.div`
-	display: flex;
-	padding-left: 0px;
-	flex-direction: column;
-	gap: 1rem;
+export const IntroBox = styled.div`
+	${flexColumn}
+	padding: 0 0 0 10px;
+	gap: 16px;
+
+	& a {
+		width: 100px;
+	}
+
+	& span {
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	}
 `;
 
 export const Image = styled.img`
-	width: 6.25rem;
-	height: 3.125rem;
+	width: 100px;
+	height: 50px;
 	cursor: pointer;
 `;
 
 export const Intro = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
-
-	& span {
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
-`;
-
-export const Line = styled.div`
-	width: 67.5rem;
-	height: 0.0625rem;
-	background-color: ${({ theme }) => theme.PALETTE.gray[200]};
-	margin: 1rem 0 1rem 0;
-`;
-
-export const IncIntroWrapper = styled.div`
-	display: flex;
-	padding-left: 0px;
-	flex-direction: column;
-	gap: 1rem;
-
-	& span {
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
-
-	& div {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-
-		& span {
-			font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-		}
-	}
+	${flexColumn}
+	gap: 4px;
 `;

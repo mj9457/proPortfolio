@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
-import { AdminContent } from '../Home/Admin.styles';
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { Button, Input, Space, theme } from 'antd';
-import {
-	Atags,
-	CancelButton,
-	Removetag,
-	SaveButton,
-	SearchInput,
-	TableInput,
-} from './AdminCategory.styles';
 
+import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
+import { AdminContent } from '../../../components/pages/Admin/Common/Common.styles';
+import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 const AdminCategory = () => {
+	// Todo API 호출
 	const data = [
 		{
 			key: 1,
@@ -42,8 +38,6 @@ const AdminCategory = () => {
 	const [editingKey, setEditingKey] = useState(null);
 	const [tableData, setTableData] = useState(data);
 	const [tempData, setTempData] = useState({});
-	const [inputValue, setInputValue] = useState('');
-
 	const columns = [
 		{
 			title: '카테고리 명',
@@ -74,21 +68,34 @@ const AdminCategory = () => {
 		},
 
 		{
-			title: '버튼',
+			title: '',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
 					<div>
-						<Atags
+						{/* <Atags
 							onClick={() => {
 								handleEdit(record.key);
 							}}
 						>
 							수정
-						</Atags>
-						<Removetag onClick={() => removeHandler(record.key)}>
+						</Atags> */}
+						<HandlerButton
+							onClick={() => {
+								handleEdit(record.key);
+							}}
+							type="primary"
+						>
+							수정
+						</HandlerButton>
+						<HandlerButton
+							onClick={() => removeHandler(record.key)}
+						>
 							삭제
-						</Removetag>
+						</HandlerButton>
+						{/* <Removetag onClick={() => removeHandler(record.key)}>
+							삭제
+						</Removetag> */}
 					</div>
 				</Space>
 			),
@@ -148,7 +155,7 @@ const AdminCategory = () => {
 				type={'ADD'}
 				// value={set}
 				placeholder="추가 할 카테고리를 입력하세요."
-			/> */}
+			/>  */}
 			<AdminTable
 				columns={columns}
 				dataSource={tableData}

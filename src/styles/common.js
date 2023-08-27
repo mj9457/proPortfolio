@@ -6,7 +6,7 @@ export const ModalBackground = css`
 	left: 0;
 	width: 100%;
 	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.7);
+	background-color: rgba(0, 0, 0, 0.4);
 `;
 
 export const bodyContainer = css`
@@ -28,4 +28,10 @@ export const flexAlignCenter = css`
 export const flexColumn = css`
 	display: flex;
 	flex-direction: column;
+`;
+
+export const flexSpaceBetweenCenter = css`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 `;

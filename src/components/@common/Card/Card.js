@@ -1,35 +1,75 @@
-import * as S from './Card.styles';
+import { useEffect, useState } from 'react';
 
-function PopularCard({ background }) {
+import * as S from './Card.styles';
+import useApi from '../../../hooks/useApi';
+
+function MentorCard(props) {
+	const { variant, url } = props;
+
+	const [mentorData, setMentorData] = useState([]);
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: `${url}`,
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (result && result.length > 0) {
+			setMentorData([...result]);
+			console.log(error);
+		}
+	}, [result]);
+
 	return (
-		<S.PopularCard background={background}>
-			<S.NbrCoach>
-				<span>👊 코칭 30회</span>
-			</S.NbrCoach>
-			<S.ImgWrapper>
-				<img src="./assets/img/profile/profile.png" />
-			</S.ImgWrapper>
-			<S.ContentsWrapper>
-				<div>
-					<S.Name>산마루</S.Name>
-				</div>
-				<S.Contents>
-					<div>
-						<S.ContentSpan>Naver</S.ContentSpan>
-					</div>
-					<div>
-						<S.ContentSpan>프론트엔드 개발자</S.ContentSpan>
-					</div>
-					<div>
-						<S.ContentSpan>경력 15년</S.ContentSpan>
-					</div>
-				</S.Contents>
-			</S.ContentsWrapper>
-			<S.IntroduceLine>
-				<span>&quot;경력 엔년차 코칭해 줌&quot;</span>
-			</S.IntroduceLine>
-		</S.PopularCard>
+		<>
+			{isLoading && <h2>로딩 중입니다.</h2>}
+			{mentorData.map((mentor, idx) => (
+				<S.PopularCard
+					variant={variant}
+					href={`/portfolio/post/${mentor._id}`}
+					key={idx}
+				>
+					<S.CoachNumBox>
+						<span>👊 코칭 {mentor.coachingCount}회</span>
+					</S.CoachNumBox>
+
+					<S.ImgBox>
+						<img
+							src={
+								!mentor.profileImageUrl
+									? '/assets/img/profile/profileImage.png'
+									: mentor.profileImageUrl
+							}
+						/>
+					</S.ImgBox>
+
+					<S.ContentsBox>
+						<div>
+							<S.Name>{mentor.nickName}</S.Name>
+						</div>
+
+						<S.Contents>
+							<div>
+								<S.ContentSpan>{mentor.company}</S.ContentSpan>
+							</div>
+							<div>
+								<S.ContentSpan>{mentor.position}</S.ContentSpan>
+							</div>
+							<div>
+								<S.ContentSpan>
+									경력 {mentor.career}년
+								</S.ContentSpan>
+							</div>
+						</S.Contents>
+					</S.ContentsBox>
+
+					<S.TitleBox>
+						&quot;<span>{mentor.title}</span>&quot;
+					</S.TitleBox>
+				</S.PopularCard>
+			))}
+		</>
 	);
 }
 
-export default PopularCard;
+export default MentorCard;

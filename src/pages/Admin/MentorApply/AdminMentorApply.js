@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { SearchInput } from '../../../components/Admin/Searchbar/Searchbar.styles';
-import AdminTable from '../../../components/Admin/Table/AdminTable';
-import { AdminContent, Removetag } from '../Home/Admin.styles';
-import { Space, theme } from 'antd';
-import { Atags } from '../Category/AdminCategory.styles';
+import { Button, Space, theme } from 'antd';
+import {
+	AdminContent,
+	Removetag,
+} from '../../../components/pages/Admin/Common/Common.styles';
+import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
+import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import { Atags, HandlerButton } from './AdminMentorApply.styles';
+import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
 
 const AdminMentorApply = () => {
 	const data = [
@@ -70,36 +74,70 @@ const AdminMentorApply = () => {
 			),
 		},
 		{
-			title: '버튼',
+			title: '',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
 					<div>
-						<Atags
+						{/* <Atags
+							onClick={() => {
+								approveHandler(record.key);
+							}}
+						>
+						</Atags> */}
+						<HandlerButton
+							type="primary"
 							onClick={() => {
 								approveHandler(record.key);
 							}}
 						>
 							승인
-						</Atags>
-						<Removetag onClick={() => refuseHandler(record.key)}>
+						</HandlerButton>
+						{/* <Removetag onClick={() => refuseHandler(record.key)}>
 							거절
-						</Removetag>
+						</Removetag> */}
+						<HandlerButton
+							onClick={() => refuseHandler(record.key)}
+						>
+							거절
+						</HandlerButton>
 					</div>
 				</Space>
 			),
 		},
 	];
-	// 거절
+	// 모달 열기
+
+	const [isOpen, setIsOpen] = useState(false);
+	const [selectedKey, setSelectedKey] = useState(null);
+	// 자세히 보기
+	const openApplyModal = key => {
+		setSelectedKey(key);
+		setIsOpen(true);
+	};
+	const closeModal = () => {
+		setSelectedKey(null);
+		setIsOpen(false);
+	};
 	const refuseHandler = key => {
+		// Todo
+		// 거절 후 filter로 재배열
+		// 처리한 신청서는 없어져야함
 		console.log(key);
 		// setTableData(data => data.filter(items => items.key !== key));
+		// 모든 처리 후
+		setSelectedKey(null);
+		setIsOpen(false);
 	};
-	// 자세히 보기
-	const openApplyModal = () => {
-		console.log('OPEN');
+	const approveHandler = key => {
+		console.log(key);
+		// Todo
+		// 승인 후 filter로 재배열
+		// 처리한 신청서는 없어져야함
+		// 모든 처리 후
+		setSelectedKey(null);
+		setIsOpen(false);
 	};
-	const approveHandler = () => {};
 	const modifiedData = data.map((item, index) => ({
 		...item,
 		key: String(index + 1), // 번호 값을 index로부터 생성
@@ -110,18 +148,28 @@ const AdminMentorApply = () => {
 	const [tableData, setTableData] = useState(modifiedData);
 
 	return (
-		<AdminContent background={colorBgContainer}>
-			<SearchInput
-				enterButton="검색"
-				placeholder=""
-				// onSearch={e => addCategoryHandler(e)}
-			/>
-			<AdminTable
-				columns={columns}
-				dataSource={tableData}
-				totalPages={0}
-			/>
-		</AdminContent>
+		<>
+			{isOpen && (
+				<AdminApplyModal
+					onClose={closeModal}
+					id={selectedKey}
+					approveHandler={approveHandler}
+					refuseHandler={refuseHandler}
+				/>
+			)}
+			<AdminContent background={colorBgContainer}>
+				<SearchInput
+					enterButton="검색"
+					placeholder=""
+					// onSearch={e => addCategoryHandler(e)}
+				/>
+				<AdminTable
+					columns={columns}
+					dataSource={tableData}
+					totalPages={0}
+				/>
+			</AdminContent>
+		</>
 	);
 };
 export default AdminMentorApply;
