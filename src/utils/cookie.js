@@ -12,9 +12,6 @@ export const getCookie = targetKey => {
 	return cookiesObject[targetKey];
 };
 
-const token = getCookie('token');
-console.log('Token cookie:', token);
-
 // 쿠키에서 토큰의 존재 여부를 확인하는 함수
 export const checkToken = () => {
 	const token = getCookie('token');
