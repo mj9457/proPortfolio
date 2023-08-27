@@ -33,7 +33,7 @@ function Header() {
 
 	const handleLogoutClick = async () => {
 		try {
-			const response = await axios.post('/api/logout');
+			const response = await axios.post('/api/auth/logout');
 
 			if (response.status === 200) {
 				clearToken();
