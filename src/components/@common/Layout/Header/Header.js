@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkToken, clearToken } from '../../../../utils/cookie';
+import axios from 'axios';
 
 import * as S from './Header.styles';
 
@@ -30,10 +31,20 @@ function Header() {
 		setOpenModal(false);
 	};
 
-	const handleLogoutClick = () => {
-		clearToken();
-		handleTokenChange();
-		navigate('/');
+	const handleLogoutClick = async () => {
+		try {
+			const response = await axios.post('/api/logout');
+
+			if (response.status === 200) {
+				clearToken();
+
+				setIsLoggedIn(false);
+
+				navigate('/');
+			}
+		} catch (error) {
+			console.error('로그아웃 오류:', error);
+		}
 	};
 
 	return (

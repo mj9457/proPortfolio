@@ -14,12 +14,9 @@ export const getCookie = targetKey => {
 
 // 쿠키에서 토큰의 존재 여부를 확인하는 함수
 export const checkToken = () => {
-	const cookiesArray = document.cookie.split('; ').map(cookie => {
-		const [key, value] = cookie.split('=');
-		return { key, value };
-	});
-
-	return cookiesArray.some(cookie => cookie.key === 'token');
+	const token = getCookie('token');
+	console.log('Token value:', token);
+	return !!token;
 };
 
 // 쿠키를 삭제하는 함수(토큰을 만료하는 함수)
