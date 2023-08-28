@@ -13,7 +13,7 @@ const mapMethodToFetcher = {
 };
 
 const useApi = ({
-	path = '', // API 경로를 설정
+	path: initPath = '', // API 경로를 설정
 	method: initMethod = 'get', // GET 메서드(기본값)
 	data: initData = {}, // 초기 데이터 (선택사항)
 	shouldFetch = false, // 컴포넌트 마운트 시 자동으로 요청
@@ -26,7 +26,7 @@ const useApi = ({
 		try {
 			setIsLoading(true);
 			const fetchResult = await mapMethodToFetcher[initMethod](
-				path,
+				initPath,
 				initData,
 			);
 			setResult(fetchResult);
@@ -34,17 +34,18 @@ const useApi = ({
 			setError(err);
 		}
 		setIsLoading(false);
-	}, [initMethod, initData, path]);
+	}, [initMethod, initData, initPath]);
 
 	const trigger = useCallback(
 		async ({
+			path: triggerPath = initPath,
 			method: triggerMethod = initMethod,
 			data: triggerData = initData,
 		}) => {
 			try {
 				setIsLoading(true);
 				const triggerResult = await mapMethodToFetcher[triggerMethod](
-					path,
+					triggerPath,
 					triggerData,
 				);
 				setResult(triggerResult);
@@ -53,7 +54,7 @@ const useApi = ({
 			}
 			setIsLoading(false);
 		},
-		[initMethod, initData, path],
+		[initMethod, initData, initPath],
 	);
 
 	useEffect(() => {

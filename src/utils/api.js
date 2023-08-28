@@ -48,8 +48,8 @@ export const getApi = async (path, params) => {
 export const postApi = async (path, data) => {
 	return await api.post(path, data);
 };
-export const deleteApi = async (path, data) => {
-	return await api.delete(path, data);
+export const deleteApi = async path => {
+	return await api.delete(path);
 };
 export const putApi = async (path, data) => {
 	return await api.put(path, data);
