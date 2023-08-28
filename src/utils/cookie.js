@@ -17,6 +17,6 @@ export const checkToken = () => {
 	const tokenMatch = document.cookie.match(/(^|; )isToken=([^;]*)/);
 	const token = tokenMatch ? tokenMatch[2] : undefined;
 
-	console.log('Token value:', token);
+	console.log('isToken value:', token);
 	return !!token;
 };

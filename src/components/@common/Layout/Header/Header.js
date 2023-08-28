@@ -16,8 +16,6 @@ function Header() {
 	const handleTokenChange = () => {
 		const tokenStatus = checkToken();
 		setIsLoggedIn(tokenStatus);
-
-		console.log('isLoggedIn updated:', tokenStatus);
 	};
 
 	useEffect(() => {
@@ -37,6 +35,7 @@ function Header() {
 
 			if (response.status === 200) {
 				setIsLoggedIn(false);
+				window.alert('로그아웃 되었습니다 ');
 				navigate('/');
 			}
 		} catch (error) {
