@@ -28,17 +28,19 @@ function PortfolioPost() {
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
 	// axios 통신 → 화면에 그려주는 작업
-	const { result: postResult, error: postError } = useApi({
+	const { result, trigger, isLoading, error } = useApi({
 		path: `/portfolio/${path}`,
 		shouldFetch: true,
 	});
 
+	console.log(result);
+
 	useEffect(() => {
-		if (postResult) {
-			setPost(postResult);
-			console.log(postError);
+		if (result) {
+			setPost(result);
+			console.log(error);
 		}
-	}, [postResult]);
+	}, [result]);
 
 	// 버튼 클릭시 → 모달 open
 	const handleOpenModal = () => {
@@ -52,18 +54,12 @@ function PortfolioPost() {
 		}
 	};
 
-	// axios 통신 → 삭제하기
-	const { trigger: deleteTrigger, error: deleteError } = useApi({
-		path: `/api/portfolio/${path}`,
-		method: 'delete',
-	});
-
+	// axios 통신 → 삭제하기 / 삭제 안 됨 (백엔드: userId 안 찍힘)
 	const handleDelete = () => {
 		// 삭제 메시지
 		if (confirm(MESSAGE.POST.DELETE)) {
-			deleteTrigger({});
-			alert(MESSAGE.POST.DELETECOMPLETE);
-			// 삭제 후 목록으로 이동
+			trigger({ path: `/portfolio/${path}`, method: 'delete' });
+			alert(MESSAGE.DELETE.COMPLETE);
 			navigate('/portfolio');
 		}
 	};
@@ -78,6 +74,7 @@ function PortfolioPost() {
 
 	return (
 		<>
+			{isLoading && <p>로딩 중입니다.</p>}
 			{post && (
 				<S.PostBox>
 					<S.TitleBox>
@@ -102,9 +99,7 @@ function PortfolioPost() {
 									setInfoModalOpenState={
 										setInfoModalOpenState
 									}
-									postAddress={
-										'https://jsonplaceholder.typicode.com/posts'
-									}
+									postAddress={''}
 									action={'완료'}
 								/>
 							)}
@@ -121,7 +116,7 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						<IntroContents post={postResult} />
+						<IntroContents post={post} />
 
 						<Line size={'small'} />
 
@@ -144,7 +139,11 @@ function PortfolioPost() {
 							</Button>
 						</S.ButtonBox>
 
-						<Review title={'후기'} />
+						<Review
+							title={'후기'}
+							putUrl={''}
+							delUrl={`/${path}/comments`}
+						/>
 					</S.ContentsBox>
 				</S.PostBox>
 			)}

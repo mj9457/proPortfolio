@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFooter from '../../../hooks/useFooter';
 
 import * as S from './PortfolioApply.styles';
@@ -10,25 +10,52 @@ import Input from '../../../components/@common/Input/Input';
 import MESSAGE from '../../../constants/message';
 import { useNavigate, useParams } from 'react-router-dom';
 import useApi from '../../../hooks/useApi';
+import { check } from '../../../utils/check';
 
 function PortfolioApply() {
 	useFooter();
+
 	const navigate = useNavigate();
 	const params = useParams();
 
-	// 유저 정보 중에서 이름, 직무, 회사만 get으로 불러온 후 이름 제외 나머지는 수정 가능하게 처리 후 post로 보내기
-	// 정보가 다 들어갔는지 빈칸이 있으면 보내지 못하게 처리 → 우선 성공
+	// axios 통신 → user Info 가져오기
+	const [user, setUser] = useState([]);
 
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/user',
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (result) {
+			setUser(result);
+
+			setMentorPost(prevState => ({
+				...prevState,
+				ownerId: result._id,
+				nickName: result.nickName,
+				name: result.name,
+				career: result.career ? result.career : '0', // 숫자로 보내주도록 백엔드에 요청
+				coachingCount: '0', // 숫자로 보내주도록 백엔드에 요청
+				profileImageUrl: result.profileImageUrl
+					? result.profileImageUrl
+					: '',
+			}));
+		}
+	}, [result]);
+
+	// 글 작성하기
 	const [mentorPost, setMentorPost] = useState({
+		ownerId: '',
 		position: '',
-		nickName: 'ㅎㅎ', // 유저 정보 받아 와서 넣어주면 됨
-		name: '문수민',
+		nickName: '',
+		name: '',
 		company: '',
-		career: 5, // 유저 정보 받아 와서 넣어주면 됨
+		career: '',
 		title: '',
 		description: '',
-		coachingCount: 13, // 유저 정보 받아 와서 넣어주면 됨
-		profileImageUrl: '', // 유저 정보 받아 와서 넣어주면 됨
+		coachingCount: '',
+		profileImageUrl: '',
 	});
 
 	const handleChange = e => {
@@ -40,66 +67,37 @@ function PortfolioApply() {
 		}));
 	};
 
-	// 유효성 검사를 어디로 빼야 할지 의문
-	const check = [
-		{
-			checked: mentorPost.position.length === 0,
-			message: MESSAGE.CHECK.POSITION,
-		},
-		{
-			checked: mentorPost.company.length === 0,
-			message: MESSAGE.CHECK.COMPANY,
-		},
-		{
-			checked: mentorPost.title.length === 0,
-			message: MESSAGE.CHECK.TITLE,
-		},
-		{
-			checked: mentorPost.title.length > 20,
-			message: MESSAGE.CHECK.TITLE,
-		},
-		{
-			checked: mentorPost.description.length === 0,
-			message: MESSAGE.CHECK.DESCRIPTION,
-		},
-	];
-
-	const { result, trigger, isLoading, error } = useApi({
-		path: '/api/portfolio',
-		method: 'post',
-	});
-
-	const checkParams = () => {
-		// 글 수정시 들어갈 로직
-		// if (params.portfolioId) {
-		// 	await axios.put(
-		// 		`https://localhost:8080/api/portfolio/${params._id}`,
-		// 		mentorPost,
-		// 	);
-		// } else {
-		//  axios({
-		// 	url: 'http://localhost:8080/api/portfolio',
-		// 	method: 'post',
-		// 	data: mentorPost,
-		// }).then(res => console.log(res));
-		trigger({
-			data: mentorPost,
-		});
-		alert(MESSAGE.POST.COMPLETE);
-		// navigate('/portfolio');
-		// }
-	};
-
+	// 글 작성하기 버튼 클릭
 	const handleSubmit = async () => {
-		const fail = check.filter(el => el.checked);
+		const fail = check(mentorPost).filter(el => el.checked);
 
 		if (fail.length > 0) {
 			const errorMessage = fail[0].message;
 			alert(errorMessage);
 		} else {
-			checkParams();
+			trigger({
+				method: 'post',
+				path: '/portfolio',
+				data: mentorPost,
+			});
+
+			alert(MESSAGE.POST.COMPLETE);
+			navigate('/portfolio');
 		}
 	};
+
+	// 글 수정하기
+	const {
+		result: postResult,
+		trigger: postTrigger,
+		isLoading: postIsLoading,
+		error: postError,
+	} = useApi({
+		path: `/portfolio/${params.portfolioId}`,
+		shouldFetch: true,
+	});
+
+	console.log(postResult);
 
 	return (
 		<S.ApplyBox>
@@ -111,10 +109,7 @@ function PortfolioApply() {
 				<S.ContentsBox>
 					<span>1. 멘토 님의 기본 정보를 작성해 주세요.</span>
 
-					<Information
-						onChange={handleChange}
-						name={mentorPost.name}
-					/>
+					<Information onChange={handleChange} user={user} />
 				</S.ContentsBox>
 
 				<S.ContentsBox>

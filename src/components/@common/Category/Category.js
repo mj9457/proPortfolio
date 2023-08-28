@@ -1,29 +1,26 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import * as S from './Category.styles';
 
 import Button from '../Button/Button';
+import useApi from '../../../hooks/useApi';
 
 function Category(props) {
 	const { variant, shape, size } = props;
 
-	const [categoryData, setCategoryData] = useState([]);
+	const [positions, setPositions] = useState([]);
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/position',
+		shouldFetch: true,
+	});
 
 	useEffect(() => {
-		const getCategory = async () => {
-			try {
-				const res = await axios.get('/mock/category.json');
-				const data = res.data.category;
-
-				setCategoryData([...data]);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		getCategory();
-	}, []);
+		if (result && result.length > 0) {
+			setPositions([...result]);
+			console.log(error);
+		}
+	}, [result]);
 
 	return (
 		<S.ButtonBox>
@@ -32,14 +29,14 @@ function Category(props) {
 					전체
 				</Button>
 
-				{categoryData.map((category, idx) => (
+				{positions.map((position, idx) => (
 					<Button
 						variant={variant}
 						shape={shape}
 						size={size}
 						key={idx}
 					>
-						{category.categoryName}
+						{position.name}
 					</Button>
 				))}
 			</div>

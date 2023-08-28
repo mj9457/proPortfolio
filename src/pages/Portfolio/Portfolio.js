@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 function Portfolio() {
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
-	// infinite scroll → intersection observer 사용...? 모르겠음
+	// infinite scroll
 
 	// 로그인한 유저가 멘토인지 아닌지 검사하는 로직
 	const [isMentor, setIsMentor] = useState(false);

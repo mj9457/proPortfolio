@@ -23,7 +23,6 @@ const MESSAGE = {
 		COMPLETE: '게시글 작성이 완료되었습니다.',
 		EDIT: '작성한 글을 수정하시겠습니까?',
 		DELETE: '게시글을 삭제하시겠습니까?',
-		DELCOMPLETE: '게시글 삭제가 완료되었습니다.',
 	},
 	STUDY: {
 		DEADLINE:
@@ -33,10 +32,12 @@ const MESSAGE = {
 	COMMENT: {
 		COMPLETE: '댓글을 작성하시겠습니까?',
 		EDIT: '댓글을 수정하시겠습니까?',
+		DELETE: '댓글을 삭제하시겠습니까?',
 	},
 	REVIEW: {
 		COMPLETE: '후기 작성이 완료되었습니다.',
 		CANCEL: '후기 작성을 취소하시겠습니까?',
+		DELETE: '후기를 삭제하시겠습니까?',
 	},
 	MYPAGE: {
 		EDIT: '수정이 완료되었습니다.',
@@ -49,6 +50,9 @@ const MESSAGE = {
 	FILE: {
 		UPLOAD: 'JPEG, JPG, PNG 파일만 업로드 가능합니다.',
 		NOFILE: '이미지를 첨부해 주세요.',
+	},
+	DELETE: {
+		COMPLETE: '삭제가 완료되었습니다.',
 	},
 };
 

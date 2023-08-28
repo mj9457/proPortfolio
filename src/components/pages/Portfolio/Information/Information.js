@@ -1,40 +1,28 @@
 import * as S from './Information.styles';
 
 import Input from '../../../@common/Input/Input';
-import Select from '../../../@common/Select/Select';
+import Position from '../../../@common/Position/Position';
 
 function Information(props) {
-	const { onChange, name } = props;
+	const { onChange, user } = props;
+	const { position, name } = user;
 
 	return (
 		<S.InfoBox>
 			<S.Contents>
 				<S.ContentsTitle>직무</S.ContentsTitle>
-				<Select
+
+				<Position
+					onChange={onChange}
+					position={position}
 					size={'regular'}
 					font={'regular'}
-					onChange={onChange}
-					name="position"
-				>
-					<option hidden>선택</option>
-					<option value="frontend">프론트엔드 개발</option>
-					<option value="backend">백엔드 개발</option>
-					<option value="fullstack">풀스택 개발</option>
-					<option value="android">안드로이드 개발</option>
-					<option value="ios">IOS 개발</option>
-				</Select>
+				/>
 			</S.Contents>
 
 			<S.Contents>
 				<S.ContentsTitle>이름</S.ContentsTitle>
-				<Input
-					size={'regular'}
-					placeholder="이름을 입력해 주세요."
-					onChange={onChange}
-					name="name"
-					value={name}
-					readOnly
-				/>
+				<Input size={'regular'} name="name" value={name} readOnly />
 			</S.Contents>
 
 			<S.Contents>
