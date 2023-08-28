@@ -1,7 +1,7 @@
 import * as S from './IntroContents.styles';
 
-function IntroContents({ contents }) {
-	const { name, career, position, company, description } = contents;
+function IntroContents({ post }) {
+	const { name, career, position, company, description } = post;
 
 	return (
 		<>

@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import * as S from './PortfolioPost.styles';
 import useFooter from '../../../hooks/useFooter';
+import useApi from '../../../hooks/useApi';
 
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
 import Review from '../../../components/@common/Review/Review';
@@ -11,14 +11,12 @@ import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
 import MESSAGE from '../../../constants/message';
-import useApi from '../../../hooks/useApi';
 
 function PortfolioPost() {
-	useFooter();
+	useFooter(); // footer 제거
 
 	// user role 확인 후 멘토의 경우 수정/삭제 버튼 보여주고 / 일반 유저의 경우 신청하기 버튼 오픈
 	// 멘토 중에서도 작성자의 경우만 수정/삭제 버튼이 활성화 되게 로직 작성
-	// 일반 유저가 신청하기를 하고 모달로 post를 보냈을 경우 신청하기 버튼 비활성화
 
 	// id 값
 	const params = useParams();
@@ -26,28 +24,23 @@ function PortfolioPost() {
 
 	const navigate = useNavigate();
 
-	const [contents, setContents] = useState({});
+	const [post, setPost] = useState({});
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
-	// axios 통신
+	// axios 통신 → 화면에 그려주는 작업
+	const { result: postResult, error: postError } = useApi({
+		path: `/portfolio/${path}`,
+		shouldFetch: true,
+	});
+
 	useEffect(() => {
-		const getContent = async () => {
-			try {
-				const res = await axios.get(
-					`http://localhost:8080/api/portfolio/${path}`,
-				);
-				const data = res.data;
+		if (postResult) {
+			setPost(postResult);
+			console.log(postError);
+		}
+	}, [postResult]);
 
-				setContents(data);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		getContent();
-	}, []);
-
-	// 모달 open
+	// 버튼 클릭시 → 모달 open
 	const handleOpenModal = () => {
 		setInfoModalOpenState(true);
 	};
@@ -59,23 +52,25 @@ function PortfolioPost() {
 		}
 	};
 
-	// 삭제하기
-	const { trigger, isLoading, error } = useApi({
+	// axios 통신 → 삭제하기
+	const { trigger: deleteTrigger, error: deleteError } = useApi({
 		path: `/api/portfolio/${path}`,
 		method: 'delete',
 	});
 
 	const handleDelete = () => {
+		// 삭제 메시지
 		if (confirm(MESSAGE.POST.DELETE)) {
-			trigger({});
-			navigate('/portfolio');
+			deleteTrigger({});
 			alert(MESSAGE.POST.DELETECOMPLETE);
+			// 삭제 후 목록으로 이동
+			navigate('/portfolio');
 		}
 	};
 
-	const { nickName, title, updatedAt, profileImageUrl } = contents;
+	const { nickName, title, updatedAt, profileImageUrl } = post;
 
-	// date & profileImage
+	// 날짜와 프로필 이미지
 	const date = String(updatedAt).slice(0, 19).split('T');
 	const image = !profileImageUrl
 		? '/assets/img/profile/profileImage.png'
@@ -83,7 +78,7 @@ function PortfolioPost() {
 
 	return (
 		<>
-			{contents && (
+			{post && (
 				<S.PostBox>
 					<S.TitleBox>
 						<span>{title}</span>
@@ -126,7 +121,7 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						<IntroContents contents={contents} />
+						<IntroContents post={postResult} />
 
 						<Line size={'small'} />
 
