@@ -3,7 +3,7 @@ import useApi from '../../../hooks/useApi';
 import Select from '../Select/Select';
 
 function Position(props) {
-	const { onChange } = props;
+	const { onChange, size, font } = props;
 
 	const [positions, setPositions] = useState([]);
 
@@ -20,21 +20,14 @@ function Position(props) {
 	}, [result]);
 
 	return (
-		<>
-			<Select
-				size={'regular'}
-				font={'regular'}
-				onChange={onChange}
-				name="position"
-			>
-				<option hidden>선택</option>
-				{positions.map((el, idx) => (
-					<option value={el.name} key={idx}>
-						{el.name}
-					</option>
-				))}
-			</Select>
-		</>
+		<Select size={size} font={font} onChange={onChange} name="position">
+			<option hidden>선택</option>
+			{positions.map((el, idx) => (
+				<option value={el.name} key={idx}>
+					{el.name}
+				</option>
+			))}
+		</Select>
 	);
 }
 
