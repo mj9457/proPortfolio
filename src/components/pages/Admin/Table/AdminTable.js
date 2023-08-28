@@ -3,7 +3,7 @@ import { MyTable } from './AdminTable.styles';
 import { Pagination } from 'antd';
 import { PaginationWrap } from '../../../../pages/Admin/Home/Admin.styles';
 
-const AdminTable = ({ dataSource, columns }) => {
+const AdminTable = ({ dataSource, columns, totalPages }) => {
 	return (
 		<>
 			<MyTable
@@ -12,7 +12,7 @@ const AdminTable = ({ dataSource, columns }) => {
 				pagination={false}
 			/>
 			<PaginationWrap>
-				<Pagination defaultCurrent={1} total={1000} />
+				<Pagination defaultCurrent={1} total={totalPages} />
 			</PaginationWrap>
 		</>
 	);

@@ -9,51 +9,14 @@ import Searchbar from '../../../components/pages/Admin/Searchbar/Searchbar';
 import axios from 'axios';
 import { api } from '../../../utils/api';
 import useApi from '../../../hooks/useApi';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 
 const AdminHome = () => {
-	// const data = [
-	// 	{
-	// 		key: '1',
-	// 		name: '김현규',
-	// 		nickname: '닉넴1',
-	// 		email: 'eilce1@naver.com',
-	// 	},
-	// 	{
-	// 		key: '2',
-	// 		name: '김기범',
-	// 		nickname: '닉넴2',
-	// 		email: 'eilce2@naver.com',
-	// 	},
-	// 	{
-	// 		key: '3',
-	// 		name: '조아연',
-	// 		nickname: '닉넴3',
-	// 		email: 'eilce3@naver.com',
-	// 	},
-	// 	{
-	// 		key: '4',
-	// 		name: '이헤진',
-	// 		nickname: '닉넴4',
-	// 		email: 'eilce4@naver.com',
-	// 	},
-	// 	{
-	// 		key: '5',
-	// 		name: '예은선',
-	// 		nickname: '닉넴5',
-	// 		email: 'eilce5@naver.com',
-	// 	},
-	// 	{
-	// 		key: '6',
-	// 		name: '박민준',
-	// 		nickname: '닉넴6',
-	// 		email: 'eilce@naver.com',
-	// 	},
-	// ];
 	const columns = [
 		{
 			title: '번호',
-			dataIndex: 'id',
-			key: 'id',
+			dataIndex: 'key',
+			key: 'key',
 		},
 		{
 			title: '이름',
@@ -62,8 +25,8 @@ const AdminHome = () => {
 		},
 		{
 			title: '닉네임',
-			dataIndex: 'username',
-			key: 'username',
+			dataIndex: 'nickName',
+			key: 'nickName',
 		},
 		{
 			title: '이메일',
@@ -75,9 +38,9 @@ const AdminHome = () => {
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<Removetag onClick={() => removeHandler(record.id)}>
+					<HandlerButton onClick={() => removeHandler(record._id)}>
 						삭제
-					</Removetag>
+					</HandlerButton>
 				</Space>
 			),
 		},
@@ -88,21 +51,22 @@ const AdminHome = () => {
 	/**
 	 * 사용 예시
 	 */
-	// const { result, trigger, isLoading, error } = useApi({
-	// 	path: '/users',
-	// 	shouldFetch: true,
-	// });
-
-	// useEffect(() => {
-	// 	if (result && result.length > 0) {
-	// 		const modifiedData = result.map((item, index) => ({
-	// 			...item,
-	// 			key: index,
-	// 			// id: item.id, // 번호 값을 index로부터 생성
-	// 		}));
-	// 		setUsersData(modifiedData);
-	// 	}
-	// }, [result]);
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/admin/user',
+		method: 'get',
+		shouldFetch: true,
+	});
+	console.log(result);
+	useEffect(() => {
+		if (result && result.length > 0) {
+			const modifiedData = result.map((item, index) => ({
+				...item,
+				key: index + 1,
+				// id: item.id, // 번호 값을 index로부터 생성
+			}));
+			setUsersData(modifiedData);
+		}
+	}, [result]);
 
 	// useEffect(() => {
 	// 	console.log('useApi error :: \n', error);
@@ -111,32 +75,34 @@ const AdminHome = () => {
 	// if (test1) {
 	// }
 
-	const getUserList = async () => {
-		try {
-			const response = await axios.get(
-				'https://jsonplaceholder.typicode.com/users',
-			);
-			console.log(response.data);
-			const modifiedData = response.data.map((item, index) => ({
-				...item,
-				key: index,
-				// id: item.id, // 번호 값을 index로부터 생성
-			}));
-			setUsersData(modifiedData);
-		} catch (error) {
-			console.error('API 호출 중 오류:', error);
-		}
-	};
-	useEffect(() => {
-		getUserList();
-	}, []);
+	// const getUserList = async () => {
+	// 	try {
+	// 		const response = await axios.get(
+	// 			'https://jsonplaceholder.typicode.com/users',
+	// 		);
+	// 		console.log(response.data);
+	// 		const modifiedData = response.data.map((item, index) => ({
+	// 			...item,
+	// 			key: index,
+	// 			// id: item.id, // 번호 값을 index로부터 생성
+	// 		}));
+	// 		setUsersData(modifiedData);
+	// 	} catch (error) {
+	// 		console.error('API 호출 중 오류:', error);
+	// 	}
+	// };
+	// useEffect(() => {
+	// 	getUserList();
+	// }, []);
 
 	// console.log(userData);
 	// console.log(data);
 
-	const removeHandler = id => {
-		console.log(id);
-		setUsersData(data => data.filter(items => items.id !== id));
+	const removeHandler = async userId => {
+		console.log(userId);
+
+		await trigger({ method: 'delete', path: `/admin/user/${userId}` });
+		// setUsersData(data => data.filter(items => items.id !== id));
 	};
 
 	const {
@@ -151,7 +117,7 @@ const AdminHome = () => {
 			<AdminTable
 				columns={columns}
 				dataSource={userData}
-				totalPages={0}
+				totalPages={userData.length}
 			/>
 		</AdminContent>
 	);

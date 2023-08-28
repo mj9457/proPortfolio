@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../components/@common/Button/Button';
-import Input from '../../components/@common/Input/Input';
 import AWS from 'aws-sdk';
 import {
 	ApplyCard,
@@ -24,6 +23,8 @@ const UserMentorApply = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [imageUrl, setImageUrl] = useState(null);
 	const fileInputRef = useRef(null);
+	let companyRef = useRef(null);
+	const annualRef = React.createRef();
 	AWS.config.update({
 		region: process.env.REACT_APP_REGION,
 		accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -47,30 +48,35 @@ const UserMentorApply = () => {
 		console.log(fileExt);
 		setSelectedFile(file);
 	};
+	const handleOnChange = e => {
+		companyRef = e.target.value;
+	};
 	const handleSubmit = async () => {
-		if (selectedFile === null) {
-			alert('이미지를 첨부해주세요.');
-			return;
-		}
-		console.log(selectedFile?.name);
+		console.log(companyRef);
+		console.log(annualRef.current);
+		// if (selectedFile === null) {
+		// 	alert('이미지를 첨부해주세요.');
+		// 	return;
+		// }
+		// console.log(selectedFile?.name);
 
-		const now = new Date();
-		const getMilliseconds = now.getTime();
-		const upload = new AWS.S3.ManagedUpload({
-			params: {
-				Bucket: 'pofol-bucket',
-				Key: `${getMilliseconds + '_' + selectedFile?.name}`,
-				Body: selectedFile,
-			},
-		});
-		console.log(upload);
-		try {
-			const result = await upload.promise();
-			console.log(result.Location);
-			// TODO API
-		} catch (error) {
-			console.log(error);
-		}
+		// const now = new Date();
+		// const getMilliseconds = now.getTime();
+		// const upload = new AWS.S3.ManagedUpload({
+		// 	params: {
+		// 		Bucket: 'pofol-bucket',
+		// 		Key: `${getMilliseconds + '_' + selectedFile?.name}`,
+		// 		Body: selectedFile,
+		// 	},
+		// });
+		// console.log(upload);
+		// try {
+		// 	const result = await upload.promise();
+		// 	console.log(result.Location);
+		// 	// TODO API
+		// } catch (error) {
+		// 	console.log(error);
+		// }
 	};
 	return (
 		<>
@@ -83,11 +89,21 @@ const UserMentorApply = () => {
 						</SubTitle>
 						<ContentBox>
 							<span>재직회사</span>
-							<ApplyInput placeholder="회사명을 입력해주세요."></ApplyInput>
+							<ApplyInput
+								ref={companyRef}
+								placeholder="회사명을 입력해주세요."
+								onChange={e => {
+									handleOnChange(e);
+								}}
+							></ApplyInput>
 						</ContentBox>
 						<ContentBox>
 							<span>경력</span>
-							<ApplyInput placeholder="연차를 입력해주세요."></ApplyInput>
+							<ApplyInput
+								ref={annualRef}
+								type="number"
+								placeholder="연차를 입력해주세요."
+							></ApplyInput>
 						</ContentBox>
 						<SubTitle>
 							2. 사원증 혹은 재직증명서를 업로드 해 주세요.
