@@ -4,15 +4,27 @@ import Line from '../../components/@common/Line/Line';
 import MentorCard from '../../components/@common/Card/Card';
 import Button from '../../components/@common/Button/Button';
 import Category from '../../components/@common/Category/Category';
-import { useRef } from 'react';
+import useApi from '../../hooks/useApi';
+import { useEffect, useState } from 'react';
 
 function Portfolio() {
-	// 어딘가에 저장된 user role을 가져와서 mentor의 경우만 작성하기 버튼 확인 가능
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
 	// infinite scroll → intersection observer 사용...? 모르겠음
 
-	const ref = useRef();
-	// if(scrollTo)
+	// 로그인한 유저가 멘토인지 아닌지 검사하는 로직
+	const [isMentor, setIsMentor] = useState(false);
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/user', // 유저인지 멘토인지 확인할 수 있는 api 필요
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		const mentor = result.role === 'mentor';
+
+		if (mentor) setIsMentor(true);
+		else setIsMentor(false);
+	}, [result]);
 
 	return (
 		<S.PortfolioBox>
@@ -20,17 +32,19 @@ function Portfolio() {
 				{/* banner */}
 				<S.BannerImage src="./assets/img/banner/banner02.png" />
 
-				<S.ApplyBox>
-					<a href="/portfolio/apply">
-						<Button
-							variant={'add'}
-							shape={'default'}
-							size={'normal'}
-						>
-							작성하기
-						</Button>
-					</a>
-				</S.ApplyBox>
+				{isMentor && (
+					<S.ApplyBox>
+						<a href="/portfolio/apply">
+							<Button
+								variant={'add'}
+								shape={'default'}
+								size={'normal'}
+							>
+								작성하기
+							</Button>
+						</a>
+					</S.ApplyBox>
+				)}
 			</S.BannerBox>
 
 			<Category variant={'cancel'} shape={'round'} size={'medium'} />
@@ -45,7 +59,7 @@ function Portfolio() {
 				<S.MentorCardBox>
 					<MentorCard
 						variant={'blue'}
-						url={'/api/portfolio/recommend/topMentor'}
+						url={'/portfolio/recommend/topMentor'}
 					/>
 				</S.MentorCardBox>
 			</div>
@@ -60,11 +74,7 @@ function Portfolio() {
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					<MentorCard
-						ref={ref}
-						variant={'white'}
-						url={'/api/portfolio'}
-					/>
+					<MentorCard variant={'white'} url={'/portfolio'} />
 				</S.MentorCardBox>
 			</S.MentorBox>
 		</S.PortfolioBox>
