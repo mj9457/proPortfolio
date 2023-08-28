@@ -64,7 +64,7 @@ function Home() {
 						<Slider
 							background="lightBlueBackground"
 							url={'/mock/studyInfo.json'}
-							itemsPerPage={2}
+							slidesToShow={2}
 						/>
 					</H.SlideStudyCard>
 				</H.NewStudy>

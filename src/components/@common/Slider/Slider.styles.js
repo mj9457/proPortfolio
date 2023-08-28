@@ -9,7 +9,7 @@ export const Wrap = styled.div`
 
 export const SliderWrapper = styled.div`
 	width: 100%;
-	overflow: hidden;
+	/* overflow: hidden; */
 `;
 
 export const SlideContainer = styled.div`

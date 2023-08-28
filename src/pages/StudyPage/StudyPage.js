@@ -50,6 +50,7 @@ function StudyPage() {
 						<Slider
 							background="whiteBackground"
 							url={'/mock/studyInfo.json'}
+							slidesToShow={4}
 						/>
 					</S.PopularCardWrapper>
 

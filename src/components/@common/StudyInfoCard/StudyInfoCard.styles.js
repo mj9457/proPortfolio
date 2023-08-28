@@ -56,14 +56,18 @@ export const Title = styled.p`
 	text-overflow: ellipsis;
 	width: 218px;
 `;
-export const LanguagesWrapper = styled.div`
+export const PositionWrapper = styled.div`
 	display: flex;
 	margin-bottom: 8px;
 	gap: 16px;
 `;
-export const Language = styled.p`
+
+export const Position = styled.p`
+	color: #7d7d7d;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+	margin-bottom: 8px;
+	text-overflow: ellipsis;
 `;
 
 export const DetailInfoWrapper = styled.div`
@@ -72,11 +76,16 @@ export const DetailInfoWrapper = styled.div`
 	justify-content: space-between;
 	> div {
 		display: flex;
-		gap: 8px;
+		gap: 6px;
 		> span {
 			color: #7d7d7d;
 		}
 	}
+`;
+
+export const Process = styled.p`
+	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;
 
 export const NumberPeople = styled.p`
@@ -84,13 +93,6 @@ export const NumberPeople = styled.p`
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	margin-bottom: 8px;
-`;
-export const Position = styled.p`
-	color: #7d7d7d;
-	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-	margin-bottom: 8px;
-	text-overflow: ellipsis;
 `;
 
 export const Deadline = styled.p`
