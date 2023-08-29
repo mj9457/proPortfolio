@@ -161,6 +161,10 @@ const router = createBrowserRouter([
 		element: <AdminLayout />,
 		children: [
 			{
+				path: '',
+				element: <ErrorFallback />,
+			},
+			{
 				path: 'user',
 				element: <AdminHome />,
 			},

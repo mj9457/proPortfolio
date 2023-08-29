@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Input, Space, theme } from 'antd';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
@@ -6,38 +6,15 @@ import { AdminContent } from '../../../components/pages/Admin/Common/Common.styl
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import useApi from '../../../hooks/useApi';
+import MESSAGE from '../../../constants/message';
 const AdminCategory = () => {
-	// Todo API 호출
-	const data = [
-		{
-			key: 1,
-			name: `백엔드 개발`,
-		},
-		{
-			key: 2,
-			name: '프론트 개발',
-		},
-		{
-			key: 3,
-			name: '풀 스택 개발',
-		},
-		{
-			key: 4,
-			name: '안드로이드 개발',
-		},
-		{
-			key: 5,
-			name: 'ios 개발',
-		},
-		{
-			key: 6,
-			name: '크로스 플랫폼 앱 개발',
-		},
-	];
 	// 수정 중인 행의 key를 저장
 	const [editingKey, setEditingKey] = useState(null);
-	const [tableData, setTableData] = useState(data);
+	const [tableData, setTableData] = useState();
 	const [tempData, setTempData] = useState({});
+	const [inputValue, setInputValue] = useState('');
+	const [categoryInput, setCategoryInput] = useState('');
 	const columns = [
 		{
 			title: '카테고리 명',
@@ -49,8 +26,8 @@ const AdminCategory = () => {
 				return isEditing ? (
 					<>
 						<TableInput
-							value={tempData[record.key] || record.name}
-							onChange={e => handleInputChange(e, record.key)}
+							value={tempData[record.key]}
+							onChange={e => handleInputChange(e, record._id)}
 						/>
 						<SaveButton
 							onClick={() => {
@@ -77,7 +54,7 @@ const AdminCategory = () => {
 							onClick={() => {
 								handleEdit(record.key);
 							}}
-						>
+							>
 							수정
 						</Atags> */}
 						<HandlerButton
@@ -101,25 +78,108 @@ const AdminCategory = () => {
 			),
 		},
 	];
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/position',
+		shouldFetch: true,
+	});
+	useEffect(() => {
+		console.log(result);
+		if (result && result.length > 0) {
+			setTableData(
+				result.map(item => ({
+					...item,
+					key: item._id,
+					name: item.name,
+				})),
+			);
+			// const modifiedData = result.map(item => ({
+			// 	key: item._id,
+			// 	name: item.name,
+			// }));
+			// setTableData(modifiedData);
+		}
+		console.log(tableData);
+		// if (Object.keys(result).length === 3) {
+		// }
+		// if (result.name) {
+		// 	setTableData([
+		// 		...tableData,
+		// 		{ key: result._id, name: result.name },
+		// 	]);
+		// 	console.log('CHANGE');
+		// }
+		// else {
+		// }
+		// getData();
+	}, [result]);
+	// console.log(tableData);
+
+	useEffect(() => {
+		console.log('TableData', tableData);
+	}, [tableData]);
+	// const getData = data => {
+	// 	if (result && result.length > 0) {
+	// 		const modifiedData = data.map(item => ({
+	// 			key: item._id,
+	// 			name: item.name,
+	// 		}));
+	// 		setTableData(modifiedData);
+	// 	}
+	// };
+	// const getData = () => {
+	// 	if (result && result.length > 0) {
+	// 		const modifiedData = result.map(item => ({
+	// 			key: item._id,
+	// 			name: item.name,
+	// 		}));
+
+	// 		setTableData(modifiedData);
+	// 	}
+	// };
+
+	// const addData = response => {
+
+	// }
+	// useEffect(() => {
+	// 	console.log('CHANGE');
+	// }, [tableData]);
+	// console.log(result);
+
 	// Input onChange Handler
 	const handleInputChange = (e, key) => {
 		// 새로운 배열에 값 저장
+		console.log(key);
+		setCategoryInput(e.target.value);
 		setTempData({ ...tempData, [key]: e.target.value });
+		console.log(tempData);
 	};
 	// Button Save Handler
-	const handleSave = key => {
+	const handleSave = async key => {
+		if (!categoryInput.trim()) {
+			alert(MESSAGE.CHECK.MODAL);
+			return;
+		}
 		console.log(key);
-		const updatedData = tableData.map(item =>
-			item.key === key ? { ...item, name: tempData[key] } : item,
-		);
-		console.log(updatedData);
-		setTableData(updatedData);
+		await trigger({
+			path: `/position/${key}`,
+			data: { name: categoryInput },
+			method: 'put',
+		});
+		trigger({ method: 'get', path: '/position' });
 		setEditingKey(null);
+
+		// const updatedData = tableData.map(item =>
+		// 	item.key === key ? { ...item, name: tempData[key] } : item,
+		// );
+		// console.log(updatedData);
+		// setTableData(updatedData);
 		// Todo 카테고리 수정 API
 	};
 	// 수정 버튼을 눌렀을 때 Edit 상태 업데이트
 	const handleEdit = key => {
 		setEditingKey(key);
+
 		setTempData({
 			...tempData,
 			[key]: tableData.find(item => item.key === key).name,
@@ -130,15 +190,45 @@ const AdminCategory = () => {
 		setEditingKey(null);
 	};
 	// 삭제
-	const removeHandler = key => {
-		setTableData(data => data.filter(items => items.key !== key));
+	const removeHandler = async key => {
+		await trigger({
+			method: 'delete',
+			path: `/position/${key}`,
+		});
+		trigger({ method: 'get', path: '/position' });
+		console.log(result);
+		// setTableData(data => data.filter(item => item.key !== key));
+
+		// setTableData(data => data.filter(items => items.key !== key));
 	};
-	const addCategoryHandler = e => {
-		console.log('추가하기');
-		const lastKey = tableData[tableData.length - 1].key;
-		const newKey = lastKey + 1;
-		setTableData([...tableData, { key: newKey, name: e }]);
+	// 카테고리 추가
+	const addCategoryHandler = async () => {
+		console.log(inputValue);
+		await trigger({
+			method: 'post',
+			data: { name: inputValue },
+		});
+		setInputValue('');
+
+		console.log(result);
+		trigger({ method: 'get', path: '/position' });
+		// setTableData([
+		// 	...tableData,
+		// 	{ key: result._id, _id: result._id, name: inputValue },
+		// ]);
+		console.log(result);
+		// if (result) {
+		// 	setTableData([
+		// 		...tableData,
+		// 		{ key: result._id, name: result.name },
+		// 	]);
+		// }
+
+		// setTableData(prevData => [...prevData, result]);
+		// const lastKey = tableData[tableData.length - 1].key;
+		// const newKey = lastKey + 1;
 	};
+	// console.log(tableData);
 
 	const {
 		token: { colorBgContainer },
@@ -150,17 +240,23 @@ const AdminCategory = () => {
 				enterButton="추가"
 				placeholder="추가 할 카테고리를 입력해주세요"
 				onSearch={e => addCategoryHandler(e)}
+				onChange={e => setInputValue(e.target.value)}
+				value={inputValue}
 			/>
 			{/* <Searchbar
 				type={'ADD'}
 				// value={set}
 				placeholder="추가 할 카테고리를 입력하세요."
 			/>  */}
-			<AdminTable
-				columns={columns}
-				dataSource={tableData}
-				totalPages={0}
-			/>
+			{isLoading ? (
+				<h2>로딩중</h2>
+			) : (
+				<AdminTable
+					columns={columns}
+					dataSource={tableData}
+					totalPages={0}
+				/>
+			)}
 		</AdminContent>
 	);
 };

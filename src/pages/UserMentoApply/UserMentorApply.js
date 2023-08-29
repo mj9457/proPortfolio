@@ -16,15 +16,19 @@ import {
 import { useSetRecoilState } from 'recoil';
 import { includeFooterState } from '../../recoil/atoms/index.atom';
 import useFooter from '../../hooks/useFooter';
+import MESSAGE from '../../constants/message';
 
 const UserMentorApply = () => {
 	useFooter();
 	const setIncludeFooter = useSetRecoilState(includeFooterState);
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [imageUrl, setImageUrl] = useState(null);
+	const [inputValue, setInputValue] = useState({
+		company: '',
+		annual: '',
+	});
 	const fileInputRef = useRef(null);
-	let companyRef = useRef(null);
-	const annualRef = React.createRef();
+	// let companyRef = useRef(null);
 	AWS.config.update({
 		region: process.env.REACT_APP_REGION,
 		accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -49,22 +53,42 @@ const UserMentorApply = () => {
 		setSelectedFile(file);
 	};
 	const handleOnChange = e => {
-		companyRef = e.target.value;
+		console.log(e.target.type);
+		const { name, value } = e.target;
+		console.log(name, value);
+
+		if (e.target.type === 'text') {
+			setInputValue(prevState => ({
+				...prevState,
+				company: value,
+			}));
+		}
+		if (e.target.type === 'number') {
+			setInputValue(prevState => ({
+				...prevState,
+				annual: value,
+			}));
+		}
+		// companyRef = e.target.value;
 	};
 	const handleSubmit = async () => {
-		console.log(companyRef);
-		console.log(annualRef.current);
-		// if (selectedFile === null) {
-		// 	alert('이미지를 첨부해주세요.');
-		// 	return;
-		// }
+		console.log(inputValue.annual === '');
+		if (!inputValue.company.trim() || !inputValue.annual) {
+			alert(MESSAGE.CHECK.MODAL);
+			return;
+		} else if (selectedFile === null) {
+			alert('이미지를 첨부해주세요.');
+			return;
+		}
+		console.log(inputValue);
+
 		// console.log(selectedFile?.name);
 
 		// const now = new Date();
 		// const getMilliseconds = now.getTime();
 		// const upload = new AWS.S3.ManagedUpload({
 		// 	params: {
-		// 		Bucket: 'pofol-bucket',
+		// 		Bucket: 'pofol-bucket/upload',
 		// 		Key: `${getMilliseconds + '_' + selectedFile?.name}`,
 		// 		Body: selectedFile,
 		// 	},
@@ -90,7 +114,7 @@ const UserMentorApply = () => {
 						<ContentBox>
 							<span>재직회사</span>
 							<ApplyInput
-								ref={companyRef}
+								value={inputValue.company}
 								placeholder="회사명을 입력해주세요."
 								onChange={e => {
 									handleOnChange(e);
@@ -100,9 +124,10 @@ const UserMentorApply = () => {
 						<ContentBox>
 							<span>경력</span>
 							<ApplyInput
-								ref={annualRef}
+								value={inputValue.annual}
 								type="number"
 								placeholder="연차를 입력해주세요."
+								onChange={handleOnChange}
 							></ApplyInput>
 						</ContentBox>
 						<SubTitle>
