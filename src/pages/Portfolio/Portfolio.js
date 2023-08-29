@@ -72,7 +72,7 @@ function Portfolio() {
 				<S.MentorTitleBox>
 					<span>🌟 모든 멘토</span>
 					<Select variant={'none'} font={'regular'}>
-						<option>최신순</option>
+						<option>최신순(이건 아직 미완)</option>
 						<option>인기순</option>
 					</Select>
 				</S.MentorTitleBox>
