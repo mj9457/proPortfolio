@@ -66,9 +66,7 @@ function Home() {
 					<H.SlideStudyCard>
 						<Slider
 							background="lightBlueBackground"
-							url={
-								'http://localhost:8080/api/projectStudy/recommend/latestProjectStudy'
-							}
+							url={'/projectStudy/recommend/latestProjectStudy'}
 							slidesToShow={2}
 						/>
 					</H.SlideStudyCard>
