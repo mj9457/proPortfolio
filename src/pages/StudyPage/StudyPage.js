@@ -49,7 +49,9 @@ function StudyPage() {
 					<S.PopularCardWrapper>
 						<Slider
 							background="whiteBackground"
-							url={'/mock/studyInfo.json'}
+							url={
+								'http://localhost:8080/api/projectStudy/recommend/latestProjectStudy'
+							}
 							slidesToShow={4}
 						/>
 					</S.PopularCardWrapper>

@@ -5,15 +5,11 @@ const backgroundCSS = {
 		background: ${({ theme }) => theme.PALETTE.white};
 		border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
 		width: 254px;
-		height: 200px;
-		padding: 20px;
 	`,
 
 	lightBlueBackground: css`
 		background-color: ${({ theme }) => theme.PALETTE.primary[100]};
 		width: 530px;
-		height: 200px;
-		padding: 30px;
 	`,
 };
 
@@ -34,6 +30,8 @@ export const StudyInfoCard = styled.a`
 	text-decoration: none;
 	border-radius: 10px;
 	box-sizing: border-box;
+	height: 200px;
+	padding: 20px;
 `;
 export const Category = styled.p`
 	color: ${({ theme }) => theme.PALETTE.white};
@@ -50,24 +48,22 @@ export const Title = styled.p`
 	color: ${({ theme }) => theme.PALETTE.black};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
-	margin-bottom: 32px;
-	white-space: nowrap;
-	margin-top: 16px;
+	margin: 16px 0;
+	max-width: 100%;
+	line-height: 20px;
 	text-overflow: ellipsis;
-	width: 218px;
+	white-space: nowrap;
+	overflow: hidden;
 `;
-export const PositionWrapper = styled.div`
-	display: flex;
-	margin-bottom: 8px;
-	gap: 16px;
-`;
-
 export const Position = styled.p`
 	color: #7d7d7d;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-	margin-bottom: 8px;
+	margin-bottom: 16px;
+	max-width: 214px;
+	height: 30px;
 	text-overflow: ellipsis;
+	line-height: 16px;
 `;
 
 export const DetailInfoWrapper = styled.div`
@@ -86,17 +82,18 @@ export const DetailInfoWrapper = styled.div`
 export const Process = styled.p`
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+	color: #000;
 `;
 
 export const NumberPeople = styled.p`
-	color: #5e5f61;
+	color: #000;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	margin-bottom: 8px;
 `;
 
 export const Deadline = styled.p`
-	color: #7d7d7d;
+	color: #5e5f61;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;

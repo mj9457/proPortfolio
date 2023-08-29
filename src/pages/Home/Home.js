@@ -1,54 +1,56 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import * as H from './Home.styles';
 import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCard';
 import MentorCard from '../../components/@common/Card/Card';
 import RollingSlider from './SlideBanner/SlideBanner';
 import Slider from '../../components/@common/Slider/Slider';
-import { getCookie } from '../../utils/cookie';
+import { getCookie, checkToken } from '../../utils/cookie';
+import useApi from '../../hooks/useApi';
 
 function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const userName = getCookie('userName');
-	console.log(userName);
 
 	useEffect(() => {
-		const getRecommendedMentors = async () => {
-			// const res = await axios.get(
-			// 	'http://localhost:8080/api/portfolio/recommend/recommendMentor',
-			// );
-			const res = await axios.get(
-				'http://34.64.245.195/api/portfolio/recommend/recommendMentor',
-			);
-
-			console.log(res);
-			const recommendedMentors = res.data;
-			setRecommendedMentors(recommendedMentors);
-		};
-
-		getRecommendedMentors();
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
 	}, []);
+
+	const { result, error } = useApi({
+		path: '/portfolio/recommend/recommendMentor',
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (result && result.length > 0) {
+			setRecommendedMentors([...result]);
+			console.log(error);
+		}
+	}, [result]);
 
 	return (
 		<H.Wrap>
 			<H.Content>
 				<RollingSlider />
-				<H.RecommendMentor>
-					<H.Title>👀 {userName}님에게 추천하는 멘토</H.Title>
-					<H.RecommendCards>
-						{recommendedMentors.map((mentor, idx) => (
-							<RecommendCard
-								key={idx}
-								postId={mentor.portfolioId}
-								profileimage={mentor.profileImageUrl}
-								nickName={mentor.nickName}
-								company={mentor.company}
-								position={mentor.job}
-								career={mentor.career}
-							/>
-						))}
-					</H.RecommendCards>
-				</H.RecommendMentor>
+				{isLoggedIn && (
+					<H.RecommendMentor>
+						<H.Title>👀 {userName}님에게 추천하는 멘토</H.Title>
+						<H.RecommendCards>
+							{recommendedMentors.map((mentor, idx) => (
+								<RecommendCard
+									key={idx}
+									postId={mentor.portfolioId}
+									profileimage={mentor.profileImageUrl}
+									nickName={mentor.nickName}
+									company={mentor.company}
+									position={mentor.job}
+									career={mentor.career}
+								/>
+							))}
+						</H.RecommendCards>
+					</H.RecommendMentor>
+				)}
 				<H.NewStudy>
 					<H.TitleBox>
 						<H.Title>🔥 방금 올라온 스터디/ 프로젝트</H.Title>
@@ -63,7 +65,9 @@ function Home() {
 					<H.SlideStudyCard>
 						<Slider
 							background="lightBlueBackground"
-							url={'/mock/studyInfo.json'}
+							url={
+								'http://localhost:8080/api/projectStudy/recommend/latestProjectStudy'
+							}
 							slidesToShow={2}
 						/>
 					</H.SlideStudyCard>
@@ -82,7 +86,7 @@ function Home() {
 					<H.PopularCards>
 						<MentorCard
 							variant={'white'}
-							url={'/api/portfolio/recommend/topMentor'}
+							url={'/portfolio/recommend/topMentor'}
 						/>
 					</H.PopularCards>
 				</H.PopularMento>

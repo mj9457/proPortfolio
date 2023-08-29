@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import StudyInfoCard from '../StudyInfoCard/StudyInfoCard';
 import * as H from './Slider.styles';
-import axios from 'axios';
+import useApi from '../../../hooks/useApi';
 
 function Slider({ background, url, slidesToShow }) {
 	const [slide, setSlide] = useState(0);
 	const [studyInfoData, setStudyInfoData] = useState([]);
 
-	useEffect(() => {
-		const fetchStudyInfo = async () => {
-			try {
-				const res = await axios.get(`${url}`);
-				setStudyInfoData(res.data.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
+	const { result, trigger, isLoading, error } = useApi({
+		path: `${url}`,
+		shouldFetch: true,
+	});
 
-		fetchStudyInfo();
-	}, []);
+	useEffect(() => {
+		if (result && result.length > 0) {
+			setStudyInfoData([...result]);
+			console.log(error);
+		}
+	}, [result]);
 
 	const totalSlides = Math.ceil(studyInfoData.length / slidesToShow);
-
 	const handlePrevClick = () => {
 		setSlide((slide - 1 + totalSlides) % totalSlides);
 	};
@@ -39,14 +37,14 @@ function Slider({ background, url, slidesToShow }) {
 						.map((studyInfo, index) => (
 							<StudyInfoCard
 								key={index}
-								postId={studyInfo.postId}
-								category={studyInfo.category}
+								postId={studyInfo._id}
+								classification={studyInfo.classification}
 								background={background}
 								title={studyInfo.title}
 								process={studyInfo.process}
 								recruits={studyInfo.recruits}
 								position={studyInfo.position}
-								deadline={studyInfo.deadline}
+								deadline={studyInfo.deadline.split('T')[0]}
 							/>
 						))}
 				</H.SlideContainer>
