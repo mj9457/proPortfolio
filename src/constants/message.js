@@ -44,8 +44,26 @@ const MESSAGE = {
 		DELETE: '후기를 삭제하시겠습니까?',
 	},
 	MYPAGE: {
-		EDIT: '수정이 완료되었습니다.',
+		APPLY: {
+			REQUSET: '수락하시겠습니까?',
+		},
+		EDIT: {
+			COMPLETE: '수정이 완료되었습니다.',
+			NOCHANGE: '변경 사항이 없습니다.',
+		},
 		NICKNAME: '',
+		NODATA: {
+			LIST: '내역이 없습니다.',
+		},
+		REFUSE: {
+			REQUSET: '거절하시겠습니까?',
+			CANCLE: '거절을 취소하시겠습니까?',
+			COMPLETE: '거절이 취소되었습니다.',
+		},
+		ACCOUNT: {
+			AGREE: '안내 사항을 모두 확인했으며 이에 동의합니다.',
+			THANKS: '이용해 주셔서 감사합니다.',
+		},
 	},
 	REJECT: {
 		COMPLETE: '거절 사유 작성이 완료되었습니다.',

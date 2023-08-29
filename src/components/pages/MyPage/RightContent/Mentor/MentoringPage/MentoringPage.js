@@ -4,30 +4,30 @@ import {
 	mentoringItem,
 	userData,
 } from '../../../../../../recoil/atoms/myPage/myPage.atom';
-import MESSAGE from '../../../../../../constants/message';
+import MYPAGEOPTION from '../../../../../../constants/mypage';
 
 // 멘토 코칭 페이지
 function MentoringPage() {
 	const mentoringData = useRecoilValue(mentoringItem);
 	const ApplicationArr = [
 		{
-			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.TOTAL,
-			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.TOTAL,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.TOTAL,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.TOTAL,
 			length: `${mentoringData.total.length}`,
 		},
 		{
-			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.APPLY,
-			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.APPLY,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.APPLY,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.APPLY,
 			length: `${mentoringData.apply.length}`,
 		},
 		{
-			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.COMPLETED,
-			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.COMPLETED,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.COMPLETED,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.COMPLETED,
 			length: `${mentoringData.completed.length}`,
 		},
 		{
-			subtitleMentor: MESSAGE.MYPAGE.MENTOR.SUBTITLE.REFUSE,
-			subtitleMentee: MESSAGE.MYPAGE.MENTEE.SUBTITLE.REFUSE,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.REFUSE,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.REFUSE,
 			length: `${mentoringData.refuse.length}`,
 		},
 	];
@@ -42,8 +42,8 @@ function MentoringPage() {
 				<MP.MainTitleBox>
 					<MP.MainTitle>
 						{users.role === 'mentor'
-							? MESSAGE.MYPAGE.MENTOR.TITLE
-							: MESSAGE.MYPAGE.MENTEE.TITLE}
+							? MYPAGEOPTION.MENTOR.TITLE
+							: MYPAGEOPTION.MENTEE.TITLE}
 					</MP.MainTitle>
 
 					<MP.DetailOnborad>

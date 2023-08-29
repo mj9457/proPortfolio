@@ -2,37 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import SideMenu from '../SideMenu/SideMenu';
 import * as M from './MyPageLayout.Styles';
-import axios from 'axios';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userData } from '../../../../recoil/atoms/myPage/myPage.atom';
 import useFooter from '../../../../hooks/useFooter';
+import useApi from '../../../../hooks/useApi';
 
 function MyPageLayout() {
+	// 마이페이지 내 모든 푸터 삭제
 	useFooter();
-	const [user, setUser] = useRecoilState(userData);
 
-	// 서버통신 (GET)
-	useEffect(() => {
-		async function getUserData() {
-			try {
-				const response = await axios.get(
-					'https://jsonplaceholder.typicode.com/todos/1',
-				);
-				setUser(response.data);
-			} catch (err) {
-				console.log(err);
-			}
-		}
-		getUserData();
-	}, []);
+	// 유저 정보 통신(GET)
+	const {
+		result: user,
+		trigger,
+		isLoading,
+		error,
+	} = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
 
 	return (
 		<M.Wrapper>
 			<SideMenu
 				userState={
-					!user.completed // 임시
-						? `${user.userId} 멘토님`
-						: `${user.userId} 님`
+					user.role === 'mentor'
+						? `${user.name} 멘토님`
+						: `${user.name} 님`
 				}
 			></SideMenu>
 			<Outlet />

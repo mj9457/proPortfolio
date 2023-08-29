@@ -3,7 +3,7 @@ import * as EM from './EditModal.styles';
 import axios from 'axios';
 import Textarea from '../../../../../../../@common/Textarea/Textarea';
 
-function EditModal({ categoryKey, setEditModalOpenState }) {
+function EditModal({ categoryKey, setEditModalOpenState, item }) {
 	const [textareaValue, setTextareaValue] = useState({ content: '' }); // 작성한 첨삭 내용 (멘토)
 	const [signupData, setSignupData] = useState([]); // 멘토링 신청 정보 (일반 유저)
 	const [mentoringData, setMentoringData] = useState([]); // 멘토링 작성 정보 (멘토)
@@ -60,7 +60,7 @@ function EditModal({ categoryKey, setEditModalOpenState }) {
 						'https://jsonplaceholder.typicode.com/todos/1',
 					);
 					setMentoringData(response.data);
-					console.log(response.data);
+					// console.log(response.data);
 				} catch (err) {
 					setError(err);
 				}
@@ -83,21 +83,21 @@ function EditModal({ categoryKey, setEditModalOpenState }) {
 						<EM.InfoBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>신청 제목</EM.InfoSubTitle>
-								<span>{signupData.title}</span>
+								<span>{item.title}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>질문 내용</EM.InfoSubTitle>
-								<span>{signupData.title}</span>
+								<span>{item.body}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>이메일 주소</EM.InfoSubTitle>
-								<span>{signupData.title}</span>
+								<span>{item.userId}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>
 									포트폴리오 주소
 								</EM.InfoSubTitle>
-								<span>{signupData.title}</span>
+								<span>{item.id}</span>
 							</EM.InfoSubTitleBox>
 							<EM.InfoSubTitleBox>
 								<EM.InfoSubTitle>첨삭 내용</EM.InfoSubTitle>

@@ -6,6 +6,7 @@ import {
 	mentoringItem,
 	userData,
 } from '../../../../../../recoil/atoms/myPage/myPage.atom';
+import MYPAGEOPTION from '../../../../../../constants/mypage';
 import MESSAGE from '../../../../../../constants/message';
 
 // 카드 리스트
@@ -18,16 +19,16 @@ function CardList() {
 
 	const subTitles = {
 		mentor: {
-			total: MESSAGE.MYPAGE.MENTOR.SUBTITLE.TOTAL,
-			apply: MESSAGE.MYPAGE.MENTOR.SUBTITLE.APPLY,
-			completed: MESSAGE.MYPAGE.MENTOR.SUBTITLE.COMPLETED,
-			refuse: MESSAGE.MYPAGE.MENTOR.SUBTITLE.REFUSE,
+			total: MYPAGEOPTION.MENTOR.SUBTITLE.TOTAL,
+			apply: MYPAGEOPTION.MENTOR.SUBTITLE.APPLY,
+			completed: MYPAGEOPTION.MENTOR.SUBTITLE.COMPLETED,
+			refuse: MYPAGEOPTION.MENTOR.SUBTITLE.REFUSE,
 		},
 		mentee: {
-			total: MESSAGE.MYPAGE.MENTEE.SUBTITLE.TOTAL,
-			apply: MESSAGE.MYPAGE.MENTEE.SUBTITLE.APPLY,
-			completed: MESSAGE.MYPAGE.MENTEE.SUBTITLE.COMPLETED,
-			refuse: MESSAGE.MYPAGE.MENTEE.SUBTITLE.REFUSE,
+			total: MYPAGEOPTION.MENTEE.SUBTITLE.TOTAL,
+			apply: MYPAGEOPTION.MENTEE.SUBTITLE.APPLY,
+			completed: MYPAGEOPTION.MENTEE.SUBTITLE.COMPLETED,
+			refuse: MYPAGEOPTION.MENTEE.SUBTITLE.REFUSE,
 		},
 	};
 
@@ -181,7 +182,7 @@ function CardListLayout({ length, fun, categoryKey, subTitles }) {
 
 				{length === 0 ? (
 					<CL.NonSubContentListBox>
-						{MESSAGE.NODATA.LIST}
+						{MESSAGE.MYPAGE.NODATA.LIST}
 					</CL.NonSubContentListBox>
 				) : (
 					<CL.SubContentListBox>
