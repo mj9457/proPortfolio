@@ -18,7 +18,7 @@ function PostCard({ data }) {
 		<S.Container>
 			<Link to={`/study/detail/${_id}`}>
 				<S.ChipWrapper>
-					<Chip category={classification} />
+					<Chip classification={classification} />
 					<S.ChipBox $recruitsStatus={recruitsStatus}>
 						<S.ChipText $recruitsStatus={recruitsStatus}>
 							{recruitsStatus}
