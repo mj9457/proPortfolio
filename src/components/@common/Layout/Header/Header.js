@@ -27,7 +27,7 @@ function Header() {
 		setOpenModal(false);
 	};
 
-	const { result, trigger, isLoading, error } = useApi({});
+	const { trigger } = useApi({});
 
 	const handleLogoutClick = async () => {
 		try {
