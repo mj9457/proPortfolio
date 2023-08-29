@@ -34,9 +34,6 @@ export const RegisterForm = styled.form`
 			border: 1px solid #0000001a;
 			border-radius: 4px;
 		}
-		> input {
-			border: 1px solid ${props => (props.error ? 'blue' : '#ccc')};
-		}
 	}
 	> button {
 		width: 360px;

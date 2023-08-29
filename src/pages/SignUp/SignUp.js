@@ -14,6 +14,7 @@ function SignUp() {
 	const [nickName, setNickName] = useState('');
 	const [position, setPosition] = useState('');
 	const [nameError, setNameError] = useState('');
+	const [nicknameError, setNicknameError] = useState('');
 	const navigate = useNavigate();
 	useFooter();
 
@@ -41,7 +42,14 @@ function SignUp() {
 	};
 
 	const handleNicknameChange = event => {
-		setNickName(event.target.value);
+		const value = event.target.value;
+		const regex = /^[ㄱ-ㅎ|가-힣|a-zA-Z0-9]*$/;
+		if (regex.test(value)) {
+			setNickName(value);
+			setNicknameError('');
+		} else {
+			setNicknameError('한글, 영어, 숫자만 입력 가능합니다.');
+		}
 	};
 
 	const handleJobChange = event => {
@@ -90,7 +98,7 @@ function SignUp() {
 				<div>
 					<label>이름</label>
 					<Input
-						type="text"
+						type="이름을 입력해 주세요"
 						value={name}
 						size={'medium'}
 						onChange={handleNameChange}
@@ -101,11 +109,14 @@ function SignUp() {
 				<div>
 					<label>닉네임</label>
 					<Input
-						type="text"
+						type="한글, 영어, 숫자만 입력해주세요"
 						value={nickName}
 						onChange={handleNicknameChange}
 						size={'medium'}
 					/>
+					{nicknameError && (
+						<S.StyledError>{nicknameError}</S.StyledError>
+					)}
 				</div>
 				<div>
 					<label>직무</label>
