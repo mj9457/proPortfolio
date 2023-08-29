@@ -13,6 +13,7 @@ function StudyEditPost() {
 	const defaultSelectProps = {
 		size: 'large',
 		font: 'regular',
+		variant: 'default',
 	};
 	const [userData, setUserData] = useState(null);
 	const [selectedOptions, setSelectedOptions] = useState({
@@ -30,9 +31,6 @@ function StudyEditPost() {
 	});
 	const { postId } = useParams();
 
-	// console.log(selectedOptions);
-	// console.log('편집 페이지 PostId 확인', postId);
-
 	// 유저 정보
 	const { result, trigger, isLoading, error } = useApi({
 		path: '/user',
@@ -41,9 +39,8 @@ function StudyEditPost() {
 
 	useEffect(() => {
 		if (result) {
-			// console.log('TEST', result);
 			setUserData(result);
-			// console.log(error);
+			console.log(error);
 		}
 	}, [result]);
 
@@ -61,20 +58,27 @@ function StudyEditPost() {
 		}
 	}, [userData]);
 
-	// 게시글 수정
-	useEffect(() => {
-		if (postId) {
-			const loadPostDataForEdit = async () => {
-				try {
-					// const postData = await getPostForEdit(postId);
-					// setSelectedOptions(postData);
-				} catch (error) {
-					console.error(error);
-				}
-			};
-			loadPostDataForEdit();
+	const {
+		trigger: updatePost,
+		isLoading: isUpdating,
+		error: updateError,
+	} = useApi({
+		path: `/projectStudy/${postId}`,
+		shouldFetch: false,
+	});
+
+	// 게시글 수정 요청 함수
+	const handleUpdatePost = async () => {
+		try {
+			await updatePost({
+				method: 'put',
+				data: selectedOptions,
+			});
+			console.log('게시글 수정 완료');
+		} catch (error) {
+			console.error('게시글 수정 오류', error);
 		}
-	}, [postId]);
+	};
 
 	const handleOptionChange = (name, value) => {
 		setSelectedOptions(prevOptions => ({

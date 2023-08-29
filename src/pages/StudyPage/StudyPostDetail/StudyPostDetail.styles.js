@@ -112,6 +112,9 @@ export const PostDetailBasicItem = styled.li`
 	p {
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 		font-size: ${({ theme }) => theme.FONT_SIZE.big};
+
+		word-break: keep-all;
+		max-width: 425px;
 	}
 `;
 

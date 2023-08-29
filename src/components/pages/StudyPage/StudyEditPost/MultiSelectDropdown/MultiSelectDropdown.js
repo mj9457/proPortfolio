@@ -1,11 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { STUDYOPTIONS } from '../../../../../constants/study';
 import * as S from './MultiSelectDropdown.styles';
+import useApi from '../../../../../hooks/useApi';
 
 function MultiSelectDropdown({ onPositionsChange }) {
 	const CheckBox = useRef(null);
 	const [expanded, setExpanded] = useState(false);
 	const [selectedPositions, setSelectedPositions] = useState([]);
+	const [positions, setPositions] = useState([]);
 
 	const showCheckboxes = () => {
 		setExpanded(!expanded);
@@ -19,12 +21,28 @@ function MultiSelectDropdown({ onPositionsChange }) {
 				name => name !== positionName,
 			);
 		} else {
-			updatedPositions = [...selectedPositions, positionName];
+			if (selectedPositions.length < 4) {
+				updatedPositions = [...selectedPositions, positionName];
+			} else {
+				alert('최대 4개까지만 선택할 수 있습니다.');
+				return;
+			}
 		}
 
 		setSelectedPositions(updatedPositions);
 		onPositionsChange(updatedPositions);
 	};
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/position',
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (result && result.length > 0) {
+			setPositions(result);
+		}
+	}, [result]);
 
 	return (
 		<S.MultiselectContainer>
@@ -39,17 +57,21 @@ function MultiSelectDropdown({ onPositionsChange }) {
 				<S.OverSelect></S.OverSelect>
 			</S.SelectBox>
 			<S.CheckBoxContainer ref={CheckBox} $expanded={expanded}>
-				{STUDYOPTIONS.POSITION.map(el => (
-					<S.Label htmlFor={el.name} key={el.name}>
-						<input
-							type="checkbox"
-							id={el.name}
-							checked={selectedPositions.includes(el.name)}
-							onChange={() => handlePositionChange(el.name)}
-						/>
-						<span>{el.name}</span>
-					</S.Label>
-				))}
+				{isLoading ? (
+					<p>Loading...</p>
+				) : (
+					positions.map(el => (
+						<S.Label htmlFor={el.name} key={el._id}>
+							<input
+								type="checkbox"
+								id={el.name}
+								checked={selectedPositions.includes(el.name)}
+								onChange={() => handlePositionChange(el.name)}
+							/>
+							<span>{el.name}</span>
+						</S.Label>
+					))
+				)}
 			</S.CheckBoxContainer>
 		</S.MultiselectContainer>
 	);
