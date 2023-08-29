@@ -5,13 +5,17 @@ import * as S from './SignUp.styles';
 import Button from '../../components/@common/Button/Button';
 import Input from '../../components/@common/Input/Input';
 import { getCookie } from '../../utils/cookie';
+import Position from '../../components/@common/Position/Position';
+import useFooter from '../../hooks/useFooter';
 
 function SignUp() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [nickName, setNickName] = useState('');
 	const [position, setPosition] = useState('');
+	const [nameError, setNameError] = useState('');
 	const navigate = useNavigate();
+	useFooter();
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -27,8 +31,15 @@ function SignUp() {
 	}, []);
 
 	const handleNameChange = event => {
-		setName(event.target.value);
+		const newName = event.target.value;
+		if (newName.length <= 10) {
+			setName(newName);
+			setNameError('');
+		} else {
+			setNameError('이름은 10자 이하로 입력해 주세요');
+		}
 	};
+
 	const handleNicknameChange = event => {
 		setNickName(event.target.value);
 	};
@@ -39,6 +50,11 @@ function SignUp() {
 
 	async function handleSubmit(event) {
 		event.preventDefault();
+
+		if (name.length > 10) {
+			setNameError('이름은 10자 이하로 입력해 주세요');
+			return;
+		}
 
 		try {
 			const response = await axios.post(
@@ -78,7 +94,9 @@ function SignUp() {
 						value={name}
 						size={'medium'}
 						onChange={handleNameChange}
+						error={nameError}
 					/>
+					{nameError && <S.StyledError>{nameError}</S.StyledError>}
 				</div>
 				<div>
 					<label>닉네임</label>
@@ -91,14 +109,12 @@ function SignUp() {
 				</div>
 				<div>
 					<label>직무</label>
-					<select value={position} onChange={handleJobChange}>
-						<option value="">선택하세요</option>
-						<option value="백엔드 개발">백엔드 개발</option>
-						<option value="프론트엔드 개발">프론트엔드 개발</option>
-						<option value="안드로이드 개발">안드로이드 개발</option>
-						<option value="IOS 개발">IOS 개발</option>
-						<option value="웹 퍼블리셔">웹 퍼블리셔</option>
-					</select>
+					<Position
+						onChange={handleJobChange}
+						position={position}
+						size={'regular'}
+						font={'regular'}
+					/>
 				</div>
 				<Button
 					variant={'primary'}
@@ -114,3 +130,4 @@ function SignUp() {
 }
 
 export default SignUp;
+//  주석처리 

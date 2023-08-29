@@ -4,13 +4,12 @@ import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCa
 import MentorCard from '../../components/@common/Card/Card';
 import RollingSlider from './SlideBanner/SlideBanner';
 import Slider from '../../components/@common/Slider/Slider';
-import { getCookie, checkToken } from '../../utils/cookie';
+import { checkToken } from '../../utils/cookie';
 import useApi from '../../hooks/useApi';
 
 function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);
 	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
-	const userName = getCookie('userName');
 
 	useEffect(() => {
 		const tokenStatus = checkToken();
@@ -23,11 +22,13 @@ function Home() {
 	});
 
 	useEffect(() => {
-		if (result && result.length > 0) {
-			setRecommendedMentors([...result]);
+		if (result && result.portfolios && result.portfolios.length > 0) {
+			setRecommendedMentors([...result.portfolios]);
 			console.log(error);
 		}
 	}, [result]);
+
+	const userNickName = result.nickName;
 
 	return (
 		<H.Wrap>
@@ -35,7 +36,7 @@ function Home() {
 				<RollingSlider />
 				{isLoggedIn && (
 					<H.RecommendMentor>
-						<H.Title>👀 {userName}님에게 추천하는 멘토</H.Title>
+						<H.Title>👀 {userNickName}님에게 추천하는 멘토</H.Title>
 						<H.RecommendCards>
 							{recommendedMentors.map((mentor, idx) => (
 								<RecommendCard

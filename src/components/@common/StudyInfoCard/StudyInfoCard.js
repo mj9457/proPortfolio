@@ -9,12 +9,12 @@ function StudyInfoCard({
 	position,
 	deadline,
 	background,
-	id,
+	postId,
 }) {
 	return (
 		<H.Container>
 			<H.StudyInfoCard
-				href={`/study/detail/${id}`}
+				href={`/study/detail/${postId}`}
 				background={background}
 			>
 				<Chip classification={classification} />

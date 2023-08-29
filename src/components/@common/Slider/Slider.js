@@ -15,7 +15,6 @@ function Slider({ background, url, slidesToShow }) {
 	useEffect(() => {
 		if (result && result.length > 0) {
 			setStudyInfoData([...result]);
-			console.log(error);
 		}
 	}, [result]);
 

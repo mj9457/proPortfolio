@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { css, styled } from 'styled-components';
 
 export const Wrap = styled.div`
 	width: 100%;
@@ -34,9 +34,17 @@ export const RegisterForm = styled.form`
 			border: 1px solid #0000001a;
 			border-radius: 4px;
 		}
+		> input {
+			border: 1px solid ${props => (props.error ? 'blue' : '#ccc')};
+		}
 	}
 	> button {
 		width: 360px;
 		margin-top: 32px;
 	}
+`;
+
+export const StyledError = styled.span`
+	color: ${({ theme }) => theme.PALETTE.mainColor};
+	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 `;
