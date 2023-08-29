@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
 import {
 	bodyContainer,
 	flexAlignCenter,
@@ -32,6 +34,22 @@ export const NavBox = styled.div`
 	width: 100%;
 `;
 
+export const NavBar = styled.div`
+	display: flex;
+	justify-content: baseline;
+`;
+
+export const NavLinkItem = styled(NavLink)`
+	text-decoration: none;
+	margin: 0 10px;
+	color: ${({ theme }) => theme.PALETTE.black};
+
+	&.active {
+		color: ${({ theme }) => theme.PALETTE.mainColor};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	}
+`;
+
 export const LoginBar = styled.div`
 	${flexCenter}
 	gap: 20px;
@@ -49,13 +67,5 @@ export const LoginBar = styled.div`
 		&:visited {
 			color: ${({ theme }) => theme.PALETTE.black};
 		}
-	}
-`;
-
-export const NavBar = styled(LoginBar)`
-	width: 315px;
-
-	& a {
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
 	}
 `;
