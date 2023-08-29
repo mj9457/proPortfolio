@@ -1,5 +1,5 @@
 export const STUDYOPTIONS = {
-	CATEGORY: [
+	CLASSIFICATION: [
 		{
 			value: 'study',
 			name: '스터디',
@@ -9,7 +9,7 @@ export const STUDYOPTIONS = {
 			name: '프로젝트',
 		},
 	],
-	PROCEED: [
+	PROCESS: [
 		{
 			value: 'online',
 			name: '온라인',
@@ -34,8 +34,8 @@ export const STUDYOPTIONS = {
 			name: '백엔드',
 		},
 		{
-			value: 'full',
-			name: '웹 풀스택',
+			value: 'publisher',
+			name: '웹퍼블리셔',
 		},
 		{
 			value: 'android',
@@ -43,10 +43,10 @@ export const STUDYOPTIONS = {
 		},
 		{
 			value: 'ios',
-			name: 'ios',
+			name: 'IOS',
 		},
 	],
-	PERSONNEL: [
+	RECRUITS: [
 		{
 			value: 'one',
 			name: '1명',
@@ -78,16 +78,16 @@ export const STUDYOPTIONS = {
 	],
 	CONTACT: [
 		{
-			value: 'email',
-			name: '이메일',
+			value: 'discord',
+			name: '디스코드',
 		},
 		{
 			value: 'openchat',
 			name: '오픈채팅',
 		},
 		{
-			value: 'google',
-			name: '구글폼',
+			value: 'etc',
+			name: '기타',
 		},
 	],
 };

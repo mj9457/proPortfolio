@@ -1,49 +1,105 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
 import * as S from './StudyPage.styles';
 // import PopularCard from '../../components/pages/StudyPage/PopularCard/PopularCard';
 import PostCard from '../../components/pages/StudyPage/PostCard/PostCard';
-// import Slider from '../../components/pages/StudyPage/Slider/Slider';
 import Slider from '../../components/@common/Slider/Slider';
+import SignupModal from '../../components/pages/SignUp/Modal/SignUpModal';
 import Button from '../../components/@common/Button/Button';
 import Category from '../../components/@common/Category/Category';
+import useApi from '../../hooks/useApi';
+import { checkToken } from '../../utils/cookie';
 
 function StudyPage() {
 	const navigate = useNavigate();
 	const [studyData, setStudyData] = useState([]);
+	const [openModal, setOpenModal] = useState(false);
 
-	const URL = '/mock/study.json';
-	useEffect(() => {
-		const getPost = async () => {
-			try {
-				const res = await axios.get(URL);
-				const data = res.data.data;
-				// console.log(data);
+	const { trigger, isLoading, error, result } = useApi({
+		path: '/projectStudy',
+		shouldFetch: true,
+	});
 
-				setStudyData([...data]);
-			} catch (err) {
-				console.log(err);
-			}
-		};
+	console.log('로그인 유무', checkToken());
 
-		getPost();
-	}, []);
+	const isLoggedIn = checkToken();
 
 	const onClickAddPost = () => {
-		navigate('/study/post');
+		if (!isLoggedIn) {
+			alert('로그인이 필요합니다.\n로그인 후 글을 작성해주세요!');
+			setOpenModal(true);
+		} else {
+			navigate('/study/post');
+		}
 	};
+
+	const handleSignupClose = () => {
+		setOpenModal(false);
+	};
+
+	useEffect(() => {
+		if (result && result.length > 0) {
+			setStudyData(result);
+		}
+	}, [result]);
+
+	// useEffect(() => {
+	// 	getData();
+	// }, [page]);
+
+	// const handleObserver = entries => {
+	// 	const target = entries[0];
+	// 	if (target.isIntersecting) {
+	// 		setPage(prevPage => prevPage + 1);
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	const options = {
+	// 		root: null,
+	// 		rootMargin: '0px',
+	// 		threshold: 1.0,
+	// 	};
+
+	// 	if (loading) return;
+	// 	observer.current = new IntersectionObserver(handleObserver, options);
+
+	// 	if (observer.current && observerElement.current) {
+	// 		observer.current.observe(observerElement.current);
+	// 	}
+
+	// 	return () => {
+	// 		if (observer.current) {
+	// 			observer.current.disconnect();
+	// 		}
+	// 	};
+	// }, [loading]);
+
 	return (
 		<>
 			<S.Container>
 				<S.PopularContents>
 					{/* 인기 스터디, 프로젝트 */}
 					<S.TitleWrapper>
-						<S.Title>🔥 프론트엔드 추천 스터디/ 프로젝트</S.Title>
-						<S.SubTitle>
-							포지션에 맞는 스터디, 프로젝트를 확인해보세요!
-						</S.SubTitle>
+						<S.TopBox>
+							<S.Title>
+								🔥 프론트엔드 추천 스터디/ 프로젝트
+							</S.Title>
+							<S.SubTitle>
+								포지션에 맞는 스터디, 프로젝트를 확인해보세요!
+							</S.SubTitle>
+						</S.TopBox>
+						{/*  */}
+						<Button
+							variant={'add'}
+							shape={'default'}
+							size={'normal'}
+							onClick={onClickAddPost}
+						>
+							글쓰기
+						</Button>
 					</S.TitleWrapper>
 
 					<S.PopularCardWrapper>
@@ -79,25 +135,19 @@ function StudyPage() {
 								size={'small'}
 							/>
 						</S.PositionCategoryList>
-						{/*  */}
-						<Button
-							variant={'add'}
-							shape={'default'}
-							size={'normal'}
-							onClick={onClickAddPost}
-						>
-							글쓰기
-						</Button>
 					</S.CategoryBottomList>
 
 					{/* 하단 글 리스트 영역 */}
 					<S.PostCardContainer>
+						{isLoading && <p>로딩 중입니다.</p>}
 						{studyData.map((studyData, idx) => (
 							<PostCard data={studyData} key={idx} />
 						))}
 					</S.PostCardContainer>
 				</S.StudyContents>
 			</S.Container>
+
+			{openModal && <SignupModal onClose={handleSignupClose} />}
 		</>
 	);
 }

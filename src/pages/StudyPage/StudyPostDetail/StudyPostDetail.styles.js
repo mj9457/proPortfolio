@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
 	bodyContainer,
 	flexAlignCenter,
@@ -22,6 +22,12 @@ export const RecruitmentStatus = styled.h3`
 	padding-right: 1rem;
 	border-right: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	color: ${({ theme }) => theme.PALETTE.mainColor};
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			color: ${({ theme }) => theme.PALETTE.gray[300]};
+		`}
 `;
 
 export const PostTitle = styled.p`
@@ -41,7 +47,6 @@ export const UserProfileImage = styled.img`
 	width: 2.5rem;
 	height: 2.5rem;
 	border-radius: 2.5rem;
-	border: 1px solid #000;
 `;
 
 export const UserName = styled.p`
@@ -81,6 +86,7 @@ export const PostDetailMainText = styled.p`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 	line-height: 1.4;
+	white-space: pre-line;
 `;
 
 export const PostDetailBottomTitle = styled.p`
@@ -138,4 +144,8 @@ export const PostDetailBasicItemTitle = styled.div`
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 		font-size: ${({ theme }) => theme.FONT_SIZE.big};
 	}
+`;
+
+export const CommentContainer = styled.div`
+	padding: 88px 0 64px;
 `;

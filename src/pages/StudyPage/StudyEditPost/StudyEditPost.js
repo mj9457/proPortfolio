@@ -7,25 +7,59 @@ import { STUDYOPTIONS } from '../../../constants/study';
 import Select from '../../../components/@common/Select/Select';
 import MultiSelectDropdown from '../../../components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
 import PostForm from '../../../components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
+import useApi from '../../../hooks/useApi';
 
 function StudyEditPost() {
 	const defaultSelectProps = {
 		size: 'large',
 		font: 'regular',
 	};
-
+	const [userData, setUserData] = useState(null);
 	const [selectedOptions, setSelectedOptions] = useState({
-		category: '',
-		proceed: '',
+		classification: '',
+		process: '',
 		position: [],
-		personnel: '',
-		contact: '',
-		link: '',
+		recruits: '',
+		howContactTitle: '',
+		howContactContent: '',
 		deadline: new Date(),
+		nickName: '',
+		name: '',
+		recruitsStatus: '모집중',
+		profileImageUrl: '',
 	});
 	const { postId } = useParams();
 
-	console.log('편집 페이지 PostId 확인', postId);
+	// console.log(selectedOptions);
+	// console.log('편집 페이지 PostId 확인', postId);
+
+	// 유저 정보
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/user',
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (result) {
+			// console.log('TEST', result);
+			setUserData(result);
+			// console.log(error);
+		}
+	}, [result]);
+
+	useEffect(() => {
+		if (userData) {
+			console.log('USERDATA', userData);
+			setSelectedOptions(prevOptions => ({
+				...prevOptions,
+				nickName: userData.nickName,
+				name: userData.name,
+				ownerId: userData._id,
+				profileImageUrl: userData.profileImageUrl,
+			}));
+			console.log('확인', selectedOptions);
+		}
+	}, [userData]);
 
 	// 게시글 수정
 	useEffect(() => {
@@ -78,12 +112,12 @@ function StudyEditPost() {
 						<S.SelectBox>
 							<S.SelectTitle>모집 구분</S.SelectTitle>
 							<SelectWithDefault
-								options={STUDYOPTIONS.CATEGORY}
-								selectedValue={selectedOptions.category}
+								options={STUDYOPTIONS.CLASSIFICATION}
+								selectedValue={selectedOptions.classification}
 								defaultValue="모집 구분"
 								onChange={e =>
 									handleOptionChange(
-										'category',
+										'classification',
 										e.target.value,
 									)
 								}
@@ -93,12 +127,12 @@ function StudyEditPost() {
 						<S.SelectBox>
 							<S.SelectTitle>진행 방식</S.SelectTitle>
 							<SelectWithDefault
-								options={STUDYOPTIONS.PROCEED}
-								selectedValue={selectedOptions.proceed}
+								options={STUDYOPTIONS.PROCESS}
+								selectedValue={selectedOptions.process}
 								defaultValue="진행 방식"
 								onChange={e =>
 									handleOptionChange(
-										'proceed',
+										'process',
 										e.target.value,
 									)
 								}
@@ -120,12 +154,12 @@ function StudyEditPost() {
 						<S.SelectBox>
 							<S.SelectTitle>모집 인원</S.SelectTitle>
 							<SelectWithDefault
-								options={STUDYOPTIONS.PERSONNEL}
-								selectedValue={selectedOptions.personnel}
+								options={STUDYOPTIONS.RECRUITS}
+								selectedValue={selectedOptions.recruits}
 								defaultValue="모집 인원"
 								onChange={e =>
 									handleOptionChange(
-										'personnel',
+										'recruits',
 										e.target.value,
 									)
 								}
@@ -137,9 +171,9 @@ function StudyEditPost() {
 						<S.SelectBox>
 							<S.Deadline>모집 마감일</S.Deadline>
 							<DatePicker
-								selected={selectedOptions.deadline}
-								onChange={e =>
-									handleOptionChange('deadline', e)
+								selected={new Date(selectedOptions.deadline)}
+								onChange={date =>
+									handleOptionChange('deadline', date)
 								}
 								dateFormat="yyyy-MM-dd"
 								minDate={new Date()}
@@ -152,11 +186,11 @@ function StudyEditPost() {
 							<S.SelectTitle>연락 방법</S.SelectTitle>
 							<SelectWithDefault
 								options={STUDYOPTIONS.CONTACT}
-								selectedValue={selectedOptions.contact}
+								selectedValue={selectedOptions.howContactTitle}
 								defaultValue="연락 방법"
 								onChange={e =>
 									handleOptionChange(
-										'contact',
+										'howContactTitle',
 										e.target.value,
 									)
 								}
@@ -166,7 +200,10 @@ function StudyEditPost() {
 					<S.Input
 						placeholder="연락 가능한 링크를 입력해주세요. ex) 오픈채팅 링크"
 						onChange={e =>
-							handleOptionChange('link', e.target.value)
+							handleOptionChange(
+								'howContactContent',
+								e.target.value,
+							)
 						}
 						required
 					/>

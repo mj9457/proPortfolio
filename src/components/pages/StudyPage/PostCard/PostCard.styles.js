@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
 	flexColumn,
 	flexAlignCenter,
@@ -8,7 +8,6 @@ import {
 export const Container = styled.div`
 	cursor: pointer;
 	width: 100%;
-	height: 267px;
 	padding: 1.875rem;
 	border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
 	${flexColumn}
@@ -30,6 +29,12 @@ export const ChipBox = styled.div`
 	padding: 0.45rem 0.9rem;
 	border-radius: 0.9375rem;
 	width: fit-content;
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			background-color: ${({ theme }) => theme.PALETTE.gray[100]};
+		`}
 `;
 
 export const ChipText = styled.p`
@@ -37,6 +42,12 @@ export const ChipText = styled.p`
 	font-size: 1rem;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			color: ${({ theme }) => theme.PALETTE.gray[300]};
+		`}
 `;
 
 export const Title = styled.span`
@@ -93,6 +104,8 @@ export const PositionBox = styled.div`
 	}
 `;
 
-export const Day = styled.p`
+export const Day = styled.div`
+	${flexAlignCenter};
+	gap: 8px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 `;

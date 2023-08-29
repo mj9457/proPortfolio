@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as S from './PostForm.style';
 import Button from '../../../../@common/Button/Button';
 import Textarea from '../../../../@common/Textarea/Textarea';
+import useApi from '../../../../../hooks/useApi';
 
 function PostForm({ selectedOptions }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		title: '',
-		content: '',
+		description: '',
 	});
 
 	const handleChange = e => {
@@ -21,23 +22,28 @@ function PostForm({ selectedOptions }) {
 
 	const validationChecks = [
 		{
-			check: values.title.length > 30,
-			message: '제목은 30자 이하로 입력해주세요.',
+			check: values.title.length > 50,
+			message: '제목은 50자 이하로 입력해주세요.',
 		},
 		{
 			check: values.title.trim().length === 0,
 			message: '제목을 작성해주세요.',
 		},
 		{
-			check: values.content.trim().length === 0,
+			check: values.description.trim().length === 0,
 			message: '소개 내용을 작성해주세요.',
 		},
 		{
-			check: selectedOptions.link.trim().length === 0,
+			check: values.description.length > 1000,
+			message: '내용은 1000자 이하로 작성해주세요.',
+		},
+		{
+			check: selectedOptions.howContactContent.trim().length === 0,
 			message: '연락 가능한 링크를 입력해주세요.',
 		},
 		{
-			check: Object.values(selectedOptions).some(option => {
+			check: Object.keys(selectedOptions).some(optionKey => {
+				const option = selectedOptions[optionKey];
 				if (typeof option === 'string') {
 					return option.trim().length === 0;
 				} else if (Array.isArray(option)) {
@@ -48,6 +54,13 @@ function PostForm({ selectedOptions }) {
 			message: '모든 항목을 선택해주세요.',
 		},
 	];
+	console.log('selectedOptions', selectedOptions);
+
+	// 유저 정보
+	const { trigger, isLoading, error, result } = useApi({
+		path: '/projectStudy',
+		method: 'post',
+	});
 
 	const handleSubmit = async e => {
 		const validationFailures = validationChecks.filter(
@@ -61,16 +74,16 @@ function PostForm({ selectedOptions }) {
 		}
 
 		try {
-			// const URL = '';
-			// const response = await axios.post(URL, {
-			// 	title,
-			// 	content,
-			// selectedOptions
-			// });
-
-			// console.log(response.data);
-			console.log(selectedOptions);
-			alert('성공');
+			const postData = {
+				...selectedOptions,
+				title: values.title,
+				description: values.description,
+			};
+			console.log('postData', postData);
+			await trigger({
+				data: postData,
+			});
+			navigate('/study');
 			// navigate(`/study/detail/${response.data.id}`)
 		} catch (error) {
 			console.error(error);
@@ -88,15 +101,16 @@ function PostForm({ selectedOptions }) {
 			<S.PostInput
 				placeholder="제목을 입력하세요."
 				name="title"
-				maxLength={30}
+				maxLength={50}
 				value={values.title}
 				onChange={handleChange}
 			/>
 			<Textarea
-				name="content"
+				name="description"
 				size={'large'}
+				maxLength={1000}
 				placeholder="프로젝트, 스터디에 대해 소개해주세요!"
-				value={values.content}
+				value={values.description}
 				onChange={handleChange}
 			/>
 

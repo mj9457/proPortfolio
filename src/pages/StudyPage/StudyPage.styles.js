@@ -22,6 +22,8 @@ const Title = styled.h2`
 
 const SubTitle = styled.h3``;
 
+const TopBox = styled.div``;
+
 const PopularCardWrapper = styled.div`
 	/* 
 	${flexAlignCenter}
@@ -34,6 +36,8 @@ const PopularCardWrapper = styled.div`
 
 const TitleWrapper = styled.div`
 	margin-bottom: 2.5rem;
+	${flexAlignCenter}
+	justify-content: space-between;
 `;
 
 const StudyContents = styled.div``;
@@ -106,4 +110,5 @@ export {
 	WritePostButton,
 	CategoryBottomList,
 	PostCardContainer,
+	TopBox,
 };
