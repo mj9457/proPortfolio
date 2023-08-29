@@ -84,23 +84,23 @@ const UserMentorApply = () => {
 
 		// console.log(selectedFile?.name);
 
-		// const now = new Date();
-		// const getMilliseconds = now.getTime();
-		// const upload = new AWS.S3.ManagedUpload({
-		// 	params: {
-		// 		Bucket: 'pofol-bucket/upload',
-		// 		Key: `${getMilliseconds + '_' + selectedFile?.name}`,
-		// 		Body: selectedFile,
-		// 	},
-		// });
-		// console.log(upload);
-		// try {
-		// 	const result = await upload.promise();
-		// 	console.log(result.Location);
-		// 	// TODO API
-		// } catch (error) {
-		// 	console.log(error);
-		// }
+		const now = new Date();
+		const getMilliseconds = now.getTime();
+		const upload = new AWS.S3.ManagedUpload({
+			params: {
+				Bucket: 'pofol-bucket/upload',
+				Key: `${getMilliseconds + '_' + selectedFile?.name}`,
+				Body: selectedFile,
+			},
+		});
+		console.log(upload);
+		try {
+			const result = await upload.promise();
+			console.log(result.Location);
+			// TODO API
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<>
