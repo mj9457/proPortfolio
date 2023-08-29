@@ -46,10 +46,10 @@ const UserMentorApply = () => {
 			if (file === undefined) {
 				return;
 			}
-			alert('JPEG, JPG, PNG 파일만 업로드 가능합니다.');
+			alert(MESSAGE.FILE.UPLOAD);
 			return;
 		}
-		console.log(fileExt);
+		console.log(file);
 		setSelectedFile(file);
 	};
 	const handleOnChange = e => {
@@ -100,6 +100,7 @@ const UserMentorApply = () => {
 			// TODO API
 		} catch (error) {
 			console.log(error);
+			alert('용량확인해주');
 		}
 	};
 	return (

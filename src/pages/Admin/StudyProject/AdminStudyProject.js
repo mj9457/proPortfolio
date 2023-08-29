@@ -1,6 +1,6 @@
 import { Select, Space, theme } from 'antd';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import {
@@ -9,49 +9,17 @@ import {
 } from '../../../components/pages/Admin/Common/Common.styles';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import useApi from '../../../hooks/useApi';
-import { useNavigate } from 'react-router-dom';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 
 const AdminStudyProject = () => {
-	const naviagte = useNavigate();
 	const { Option } = Select;
-	// const data = [
-	// 	{
-	// 		key: '1',
-	// 		type: '프로젝트',
-	// 		maintitle: '쇼핑몰 프로젝트 모집',
-	// 		name: '김현규',
-	// 	},
-	// 	{
-	// 		key: '2',
-	// 		type: '스터디',
-	// 		maintitle: '공부하실분',
-	// 		name: '김기범',
-	// 	},
-	// 	{
-	// 		key: '3',
-	// 		type: '스터디',
-	// 		maintitle: '프론트 스터디 모집',
-	// 		name: '조아연',
-	// 	},
-	// 	{
-	// 		key: '4',
-	// 		type: '스터디',
-	// 		maintitle: 'JavaScript 알고리즘 스터디',
-	// 		name: '이헤진',
-	// 	},
-	// 	{
-	// 		key: '5',
-	// 		type: '프로젝트',
-	// 		maintitle: '클론 프로젝트 팀원 모집',
-	// 		name: '예은선',
-	// 	},
-	// 	{
-	// 		key: '6',
-	// 		type: '스터디',
-	// 		maintitle: '백엔드 스터디 모집',
-	// 		name: '박민준',
-	// 	},
-	// ];
+	const [tableData, setTableData] = useState();
+	const [classification, setClassification] = useState('all');
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/projectStudy',
+		shouldFetch: true,
+	});
 	const columns = [
 		{
 			title: '글 번호',
@@ -61,7 +29,7 @@ const AdminStudyProject = () => {
 		{
 			title: (
 				<Select
-					defaultValue="all"
+					defaultValue={classification}
 					style={{ width: 100 }}
 					options={[
 						{ value: 'all', label: '전체' },
@@ -71,11 +39,7 @@ const AdminStudyProject = () => {
 					onChange={e => {
 						changeSelectValue(e);
 					}}
-				>
-					<Option value="all">전체</Option>
-					<Option value="project">프로젝트</Option>
-					<Option value="study">스터디</Option>
-				</Select>
+				/>
 			),
 			key: 'classification',
 			dataIndex: 'classification',
@@ -115,64 +79,71 @@ const AdminStudyProject = () => {
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<Removetag onClick={() => removeHandler(record._id)}>
+					<HandlerButton onClick={() => removeHandler(record._id)}>
 						삭제
-					</Removetag>
+					</HandlerButton>
 				</Space>
 			),
 		},
 	];
-	const [tableData, setTableData] = useState();
 
 	// select option이 변경될 때
-	const { result, trigger, isLoading, error } = useApi({
-		path: '/admin',
-		shouldFetch: true,
-	});
+
 	useEffect(() => {
+		console.log(result);
 		if (result && result.length > 0) {
-			const modifiedData = result.map((item, index) => ({
-				...item,
-				key: index + 1,
-				// id: item.id, // 번호 값을 index로부터 생성
-			}));
-			setTableData(modifiedData);
+			setTableData(
+				result.map((item, index) => ({
+					...item,
+					key: index + 1,
+				})),
+			);
 		}
 	}, [result]);
-	console.log(tableData);
-	const changeSelectValue = e => {
-		// console.log(modifiedData);
-		// // 한 페이지에 나타낼 개수대로 가져오는 api 협의
-		// if (e === 'study') {
-		// 	// Todo 스터디만 가져오는 API
-		// 	setTableData(data.filter(item => item.type === '스터디'));
-		// } else if (e === 'project') {
-		// 	// Todo 프로젝트만 가져오는 API
-		// 	setTableData(data.filter(item => item.type === '프로젝트'));
-		// } else {
-		// 	// 구분없이 가져오는 API
-		// 	setTableData(modifiedData);
-		// }
+	const memoColumns = useMemo(() => [], [classification]);
+	const memoResult = useMemo(
+		() => (
+			<AdminTable
+				columns={columns}
+				dataSource={tableData}
+				totalPages={0}
+			/>
+		),
+		[tableData, memoColumns],
+	);
+	const changeSelectValue = async e => {
+		console.log(e);
+		if (e === 'study') {
+			trigger({
+				params: {
+					classification: '스터디',
+				},
+				applyResult: true,
+			});
+			setClassification('study');
+			// Todo 스터디만 가져오는 API
+		} else if (e === 'project') {
+			trigger({
+				params: {
+					classification: '프로젝트',
+				},
+				applyResult: true,
+			});
+			setClassification('project');
+		} else if (e === 'all') {
+			trigger({ path: '/projectStudy' });
+			setClassification('all');
+		}
 	};
 	const removeHandler = async key => {
 		await trigger({
 			path: `/admin/${key}`,
 			method: 'delete',
+			applyResult: true,
 		});
-		trigger({ method: 'get', path: '/admin' });
-		// Todo
-		// 거절 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
 	};
 	// 자세히 보기
-	const openNewWindow = () => {
-		// console.log('OPEN');
-		// naviagte('/stu')
-	};
-	// const modifiedData = data.map((item, index) => ({
-	// 	...item,
-	// 	key: String(index + 1), // 번호 값을 index로부터 생성
-	// }));
+
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
@@ -184,15 +155,7 @@ const AdminStudyProject = () => {
 				placeholder=""
 				// onSearch={e => addCategoryHandler(e)}
 			/>
-			{isLoading ? (
-				<h2>로딩중</h2>
-			) : (
-				<AdminTable
-					columns={columns}
-					dataSource={tableData}
-					totalPages={0}
-				/>
-			)}
+			{isLoading ? <h2>로딩중</h2> : memoResult}
 		</AdminContent>
 	);
 };

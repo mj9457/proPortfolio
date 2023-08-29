@@ -17,20 +17,28 @@ const useApi = ({
 	method: initMethod = 'get', // GET 메서드(기본값)
 	data: initData = {}, // 초기 데이터 (선택사항)
 	shouldFetch = false, // 컴포넌트 마운트 시 자동으로 요청
+	params: initParams = {},
 }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [result, setResult] = useState({});
+	const [_, occuredError] = useState({});
 
 	const initFetch = useCallback(async () => {
 		try {
 			setIsLoading(true);
+
 			const fetchResult = await mapMethodToFetcher[initMethod](
 				initPath,
 				initData,
 			);
 			setResult(fetchResult);
 		} catch (err) {
+			// 비동기 에러 검출 가능
+			occuredError(() => {
+				throw new Error(err);
+			});
+
 			setError(err);
 		}
 		setIsLoading(false);
@@ -41,20 +49,47 @@ const useApi = ({
 			path: triggerPath = initPath,
 			method: triggerMethod = initMethod,
 			data: triggerData = initData,
+			params: triggerParams = initParams,
+			applyResult = false,
 		}) => {
 			try {
 				setIsLoading(true);
+				// const fetchResult = await mapMethodToFetcher[initMethod](
+				// 	`${initPath}${queryParams ? `?${queryParams}` : initPath}`,
+				// 	initData,
+				// );
 				const triggerResult = await mapMethodToFetcher[triggerMethod](
 					triggerPath,
 					triggerData,
 				);
-				setResult(triggerResult);
+				if (applyResult) {
+					const queryParams = new URLSearchParams(
+						triggerParams,
+					).toString();
+					// query가 있을 때 query로 호출, 없을때는 initPath로 호출
+					const urlWithParams = queryParams
+						? `${triggerPath}?${queryParams}`
+						: initPath;
+					// console.log(urlWithParams);
+					const triggerResult = await mapMethodToFetcher[initMethod](
+						urlWithParams,
+						initData,
+					);
+					console.log(triggerResult);
+					setResult(triggerResult);
+				} else {
+					setResult(triggerResult);
+				}
 			} catch (err) {
+				// 비동기 에러 검출 가능
+				occuredError(() => {
+					throw new Error(err);
+				});
 				setError(err);
 			}
 			setIsLoading(false);
 		},
-		[initMethod, initData, initPath],
+		[initMethod, initData, initPath, initParams],
 	);
 
 	useEffect(() => {

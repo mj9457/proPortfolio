@@ -15,6 +15,12 @@ const AdminCategory = () => {
 	const [tempData, setTempData] = useState({});
 	const [inputValue, setInputValue] = useState('');
 	const [categoryInput, setCategoryInput] = useState('');
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/position',
+		shouldFetch: true,
+	});
+
 	const columns = [
 		{
 			title: '카테고리 명',
@@ -79,10 +85,6 @@ const AdminCategory = () => {
 		},
 	];
 
-	const { result, trigger, isLoading, error } = useApi({
-		path: '/position',
-		shouldFetch: true,
-	});
 	useEffect(() => {
 		console.log(result);
 		if (result && result.length > 0) {
@@ -93,58 +95,20 @@ const AdminCategory = () => {
 					name: item.name,
 				})),
 			);
-			// const modifiedData = result.map(item => ({
-			// 	key: item._id,
-			// 	name: item.name,
-			// }));
-			// setTableData(modifiedData);
 		}
-		console.log(tableData);
-		// if (Object.keys(result).length === 3) {
-		// }
-		// if (result.name) {
-		// 	setTableData([
-		// 		...tableData,
-		// 		{ key: result._id, name: result.name },
-		// 	]);
-		// 	console.log('CHANGE');
-		// }
-		// else {
-		// }
-		// getData();
 	}, [result]);
-	// console.log(tableData);
 
-	useEffect(() => {
-		console.log('TableData', tableData);
-	}, [tableData]);
-	// const getData = data => {
-	// 	if (result && result.length > 0) {
-	// 		const modifiedData = data.map(item => ({
-	// 			key: item._id,
-	// 			name: item.name,
-	// 		}));
-	// 		setTableData(modifiedData);
-	// 	}
-	// };
-	// const getData = () => {
-	// 	if (result && result.length > 0) {
-	// 		const modifiedData = result.map(item => ({
-	// 			key: item._id,
-	// 			name: item.name,
-	// 		}));
-
-	// 		setTableData(modifiedData);
-	// 	}
-	// };
-
-	// const addData = response => {
-
-	// }
-	// useEffect(() => {
-	// 	console.log('CHANGE');
-	// }, [tableData]);
-	// console.log(result);
+	const memoColumns = useMemo(() => [], [tempData, editingKey]);
+	const memoResult = useMemo(
+		() => (
+			<AdminTable
+				columns={columns}
+				dataSource={tableData}
+				totalPages={0}
+			/>
+		),
+		[tableData, memoColumns],
+	);
 
 	// Input onChange Handler
 	const handleInputChange = (e, key) => {
@@ -165,8 +129,8 @@ const AdminCategory = () => {
 			path: `/position/${key}`,
 			data: { name: categoryInput },
 			method: 'put',
+			applyResult: true,
 		});
-		trigger({ method: 'get', path: '/position' });
 		setEditingKey(null);
 
 		// const updatedData = tableData.map(item =>
@@ -194,9 +158,8 @@ const AdminCategory = () => {
 		await trigger({
 			method: 'delete',
 			path: `/position/${key}`,
+			applyResult: true,
 		});
-		trigger({ method: 'get', path: '/position' });
-		console.log(result);
 		// setTableData(data => data.filter(item => item.key !== key));
 
 		// setTableData(data => data.filter(items => items.key !== key));
@@ -207,26 +170,10 @@ const AdminCategory = () => {
 		await trigger({
 			method: 'post',
 			data: { name: inputValue },
+			applyResult: true,
 		});
 		setInputValue('');
-
 		console.log(result);
-		trigger({ method: 'get', path: '/position' });
-		// setTableData([
-		// 	...tableData,
-		// 	{ key: result._id, _id: result._id, name: inputValue },
-		// ]);
-		console.log(result);
-		// if (result) {
-		// 	setTableData([
-		// 		...tableData,
-		// 		{ key: result._id, name: result.name },
-		// 	]);
-		// }
-
-		// setTableData(prevData => [...prevData, result]);
-		// const lastKey = tableData[tableData.length - 1].key;
-		// const newKey = lastKey + 1;
 	};
 	// console.log(tableData);
 
@@ -243,12 +190,13 @@ const AdminCategory = () => {
 				onChange={e => setInputValue(e.target.value)}
 				value={inputValue}
 			/>
+			{isLoading ? <h2>로딩중</h2> : memoResult}
 			{/* <Searchbar
 				type={'ADD'}
 				// value={set}
 				placeholder="추가 할 카테고리를 입력하세요."
 			/>  */}
-			{isLoading ? (
+			{/* {isLoading ? (
 				<h2>로딩중</h2>
 			) : (
 				<AdminTable
@@ -256,7 +204,7 @@ const AdminCategory = () => {
 					dataSource={tableData}
 					totalPages={0}
 				/>
-			)}
+			)} */}
 		</AdminContent>
 	);
 };
