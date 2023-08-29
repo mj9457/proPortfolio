@@ -110,7 +110,7 @@ function PortfolioApply() {
 		if (postResult) {
 			setMentorPost(prevState => ({
 				...prevState,
-				ownerId: postResult._id,
+				ownerId: result._id,
 				position: postResult.position,
 				nickName: postResult.nickName,
 				name: postResult.name,
