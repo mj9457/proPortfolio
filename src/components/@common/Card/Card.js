@@ -34,13 +34,7 @@ function MentorCard(props) {
 					</S.CoachNumBox>
 
 					<S.ImgBox>
-						<img
-							src={
-								!mentor.profileImageUrl
-									? '/assets/img/profile/profileImage.png'
-									: mentor.profileImageUrl
-							}
-						/>
+						<img src={mentor.profileImageUrl} />
 					</S.ImgBox>
 
 					<S.ContentsBox>

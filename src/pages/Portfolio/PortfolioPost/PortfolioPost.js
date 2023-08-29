@@ -25,6 +25,7 @@ function PortfolioPost() {
 	const navigate = useNavigate();
 
 	const [post, setPost] = useState({});
+	const [userId, setUserId] = useState({});
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
 	// axios 통신 → 화면에 그려주는 작업
@@ -32,8 +33,6 @@ function PortfolioPost() {
 		path: `/portfolio/${path}`,
 		shouldFetch: true,
 	});
-
-	console.log(result);
 
 	useEffect(() => {
 		if (result) {
@@ -48,6 +47,21 @@ function PortfolioPost() {
 	};
 
 	// 수정하기
+	const { result: userResult } = useApi({
+		path: '/user',
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (userResult) {
+			setUserId(userResult);
+			console.log(error);
+		}
+	}, [userResult]);
+
+	const userCheck = userId._id === post.ownerId;
+	const roleCheck = userId.role === 'user';
+
 	const handleEdit = () => {
 		if (confirm(MESSAGE.POST.EDIT)) {
 			navigate(`/portfolio/edit/${path}`);
@@ -68,9 +82,6 @@ function PortfolioPost() {
 
 	// 날짜와 프로필 이미지
 	const date = String(updatedAt).slice(0, 19).split('T');
-	const image = !profileImageUrl
-		? '/assets/img/profile/profileImage.png'
-		: profileImageUrl;
 
 	return (
 		<>
@@ -84,7 +95,7 @@ function PortfolioPost() {
 					<S.ContentsBox>
 						<S.MentorBox>
 							<S.NameBox>
-								<img src={image} />
+								<img src={profileImageUrl} />
 								<strong>{nickName}</strong>
 
 								<Line size={'height'} />
@@ -104,14 +115,16 @@ function PortfolioPost() {
 								/>
 							)}
 
-							<Button
-								variant={'primary'}
-								shape={'default'}
-								size={'normal'}
-								onClick={handleOpenModal}
-							>
-								신청하기
-							</Button>
+							{roleCheck && (
+								<Button
+									variant={'primary'}
+									shape={'default'}
+									size={'normal'}
+									onClick={handleOpenModal}
+								>
+									신청하기
+								</Button>
+							)}
 						</S.MentorBox>
 
 						<Line size={'small'} />
@@ -120,24 +133,26 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						<S.ButtonBox>
-							<Button
-								variant={'primary'}
-								shape={'default'}
-								size={'normal'}
-								onClick={handleEdit}
-							>
-								수정
-							</Button>
-							<Button
-								variant={'cancel'}
-								shape={'default'}
-								size={'normal'}
-								onClick={handleDelete}
-							>
-								삭제
-							</Button>
-						</S.ButtonBox>
+						{userCheck && (
+							<S.ButtonBox>
+								<Button
+									variant={'primary'}
+									shape={'default'}
+									size={'normal'}
+									onClick={handleEdit}
+								>
+									수정
+								</Button>
+								<Button
+									variant={'cancel'}
+									shape={'default'}
+									size={'normal'}
+									onClick={handleDelete}
+								>
+									삭제
+								</Button>
+							</S.ButtonBox>
+						)}
 
 						<Review
 							title={'후기'}

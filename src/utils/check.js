@@ -11,12 +11,16 @@ export const check = ex => {
 			message: MESSAGE.CHECK.COMPANY,
 		},
 		{
+			checked: ex.career.length === 0,
+			message: MESSAGE.CHECK.CAREER,
+		},
+		{
 			checked: ex.title.length === 0,
 			message: MESSAGE.CHECK.TITLE,
 		},
 		{
 			checked: ex.title.length > 50,
-			message: MESSAGE.CHECK.TITLE,
+			message: MESSAGE.CHECK.TITLELENGTH,
 		},
 		{
 			checked: ex.description.length === 0,
@@ -24,7 +28,7 @@ export const check = ex => {
 		},
 		{
 			checked: ex.description.length > 1000,
-			message: MESSAGE.CHECK.DESCRIPTION,
+			message: MESSAGE.CHECK.DESCRIPTIONLENGTH,
 		},
 	];
 };

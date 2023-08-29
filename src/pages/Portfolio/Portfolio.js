@@ -6,6 +6,7 @@ import Button from '../../components/@common/Button/Button';
 import Category from '../../components/@common/Category/Category';
 import useApi from '../../hooks/useApi';
 import { useEffect, useState } from 'react';
+import Select from '../../components/@common/Select/Select';
 
 function Portfolio() {
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
@@ -70,7 +71,10 @@ function Portfolio() {
 				{/* 모든 멘토 제목 */}
 				<S.MentorTitleBox>
 					<span>🌟 모든 멘토</span>
-					<S.Input placeholder="검색어를 입력하세요." />
+					<Select variant={'none'} font={'regular'}>
+						<option>최신순</option>
+						<option>인기순</option>
+					</Select>
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
