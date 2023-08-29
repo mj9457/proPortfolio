@@ -25,6 +25,7 @@ const MESSAGE = {
 	POST: {
 		COMPLETE: '게시글 작성이 완료되었습니다.',
 		EDIT: '작성한 글을 수정하시겠습니까?',
+		EDITFIN: '게시글 수정이 완료되었습니다.',
 		DELETE: '게시글을 삭제하시겠습니까?',
 	},
 	STUDY: {

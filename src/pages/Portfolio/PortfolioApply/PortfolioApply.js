@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import useFooter from '../../../hooks/useFooter';
+import useApi from '../../../hooks/useApi';
+import { check } from '../../../utils/check';
 
 import * as S from './PortfolioApply.styles';
 
@@ -8,15 +11,13 @@ import Button from '../../../components/@common/Button/Button';
 import Textarea from '../../../components/@common/Textarea/Textarea';
 import Input from '../../../components/@common/Input/Input';
 import MESSAGE from '../../../constants/message';
-import { useNavigate, useParams } from 'react-router-dom';
-import useApi from '../../../hooks/useApi';
-import { check } from '../../../utils/check';
 
 function PortfolioApply() {
 	useFooter();
 
 	const navigate = useNavigate();
 	const params = useParams();
+	const portfolioId = params.portfolioId;
 
 	// axios 통신 → user Info 가져오기
 	const [user, setUser] = useState([]);
@@ -35,11 +36,10 @@ function PortfolioApply() {
 				ownerId: result._id,
 				nickName: result.nickName,
 				name: result.name,
-				career: result.career ? result.career : '0', // 숫자로 보내주도록 백엔드에 요청
-				coachingCount: '0', // 숫자로 보내주도록 백엔드에 요청
-				profileImageUrl: result.profileImageUrl
-					? result.profileImageUrl
-					: '',
+				career: result.career,
+				company: result.company,
+				coachingCount: result.coachingCount,
+				profileImageUrl: result.profileImageUrl,
 			}));
 		}
 	}, [result]);
@@ -67,7 +67,7 @@ function PortfolioApply() {
 		}));
 	};
 
-	// 글 작성하기 버튼 클릭
+	// 글 작성하기 & 수정하기 버튼 클릭
 	const handleSubmit = async () => {
 		const fail = check(mentorPost).filter(el => el.checked);
 
@@ -75,14 +75,23 @@ function PortfolioApply() {
 			const errorMessage = fail[0].message;
 			alert(errorMessage);
 		} else {
-			trigger({
-				method: 'post',
-				path: '/portfolio',
-				data: mentorPost,
-			});
-
-			alert(MESSAGE.POST.COMPLETE);
-			navigate('/portfolio');
+			if (portfolioId) {
+				postTrigger({
+					method: 'put',
+					path: `/portfolio/${portfolioId}`,
+					data: mentorPost,
+				});
+				alert(MESSAGE.POST.EDITFIN);
+				// navigate(`/portfolio/${portfolioId}`);
+			} else {
+				trigger({
+					method: 'post',
+					path: '/portfolio',
+					data: mentorPost,
+				});
+				alert(MESSAGE.POST.COMPLETE);
+				navigate('/portfolio');
+			}
 		}
 	};
 
@@ -93,11 +102,27 @@ function PortfolioApply() {
 		isLoading: postIsLoading,
 		error: postError,
 	} = useApi({
-		path: `/portfolio/${params.portfolioId}`,
+		path: `/portfolio/${portfolioId}`,
 		shouldFetch: true,
 	});
 
-	console.log(postResult);
+	useEffect(() => {
+		if (postResult) {
+			setMentorPost(prevState => ({
+				...prevState,
+				ownerId: postResult._id,
+				position: postResult.position,
+				nickName: postResult.nickName,
+				name: postResult.name,
+				company: postResult.company,
+				career: postResult.career,
+				title: postResult.title,
+				description: postResult.description,
+				coachingCount: postResult.coachingCount,
+				profileImageUrl: postResult.profileImageUrl,
+			}));
+		}
+	}, [postResult]);
 
 	return (
 		<S.ApplyBox>
@@ -109,7 +134,12 @@ function PortfolioApply() {
 				<S.ContentsBox>
 					<span>1. 멘토 님의 기본 정보를 작성해 주세요.</span>
 
-					<Information onChange={handleChange} user={user} />
+					<Information
+						handleChange={handleChange}
+						user={user}
+						portfolioId={portfolioId}
+						mentorPost={mentorPost}
+					/>
 				</S.ContentsBox>
 
 				<S.ContentsBox>
@@ -117,6 +147,7 @@ function PortfolioApply() {
 					<Input
 						size={'large'}
 						placeholder="제목을 입력해 주세요."
+						defaultValue={portfolioId ? mentorPost.title : ''}
 						onChange={handleChange}
 						name="title"
 					/>
@@ -127,6 +158,7 @@ function PortfolioApply() {
 					<Textarea
 						size={'regular'}
 						placeholder={'소개 글 및 경력은 필수로 입력해 주세요.'}
+						defaultValue={portfolioId ? mentorPost.description : ''}
 						onChange={handleChange}
 						name="description"
 					/>

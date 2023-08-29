@@ -4,8 +4,8 @@ import Input from '../../../@common/Input/Input';
 import Position from '../../../@common/Position/Position';
 
 function Information(props) {
-	const { onChange, user } = props;
-	const { position, name } = user;
+	const { handleChange, user, mentorPost, portfolioId } = props;
+	const { position, name, career, company } = user;
 
 	return (
 		<S.InfoBox>
@@ -13,16 +13,22 @@ function Information(props) {
 				<S.ContentsTitle>직무</S.ContentsTitle>
 
 				<Position
-					onChange={onChange}
-					position={position}
+					variant={'default'}
 					size={'regular'}
 					font={'regular'}
+					defaultValue={portfolioId ? mentorPost.position : position}
+					onChange={handleChange}
 				/>
 			</S.Contents>
 
 			<S.Contents>
 				<S.ContentsTitle>이름</S.ContentsTitle>
-				<Input size={'regular'} name="name" value={name} readOnly />
+				<Input
+					size={'regular'}
+					name="name"
+					value={portfolioId ? mentorPost.name : name}
+					readOnly
+				/>
 			</S.Contents>
 
 			<S.Contents>
@@ -30,8 +36,20 @@ function Information(props) {
 				<Input
 					size={'regular'}
 					placeholder="회사명을 입력해 주세요."
-					onChange={onChange}
 					name="company"
+					defaultValue={portfolioId ? mentorPost.company : company}
+					onChange={handleChange}
+				/>
+			</S.Contents>
+
+			<S.Contents>
+				<S.ContentsTitle>경력</S.ContentsTitle>
+				<Input
+					size={'regular'}
+					placeholder="경력을 입력해 주세요."
+					name="career"
+					defaultValue={portfolioId ? mentorPost.career : career}
+					onChange={handleChange}
 				/>
 			</S.Contents>
 		</S.InfoBox>
