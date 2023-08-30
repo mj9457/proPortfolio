@@ -41,6 +41,7 @@ const MESSAGE = {
 	REVIEW: {
 		COMPLETE: '후기 작성이 완료되었습니다.',
 		CANCEL: '후기 작성을 취소하시겠습니까?',
+		EDIT: '후기를 수정하시겠습니까?',
 		DELETE: '후기를 삭제하시겠습니까?',
 	},
 	MYPAGE: {

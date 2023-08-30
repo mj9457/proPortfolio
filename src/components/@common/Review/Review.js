@@ -50,9 +50,6 @@ function Review(props) {
 		}
 	}, [result.comments, userResult]);
 
-	console.log(edit);
-	console.log(editReview);
-
 	// 댓글 수정하기
 	const handleChange = e => {
 		const { name, value } = e.target;
@@ -65,9 +62,11 @@ function Review(props) {
 
 	const handleEdit = id => {
 		const selectedComment = review.find(comment => comment._id === id);
+		const alertMessage =
+			title === '후기' ? MESSAGE.REVIEW.EDIT : MESSAGE.COMMENT.EDIT;
 
 		if (selectedComment.ownerId === userInfo._id) {
-			if (confirm(MESSAGE.COMMENT.EDIT)) {
+			if (confirm(alertMessage)) {
 				setEditReview({
 					author: selectedComment.author,
 					content: selectedComment.content,
@@ -144,25 +143,13 @@ function Review(props) {
 
 							{edit === comment._id ? (
 								<S.Buttons>
-									<button onClick={handleComplete}>
-										완료
-									</button>
-									<button onClick={() => setEdit(null)}>
-										취소
-									</button>
+									<button onClick={handleComplete}>완료</button>
+									<button onClick={() => setEdit(null)}>취소</button>
 								</S.Buttons>
 							) : (
 								<S.Buttons>
-									<button
-										onClick={() => handleEdit(comment._id)}
-									>
-										수정
-									</button>
-									<button
-										onClick={() =>
-											handleDelete(comment._id)
-										}
-									>
+									<button onClick={() => handleEdit(comment._id)}>수정</button>
+									<button onClick={() => handleDelete(comment._id)}>
 										삭제
 									</button>
 								</S.Buttons>
