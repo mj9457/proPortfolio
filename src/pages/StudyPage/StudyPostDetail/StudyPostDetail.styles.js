@@ -22,6 +22,7 @@ export const RecruitmentStatus = styled.h3`
 	padding-right: 1rem;
 	border-right: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	color: ${({ theme }) => theme.PALETTE.mainColor};
+	min-width: 100px;
 
 	${props =>
 		props.$recruitsStatus === '모집마감' &&
@@ -115,6 +116,7 @@ export const PostDetailBasicItem = styled.li`
 
 		word-break: keep-all;
 		max-width: 425px;
+		line-height: 1.2;
 	}
 `;
 
@@ -146,6 +148,7 @@ export const PostDetailBasicItemTitle = styled.div`
 	> p {
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 		font-size: ${({ theme }) => theme.FONT_SIZE.big};
+		min-width: 74px;
 	}
 `;
 

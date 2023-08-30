@@ -125,6 +125,7 @@ function StudyEditPost() {
 									handleOptionChange('position', position);
 								}}
 								name="position"
+								selectedData={selectedOptions.position}
 							/>
 						</S.SelectBox>
 

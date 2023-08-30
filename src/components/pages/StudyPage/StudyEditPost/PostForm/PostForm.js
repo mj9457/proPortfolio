@@ -19,7 +19,7 @@ function PostForm({ selectedOptions, postId, postData }) {
 		if (isTitle && isDescription) {
 			setValues({
 				title: postData.title,
-				description: postData.title,
+				description: postData.description,
 			});
 		}
 	}, [isTitle]);

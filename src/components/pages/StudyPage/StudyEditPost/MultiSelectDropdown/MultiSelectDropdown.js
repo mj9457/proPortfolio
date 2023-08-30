@@ -3,7 +3,7 @@ import { STUDYOPTIONS } from '../../../../../constants/study';
 import * as S from './MultiSelectDropdown.styles';
 import useApi from '../../../../../hooks/useApi';
 
-function MultiSelectDropdown({ onPositionsChange }) {
+function MultiSelectDropdown({ onPositionsChange, selectedData }) {
 	const CheckBox = useRef(null);
 	const [expanded, setExpanded] = useState(false);
 	const [selectedPositions, setSelectedPositions] = useState([]);
@@ -12,6 +12,18 @@ function MultiSelectDropdown({ onPositionsChange }) {
 	const showCheckboxes = () => {
 		setExpanded(!expanded);
 	};
+
+	useEffect(() => {
+		if (selectedData) {
+			setSelectedPositions(selectedData);
+		}
+	}, [selectedData]);
+
+	useEffect(() => {
+		if (selectedPositions.length === 4) {
+			setExpanded(false);
+		}
+	}, [selectedPositions]);
 
 	const handlePositionChange = positionName => {
 		let updatedPositions;
@@ -51,7 +63,7 @@ function MultiSelectDropdown({ onPositionsChange }) {
 					<option>
 						{selectedPositions.length > 0
 							? selectedPositions.join(', ')
-							: '모집하는 직무를 선택해주세요.'}
+							: '모집하는 직무를 선택해주세요.(최대 4개)'}
 					</option>
 				</select>
 				<S.OverSelect></S.OverSelect>

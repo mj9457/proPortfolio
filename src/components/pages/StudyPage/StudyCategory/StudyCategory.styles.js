@@ -17,8 +17,8 @@ export const CategoryItem = styled.button`
 	background-color: transparent;
 	cursor: pointer;
 
-	color: ${({ theme, isSelected }) =>
-		isSelected ? theme.PALETTE.mainColor : 'black'};
+	color: ${({ theme, $isSelected }) =>
+		$isSelected ? theme.PALETTE.mainColor : 'black'};
 
 	&:hover {
 		transition: all ease 0.2s;
@@ -38,10 +38,10 @@ export const PositionCategoryItem = styled.button`
 	border-radius: 50px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	cursor: pointer;
-	background-color: ${({ theme, isSelected }) =>
-		isSelected ? theme.PALETTE.mainColor : 'white'};
-	color: ${({ theme, isSelected }) =>
-		isSelected ? 'white' : theme.PALETTE.mainColor};
+	background-color: ${({ theme, $isSelected }) =>
+		$isSelected ? theme.PALETTE.mainColor : 'white'};
+	color: ${({ theme, $isSelected }) =>
+		$isSelected ? 'white' : theme.PALETTE.mainColor};
 	border: 1px solid ${({ theme }) => theme.PALETTE.mainColor};
 
 	&:hover {
