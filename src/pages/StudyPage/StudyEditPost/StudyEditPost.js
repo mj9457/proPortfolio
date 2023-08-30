@@ -4,18 +4,13 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './StudyEditPost.styles';
 import { STUDYOPTIONS } from '../../../constants/study';
-import Select from '../../../components/@common/Select/Select';
 import MultiSelectDropdown from '../../../components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
 import PostForm from '../../../components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
 import useApi from '../../../hooks/useApi';
+import SelectWithDefault from '../../../components/pages/StudyPage/StudyEditPost/SelectWithDefault/SelectWithDefault';
 
 function StudyEditPost() {
-	const defaultSelectProps = {
-		size: 'large',
-		font: 'regular',
-		variant: 'default',
-	};
-	const [userData, setUserData] = useState(null);
+	const [isEdit, setIsEdit] = useState(false);
 	const [selectedOptions, setSelectedOptions] = useState({
 		classification: '',
 		process: '',
@@ -29,24 +24,24 @@ function StudyEditPost() {
 		recruitsStatus: '모집중',
 		profileImageUrl: '',
 	});
-	const { postId } = useParams();
+
+	const params = useParams();
+	const postId = params.postId;
 
 	// 유저 정보
-	const { result, trigger, isLoading, error } = useApi({
+	const { result: userData, trigger: getUserData } = useApi({
 		path: '/user',
 		shouldFetch: true,
 	});
 
-	useEffect(() => {
-		if (result) {
-			setUserData(result);
-			console.log(error);
-		}
-	}, [result]);
+	// 게시글 정보
+	const { result: postData, trigger: getEditPostData } = useApi({
+		path: isEdit ? `/projectStudy/${postId}` : '',
+		shouldFetch: isEdit,
+	});
 
 	useEffect(() => {
 		if (userData) {
-			console.log('USERDATA', userData);
 			setSelectedOptions(prevOptions => ({
 				...prevOptions,
 				nickName: userData.nickName,
@@ -54,57 +49,35 @@ function StudyEditPost() {
 				ownerId: userData._id,
 				profileImageUrl: userData.profileImageUrl,
 			}));
-			console.log('확인', selectedOptions);
 		}
 	}, [userData]);
 
-	const {
-		trigger: updatePost,
-		isLoading: isUpdating,
-		error: updateError,
-	} = useApi({
-		path: `/projectStudy/${postId}`,
-		shouldFetch: false,
-	});
-
-	// 게시글 수정 요청 함수
-	const handleUpdatePost = async () => {
-		try {
-			await updatePost({
-				method: 'put',
-				data: selectedOptions,
-			});
-			console.log('게시글 수정 완료');
-		} catch (error) {
-			console.error('게시글 수정 오류', error);
+	useEffect(() => {
+		if (postData && postId) {
+			const initialDeadline = new Date(selectedOptions.deadline);
+			setSelectedOptions(prevOptions => ({
+				...prevOptions,
+				classification: postData.classification,
+				process: postData.process,
+				position: postData.position,
+				recruits: postData.recruits,
+				howContactTitle: postData.howContactTitle,
+				howContactContent: postData.howContactContent,
+				deadline: initialDeadline,
+				nickName: userData.nickName,
+				name: userData.name,
+				ownerId: userData._id,
+				profileImageUrl: userData.profileImageUrl,
+				recruitsStatus: '모집중',
+			}));
 		}
-	};
+	}, [postData]);
 
 	const handleOptionChange = (name, value) => {
 		setSelectedOptions(prevOptions => ({
 			...prevOptions,
 			[name]: value,
 		}));
-	};
-
-	const SelectWithDefault = ({
-		options,
-		selectedValue,
-		defaultValue,
-		onChange,
-	}) => {
-		return (
-			<Select
-				{...defaultSelectProps}
-				onChange={onChange}
-				value={selectedValue}
-			>
-				<option hidden>{defaultValue}을 선택해주세요.</option>
-				{options.map(el => (
-					<option key={el.value}>{el.name}</option>
-				))}
-			</Select>
-		);
 	};
 
 	return (
@@ -210,6 +183,7 @@ function StudyEditPost() {
 							)
 						}
 						required
+						value={selectedOptions.howContactContent}
 					/>
 				</S.SelectContainer>
 			</S.BasicInfoBox>
@@ -217,7 +191,11 @@ function StudyEditPost() {
 			{/* 상세 설명 */}
 			<S.PostBox>
 				<S.Title>✨ 프로젝트/스터디를 소개 해주세요.</S.Title>
-				<PostForm selectedOptions={selectedOptions} />
+				<PostForm
+					selectedOptions={selectedOptions}
+					postId={postId}
+					postData={postData}
+				/>
 			</S.PostBox>
 		</S.Container>
 	);

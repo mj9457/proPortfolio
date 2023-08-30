@@ -5,7 +5,7 @@ import * as S from './EditComments.styles';
 import Button from '../../../components/@common/Button/Button';
 import useApi from '../../../hooks/useApi';
 
-function EditComments() {
+function EditComments({ isLoggedIn }) {
 	const { postId } = useParams();
 
 	const [comment, setComment] = useState('');
@@ -21,6 +21,10 @@ function EditComments() {
 	};
 
 	const handleCommentSubmit = async () => {
+		if (!isLoggedIn) {
+			alert('로그인한 회원만 댓글을 입력할 수 있어요.');
+			return;
+		}
 		if (comment.trim() === '') {
 			alert('댓글 내용을 입력해주세요.');
 			return;
@@ -36,11 +40,6 @@ function EditComments() {
 
 	return (
 		<S.Container>
-			<S.Title>
-				<p>댓글</p>
-				{/* <span>3</span> */}
-			</S.Title>
-
 			<S.CommentWrapper>
 				<textarea
 					placeholder="댓글을 등록하세요."

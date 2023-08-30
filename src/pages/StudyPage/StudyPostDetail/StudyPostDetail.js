@@ -6,19 +6,25 @@ import * as S from './StudyPostDetail.styles';
 import Button from '../../../components/@common/Button/Button';
 import EditComments from '../../../components/@common/EditComments/EditComments';
 import useApi from '../../../hooks/useApi';
+import { checkToken } from '../../../utils/cookie';
 
 function StudyPostDetail() {
 	const { postId } = useParams();
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 
-	console.log('postId', postId);
 	const [postDetail, setPostDetail] = useState(null);
 	const [user, setUser] = useState(null);
 	const [isRecruitClosed, setIsRecruitClosed] = useState(null);
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	}, []);
+
 	const { result: userData } = useApi({
-		path: '/user',
-		shouldFetch: true,
+		path: isLoggedIn ? '/user' : '',
+		shouldFetch: isLoggedIn,
 	});
 
 	useEffect(() => {
@@ -53,8 +59,6 @@ function StudyPostDetail() {
 	console.log('isRecruitClosed', isRecruitClosed);
 
 	const isUser = userData._id === result.ownerId;
-
-	// const isRecruitClosed = result.recruitsStatus === "모집마감" ? true : false;
 
 	const {
 		ownerId,
@@ -296,7 +300,7 @@ function StudyPostDetail() {
 							)}
 
 							<S.CommentContainer>
-								<EditComments />
+								<EditComments isLoggedIn={isLoggedIn} />
 							</S.CommentContainer>
 						</S.PostDetailBottom>
 					</>

@@ -6,12 +6,23 @@ import Button from '../../../../@common/Button/Button';
 import Textarea from '../../../../@common/Textarea/Textarea';
 import useApi from '../../../../../hooks/useApi';
 
-function PostForm({ selectedOptions }) {
+function PostForm({ selectedOptions, postId, postData }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		title: '',
 		description: '',
 	});
+	const isTitle = postData.title;
+	const isDescription = postData.description;
+
+	useEffect(() => {
+		if (isTitle && isDescription) {
+			setValues({
+				title: postData.title,
+				description: postData.title,
+			});
+		}
+	}, [isTitle]);
 
 	const handleChange = e => {
 		setValues({
@@ -22,23 +33,25 @@ function PostForm({ selectedOptions }) {
 
 	const validationChecks = [
 		{
-			check: values.title.length > 50,
+			check: values.title && values.title.length > 50,
 			message: '제목은 50자 이하로 입력해주세요.',
 		},
 		{
-			check: values.title.trim().length === 0,
+			check: values.title && values.title.trim().length === 0,
 			message: '제목을 작성해주세요.',
 		},
 		{
-			check: values.description.trim().length === 0,
+			check: values.description && values.description.trim().length === 0,
 			message: '소개 내용을 작성해주세요.',
 		},
 		{
-			check: values.description.length > 1000,
+			check: values.description && values.description.length > 1000,
 			message: '내용은 1000자 이하로 작성해주세요.',
 		},
 		{
-			check: selectedOptions.howContactContent.trim().length === 0,
+			check:
+				selectedOptions.howContactContent &&
+				selectedOptions.howContactContent.trim().length === 0,
 			message: '연락 가능한 링크를 입력해주세요.',
 		},
 		{
@@ -56,7 +69,6 @@ function PostForm({ selectedOptions }) {
 	];
 	console.log('selectedOptions', selectedOptions);
 
-	// 유저 정보
 	const { trigger, isLoading, error, result } = useApi({
 		path: '/projectStudy',
 		method: 'post',
@@ -79,12 +91,22 @@ function PostForm({ selectedOptions }) {
 				title: values.title,
 				description: values.description,
 			};
-			console.log('postData', postData);
-			await trigger({
-				data: postData,
-			});
-			navigate('/study');
+
+			if (postId) {
+				await trigger({
+					path: `/projectStudy/${postId}`,
+					method: 'put',
+					data: postData,
+				});
+			} else {
+				await trigger({
+					path: '/projectStudy',
+					method: 'post',
+					data: postData,
+				});
+			}
 			// navigate(`/study/detail/${response.data.id}`)
+			navigate(`/study`);
 		} catch (error) {
 			console.error(error);
 		}
