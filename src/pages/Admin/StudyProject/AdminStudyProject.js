@@ -12,7 +12,7 @@ import useApi from '../../../hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 
 const AdminStudyProject = () => {
-	const { Option } = Select;
+	// const { Option } = Select;
 	const [tableData, setTableData] = useState();
 	const [classification, setClassification] = useState('all');
 

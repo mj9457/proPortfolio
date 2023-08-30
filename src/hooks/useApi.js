@@ -22,7 +22,7 @@ const useApi = ({
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [result, setResult] = useState({});
-	const [_, occuredError] = useState({});
+	const [_, occurredError] = useState({});
 
 	const initFetch = useCallback(async () => {
 		try {
@@ -35,9 +35,9 @@ const useApi = ({
 			setResult(fetchResult);
 		} catch (err) {
 			// 비동기 에러 검출 가능
-			occuredError(() => {
-				throw new Error(err);
-			});
+			// occurredError(() => {
+			// 	throw new Error(err);
+			// });
 
 			setError(err);
 		}
@@ -82,7 +82,7 @@ const useApi = ({
 				}
 			} catch (err) {
 				// 비동기 에러 검출 가능
-				// occuredError(() => {
+				// occurredError(() => {
 				// 	throw new Error(err);
 				// });
 				setError(err);

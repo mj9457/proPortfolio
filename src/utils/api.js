@@ -5,8 +5,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 // axios를 통한 모든 통신에서 서버에서 5초 이상 응답이 없는 경우 에러처리
 axios.defaults.timeout = 5000;
 
-// const apiBaseUrl = 'http://34.64.245.195';
-const apiBaseUrl = '/api';
+const apiBaseUrl = 'http://34.64.245.195/api';
+// const apiBaseUrl = '/api';
 
 // api instance
 export const api = axios.create({
