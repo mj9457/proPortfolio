@@ -9,6 +9,7 @@ import useApi from '../../../../hooks/useApi';
 function Header() {
 	const [openModal, setOpenModal] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	const [isMentor, setIsMentor] = useState(false);
 	const navigate = useNavigate();
 
 	const handleTokenChange = () => {
@@ -20,22 +21,34 @@ function Header() {
 		handleTokenChange();
 	}, [isLoggedIn]);
 
+	const { result, trigger } = useApi({
+		path: isLoggedIn ? '/user' : '', // 유저인지 멘토인지 확인할 수 있는 api 필요
+		shouldFetch: isLoggedIn,
+	});
+
+	useEffect(() => {
+		if (result) {
+			const mentor = result.role === 'user';
+
+			if (mentor) setIsMentor(true);
+			else setIsMentor(false);
+		}
+	}, [result]);
+
 	const handleSignupClick = () => {
 		setOpenModal(true);
 	};
+
 	const handleSignupClose = () => {
 		setOpenModal(false);
 	};
-
-	const { trigger } = useApi({});
 
 	const handleLogoutClick = () => {
 		trigger({ path: '/auth/logout', method: 'post' });
 
 		setIsLoggedIn(false);
-		window.alert('로그아웃 되었습니다 ');
-		window.location.reload();
-		// navigate('/');
+		alert('로그아웃이 완료되었습니다.');
+		navigate('/');
 	};
 
 	return (
@@ -67,16 +80,18 @@ function Header() {
 									alt="알림"
 								/>
 							</a>
-							<Button
-								variant={'primary'}
-								shape={'default'}
-								size={'small'}
-								onClick={() => {
-									navigate('/usermentorapply');
-								}}
-							>
-								멘토 전환
-							</Button>
+							{isMentor && (
+								<Button
+									variant={'primary'}
+									shape={'default'}
+									size={'small'}
+									onClick={() => {
+										navigate('/usermentorapply');
+									}}
+								>
+									멘토 전환
+								</Button>
+							)}
 						</>
 					) : (
 						<>
