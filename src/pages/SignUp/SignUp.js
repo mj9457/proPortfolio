@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import * as S from './SignUp.styles';
 import Button from '../../components/@common/Button/Button';
 import Input from '../../components/@common/Input/Input';
 import { getCookie } from '../../utils/cookie';
 import Position from '../../components/@common/Position/Position';
 import useFooter from '../../hooks/useFooter';
+import useApi from '../../hooks/useApi';
 
 function SignUp() {
 	const [name, setName] = useState('');
@@ -17,6 +17,8 @@ function SignUp() {
 	const [nicknameError, setNicknameError] = useState('');
 	const navigate = useNavigate();
 	useFooter();
+
+	const { result, trigger, isLoading, error } = useApi({});
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -31,6 +33,13 @@ function SignUp() {
 		fetchUserData();
 	}, []);
 
+	useEffect(() => {
+		if (error) {
+			console.log(result);
+		}
+		console.log(error);
+	}, [error]);
+
 	const handleNameChange = event => {
 		const newName = event.target.value;
 		if (newName.length <= 10) {
@@ -44,63 +53,48 @@ function SignUp() {
 	const handleNicknameChange = event => {
 		const value = event.target.value;
 		const regex = /^[ㄱ-ㅎ|가-힣|a-zA-Z0-9]*$/;
-		if (regex.test(value)) {
-			setNickName(value);
-			setNicknameError('');
+		if (value.length <= 10) {
+			if (regex.test(value)) {
+				setNickName(value);
+				setNicknameError('');
+			} else {
+				setNicknameError('한글, 영어, 숫자만 입력 가능합니다.');
+			}
 		} else {
-			setNicknameError('한글, 영어, 숫자만 입력 가능합니다.');
+			setNicknameError('닉네임은 10자 이하로 입력해 주세요');
 		}
 	};
-
 	const handleJobChange = event => {
 		setPosition(event.target.value);
 	};
 
-	async function handleSubmit(event) {
+	const handleSubmit = async event => {
 		event.preventDefault();
 
-		if (name.length > 10) {
-			setNameError('이름은 10자 이하로 입력해 주세요');
-			return;
-		}
+		await trigger({
+			path: '/auth/signup',
+			method: 'post',
+			data: {
+				name,
+				email,
+				nickName,
+				position,
+			},
+		});
+		console.log(error);
 
-		try {
-			const response = await axios.post(
-				'http://34.64.245.195/api/auth/signup',
-				{
-					name,
-					email,
-					nickName,
-					position,
-				},
-			);
+		// if (result.result === 'MongoServerError') {
+		// 	if (result.reason.includes('duplicate key')) {
+		// 		alert('이미 사용중인 닉네임입니다.');
+		// 		return;
+		// 	} else {
+		// 		alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+		// 		return;
+		// 	}
+		// }
 
-			if (response.status === 200 || response.status === 201) {
-				alert('회원가입이 성공적으로 완료되었습니다!');
-				navigate('/signupdone');
-			} else {
-				alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
-			}
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.data &&
-				error.response.data.result === 'MongoServerError'
-			) {
-				if (
-					error.response.data.reason &&
-					error.response.data.reason.includes('duplicate key')
-				) {
-					alert('이미 사용중인 닉네임입니다.');
-				} else {
-					alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
-				}
-			} else {
-				console.error('Error:', error);
-				alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
-			}
-		}
-	}
+		// navigate('/signupdone');
+	};
 
 	return (
 		<S.Wrap>

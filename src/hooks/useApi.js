@@ -42,7 +42,7 @@ const useApi = ({
 			// 	throw new Error(err);
 			// });
 
-			setError(err);
+			// setError(err);
 		}
 		setIsLoading(false);
 	}, [initMethod, initData, initPath]);
@@ -88,7 +88,7 @@ const useApi = ({
 				// occurredError(() => {
 				// 	throw new Error(err);
 				// });
-				setError(err);
+				// setError(err);
 			}
 			setIsLoading(false);
 		},

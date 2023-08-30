@@ -6,6 +6,7 @@ import RollingSlider from './SlideBanner/SlideBanner';
 import Slider from '../../components/@common/Slider/Slider';
 import { checkToken } from '../../utils/cookie';
 import useApi from '../../hooks/useApi';
+import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
 
 function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);
@@ -36,7 +37,9 @@ function Home() {
 				<RollingSlider />
 				{isLoggedIn && (
 					<H.RecommendMentor>
-						<H.Title>👀 {userNickName}님에게 추천하는 멘토</H.Title>
+						<H.Title>
+							👀 {userNickName} 님에게 추천하는 멘토
+						</H.Title>
 						<H.RecommendCards>
 							{recommendedMentors.map((mentor, idx) => (
 								<RecommendCard
@@ -49,6 +52,9 @@ function Home() {
 									career={mentor.career}
 								/>
 							))}
+							{recommendedMentors.length === 0 && (
+								<EmptyMessage />
+							)}
 						</H.RecommendCards>
 					</H.RecommendMentor>
 				)}

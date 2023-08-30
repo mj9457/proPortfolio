@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const slideAnimation = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+`;
 
 export const Wrap = styled.div`
 	width: 100%;
@@ -15,9 +24,12 @@ export const SliderWrapper = styled.div`
 export const SlideContainer = styled.div`
 	display: flex;
 	justify-content: flex-start;
-	transition: transform 0.5s ease-in-out;
+	transition: transform 0.5s ease;
 	> div {
 		margin-right: 19px;
+	}
+	&.slide-transition {
+		animation: ${slideAnimation} 1s ease-in-out forwards;
 	}
 `;
 
