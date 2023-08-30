@@ -82,7 +82,7 @@ function PortfolioApply() {
 					data: mentorPost,
 				});
 				alert(MESSAGE.POST.EDITFIN);
-				// navigate(`/portfolio/${portfolioId}`);
+				navigate(-1);
 			} else {
 				trigger({
 					method: 'post',

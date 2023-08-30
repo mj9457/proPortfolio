@@ -11,6 +11,7 @@ import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
 import MESSAGE from '../../../constants/message';
+import { checkToken } from '../../../utils/cookie';
 
 function PortfolioPost() {
 	useFooter(); // footer 제거
@@ -26,7 +27,26 @@ function PortfolioPost() {
 
 	const [post, setPost] = useState({});
 	const [userId, setUserId] = useState({});
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
+
+	useEffect(() => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	}, []);
+
+	// 수정하기
+	const { result: userResult, error: userError } = useApi({
+		path: isLoggedIn ? '/user' : '',
+		shouldFetch: isLoggedIn,
+	});
+
+	useEffect(() => {
+		if (userResult) {
+			setUserId(userResult);
+			console.log(userError);
+		}
+	}, [userResult]);
 
 	// axios 통신 → 화면에 그려주는 작업
 	const { result, trigger, isLoading, error } = useApi({
@@ -45,19 +65,6 @@ function PortfolioPost() {
 	const handleOpenModal = () => {
 		setInfoModalOpenState(true);
 	};
-
-	// 수정하기
-	const { result: userResult } = useApi({
-		path: '/user',
-		shouldFetch: true,
-	});
-
-	useEffect(() => {
-		if (userResult) {
-			setUserId(userResult);
-			console.log(error);
-		}
-	}, [userResult]);
 
 	const userCheck = userId._id === post.ownerId;
 	const roleCheck = userId.role === 'user';
@@ -126,14 +133,10 @@ function PortfolioPost() {
 								</Button>
 							)}
 						</S.MentorBox>
-
 						<Line size={'small'} />
-
 						<IntroContents post={post} />
-
 						<Line size={'small'} />
-
-						{userCheck && (
+						{isLoggedIn && userCheck && (
 							<S.ButtonBox>
 								<Button
 									variant={'primary'}
@@ -154,7 +157,7 @@ function PortfolioPost() {
 							</S.ButtonBox>
 						)}
 
-						<Review title={'후기'} getUrl={''} />
+						<Review title={'후기'} getUrl={`/portfolio/${path}`} />
 					</S.ContentsBox>
 				</S.PostBox>
 			)}

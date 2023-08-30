@@ -7,17 +7,23 @@ import Category from '../../components/@common/Category/Category';
 import useApi from '../../hooks/useApi';
 import { useEffect, useState } from 'react';
 import Select from '../../components/@common/Select/Select';
+import { checkToken } from '../../utils/cookie';
 
 function Portfolio() {
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
-	// infinite scroll
 
 	// 로그인한 유저가 멘토인지 아닌지 검사하는 로직
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const [isMentor, setIsMentor] = useState(false);
 
+	useEffect(() => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	}, []);
+
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/user', // 유저인지 멘토인지 확인할 수 있는 api 필요
-		shouldFetch: true,
+		path: isLoggedIn ? '/user' : '', // 유저인지 멘토인지 확인할 수 있는 api 필요
+		shouldFetch: isLoggedIn,
 	});
 
 	useEffect(() => {

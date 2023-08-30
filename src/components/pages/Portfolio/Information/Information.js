@@ -16,7 +16,7 @@ function Information(props) {
 					variant={'default'}
 					size={'regular'}
 					font={'regular'}
-					defaultValue={portfolioId ? mentorPost.position : position}
+					value={portfolioId ? mentorPost.position : position}
 					onChange={handleChange}
 				/>
 			</S.Contents>

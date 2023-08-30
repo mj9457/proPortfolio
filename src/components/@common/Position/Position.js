@@ -3,7 +3,7 @@ import useApi from '../../../hooks/useApi';
 import Select from '../Select/Select';
 
 function Position(props) {
-	const { onChange, size, font, variant, defaultValue, ...rest } = props;
+	const { onChange, size, font, variant, value, ...rest } = props;
 
 	const [positions, setPositions] = useState([]);
 
@@ -24,7 +24,7 @@ function Position(props) {
 			size={size}
 			font={font}
 			variant={variant}
-			defaultValue={defaultValue}
+			value={value}
 			onChange={onChange}
 			name="position"
 			{...rest}
