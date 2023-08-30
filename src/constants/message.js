@@ -51,7 +51,7 @@ const MESSAGE = {
 			COMPLETE: '수정이 완료되었습니다.',
 			NOCHANGE: '변경 사항이 없습니다.',
 		},
-		NICKNAME: '',
+		NICKNAME: '닉네임을 입력해 주세요.',
 		NODATA: {
 			LIST: '내역이 없습니다.',
 		},

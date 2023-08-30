@@ -26,6 +26,11 @@ const MyPageLayout = lazy(() =>
 const MentoringListPage = lazy(() =>
 	import('../pages/MyPage/Mentor/MentoringList/MentoringListPage'),
 );
+const MentoringPostListPage = lazy(() =>
+	import(
+		'../pages/MyPage/Mentor/MentoringPostListPage/MentoringPostListPage'
+	),
+);
 
 // portfolio page
 const Portfolio = lazy(() => import('../pages/Portfolio/Portfolio'));
@@ -100,15 +105,19 @@ const router = createBrowserRouter([
 						element: <MentoringListPage />,
 					},
 					{
+						path: 'mentoringpostlist',
+						element: <MentoringPostListPage />,
+					},
+					{
 						path: 'postlist',
 						element: <PostListPage />,
 					},
 					{
-						path: 'AccountManage',
+						path: 'accountmanage',
 						element: <AccountManagePage />,
 					},
 					{
-						path: 'AccountWithdrawal',
+						path: 'accountwithdrawal',
 						element: <AccountWithdrawalPage />,
 					},
 				],

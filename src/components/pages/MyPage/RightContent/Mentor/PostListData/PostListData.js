@@ -3,7 +3,7 @@ import * as PLD from './PostListData.styles';
 import { userData } from '../../../../../../recoil/atoms/myPage/myPage.atom';
 import { useEffect } from 'react';
 
-// 유저가 작성한 게시글(스터디/프로젝트 모집글, 멘토링 신청 게시글)
+// 유저가 작성한 게시글(스터디/프로젝트 모집글)
 function PostListData({ postList, onDelete }) {
 	const user = useRecoilValue(userData);
 

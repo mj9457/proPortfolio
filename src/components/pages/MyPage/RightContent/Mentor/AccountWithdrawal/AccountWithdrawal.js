@@ -1,34 +1,47 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as AM from './AccountWithdrawal.styles';
-import axios from 'axios';
-import { useRecoilValue } from 'recoil';
-import { userData } from '../../../../../../recoil/atoms/myPage/myPage.atom';
 import MYPAGEOPTION from '../../../../../../constants/mypage';
 import { Button } from '../../../../../@common/Button/Button.styles';
 import MESSAGE from '../../../../../../constants/message';
+import useApi from '../../../../../../hooks/useApi';
 
 function AccountWithdrawal() {
-	const user = useRecoilValue(userData);
+	// 유저 정보 담을 state
+	const [user, setUser] = useState({});
+	// 유저 정보 통신(GET)
+	const {
+		result: users,
+		trigger: usersT,
+		isLoading: usersL,
+		error: usersE,
+	} = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (users) {
+			setUser(users);
+		}
+		console.log(user);
+	}, [users]);
+
 	const [Checked, setChecked] = useState(false);
 
 	const checkHandler = () => {
 		setChecked(!Checked);
 	};
 
-	const onDelete = () => {
-		console.log(user);
-		async function deleteUser() {
-			try {
-				const response = await axios.delete(
-					`https://jsonplaceholder.typicode.com/posts/:${user.id}`,
-				);
-				console.log(response);
-				alert(MESSAGE.MYPAGE.ACCOUNT.THANKS);
-			} catch (err) {
-				console.log(err);
-			}
+	const onDelete = async () => {
+		try {
+			await usersT({
+				method: 'delete',
+				shouldFetch: true,
+			});
+			alert(MESSAGE.MYPAGE.ACCOUNT.THANKS);
+		} catch (err) {
+			console.log(err);
 		}
-		deleteUser();
 	};
 
 	return (
