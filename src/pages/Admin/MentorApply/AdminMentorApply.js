@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button, Space, theme } from 'antd';
 import {
 	AdminContent,
@@ -8,40 +8,20 @@ import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import { Atags, HandlerButton } from './AdminMentorApply.styles';
 import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
+import useApi from '../../../hooks/useApi';
 
 const AdminMentorApply = () => {
-	const data = [
-		{
-			key: '1',
-			name: '김현규',
-			email: 'eilce1@naver.com',
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/mentorRequest',
+		shouldFetch: true,
+		params: {
+			status: 'requested',
 		},
-		{
-			key: '2',
-			name: '김기범',
-			email: 'eilce2@naver.com',
-		},
-		{
-			key: '3',
-			name: '조아연',
-			email: 'eilce3@naver.com',
-		},
-		{
-			key: '4',
-			name: '이헤진',
-			email: 'eilce4@naver.com',
-		},
-		{
-			key: '5',
-			name: '예은선',
-			email: 'eilce5@naver.com',
-		},
-		{
-			key: '6',
-			name: '박민준',
-			email: 'eilce@naver.com',
-		},
-	];
+	});
+	const [applyData, setApplyData] = useState([]);
+	const [isOpen, setIsOpen] = useState(false);
+	const [selectedKey, setSelectedKey] = useState(null);
+
 	const columns = [
 		{
 			title: '번호',
@@ -88,7 +68,7 @@ const AdminMentorApply = () => {
 						<HandlerButton
 							type="primary"
 							onClick={() => {
-								approveHandler(record.key);
+								approveHandler(record.userId, record._id);
 							}}
 						>
 							승인
@@ -97,7 +77,7 @@ const AdminMentorApply = () => {
 							거절
 						</Removetag> */}
 						<HandlerButton
-							onClick={() => refuseHandler(record.key)}
+							onClick={() => refuseHandler(record._id)}
 						>
 							거절
 						</HandlerButton>
@@ -106,10 +86,30 @@ const AdminMentorApply = () => {
 			),
 		},
 	];
-	// 모달 열기
+	useEffect(() => {
+		if (result && result.length > 0) {
+			setApplyData(
+				result
+					.filter(item => item.status === 'requested')
+					.map((item, index) => ({
+						...item,
+						key: index + 1,
+					})),
+			);
+		}
+	}, [result]);
+	const memoColumns = useMemo(() => [], [selectedKey, isOpen]);
+	const memoResult = useMemo(
+		() => (
+			<AdminTable
+				columns={columns}
+				dataSource={applyData}
+				totalPages={0}
+			/>
+		),
+		[applyData, memoColumns],
+	);
 
-	const [isOpen, setIsOpen] = useState(false);
-	const [selectedKey, setSelectedKey] = useState(null);
 	// 자세히 보기
 	const openApplyModal = key => {
 		setSelectedKey(key);
@@ -119,40 +119,47 @@ const AdminMentorApply = () => {
 		setSelectedKey(null);
 		setIsOpen(false);
 	};
-	const refuseHandler = key => {
-		// Todo
-		// 거절 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
-		console.log(key);
+	// 거절
+	const refuseHandler = requestId => {
+		trigger({
+			path: `/mentorRequest/${requestId}`,
+			method: 'put',
+			data: { status: 'rejected' },
+			applyResult: true,
+		});
+
 		// setTableData(data => data.filter(items => items.key !== key));
 		// 모든 처리 후
 		setSelectedKey(null);
 		setIsOpen(false);
 	};
-	const approveHandler = key => {
-		console.log(key);
-		// Todo
-		// 승인 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
-		// 모든 처리 후
+	// 승인
+	const approveHandler = async (userId, requestId) => {
+		console.log(userId, requestId);
+		await trigger({
+			path: `/admin/user/${userId}/role`,
+			method: 'put',
+			data: { role: 'mentor' },
+		});
+		await trigger({
+			path: `/mentorRequest/${requestId}`,
+			method: 'put',
+			data: { status: 'accepted' },
+			applyResult: true,
+		});
 		setSelectedKey(null);
 		setIsOpen(false);
 	};
-	const modifiedData = data.map((item, index) => ({
-		...item,
-		key: String(index + 1), // 번호 값을 index로부터 생성
-	}));
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
-	const [tableData, setTableData] = useState(modifiedData);
 
 	return (
 		<>
 			{isOpen && (
 				<AdminApplyModal
 					onClose={closeModal}
-					id={selectedKey}
+					userInfo={selectedKey}
 					approveHandler={approveHandler}
 					refuseHandler={refuseHandler}
 				/>
@@ -163,11 +170,7 @@ const AdminMentorApply = () => {
 					placeholder=""
 					// onSearch={e => addCategoryHandler(e)}
 				/>
-				<AdminTable
-					columns={columns}
-					dataSource={tableData}
-					totalPages={0}
-				/>
+				{isLoading ? <h2>로딩중</h2> : memoResult}
 			</AdminContent>
 		</>
 	);

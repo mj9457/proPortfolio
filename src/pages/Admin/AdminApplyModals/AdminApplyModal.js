@@ -1,4 +1,4 @@
-import { createElement, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
 	ApplyModalWrap,
 	ButtonArea,
@@ -18,10 +18,15 @@ import {
 } from './AdminApplyModal.styles';
 // import IMG from 'assets/img/banner/banner01.png';
 
-const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
+const AdminApplyModal = ({
+	onClose,
+	userInfo,
+	approveHandler,
+	refuseHandler,
+}) => {
+	console.log(userInfo);
 	const outside = useRef();
 	const imageOutside = useRef();
-	console.log('Modal');
 
 	const [isImageModalVisible, setIsImageModalVisible] = useState(false);
 
@@ -47,59 +52,60 @@ const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
 						<TextArea>
 							<SubTitle>이름</SubTitle>
 						</TextArea>
-						<span>{id.name}</span>
+						<span>{userInfo.name}</span>
 						<TextWrap></TextWrap>
 						<TextArea>
 							<SubTitle>닉네임</SubTitle>
 						</TextArea>
-						<span>엘리스랩</span>
+						<span>{userInfo.nickName}</span>
 					</TextWrap>
 					<TextWrap>
 						<TextArea>
 							<SubTitle>이메일주소</SubTitle>
 						</TextArea>
-						<span>eilce@naver.com</span>
+						<span>{userInfo.email}</span>
 					</TextWrap>
 					<TextWrap>
 						<TextArea>
 							<SubTitle>직무</SubTitle>
 						</TextArea>
-						<span>프론트 엔드 개발</span>
+						<span>{userInfo.position}</span>
 					</TextWrap>
 					<TextWrap>
 						<TextArea>
 							<SubTitle>기업명</SubTitle>
 						</TextArea>
-						<span>엘리스</span>
+						<span>{userInfo.company}</span>
 					</TextWrap>
 					<TextWrap>
 						<TextArea>
 							<SubTitle>경력</SubTitle>
 						</TextArea>
-						<span>3년차</span>
+						<span>{userInfo.career}</span>
 					</TextWrap>
 					<TextWrap>
 						<TextArea>
 							<SubTitle>사원증 및 재직증명서</SubTitle>
 						</TextArea>
 					</TextWrap>
-					<ImgBox>
-						<img
-							src="/assets/img/banner/banner01.png"
+					<ImgBox url={userInfo.authenticationImageUrl}>
+						{/* <img
+							src={userInfo.authenticationImageUrl}
 							onClick={imageClickHandler}
-						/>
+						/> */}
+						<div onClick={imageClickHandler}></div>
 					</ImgBox>
 					<ButtonArea>
 						<button
 							onClick={() => {
-								refuseHandler(id);
+								refuseHandler(userInfo._id);
 							}}
 						>
 							거절
 						</button>
 						<button
 							onClick={() => {
-								approveHandler(id);
+								approveHandler(userInfo.userId, userInfo._id);
 							}}
 						>
 							승인
@@ -124,7 +130,9 @@ const AdminApplyModal = ({ onClose, id, approveHandler, refuseHandler }) => {
 									}}
 								/>
 							</IconBox>
-							<OriginalImage src="/assets/img/banner/banner01.png" />
+							<OriginalImage
+								src={userInfo.authenticationImageUrl}
+							/>
 						</OriginalImageBox>
 					</OriginalImageWrap>
 				</ImageModal>
