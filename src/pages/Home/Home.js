@@ -17,8 +17,8 @@ function Home() {
 	}, []);
 
 	const { result, error } = useApi({
-		path: '/portfolio/recommend/recommendMentor',
-		shouldFetch: true,
+		path: isLoggedIn ? '/portfolio/recommend/recommendMentor' : '',
+		shouldFetch: isLoggedIn,
 	});
 
 	useEffect(() => {

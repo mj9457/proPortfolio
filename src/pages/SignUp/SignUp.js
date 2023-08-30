@@ -82,8 +82,23 @@ function SignUp() {
 				alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
 			}
 		} catch (error) {
-			console.error('Error:', error);
-			alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+			if (
+				error.response &&
+				error.response.data &&
+				error.response.data.result === 'MongoServerError'
+			) {
+				if (
+					error.response.data.reason &&
+					error.response.data.reason.includes('duplicate key')
+				) {
+					alert('이미 사용중인 닉네임입니다.');
+				} else {
+					alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+				}
+			} else {
+				console.error('Error:', error);
+				alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+			}
 		}
 	}
 
