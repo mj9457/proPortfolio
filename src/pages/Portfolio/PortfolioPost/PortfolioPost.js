@@ -88,7 +88,15 @@ function PortfolioPost() {
 	const { nickName, title, updatedAt, profileImageUrl } = post;
 
 	// 날짜와 프로필 이미지
-	const date = String(updatedAt).slice(0, 19).split('T');
+	const serverDate = new Date(updatedAt);
+	const date = serverDate.toLocaleDateString('ko-KR');
+	const options = {
+		hour: 'numeric',
+		minute: 'numeric',
+		second: 'numeric',
+		hour12: false,
+	};
+	const time = serverDate.toLocaleTimeString('en-US', options);
 
 	return (
 		<>
@@ -108,7 +116,7 @@ function PortfolioPost() {
 								<Line size={'height'} />
 
 								<span>
-									{date[0]} {date[1]}
+									{date} &nbsp;{time}
 								</span>
 							</S.NameBox>
 

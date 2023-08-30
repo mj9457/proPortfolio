@@ -1,13 +1,14 @@
+import { useEffect, useState } from 'react';
+import { checkToken } from '../../utils/cookie';
+import useApi from '../../hooks/useApi';
+
 import * as S from './Portfolio.styles';
 
 import Line from '../../components/@common/Line/Line';
 import MentorCard from '../../components/@common/Card/Card';
 import Button from '../../components/@common/Button/Button';
 import Category from '../../components/@common/Category/Category';
-import useApi from '../../hooks/useApi';
-import { useEffect, useState } from 'react';
 import Select from '../../components/@common/Select/Select';
-import { checkToken } from '../../utils/cookie';
 
 function Portfolio() {
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
@@ -78,8 +79,8 @@ function Portfolio() {
 				<S.MentorTitleBox>
 					<span>🌟 모든 멘토</span>
 					<Select variant={'none'} font={'regular'}>
-						<option>최신순(이건 아직 미완)</option>
 						<option>인기순</option>
+						<option>최신순</option>
 					</Select>
 				</S.MentorTitleBox>
 

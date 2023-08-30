@@ -38,6 +38,7 @@ function PortfolioApply() {
 				name: result.name,
 				career: result.career,
 				company: result.company,
+				position: result.position,
 				coachingCount: result.coachingCount,
 				profileImageUrl: result.profileImageUrl,
 			}));

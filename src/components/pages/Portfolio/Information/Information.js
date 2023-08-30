@@ -5,7 +5,7 @@ import Position from '../../../@common/Position/Position';
 
 function Information(props) {
 	const { handleChange, user, mentorPost, portfolioId } = props;
-	const { position, name, career, company } = user;
+	const { name, career, company } = user;
 
 	return (
 		<S.InfoBox>
@@ -16,7 +16,7 @@ function Information(props) {
 					variant={'default'}
 					size={'regular'}
 					font={'regular'}
-					value={portfolioId ? mentorPost.position : position}
+					value={mentorPost.position}
 					onChange={handleChange}
 				/>
 			</S.Contents>
