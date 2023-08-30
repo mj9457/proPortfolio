@@ -15,19 +15,19 @@ export const check = ex => {
 			message: MESSAGE.CHECK.CAREER,
 		},
 		{
-			checked: ex.title.length === 0,
+			checked: !ex.title || ex.title.length === 0,
 			message: MESSAGE.CHECK.TITLE,
 		},
 		{
-			checked: ex.title.length > 50,
+			checked: ex.title && ex.title.length > 50,
 			message: MESSAGE.CHECK.TITLELENGTH,
 		},
 		{
-			checked: ex.description.length === 0,
+			checked: !ex.description || ex.description.length === 0,
 			message: MESSAGE.CHECK.DESCRIPTION,
 		},
 		{
-			checked: ex.description.length > 1000,
+			checked: ex.description && ex.description.length > 1000,
 			message: MESSAGE.CHECK.DESCRIPTIONLENGTH,
 		},
 	];

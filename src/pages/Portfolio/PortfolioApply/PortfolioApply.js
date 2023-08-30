@@ -69,7 +69,7 @@ function PortfolioApply() {
 	};
 
 	// 글 작성하기 & 수정하기 버튼 클릭
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		const fail = check(mentorPost).filter(el => el.checked);
 
 		if (fail.length > 0) {

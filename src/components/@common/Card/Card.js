@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import * as S from './Card.styles';
 import useApi from '../../../hooks/useApi';
+import EmptyMessage from '../EmptyMessage/EmptyMessage';
 
 function MentorCard(props) {
 	const { variant, url } = props;
@@ -23,6 +24,7 @@ function MentorCard(props) {
 	return (
 		<>
 			{isLoading && <h2>로딩 중입니다.</h2>}
+			{mentorData.length === 0 && <EmptyMessage />}
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
 					variant={variant}
