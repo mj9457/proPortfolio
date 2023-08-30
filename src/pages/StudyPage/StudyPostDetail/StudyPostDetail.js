@@ -300,7 +300,11 @@ function StudyPostDetail() {
 							)}
 
 							<S.CommentContainer>
-								<EditComments isLoggedIn={isLoggedIn} />
+								<EditComments
+									isLoggedIn={isLoggedIn}
+									userData={user}
+									title={'댓글'}
+								/>
 							</S.CommentContainer>
 						</S.PostDetailBottom>
 					</>

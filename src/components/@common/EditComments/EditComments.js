@@ -1,48 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as S from './EditComments.styles';
 import Button from '../../../components/@common/Button/Button';
 import useApi from '../../../hooks/useApi';
+import MESSAGE from '../../../constants/message';
 
-function EditComments({ isLoggedIn }) {
+function EditComments({ isLoggedIn, userData, title }) {
 	const { postId } = useParams();
 
-	const [comment, setComment] = useState('');
+	const [comment, setComment] = useState({
+		author: '',
+		ownerId: '',
+		content: '',
+	});
 
+	if (userData) {
+		comment.author = userData.nickName;
+		comment.ownerId = userData._id;
+	}
 	const { trigger, isLoading, error, result } = useApi({
 		path: `/projectStudy/${postId}/comments`,
 		method: 'post',
 		shouldFetch: false,
 	});
 
-	const handleCommentChange = event => {
-		setComment(event.target.value);
+	const handleCommentChange = e => {
+		const newComment = {
+			...comment,
+			content: e.target.value,
+		};
+		setComment(newComment);
 	};
 
 	const handleCommentSubmit = async () => {
 		if (!isLoggedIn) {
-			alert('로그인한 회원만 댓글을 입력할 수 있어요.');
+			alert('로그인한 회원만 입력할 수 있어요.');
 			return;
 		}
-		if (comment.trim() === '') {
-			alert('댓글 내용을 입력해주세요.');
+		if (comment.content.trim() === '') {
+			alert('내용을 입력해주세요.');
 			return;
 		}
-		try {
-			await trigger({ data: { content: comment } });
-			console.log('comment', comment);
-			setComment('');
-		} catch (error) {
-			console.error(error);
+		if (comment.content.length > 1000) {
+			alert('1000자 이하로 입력해주세요.');
+			return;
 		}
+
+		const commentData = {
+			...comment,
+		};
+		await trigger({
+			data: commentData,
+		});
+		console.log(commentData);
+		setComment(prevComment => ({
+			...prevComment,
+			content: '',
+		}));
 	};
+
+	const particle = title === '후기' ? '을' : '를';
 
 	return (
 		<S.Container>
 			<S.CommentWrapper>
 				<textarea
-					placeholder="댓글을 등록하세요."
+					placeholder={`${title}${particle} 등록하세요.`}
+					value={comment.content}
+					maxLength={1000}
 					onChange={handleCommentChange}
 				></textarea>
 				<S.ButtonWrapper>
@@ -52,7 +77,7 @@ function EditComments({ isLoggedIn }) {
 						shape={'medium'}
 						onClick={handleCommentSubmit}
 					>
-						댓글 등록
+						{`${title} 등록`}
 					</Button>
 				</S.ButtonWrapper>
 			</S.CommentWrapper>
