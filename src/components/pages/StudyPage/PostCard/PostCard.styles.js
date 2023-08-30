@@ -1,9 +1,18 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import {
 	flexColumn,
 	flexAlignCenter,
 	flexCenter,
 } from '../../../../styles/common';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const Container = styled.div`
 	cursor: pointer;
@@ -12,6 +21,8 @@ export const Container = styled.div`
 	border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
 	${flexColumn}
 	border-radius: 15px;
+	opacity: 0;
+	animation: ${fadeIn} 0.6s ease forwards;
 	a {
 		text-decoration: none;
 		color: inherit;

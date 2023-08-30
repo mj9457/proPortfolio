@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Chip from '../../../@common/Chip/Chip';
 
 function PostCard({ data }) {
-	console.log('POSTCARD', data);
 	const {
 		_id,
 		recruitsStatus,

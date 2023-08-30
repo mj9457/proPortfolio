@@ -216,24 +216,12 @@ function StudyPostDetail() {
 											<S.PostDetailBasicItemTitle>
 												<p>마감 기간</p>
 											</S.PostDetailBasicItemTitle>
+
 											<p>
 												{deadline
-													? new Date(deadline)
-															.toISOString()
-															.substr(0, 10)
-															.split('-')
-															.map(
-																(
-																	part,
-																	index,
-																) =>
-																	index === 1
-																		? parseInt(
-																				part,
-																		  )
-																		: part,
-															)
-															.join('. ')
+													? deadline
+															.split('T')[0]
+															.replace(/-/g, '. ')
 													: ''}
 											</p>
 										</S.PostDetailBasicItem>

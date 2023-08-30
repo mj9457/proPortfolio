@@ -95,8 +95,11 @@ const PostCardContainer = styled.div`
 	gap: 32px;
 `;
 
+const CategoryContainer = styled.div``;
+
 export {
 	Container,
+	CategoryContainer,
 	Title,
 	SubTitle,
 	TitleWrapper,
