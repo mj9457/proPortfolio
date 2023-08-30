@@ -1,6 +1,5 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import UserMentorApply from '../pages/UserMentoApply/UserMentorApply';
 
 const Layout = lazy(() => import('../components/@common/Layout'));
 
@@ -48,6 +47,11 @@ const StudyEditPost = lazy(() =>
 );
 const StudyPostDetail = lazy(() =>
 	import('../pages/StudyPage/StudyPostDetail/StudyPostDetail'),
+);
+
+// user mentor apply page
+const UserMentorApply = lazy(() =>
+	import('../pages/UserMentoApply/UserMentorApply'),
 );
 
 // admin
