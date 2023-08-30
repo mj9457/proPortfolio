@@ -76,6 +76,9 @@ const MESSAGE = {
 	DELETE: {
 		COMPLETE: '삭제가 완료되었습니다.',
 	},
+	APPLY: {
+		COMPLETE: '신청이 완료되었습니다.',
+	},
 };
 
 export default MESSAGE;

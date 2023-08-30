@@ -110,7 +110,7 @@ function PortfolioPost() {
 									setInfoModalOpenState={
 										setInfoModalOpenState
 									}
-									postAddress={''}
+									path={path}
 									action={'완료'}
 								/>
 							)}
@@ -154,11 +154,7 @@ function PortfolioPost() {
 							</S.ButtonBox>
 						)}
 
-						<Review
-							title={'후기'}
-							putUrl={''}
-							delUrl={`/${path}/comments`}
-						/>
+						<Review title={'후기'} getUrl={''} />
 					</S.ContentsBox>
 				</S.PostBox>
 			)}
