@@ -7,8 +7,8 @@ import * as S from './Portfolio.styles';
 import Line from '../../components/@common/Line/Line';
 import MentorCard from '../../components/@common/Card/Card';
 import Button from '../../components/@common/Button/Button';
-import Category from '../../components/@common/Category/Category';
 import Select from '../../components/@common/Select/Select';
+import PortfolioCategory from '../../components/pages/Portfolio/PortfolioCategory/PortfolioCategory';
 
 function Portfolio() {
 	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
@@ -55,7 +55,11 @@ function Portfolio() {
 				)}
 			</S.BannerBox>
 
-			<Category variant={'cancel'} shape={'round'} size={'medium'} />
+			<PortfolioCategory
+				variant={'cancel'}
+				shape={'round'}
+				size={'medium'}
+			/>
 
 			<div>
 				{/* 지금 인기 있는 멘토들 제목 */}

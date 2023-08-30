@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import * as S from './Category.styles';
+import * as S from './PortfolioCategory.styles';
 
-import Button from '../Button/Button';
-import useApi from '../../../hooks/useApi';
+import Button from '../../../@common/Button/Button';
+import useApi from '../../../../hooks/useApi';
 
-function Category(props) {
+function PortfolioCategory(props) {
 	const { variant, shape, size } = props;
 
 	const [positions, setPositions] = useState([]);
@@ -44,4 +44,4 @@ function Category(props) {
 	);
 }
 
-export default Category;
+export default PortfolioCategory;

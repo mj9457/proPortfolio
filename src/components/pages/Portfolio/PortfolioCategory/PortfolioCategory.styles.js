@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { flexColumn } from '../../../styles/common';
+import { flexColumn } from '../../../../styles/common';
 
 export const ButtonBox = styled.div`
 	${flexColumn}
