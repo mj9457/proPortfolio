@@ -6,4 +6,5 @@ export const Wrapper = styled.div`
 	justify-content: flex-start;
 	${bodyContainer}
 	margin-top: 4rem;
+	gap: 6.25rem;
 `;

@@ -1,48 +1,49 @@
 import useApi from '../../../../../../hooks/useApi';
-import * as PLD from './PostListData.styles';
+import * as MPLD from './MentoringPostListData.styles';
 import { useEffect, useState } from 'react';
 
 // 유저가 작성한 게시글(스터디/프로젝트 모집글)
-function PostListData() {
-	// 프로젝트/스터디 게시물 정보 담을 state
+function MentoringPostListData() {
+	// 멘토링 신청 게시글 정보 담을 state
 	const [postList, setPostList] = useState([]);
-	// 프로젝트/스터디 게시물 정보 통신(GET)
+	// 멘토링 신청 게시글 정보 통신(GET)
 	const {
 		result: postLists,
 		trigger: postListsT,
 		// isLoading: postListsL,
 	} = useApi({
-		path: `/projectStudy/mypage`,
+		path: `/portfolio/mypage`,
 		shouldFetch: true,
 	});
 
-	// 프로젝트/스터디 게시물 정보 변경될 때 마다 리렌더링
+	// 멘토링 신청 게시글 정보 변경될 때 마다 리렌더링
 	useEffect(() => {
 		if (postLists) {
 			setPostList(postLists);
 		}
+		console.log(postLists);
 	}, [postLists]);
 
 	// 게시물 보기
 	const showPost = postId => {
 		console.log(postId);
 		window.open(
-			`http://localhost:3000/study/detail/${postId}`,
+			`http://localhost:3000/portfolio/post/${postId}`,
 			'_blank',
 			'noopener, noreferrer',
-		); // 프로젝트 / 스터디 게시물 (유저)
+		); // 멘토링 게시물 (멘토)
 	};
 
 	// 게시글 삭제
 	const onDelete = async targetId => {
 		await postListsT({
 			method: 'delete',
-			path: `/projectStudy/${targetId}`,
+			path: `/portfolio/${targetId}`,
 		});
 		alert('삭제 되었습니다.');
 		await postListsT({
 			method: 'get',
-			path: `/projectStudy/mypage`,
+			path: `/portfolio/mypage`,
 		});
 	};
 
@@ -52,32 +53,28 @@ function PostListData() {
 			{postList.length > 0 &&
 				postList.map((item, index) => {
 					return (
-						<PLD.ContentList key={index}>
-							<PLD.ContentNumber>{index + 1}</PLD.ContentNumber>
-							<PLD.ContentCategory>
-								{item.classification}
-							</PLD.ContentCategory>
-							<PLD.ContentTitle
+						<MPLD.ContentList key={index}>
+							<MPLD.ContentNumber>{index + 1}</MPLD.ContentNumber>
+							<MPLD.ContentCategory>
+								{item.position[0]}
+							</MPLD.ContentCategory>
+							<MPLD.ContentTitle
 								onClick={() => showPost(item._id)}
 							>
 								{item.title}
-							</PLD.ContentTitle>
-							<PLD.ContentDate>{`~ ${item.deadline.slice(
-								0,
-								10,
-							)}`}</PLD.ContentDate>
-							<PLD.ButtonBox>
-								<PLD.DeleteButton
+							</MPLD.ContentTitle>
+							<MPLD.ButtonBox>
+								<MPLD.DeleteButton
 									onClick={() => onDelete(item._id)}
 								>
 									삭제
-								</PLD.DeleteButton>
-							</PLD.ButtonBox>
-						</PLD.ContentList>
+								</MPLD.DeleteButton>
+							</MPLD.ButtonBox>
+						</MPLD.ContentList>
 					);
 				})}
 		</>
 	);
 }
 
-export default PostListData;
+export default MentoringPostListData;

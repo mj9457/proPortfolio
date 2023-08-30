@@ -1,37 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as AM from './AccountManage.styles';
 import MYPAGEOPTION from '../../../../../../constants/mypage';
 import { Button } from '../../../../../@common/Button/Button.styles';
 import { useForm } from 'react-hook-form';
 import useApi from '../../../../../../hooks/useApi';
 import MESSAGE from '../../../../../../constants/message';
+import AWS from 'aws-sdk';
 
 function AccountManage() {
 	// 유저 정보 담을 state
 	const [user, setUser] = useState({});
 	// 유저 정보 통신(GET)
-	const {
-		result: users,
-		trigger: usersT,
-		isLoading: usersL,
-		error: usersE,
-	} = useApi({
+	const { result: users, trigger: usersT } = useApi({
 		path: `/user`,
 		shouldFetch: true,
 	});
 
 	// 직무 담을 state
 	const [position, setPosition] = useState([]);
-	const {
-		result: positions,
-		trigger: positionsT,
-		isLoading: positionsL,
-		error: positionsE,
-	} = useApi({
+	const { result: positions } = useApi({
 		path: '/position',
 		shouldFetch: true,
 	});
 
+	// 유저 정보가 변경될 때 리렌더링
 	useEffect(() => {
 		if (users) {
 			setUser(users);
@@ -39,6 +31,7 @@ function AccountManage() {
 		console.log(user);
 	}, [users]);
 
+	// 포지션 정보가 변경될 때 리렌더링
 	useEffect(() => {
 		if (positions && positions.length > 0) {
 			setPosition([...positions]);
@@ -78,6 +71,45 @@ function AccountManage() {
 		}
 	};
 
+	const [selectedFile, setSelectedFile] = useState(null);
+	const fileInputRef = useRef(null);
+
+	AWS.config.update({
+		region: process.env.REACT_APP_REGION,
+		accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+		secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+	});
+
+	const fileUploadHandler = () => {
+		if (fileInputRef.current) {
+			fileInputRef.current.click();
+		}
+	};
+	const handleFileChange = e => {
+		const file = e.target.files[0];
+		const fileExt = file?.name.split('.').pop();
+		if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
+			if (file === undefined) {
+				return;
+			}
+			alert(MESSAGE.FILE.UPLOAD);
+			return;
+		}
+		console.log(file);
+		setSelectedFile(file);
+	};
+
+	const now = new Date();
+	const getMilliseconds = now.getTime();
+	const upload = new AWS.S3.ManagedUpload({
+		params: {
+			Bucket: 'pofol-bucket/upload',
+			Key: `${getMilliseconds + '_' + selectedFile?.name}`,
+			Body: selectedFile,
+		},
+	});
+	console.log(upload);
+
 	return (
 		<AM.DetailOnboradWrapper>
 			<AM.MainTitleBox>
@@ -89,10 +121,22 @@ function AccountManage() {
 						<AM.UserCardImg>
 							<img
 								{...register('image')}
-								src={user.profileImage}
+								src={
+									selectedFile
+										? selectedFile.name
+										: user.profileImage
+								}
 								alt="프로필 사진"
 							></img>
-							<span>프로필 수정</span>
+							<button onClick={fileUploadHandler}>
+								프로필 수정
+							</button>
+							<input
+								accept="image/*"
+								type="file"
+								ref={fileInputRef}
+								onChange={handleFileChange}
+							></input>
 						</AM.UserCardImg>
 						<AM.UserCardInfo>
 							<AM.UserName>{user.name}</AM.UserName>

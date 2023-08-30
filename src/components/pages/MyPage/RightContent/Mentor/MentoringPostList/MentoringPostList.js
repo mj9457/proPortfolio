@@ -1,87 +1,24 @@
 import { useEffect, useState } from 'react';
 import * as MPL from './MentoringPostList.styles';
-import PostListData from '../PostListData/PostListData';
 import useApi from '../../../../../../hooks/useApi';
+import MentoringPostListData from '../MentoringPostListData/MentoringPostListData';
 
-// 유저가 작성한 게시글 리스트(스터디/프로젝트 모집글, 멘토링 신청 게시글)
+// 멘토가 작성한 게시글 리스트(멘토링 신청 게시글)
 function MentoringPostList() {
-	const [postList, setPostList] = useState([]); // 게시글 리스트
-	const [error, setError] = useState(null); // 에러 state
-
-	// // 유저 정보 담을 state
-	const [user, setUser] = useState({});
-	// 유저 정보 통신(GET)
-	const {
-		result: users,
-		trigger: usersT,
-		isLoading: usersL,
-		error: usersE,
-	} = useApi({
-		path: `/user`,
-		shouldFetch: true,
-	});
-	// /projectStudy/myPage
-
-	useEffect(() => {
-		if (users) {
-			setUser(users);
-		}
-		console.log(user);
-	}, [users]);
-
-	// 유저 정보 담을 state
-	const [port, setPort] = useState({});
-	// 유저 정보 통신(GET)
-	const { result: portR, trigger: portT } = useApi({
+	// 멘토링 신청 게시글 정보 담을 state
+	const [postList, setPostList] = useState([]);
+	// 멘토링 신청 게시글 정보 통신(GET)
+	const { result: postLists } = useApi({
 		path: `/portfolio/mypage`,
 		shouldFetch: true,
 	});
 
 	useEffect(() => {
-		if (portR) {
-			setPort(portR);
+		if (postLists) {
+			setPostList(postLists);
 		}
-		console.log(port);
-	}, [portR]);
-	console.log(1);
-	// useEffect(() => {
-	// 	async function getPostList() {
-	// 		try {
-	// 			if (user.role === 'mentor') {
-	// 				const response = await axios.get(
-	// 					'https://jsonMPLaceholder.typicode.com/todos', // 요청 주소를 다르게
-	// 					postList,
-	// 				);
-	// 				setPostList(response.data);
-	// 			} else {
-	// 				const response = await axios.get(
-	// 					'https://jsonMPLaceholder.typicode.com/todos', // 요청 주소를 다르게
-	// 					postList,
-	// 				);
-	// 				setPostList(response.data);
-	// 			}
-	// 		} catch (err) {
-	// 			setError(err);
-	// 		}
-	// 	}
-	// 	getPostList();
-	// }, []);
-
-	// // 게시글 삭제
-	const onDelete = targetId => {
-		// async function deleteList() {
-		// 	try {
-		// 		if (user.role === 'mentor') {
-		// 		} else {
-		// 		}
-		// 	} catch (err) {
-		// 		console.log(err);
-		// 		setError(err);
-		// 	}
-		// }
-		// deleteList();
-		console.log(targetId);
-	};
+		console.log(postLists);
+	}, [postLists]);
 
 	return (
 		<>
@@ -97,10 +34,7 @@ function MentoringPostList() {
 								내역이 없습니다.
 							</MPL.NothingContentList>
 						) : (
-							<PostListData
-								postList={postList}
-								onDelete={onDelete}
-							/>
+							<MentoringPostListData />
 						)}
 					</MPL.ContentListBox>
 				</MPL.ContentBox>

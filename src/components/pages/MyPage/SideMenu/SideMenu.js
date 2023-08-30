@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import useApi from '../../../../hooks/useApi';
 
 // 왼쪽 메뉴
-function SideMenu({ userState }) {
+function SideMenu() {
 	const navigate = useNavigate();
 
 	// 버튼 클릭시 페이지 전환
@@ -15,39 +15,43 @@ function SideMenu({ userState }) {
 	// 유저 정보 담을 state
 	const [user, setUser] = useState({});
 
-	// 유저 정보 통신(GET)
-	const {
-		result: users,
-		trigger: usersT,
-		isLoading: usersL,
-		error: usersE,
-	} = useApi({
+	// 유저 정보 불러오기
+	const { result: users } = useApi({
 		path: `/user`,
 		shouldFetch: true,
 	});
 
+	useEffect(() => {
+		if (users) {
+			setUser(users);
+		}
+	}, [users]);
+
 	return (
 		<SM.Wrapper>
-			<SM.MainTitle>{userState}</SM.MainTitle>
-
+			<SM.MainTitle>
+				{user.role === 'mentor'
+					? `${user.name} 멘토님`
+					: `${user.name} 님`}
+			</SM.MainTitle>
 			<SM.SubTitleWrapper>
 				<SM.History>
 					<button onClick={() => handleClickButton('mentoringlist')}>
-						{users.role === 'mentor'
+						{user.role === 'mentor'
 							? '멘토링 신청 받은 내역'
 							: '멘토링 신청 내역'}
 					</button>
-					{users.role === 'mentor' ? (
+					{user.role === 'mentor' ? (
 						<button
 							onClick={() =>
 								handleClickButton('mentoringpostlist')
 							}
 						>
-							멘토링 신청 게시물 관리
+							멘토링 작성 내역
 						</button>
 					) : undefined}
 					<button onClick={() => handleClickButton('postlist')}>
-						프로젝트 / 스터디 게시물 관리
+						프로젝트 / 스터디
 					</button>
 				</SM.History>
 				<SM.Info>
