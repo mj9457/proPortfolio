@@ -15,6 +15,9 @@ function Review(props) {
 
 	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 
+	const itemsPerPage = 10; // 페이지 당 표시될 아이템 개수
+	const [currentPage, setCurrentPage] = useState(1); // 초기값을 1로 설정
+
 	const [editReview, setEditReview] = useState({
 		author: '',
 		content: '',
@@ -89,19 +92,53 @@ function Review(props) {
 		alert('수정이 완료되었습니다.');
 	};
 
+	// 페이지 변경 핸들러
+	const handlePageChange = pageNumber => {
+		trigger({
+			params: {
+				skip: pageNumber * 10 - 10,
+				limit: 10,
+			},
+
+			applyResult: true,
+		});
+
+		setReview(result.comments);
+		setCurrentPage(pageNumber);
+	};
+
 	// 댓글 삭제하기
-	const handleDelete = id => {
+	const handleDelete = async id => {
 		const selectedComment = review.find(comment => comment._id === id);
 
 		if (selectedComment.ownerId === userInfo._id) {
 			if (confirm(MESSAGE.COMMENT.DELETE)) {
-				trigger({
+				await trigger({
 					method: 'delete',
 					path: `${getUrl}/comments/${id}`,
 					data: selectedComment, // 삭제할 review data 들어갈 곳
+					applyResult: true,
 				});
 
-				alert(MESSAGE.DELETE.COMPLETE);
+				if (result.comments.length === 1) {
+					alert(MESSAGE.DELETE.COMPLETE);
+					await trigger({
+						params: {
+							skip: (currentPage - 1) * 10 - 10,
+						},
+						applyResult: true,
+					});
+					setCurrentPage(prev => prev - 1);
+				} else {
+					await trigger({
+						params: {
+							skip: currentPage * 10 - 10,
+						},
+						applyResult: true,
+					});
+
+					alert(MESSAGE.DELETE.COMPLETE);
+				}
 			}
 		} else {
 			alert('삭제할 권한이 없습니다.');
@@ -123,22 +160,6 @@ function Review(props) {
 		return `${date} ${time}`;
 	};
 
-	const itemsPerPage = 10; // 페이지 당 표시될 아이템 개수
-	const [currentPage, setCurrentPage] = useState(1); // 초기값을 1로 설정
-
-	// 페이지 변경 핸들러
-	const handlePageChange = pageNumber => {
-		trigger({
-			params: {
-				skip: pageNumber * 10 - 10,
-				limit: 10,
-			},
-			applyResult: true,
-		});
-		setReview(result.comments);
-		setCurrentPage(pageNumber);
-	};
-
 	return (
 		<S.ReviewBox>
 			<S.TopBox>
@@ -147,45 +168,53 @@ function Review(props) {
 			</S.TopBox>
 
 			<S.BottomBox>
-				{review.map((comment, idx) => (
-					<S.CommentBox key={idx}>
-						<S.MiddleBox>
-							<S.NamingBox>
-								<strong>{comment.author}</strong>
-								<span>{dateAndTime(comment.createdAt)}</span>
-							</S.NamingBox>
+				{isLoading ? (
+					<h2>로딩 중입니다.</h2>
+				) : (
+					<>
+						{review.map((comment, idx) => (
+							<S.CommentBox key={idx}>
+								<S.MiddleBox>
+									<S.NamingBox>
+										<strong>{comment.author}</strong>
+										<span>{dateAndTime(comment.createdAt)}</span>
+									</S.NamingBox>
 
-							{edit === comment._id ? (
-								<S.Buttons>
-									<button onClick={handleComplete}>완료</button>
-									<button onClick={() => setEdit(null)}>취소</button>
-								</S.Buttons>
-							) : (
-								<S.Buttons>
-									<button onClick={() => handleEdit(comment._id)}>수정</button>
-									<button onClick={() => handleDelete(comment._id)}>
-										삭제
-									</button>
-								</S.Buttons>
-							)}
-						</S.MiddleBox>
+									{edit === comment._id ? (
+										<S.Buttons>
+											<button onClick={handleComplete}>완료</button>
+											<button onClick={() => setEdit(null)}>취소</button>
+										</S.Buttons>
+									) : (
+										<S.Buttons>
+											<button onClick={() => handleEdit(comment._id)}>
+												수정
+											</button>
+											<button onClick={() => handleDelete(comment._id)}>
+												삭제
+											</button>
+										</S.Buttons>
+									)}
+								</S.MiddleBox>
 
-						<div>
-							{edit === comment._id ? (
-								<Textarea
-									size={'full'}
-									name="content"
-									defaultValue={editReview.content}
-									onChange={handleChange}
-								/>
-							) : (
-								<S.Contents>{comment.content}</S.Contents>
-							)}
-						</div>
+								<div>
+									{edit === comment._id ? (
+										<Textarea
+											size={'full'}
+											name="content"
+											defaultValue={editReview.content}
+											onChange={handleChange}
+										/>
+									) : (
+										<S.Contents>{comment.content}</S.Contents>
+									)}
+								</div>
 
-						<Line size={'small'} />
-					</S.CommentBox>
-				))}
+								<Line size={'small'} />
+							</S.CommentBox>
+						))}
+					</>
+				)}
 			</S.BottomBox>
 
 			<Pagination
