@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as S from './StudyCategory.styles';
 import PostCard from '../PostCard/PostCard';
 import useApi from '../../../../hooks/useApi';
@@ -16,17 +16,94 @@ function StudyCategory() {
 		position: '',
 	});
 
-	// 포지션 리스트
-	const { trigger, isLoading, error, result } = useApi({
-		path: '/position',
-		shouldFetch: true,
-	});
+	// 무한스크롤
+	const [limit, setLimit] = useState(6);
+	const [skip, setSkip] = useState(0);
+
+	const observer = useRef();
+	const observerElement = useRef();
+
+	// const handleObserver = entries => {
+	// 	const target = entries[0];
+	// 	if (target.isIntersecting) {
+	// 		console.log('통과');
+	// 		setSkip(prevSkip => {
+	// 			const newSkip = prevSkip + limit;
+	// 			triggerProjectStudy({
+	// 				path: '/projectStudy',
+	// 				params: {
+	// 					classification: selectedValues.classification,
+	// 					position: selectedValues.position,
+	// 					limit,
+	// 					skip: newSkip,
+	// 				},
+	// 				shouldFetch: true,
+	// 				applyResult: true,
+	// 			});
+
+	// 			return newSkip;
+	// 		});
+	// 		console.log('SKIP', skip);
+	// 		console.log('projectStudy', projectStudy);
+	// 		setProjectStudy(prevProjectStudy => [
+	// 			...prevProjectStudy,
+	// 			...resultProjectStudy,
+	// 		]);
+	// 		console.log('projectStudy22222222222222222222', projectStudy);
+	// 	}
+	// };
+
+	const handleObserver = entries => {
+		const target = entries[0];
+
+		if (target.isIntersecting && !isLoadingProjectStudy) {
+			console.log('통과');
+			setSkip(prevSkip => {
+				const newSkip = prevSkip + limit;
+				triggerProjectStudy({
+					path: '/projectStudy',
+					params: {
+						classification: selectedValues.classification,
+						position: selectedValues.position,
+						limit,
+						skip: newSkip,
+					},
+					shouldFetch: true,
+					applyResult: true,
+				});
+
+				// setProjectStudy(prevProjectStudy => {
+				// 	return
+				// 	([...prevProjectStudy, ...resultProjectStudy]
+				// 	 console.log(prevProjectStudy);)
+				// });
+
+				console.log('PROJECT', projectStudy);
+
+				return newSkip;
+			});
+		}
+	};
 
 	useEffect(() => {
-		if (result && result.length > 0) {
-			setPosition(result);
+		const options = {
+			root: null,
+			rootMargin: '0px',
+			threshold: 1.0,
+		};
+
+		observer.current = new IntersectionObserver(handleObserver, options);
+
+		if (observerElement.current) {
+			observer.current.observe(observerElement.current);
 		}
-	}, [result]);
+
+		return () => {
+			if (observer.current) {
+				observer.current.disconnect();
+			}
+		};
+	}, [observer.current, observerElement]);
 
 	// 카테고리에 맞는 스터디 프로젝트
 	const {
@@ -40,23 +117,16 @@ function StudyCategory() {
 	});
 
 	useEffect(() => {
-		if (resultProjectStudy) {
+		if (resultProjectStudy && skip === 0) {
 			setProjectStudy(resultProjectStudy);
 		}
-	}, [resultProjectStudy, selectedValues]);
+	}, [resultProjectStudy]);
 
-	// console.log(
-	// 	'selectedValue - 버튼 선택한 값 (파람스로 보내는 값)',
-	// 	selectedValues,
-
-	// 	'resultProjectStudy - result 프로젝트 스터디 데이터 리스트',
-	// 	resultProjectStudy,
-
-	// 	'projectStudy - set한 프로젝트 스터디 데이터 리스트',
-	// 	projectStudy,
-	// );
-
+	// 전체, 스터디, 프로젝트 클릭
 	const handleCategoryClick = classificationValue => {
+		setLimit(6);
+		setSkip(0);
+
 		setSelectedValues(prev => ({
 			...prev,
 			classification: classificationValue,
@@ -66,12 +136,18 @@ function StudyCategory() {
 			params: {
 				classification: classificationValue,
 				position: selectedValues.position,
+				limit,
+				skip: 0,
 			},
 			applyResult: true,
 		});
 	};
 
+	// 포지션 클릭
 	const handlePositionClick = positionValue => {
+		setLimit(6);
+		setSkip(0);
+
 		setSelectedValues(prev => ({
 			...prev,
 			position: positionValue,
@@ -81,12 +157,32 @@ function StudyCategory() {
 			params: {
 				classification: selectedValues.classification,
 				position: positionValue,
+				limit,
+				skip: 0,
 			},
 			applyResult: true,
 		});
 	};
 
-	// console.log('PROJECTSTUDY', projectStudy);
+	// 포지션 리스트
+	const {
+		trigger,
+		isLoading,
+		error,
+		result: positionResult,
+	} = useApi({
+		path: '/position',
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (positionResult && positionResult.length > 0) {
+			setPosition(positionResult);
+		}
+	}, [positionResult]);
+
+	// ***********************************************************************
+	// ***********************************************************************
 
 	return (
 		<>
@@ -117,15 +213,18 @@ function StudyCategory() {
 						전체
 					</S.PositionCategoryItem>
 
-					{position.map(el => (
-						<S.PositionCategoryItem
-							$isSelected={selectedValues.position === el.name}
-							key={el._id}
-							onClick={() => handlePositionClick(el.name)}
-						>
-							{el.name}
-						</S.PositionCategoryItem>
-					))}
+					{position &&
+						position.map(el => (
+							<S.PositionCategoryItem
+								$isSelected={
+									selectedValues.position === el.name
+								}
+								key={el._id}
+								onClick={() => handlePositionClick(el.name)}
+							>
+								{el.name}
+							</S.PositionCategoryItem>
+						))}
 				</S.PositionCategoryList>
 			</S.CategoryBottomList>
 
@@ -134,9 +233,21 @@ function StudyCategory() {
 				{!Array.isArray(projectStudy) || projectStudy.length === 0 ? (
 					<EmptyMessage />
 				) : (
-					projectStudy.map((projectStudy, idx) => (
-						<PostCard data={projectStudy} key={idx} />
-					))
+					<>
+						{projectStudy.map((projectStudy, idx) => (
+							<div key={projectStudy._id + idx}>
+								<PostCard data={projectStudy} />
+							</div>
+						))}
+
+						<div
+							style={{
+								height: '10px',
+								border: '1px solid black',
+							}}
+							ref={observerElement}
+						/>
+					</>
 				)}
 			</S.PostCardContainer>
 		</>
