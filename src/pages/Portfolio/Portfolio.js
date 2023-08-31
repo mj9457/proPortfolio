@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { checkToken } from '../../utils/cookie';
 import useApi from '../../hooks/useApi';
 
@@ -10,18 +11,16 @@ import Button from '../../components/@common/Button/Button';
 import Select from '../../components/@common/Select/Select';
 
 function Portfolio() {
-	// 버튼 클릭시 렌더링 되는 데이터 다르게 하는 로직 작성
-
+	// 로그인 유저 체크
 	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+
+	// 멘토 체크
 	const [isMentor, setIsMentor] = useState(false);
 
+	// 포지션 === 카테고리 관리
 	const [positions, setPositions] = useState([]);
 
-	useEffect(() => {
-		const tokenStatus = checkToken();
-		setIsLoggedIn(tokenStatus);
-	}, []);
-
+	// api 통신 1. 유저 정보 / 2. 포지션 === 카테고리 정보
 	const { result, trigger, isLoading, error } = useApi({
 		path: isLoggedIn ? '/user' : '',
 		shouldFetch: isLoggedIn,
@@ -32,6 +31,13 @@ function Portfolio() {
 		shouldFetch: true,
 	});
 
+	// 로그인 체크
+	useEffect(() => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	}, []);
+
+	// 멘토 롤 체크 && 카테고리 값 들어오는지 체크
 	useEffect(() => {
 		const mentor = result.role === 'mentor';
 
@@ -88,7 +94,14 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 */}
 				<S.MentorCardBox>
-					<MentorCard variant={'blue'} url={'/portfolio/recommend/topMentor'} />
+					{isLoading ? (
+						<h2>로딩 중입니다.</h2>
+					) : (
+						<MentorCard
+							variant={'blue'}
+							url={'/portfolio/recommend/topMentor'}
+						/>
+					)}
 				</S.MentorCardBox>
 			</div>
 
@@ -106,7 +119,11 @@ function Portfolio() {
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					<MentorCard variant={'white'} url={'/portfolio'} />
+					{isLoading ? (
+						<h2>로딩 중입니다.</h2>
+					) : (
+						<MentorCard variant={'white'} url={'/portfolio'} />
+					)}
 				</S.MentorCardBox>
 			</S.MentorBox>
 		</S.PortfolioBox>

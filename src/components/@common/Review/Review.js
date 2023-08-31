@@ -11,13 +11,14 @@ import Pagination from '../Pagination/Pagination';
 
 function Review(props) {
 	const { title, getUrl } = props;
+
+	// review && comments 데이터
 	const [review, setReview] = useState([]);
 
+	// 로그인 체크
 	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 
-	const itemsPerPage = 10; // 페이지 당 표시될 아이템 개수
-	const [currentPage, setCurrentPage] = useState(1); // 초기값을 1로 설정
-
+	// 수정시 데이터 보낼 state
 	const [editReview, setEditReview] = useState({
 		author: '',
 		content: '',
@@ -28,13 +29,16 @@ function Review(props) {
 	const [userInfo, setUserInfo] = useState({});
 	const [edit, setEdit] = useState(false);
 
-	// user Info
+	// 페이지네이션
+	const itemsPerPage = 10; // 페이지 당 표시될 아이템 개수
+	const [currentPage, setCurrentPage] = useState(1); // 초기값을 1로 설정
+
+	// api 통신
 	const { result: userResult } = useApi({
 		path: isLoggedIn ? '/user' : '',
 		shouldFetch: isLoggedIn,
 	});
 
-	// 댓글 목록
 	const { result, trigger, isLoading, error } = useApi({
 		path: `${getUrl}/comments`,
 		shouldFetch: true,
@@ -51,7 +55,7 @@ function Review(props) {
 		}
 	}, [result.comments, userResult]);
 
-	// 댓글 수정하기
+	// 댓글 바뀌는 값
 	const handleChange = e => {
 		const { name, value } = e.target;
 
@@ -61,6 +65,7 @@ function Review(props) {
 		}));
 	};
 
+	// 댓글 수정
 	const handleEdit = id => {
 		const selectedComment = review.find(comment => comment._id === id);
 		const alertMessage =
@@ -82,6 +87,7 @@ function Review(props) {
 		}
 	};
 
+	// 댓글 수정 완료
 	const handleComplete = () => {
 		trigger({
 			method: 'put',
@@ -107,7 +113,7 @@ function Review(props) {
 		setCurrentPage(pageNumber);
 	};
 
-	// 댓글 삭제하기
+	// 댓글 삭제
 	const handleDelete = async id => {
 		const selectedComment = review.find(comment => comment._id === id);
 

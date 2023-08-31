@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import useApi from '../../../hooks/useApi';
 
 import * as S from './Card.styles';
-import useApi from '../../../hooks/useApi';
+
 import EmptyMessage from '../EmptyMessage/EmptyMessage';
 
 function MentorCard(props) {
@@ -9,14 +10,14 @@ function MentorCard(props) {
 
 	const [mentorData, setMentorData] = useState([]);
 
-	const { result, trigger, isLoading, error } = useApi({
+	const { result, isLoading, error } = useApi({
 		path: `${url}`,
 		shouldFetch: true,
 	});
 
 	useEffect(() => {
-		if (result && result.length > 0) {
-			setMentorData([...result]);
+		if (result.data && result.data.length > 0) {
+			setMentorData([...result.data]);
 			console.log(error);
 		}
 	}, [result]);
@@ -52,9 +53,7 @@ function MentorCard(props) {
 								<S.ContentSpan>{mentor.position}</S.ContentSpan>
 							</div>
 							<div>
-								<S.ContentSpan>
-									경력 {mentor.career}년
-								</S.ContentSpan>
+								<S.ContentSpan>경력 {mentor.career}년</S.ContentSpan>
 							</div>
 						</S.Contents>
 					</S.ContentsBox>

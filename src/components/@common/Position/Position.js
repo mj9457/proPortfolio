@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useApi from '../../../hooks/useApi';
+
 import Select from '../Select/Select';
 
 function Position(props) {
@@ -7,7 +8,7 @@ function Position(props) {
 
 	const [positions, setPositions] = useState([]);
 
-	const { result, trigger, isLoading, error } = useApi({
+	const { result, error } = useApi({
 		path: '/position',
 		shouldFetch: true,
 	});

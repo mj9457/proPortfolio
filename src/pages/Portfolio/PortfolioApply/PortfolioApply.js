@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import useFooter from '../../../hooks/useFooter';
 import useApi from '../../../hooks/useApi';
 import { check } from '../../../utils/check';
+import MESSAGE from '../../../constants/message';
 
 import * as S from './PortfolioApply.styles';
 
@@ -10,23 +12,45 @@ import Information from '../../../components/pages/Portfolio/Information/Informa
 import Button from '../../../components/@common/Button/Button';
 import Textarea from '../../../components/@common/Textarea/Textarea';
 import Input from '../../../components/@common/Input/Input';
-import MESSAGE from '../../../constants/message';
 
 function PortfolioApply() {
 	useFooter();
 
 	const navigate = useNavigate();
+
+	// params 가져와서 portfolioId 있는지 확인
 	const params = useParams();
 	const portfolioId = params.portfolioId;
 
-	// axios 통신 → user Info 가져오기
+	// 유저 정보 체크
 	const [user, setUser] = useState([]);
 
-	const { result, trigger, isLoading, error } = useApi({
+	// 글 작성
+	const [mentorPost, setMentorPost] = useState({
+		ownerId: '',
+		position: '',
+		nickName: '',
+		name: '',
+		company: '',
+		career: '',
+		title: '',
+		description: '',
+		coachingCount: '',
+		profileImageUrl: '',
+	});
+
+	// api 통신
+	const { result, trigger } = useApi({
 		path: '/user',
 		shouldFetch: true,
 	});
 
+	const { result: postResult, trigger: postTrigger } = useApi({
+		path: `/portfolio/${portfolioId}`,
+		shouldFetch: true,
+	});
+
+	// 원래 유저에 들어가 있던 정보 setMentorPost에 넣어주기
 	useEffect(() => {
 		if (result) {
 			setUser(result);
@@ -45,68 +69,7 @@ function PortfolioApply() {
 		}
 	}, [result]);
 
-	// 글 작성하기
-	const [mentorPost, setMentorPost] = useState({
-		ownerId: '',
-		position: '',
-		nickName: '',
-		name: '',
-		company: '',
-		career: '',
-		title: '',
-		description: '',
-		coachingCount: '',
-		profileImageUrl: '',
-	});
-
-	const handleChange = e => {
-		const { name, value } = e.target;
-
-		setMentorPost(prevState => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
-
-	// 글 작성하기 & 수정하기 버튼 클릭
-	const handleSubmit = () => {
-		const fail = check(mentorPost).filter(el => el.checked);
-
-		if (fail.length > 0) {
-			const errorMessage = fail[0].message;
-			alert(errorMessage);
-		} else {
-			if (portfolioId) {
-				postTrigger({
-					method: 'put',
-					path: `/portfolio/${portfolioId}`,
-					data: mentorPost,
-				});
-				alert(MESSAGE.POST.EDITFIN);
-				navigate(-1);
-			} else {
-				trigger({
-					method: 'post',
-					path: '/portfolio',
-					data: mentorPost,
-				});
-				alert(MESSAGE.POST.COMPLETE);
-				navigate('/portfolio');
-			}
-		}
-	};
-
-	// 글 수정하기
-	const {
-		result: postResult,
-		trigger: postTrigger,
-		isLoading: postIsLoading,
-		error: postError,
-	} = useApi({
-		path: `/portfolio/${portfolioId}`,
-		shouldFetch: true,
-	});
-
+	// 글 수정 시 이미 들어가 있던 데이터 불러오는 로직
 	useEffect(() => {
 		if (postResult) {
 			setMentorPost(prevState => ({
@@ -124,6 +87,46 @@ function PortfolioApply() {
 			}));
 		}
 	}, [postResult]);
+
+	const handleChange = e => {
+		const { name, value } = e.target;
+
+		setMentorPost(prevState => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
+	// 글 작성하기 & 수정하기 버튼 클릭
+	const handleSubmit = () => {
+		const fail = check(mentorPost).filter(el => el.checked);
+
+		// 유효성 검사 후
+		if (fail.length > 0) {
+			const errorMessage = fail[0].message;
+			alert(errorMessage);
+		} else {
+			// url에 portfolioId가 있다면 수정
+			if (portfolioId) {
+				postTrigger({
+					method: 'put',
+					path: `/portfolio/${portfolioId}`,
+					data: mentorPost,
+				});
+				alert(MESSAGE.POST.EDITFIN);
+				navigate(-1);
+			} else {
+				// 없다면 작성
+				trigger({
+					method: 'post',
+					path: '/portfolio',
+					data: mentorPost,
+				});
+				alert(MESSAGE.POST.COMPLETE);
+				navigate('/portfolio');
+			}
+		}
+	};
 
 	return (
 		<S.ApplyBox>
