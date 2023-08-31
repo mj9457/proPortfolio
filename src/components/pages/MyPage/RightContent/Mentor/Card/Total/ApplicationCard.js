@@ -7,14 +7,12 @@ import RefuseViewModal from '../../Modal/Mentee/RefuseViewModal/RefuseViewModal'
 import InfoEditModal from '../../Modal/Mentee/InfoEditModal/InfoEditModal';
 import EditViewModal from '../../Modal/Mentee/EditViewModal/EditViewModal';
 import { useRecoilValue } from 'recoil';
-import {
-	mentoringItem,
-	userData,
-} from '../../../../../../../recoil/atoms/myPage/myPage.atom';
+import { mentoringItem } from '../../../../../../../recoil/atoms/myPage/myPage.atom';
 import axios from 'axios';
 import ApplyModal from '../../../../../../@common/ApplyModal/ApplyModal';
 import MYPAGEOPTION from '../../../../../../../constants/mypage';
 import MESSAGE from '../../../../../../../constants/message';
+import useApi from '../../../../../../../hooks/useApi';
 
 // 카드 리스트
 function ApplicationCard({ categoryKey }) {
@@ -43,12 +41,25 @@ function ApplicationCard({ categoryKey }) {
 	};
 
 	const mentoringData = useRecoilValue(mentoringItem);
-	const totalData = mentoringData.total;
-	const applyData = mentoringData.apply;
+	const requestedData = mentoringData.requested;
+	const acceptedData = mentoringData.accepted;
 	const completedData = mentoringData.completed;
 	const refuseData = mentoringData.refuse;
-	const newUser = { ...useRecoilValue(userData) };
-	newUser.role = 'mentor';
+	// 유저 정보 담을 state
+	const [user, setUser] = useState({});
+	// 유저 정보 통신(GET)
+	const { result: users, trigger: usersT } = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
+
+	// 유저 정보가 변경될 때 리렌더링
+	useEffect(() => {
+		if (users) {
+			setUser(users);
+		}
+		console.log(user);
+	}, [users]);
 
 	const [mData, setMData] = useState('');
 
@@ -56,7 +67,7 @@ function ApplicationCard({ categoryKey }) {
 	const onDelete = targetId => {
 		async function deleteList() {
 			try {
-				if (newUser.role === 'mentor') {
+				if (user.role === 'mentor') {
 					const response = await axios.delete(
 						`https://jsonplaceholder.typicode.com/posts/:${targetId}`, // 요청 주소 다르게
 					);
@@ -88,7 +99,7 @@ function ApplicationCard({ categoryKey }) {
 
 	return (
 		<>
-			{categoryKey === 'apply' ? (
+			{categoryKey === 'accepted' ? (
 				<CardLayout
 					showInfoModal={showInfoModal}
 					infoModalOpenState={infoModalOpenState}
@@ -98,7 +109,7 @@ function ApplicationCard({ categoryKey }) {
 					setEditModalOpenState={setEditModalOpenState}
 					categoryKey={categoryKey}
 					onDelete={onDelete}
-					itemArr={applyData}
+					itemArr={acceptedData}
 					nowData={nowData}
 					nowDataFun={nowDataFun}
 				></CardLayout>
@@ -139,7 +150,7 @@ function ApplicationCard({ categoryKey }) {
 					setRefuseModalOpenState={setRefuseModalOpenState}
 					categoryKey={categoryKey}
 					onDelete={onDelete}
-					itemArr={totalData}
+					itemArr={requestedData}
 					nowData={nowData}
 					nowDataFun={nowDataFun}
 				></CardLayout>
@@ -158,10 +169,21 @@ function CardLayout(props) {
 	const { showRefuseModal, refuseModalOpenState, setRefuseModalOpenState } =
 		props;
 
-	// 여긴 유저 정보를 받아오면 안됌! 임시 (api 완성 후 삭제필요)
-	const user = useRecoilValue(userData);
-	const users = { ...user };
-	users.role = 'mentor';
+	// 유저 정보 담을 state
+	const [user, setUser] = useState({});
+	// 유저 정보 통신(GET)
+	const { result: users, trigger: usersT } = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
+
+	// 유저 정보가 변경될 때 리렌더링
+	useEffect(() => {
+		if (users) {
+			setUser(users);
+		}
+		console.log(user);
+	}, [users]);
 
 	const newArr = [...itemArr];
 
@@ -179,7 +201,7 @@ function CardLayout(props) {
 							<CCS.UserBox>
 								<CCS.UserImage></CCS.UserImage>
 								<CCS.UserInfoBox>
-									<CCS.UserName>{`사용자 이름: ${element.userId}`}</CCS.UserName>
+									<CCS.UserName>{`${element.userId}`}</CCS.UserName>
 									<CCS.ApplicationTitle
 										onClick={() => {
 											showInfoModal(element);
@@ -187,7 +209,7 @@ function CardLayout(props) {
 										}}
 									>
 										{users.role === 'mentor'
-											? `신청서 제목: ${element.title}`
+											? `${element.title}`
 											: `개발 경력:${element.title}`}
 									</CCS.ApplicationTitle>
 									{users.role === 'mentor'
@@ -204,17 +226,22 @@ function CardLayout(props) {
 													setInfoModalOpenState={
 														setInfoModalOpenState
 													}
-													postAddress={
-														'https://jsonplaceholder.typicode.com/posts'
-													}
 													action={'수정'}
+													path={'/'}
+													nowData={nowData}
 												/>
+												// <InfoEditModal
+												// 	setInfoModalOpenState={
+												// 		setInfoModalOpenState
+												// 	}
+												// 	nowData={nowData}
+												// />
 										  )}
 								</CCS.UserInfoBox>
 							</CCS.UserBox>
 
 							<CCS.ButtonBox>
-								{categoryKey === 'apply' ? (
+								{categoryKey === 'accepted' ? (
 									<>
 										{users.role === 'mentor' ? (
 											<CCS.OneButton
@@ -345,7 +372,7 @@ function CardLayout(props) {
 										>
 											{
 												MYPAGEOPTION.MENTOR.BUTTONTITLE
-													.APPLY
+													.ACCEPTED
 											}
 										</CCS.ApplyButton>
 									</>

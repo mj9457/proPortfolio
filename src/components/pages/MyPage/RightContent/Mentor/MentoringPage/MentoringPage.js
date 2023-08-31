@@ -1,8 +1,8 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import * as MP from './MentoringPage.styles';
 import {
+	applyItem,
 	mentoringItem,
-	userData,
 } from '../../../../../../recoil/atoms/myPage/myPage.atom';
 import MYPAGEOPTION from '../../../../../../constants/mypage';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,13 @@ import useApi from '../../../../../../hooks/useApi';
 
 // 멘토 코칭 페이지
 function MentoringPage() {
-	// const mentoringData = useRecoilValue(mentoringItem);
+	const mentoringData = useRecoilValue(mentoringItem);
+	const applyData = useRecoilValue(applyItem);
 
 	// 유저 정보 담을 state
 	const [user, setUser] = useState({});
 	// 유저 정보 통신(GET)
-	const { result: users, trigger: usersT } = useApi({
+	const { result: users } = useApi({
 		path: `/user`,
 		shouldFetch: true,
 	});
@@ -25,44 +26,32 @@ function MentoringPage() {
 		if (users) {
 			setUser(users);
 		}
-		console.log(user);
 	}, [users]);
-
-	// 멘토링 신청 정보 담을 state
-	const [mentoringData, setMentoringDatas] = useState([]);
-	// 멘토링 신청 정보 통신(GET)
-	const { result: mentoringDatas, trigger: mentoringDatasT } = useApi({
-		path: `/portfolio/mentoringRequests`,
-		shouldFetch: true,
-	});
-	// 멘토링 신청 정보가 변경될 때 리렌더링
-	useEffect(() => {
-		if (mentoringDatas) {
-			setMentoringDatas(mentoringDatas);
-		}
-		console.log(mentoringData);
-	}, [mentoringDatas]);
 
 	const ApplicationArr = [
 		{
-			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.TOTAL,
-			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.TOTAL,
-			length: `${mentoringData?.total?.length || 0}`,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.REQUESTED,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.REQUESTED,
+			mentorLength: `${mentoringData?.total?.length || 0}`,
+			userLength: `${applyData?.total?.length || 0}`,
 		},
 		{
-			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.APPLY,
-			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.APPLY,
-			length: `${mentoringData?.apply?.length || 0}`,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.ACCEPTED,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.ACCEPTED,
+			mentorLength: `${mentoringData?.apply?.length || 0}`,
+			userLength: `${applyData?.apply?.length || 0}`,
 		},
 		{
 			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.COMPLETED,
 			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.COMPLETED,
-			length: `${mentoringData?.completed?.length || 0}`,
+			mentorLength: `${mentoringData?.completed?.length || 0}`,
+			userLength: `${applyData?.completed?.length || 0}`,
 		},
 		{
-			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.REFUSE,
-			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.REFUSE,
-			length: `${mentoringData?.refuse?.length || 0}`,
+			subtitleMentor: MYPAGEOPTION.MENTOR.SUBTITLE.REJECTED,
+			subtitleMentee: MYPAGEOPTION.MENTEE.SUBTITLE.REJECTED,
+			mentorLength: `${mentoringData?.refuse?.length || 0}`,
+			userLength: `${applyData?.refuse?.length || 0}`,
 		},
 	];
 
@@ -85,7 +74,9 @@ function MentoringPage() {
 										: element.subtitleMentee}
 								</MP.DetailOnboradSubTitle>
 								<MP.DetailOnboradSubTitleCount>
-									{element.length}
+									{users.role === 'mentor'
+										? element.mentorLength
+										: element.userLength}
 								</MP.DetailOnboradSubTitleCount>
 							</MP.DetailOnboradBox>
 						))}

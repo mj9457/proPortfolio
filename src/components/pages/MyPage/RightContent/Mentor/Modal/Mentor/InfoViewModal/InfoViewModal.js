@@ -2,27 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import * as IM from './InfoViewModal.styles';
 import axios from 'axios';
 import MYPAGEOPTION from '../../../../../../../../constants/mypage';
+import { useParams } from 'react-router-dom';
 
 // 멘토 - 멘토링 신청서 보기 모달
 function InfoViewModal({ setInfoModalOpenState, item }) {
-	const [textareaValue, setTextareaValue] = useState(''); //
-	const [error, setError] = useState(null); // 에러 state
-
-	// // 서버통신 (GET)
-	// useEffect(() => {
-	// 	async function getInfo() {
-	// 		try {
-	// 			const response = await axios.get(
-	// 				'https://jsonplaceholder.typicode.com/todos/1',
-	// 			);
-	// 			setTextareaValue(response.data);
-	// 		} catch (err) {
-	// 			setError(err);
-	// 		}
-	// 	}
-	// 	getInfo();
-	// }, []);
-
 	// 모달 끄기
 	const closeModal = () => {
 		setInfoModalOpenState(false);
@@ -47,13 +30,13 @@ function InfoViewModal({ setInfoModalOpenState, item }) {
 								<IM.InfoSubTitle>
 									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.CONTENT}
 								</IM.InfoSubTitle>
-								<span>{item.body}</span>
+								<span>{item.content}</span>
 							</IM.InfoSubTitleBox>
 							<IM.InfoSubTitleBox>
 								<IM.InfoSubTitle>
 									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.EMAIL}
 								</IM.InfoSubTitle>
-								<span>{item.userId}</span>
+								<span>{item.email}</span>
 							</IM.InfoSubTitleBox>
 							<IM.InfoSubTitleBox>
 								<IM.InfoSubTitle>
@@ -62,7 +45,7 @@ function InfoViewModal({ setInfoModalOpenState, item }) {
 											.PORTFOLIO
 									}
 								</IM.InfoSubTitle>
-								<span>{item.id}</span>
+								<span>{item.portfolioAddress}</span>
 							</IM.InfoSubTitleBox>
 						</IM.InfoBox>
 					</IM.InfoWrapper>

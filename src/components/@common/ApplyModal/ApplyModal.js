@@ -9,7 +9,7 @@ import MESSAGE from '../../../constants/message';
 
 function ApplyModal(props) {
 	// path 가 params 에 있는 아이디 값 - 확인하려면 portfolioPost.js 확인 바람
-	const { setInfoModalOpenState, action, path } = props;
+	const { setInfoModalOpenState, action, path, nowData } = props;
 
 	// 유저가 입력한 정보 state
 	const [textValue, setTextValue] = useState({
@@ -65,9 +65,10 @@ function ApplyModal(props) {
 			if (action === '수정') {
 				trigger({
 					method: 'put',
-					path: `/portfolio/${path}/mentoringRequests`,
+					path: `/portfolio/${nowData._id}/mentoringRequests`,
 					data: textValue,
 				});
+				alert(MESSAGE.MYPAGE.EDIT.COMPLETE);
 				closeModal();
 			} else {
 				// action 이 완료일 때는 api method 가 post
@@ -102,7 +103,9 @@ function ApplyModal(props) {
 									size={'regular'}
 									placeholder="신청 제목을 작성해 주세요!"
 									defaultValue={
-										result.title ? result.title : ''
+										result?.title
+											? result?.title
+											: nowData?.title
 									}
 									onChange={handleChange}
 								/>
@@ -116,7 +119,9 @@ function ApplyModal(props) {
 										'질문할 내용을 자세하게 작성해 주세요!'
 									}
 									defaultValue={
-										result.content ? result.content : ''
+										result?.content
+											? result?.content
+											: nowData?.content
 									}
 									onChange={handleChange}
 								/>
@@ -129,7 +134,9 @@ function ApplyModal(props) {
 									size={'regular'}
 									placeholder="example@naver.com"
 									defaultValue={
-										result.email ? result.email : ''
+										result?.email
+											? result?.email
+											: nowData?.email
 									}
 									onChange={handleChange}
 								/>
@@ -144,9 +151,9 @@ function ApplyModal(props) {
 									size={'regular'}
 									placeholder="https://github/example"
 									defaultValue={
-										result.portfolioAddress
-											? result.portfolioAddress
-											: ''
+										result?.portfolioAddress
+											? result?.portfolioAddress
+											: nowData?.portfolioAddress
 									}
 									onChange={handleChange}
 								/>

@@ -71,44 +71,44 @@ function AccountManage() {
 		}
 	};
 
-	const [selectedFile, setSelectedFile] = useState(null);
-	const fileInputRef = useRef(null);
+	// const [selectedFile, setSelectedFile] = useState(null);
+	// const fileInputRef = useRef(null);
 
-	AWS.config.update({
-		region: process.env.REACT_APP_REGION,
-		accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-		secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
-	});
+	// AWS.config.update({
+	// 	region: process.env.REACT_APP_REGION,
+	// 	accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+	// 	secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+	// });
 
-	const fileUploadHandler = () => {
-		if (fileInputRef.current) {
-			fileInputRef.current.click();
-		}
-	};
-	const handleFileChange = e => {
-		const file = e.target.files[0];
-		const fileExt = file?.name.split('.').pop();
-		if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
-			if (file === undefined) {
-				return;
-			}
-			alert(MESSAGE.FILE.UPLOAD);
-			return;
-		}
-		console.log(file);
-		setSelectedFile(file);
-	};
+	// const fileUploadHandler = () => {
+	// 	if (fileInputRef.current) {
+	// 		fileInputRef.current.click();
+	// 	}
+	// };
+	// const handleFileChange = e => {
+	// 	const file = e.target.files[0];
+	// 	const fileExt = file?.name.split('.').pop();
+	// 	if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
+	// 		if (file === undefined) {
+	// 			return;
+	// 		}
+	// 		alert(MESSAGE.FILE.UPLOAD);
+	// 		return;
+	// 	}
+	// 	console.log(file);
+	// 	setSelectedFile(file);
+	// };
 
-	const now = new Date();
-	const getMilliseconds = now.getTime();
-	const upload = new AWS.S3.ManagedUpload({
-		params: {
-			Bucket: 'pofol-bucket/upload',
-			Key: `${getMilliseconds + '_' + selectedFile?.name}`,
-			Body: selectedFile,
-		},
-	});
-	console.log(upload);
+	// const now = new Date();
+	// const getMilliseconds = now.getTime();
+	// const upload = new AWS.S3.ManagedUpload({
+	// 	params: {
+	// 		Bucket: 'pofol-bucket/upload',
+	// 		Key: `${getMilliseconds + '_' + selectedFile?.name}`,
+	// 		Body: selectedFile,
+	// 	},
+	// });
+	// console.log(upload);
 
 	return (
 		<AM.DetailOnboradWrapper>
@@ -121,22 +121,20 @@ function AccountManage() {
 						<AM.UserCardImg>
 							<img
 								{...register('image')}
-								src={
-									selectedFile
-										? selectedFile.name
-										: user.profileImage
-								}
+								// src={
+								// 	selectedFile
+								// 		? selectedFile.name
+								// 		: user.profileImage
+								// }
 								alt="프로필 사진"
 							></img>
-							<button onClick={fileUploadHandler}>
-								프로필 수정
-							</button>
-							<input
+							<button>프로필 수정</button>
+							{/* <input
 								accept="image/*"
 								type="file"
-								ref={fileInputRef}
-								onChange={handleFileChange}
-							></input>
+								// ref={fileInputRef}
+								// onChange={handleFileChange}
+							></input> */}
 						</AM.UserCardImg>
 						<AM.UserCardInfo>
 							<AM.UserName>{user.name}</AM.UserName>
