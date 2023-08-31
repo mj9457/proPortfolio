@@ -7,11 +7,9 @@ import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
 import Textarea from '../Textarea/Textarea';
 import { checkToken } from '../../../utils/cookie';
+import Pagination from '../Pagination/Pagination';
 
 function Review(props) {
-	// 댓글 페이지네이션 처리 필요
-	// 댓글도 댓글 작성자인 경우만 수정/삭제 버튼 오픈
-
 	const { title, getUrl } = props;
 	const [review, setReview] = useState([]);
 
@@ -35,7 +33,7 @@ function Review(props) {
 
 	// 댓글 목록
 	const { result, trigger, isLoading, error } = useApi({
-		path: `${getUrl}`,
+		path: `${getUrl}/comments`,
 		shouldFetch: true,
 	});
 
@@ -125,11 +123,27 @@ function Review(props) {
 		return `${date} ${time}`;
 	};
 
+	const itemsPerPage = 10; // 페이지 당 표시될 아이템 개수
+	const [currentPage, setCurrentPage] = useState(1); // 초기값을 1로 설정
+
+	// 페이지 변경 핸들러
+	const handlePageChange = pageNumber => {
+		trigger({
+			params: {
+				skip: pageNumber * 10 - 10,
+				limit: 10,
+			},
+			applyResult: true,
+		});
+		setReview(result.comments);
+		setCurrentPage(pageNumber);
+	};
+
 	return (
 		<S.ReviewBox>
 			<S.TopBox>
 				<strong>{title}</strong>
-				<span>{review.length}</span>
+				<span>{result.total}</span>
 			</S.TopBox>
 
 			<S.BottomBox>
@@ -173,6 +187,13 @@ function Review(props) {
 					</S.CommentBox>
 				))}
 			</S.BottomBox>
+
+			<Pagination
+				itemsPerPage={itemsPerPage}
+				totalItems={result.totalPages}
+				currentPage={currentPage}
+				onPageChange={handlePageChange}
+			/>
 		</S.ReviewBox>
 	);
 }
