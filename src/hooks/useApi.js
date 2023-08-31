@@ -18,6 +18,7 @@ const useApi = ({
 	data: initData = {}, // 초기 데이터 (선택사항)
 	shouldFetch = false, // 컴포넌트 마운트 시 자동으로 요청
 	params: initParams = {},
+	showBoundary = true, // 비동기에러 표시여부
 }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -37,12 +38,15 @@ const useApi = ({
 			);
 			setResult(fetchResult);
 		} catch (err) {
-			// 비동기 에러 검출 가능
-			// occurredError(() => {
-			// 	throw new Error(err);
-			// });
-
-			// setError(err);
+			if (showBoundary) {
+				setError(err);
+				throw err;
+			} else {
+				// 비동기 에러 검출 가능
+				occurredError(() => {
+					throw new Error(err);
+				});
+			}
 		}
 		setIsLoading(false);
 	}, [initMethod, initData, initPath]);
@@ -54,6 +58,7 @@ const useApi = ({
 			data: triggerData = initData,
 			params: triggerParams = {},
 			applyResult = false,
+			showBoundary = true,
 		}) => {
 			try {
 				setIsLoading(true);
@@ -73,7 +78,7 @@ const useApi = ({
 					const urlWithParams = queryParams
 						? `${triggerPath}?${queryParams}`
 						: initPath;
-					// console.log(urlWithParams);
+					console.log(urlWithParams);
 					const triggerResult = await mapMethodToFetcher[initMethod](
 						urlWithParams,
 						initData,
@@ -85,10 +90,15 @@ const useApi = ({
 				}
 			} catch (err) {
 				// 비동기 에러 검출 가능
-				// occurredError(() => {
-				// 	throw new Error(err);
-				// });
-				// setError(err);
+				if (showBoundary) {
+					setError(err);
+					throw err;
+				} else {
+					// 비동기 에러 검출 가능
+					occurredError(() => {
+						throw new Error(err);
+					});
+				}
 			}
 			setIsLoading(false);
 		},

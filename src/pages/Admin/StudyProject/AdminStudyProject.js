@@ -1,4 +1,4 @@
-import { Select, Space, theme } from 'antd';
+import { Pagination, Select, Space, theme } from 'antd';
 
 import { useEffect, useMemo, useState } from 'react';
 
@@ -10,29 +10,32 @@ import {
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import useApi from '../../../hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import { PaginationWrap } from '../Home/Admin.styles';
 
 const AdminStudyProject = () => {
 	// const { Option } = Select;
 	const [tableData, setTableData] = useState();
-	const [classification, setClassification] = useState('all');
+	const [currentclassification, setCurrentClassification] = useState('');
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/projectStudy',
+		path: 'admin/projectStudies',
 		shouldFetch: true,
 	});
 	const columns = [
 		{
-			title: '글 번호',
+			title: '번호',
 			dataIndex: 'key',
 			key: 'key',
 		},
 		{
 			title: (
 				<Select
-					defaultValue={classification}
+					defaultValue={currentclassification}
 					style={{ width: 100 }}
 					options={[
-						{ value: 'all', label: '전체' },
+						{ value: '', label: '전체' },
 						{ value: 'project', label: '프로젝트' },
 						{ value: 'study', label: '스터디' },
 					]}
@@ -91,16 +94,20 @@ const AdminStudyProject = () => {
 
 	useEffect(() => {
 		console.log(result);
-		if (result && result.length > 0) {
+		if (result.projectStudies && result.projectStudies.length > 0) {
+			const startIndex = (currentPage - 1) * 10;
 			setTableData(
-				result.map((item, index) => ({
+				result.projectStudies.map((item, index) => ({
 					...item,
-					key: index + 1,
+					key: startIndex + index + 1,
 				})),
 			);
 		}
+		if (result.totalCount) {
+			setTotalPages(result.totalCount);
+		}
 	}, [result]);
-	const memoColumns = useMemo(() => [], [classification]);
+	const memoColumns = useMemo(() => [], [currentclassification]);
 	const memoResult = useMemo(
 		() => (
 			<AdminTable
@@ -109,30 +116,38 @@ const AdminStudyProject = () => {
 				totalPages={0}
 			/>
 		),
-		[tableData, memoColumns],
+		[tableData, memoColumns, currentPage],
 	);
 	const changeSelectValue = async e => {
-		console.log(e);
+		setCurrentPage(1);
+		console.log(currentPage);
 		if (e === 'study') {
 			trigger({
 				params: {
 					classification: '스터디',
+					skip: currentPage * 10 - 10,
 				},
 				applyResult: true,
 			});
-			setClassification('study');
+			setCurrentClassification('스터디');
 			// Todo 스터디만 가져오는 API
 		} else if (e === 'project') {
 			trigger({
 				params: {
 					classification: '프로젝트',
+					skip: currentPage * 10 - 10,
 				},
 				applyResult: true,
 			});
-			setClassification('project');
+			setCurrentClassification('프로젝트');
 		} else if (e === 'all') {
-			trigger({ path: '/projectStudy' });
-			setClassification('all');
+			trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentClassification('');
 		}
 	};
 	const removeHandler = async key => {
@@ -141,12 +156,44 @@ const AdminStudyProject = () => {
 			method: 'delete',
 			applyResult: true,
 		});
+		if (result.projectStudies.length === 1) {
+			await trigger({
+				params: {
+					skip: (currentPage - 1) * 10 - 10,
+					classification: currentclassification,
+				},
+				applyResult: true,
+			});
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+					classification: currentclassification,
+				},
+				applyResult: true,
+			});
+		}
 	};
 	// 자세히 보기
 
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
+
+	const pageChange = async pageNumber => {
+		console.log(currentclassification);
+		console.log(pageNumber);
+
+		await trigger({
+			params: {
+				skip: pageNumber * 10 - 10,
+				classification: currentclassification,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+	};
 
 	return (
 		<AdminContent background={colorBgContainer}>
@@ -155,7 +202,23 @@ const AdminStudyProject = () => {
 				placeholder=""
 				// onSearch={e => addCategoryHandler(e)}
 			/>
-			{isLoading ? <h2>로딩중</h2> : memoResult}
+			{isLoading ? (
+				<h2>로딩중</h2>
+			) : (
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };

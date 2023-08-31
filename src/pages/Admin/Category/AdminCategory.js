@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Input, Space, theme } from 'antd';
+import { Button, Input, Pagination, Space, theme } from 'antd';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { AdminContent } from '../../../components/pages/Admin/Common/Common.styles';
@@ -8,6 +8,7 @@ import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
+import { PaginationWrap } from '../Home/Admin.styles';
 const AdminCategory = () => {
 	// 수정 중인 행의 key를 저장
 	const [editingKey, setEditingKey] = useState(null);
@@ -15,6 +16,8 @@ const AdminCategory = () => {
 	const [tempData, setTempData] = useState({});
 	const [inputValue, setInputValue] = useState('');
 	const [categoryInput, setCategoryInput] = useState('');
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 
 	const { result, trigger, isLoading, error } = useApi({
 		path: '/position',
@@ -87,26 +90,23 @@ const AdminCategory = () => {
 
 	useEffect(() => {
 		console.log(result);
-		if (result && result.length > 0) {
+		if (result.positions && result.positions.length > 0) {
 			setTableData(
-				result.map(item => ({
+				result.positions.map(item => ({
 					...item,
 					key: item._id,
 					name: item.name,
 				})),
 			);
 		}
+		if (result.total) {
+			setTotalPages(result.total);
+		}
 	}, [result]);
 
-	const memoColumns = useMemo(() => [], [tempData, editingKey]);
+	const memoColumns = useMemo(() => [...columns], [tempData, editingKey]);
 	const memoResult = useMemo(
-		() => (
-			<AdminTable
-				columns={columns}
-				dataSource={tableData}
-				totalPages={0}
-			/>
-		),
+		() => <AdminTable columns={columns} dataSource={tableData} />,
 		[tableData, memoColumns],
 	);
 
@@ -160,9 +160,22 @@ const AdminCategory = () => {
 			path: `/position/${key}`,
 			applyResult: true,
 		});
-		// setTableData(data => data.filter(item => item.key !== key));
-
-		// setTableData(data => data.filter(items => items.key !== key));
+		if (result.positions.length === 1) {
+			await trigger({
+				params: {
+					skip: (currentPage - 1) * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+		}
 	};
 	// 카테고리 추가
 	const addCategoryHandler = async () => {
@@ -181,6 +194,19 @@ const AdminCategory = () => {
 		token: { colorBgContainer },
 	} = theme.useToken();
 
+	const pageChange = async pageNumber => {
+		console.log(pageNumber);
+
+		await trigger({
+			path: '/position',
+			params: {
+				skip: pageNumber * 10 - 10,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+	};
+
 	return (
 		<AdminContent background={colorBgContainer}>
 			<SearchInput
@@ -190,21 +216,23 @@ const AdminCategory = () => {
 				onChange={e => setInputValue(e.target.value)}
 				value={inputValue}
 			/>
-			{isLoading ? <h2>로딩중</h2> : memoResult}
-			{/* <Searchbar
-				type={'ADD'}
-				// value={set}
-				placeholder="추가 할 카테고리를 입력하세요."
-			/>  */}
-			{/* {isLoading ? (
+			{isLoading ? (
 				<h2>로딩중</h2>
 			) : (
-				<AdminTable
-					columns={columns}
-					dataSource={tableData}
-					totalPages={0}
-				/>
-			)} */}
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };

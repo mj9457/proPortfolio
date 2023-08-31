@@ -10,10 +10,12 @@ const AdminTable = ({ dataSource, columns, totalPages }) => {
 				columns={columns}
 				dataSource={dataSource}
 				pagination={false}
+				// defaultCurrent={1}
+				// total={totalPages}
 			/>
-			<PaginationWrap>
+			{/* <PaginationWrap>
 				<Pagination defaultCurrent={1} total={totalPages} />
-			</PaginationWrap>
+			</PaginationWrap> */}
 		</>
 	);
 };

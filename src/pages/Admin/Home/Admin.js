@@ -1,15 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Space, theme } from 'antd';
+import { Pagination, Space, theme } from 'antd';
 import {
 	AdminContent,
 	Removetag,
 } from '../../../components/pages/Admin/Common/Common.styles';
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import Searchbar from '../../../components/pages/Admin/Searchbar/Searchbar';
-import axios from 'axios';
-import { api } from '../../../utils/api';
 import useApi from '../../../hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import { PaginationWrap } from './Admin.styles';
 
 const AdminHome = () => {
 	const { result, trigger, isLoading, error } = useApi({
@@ -50,6 +49,8 @@ const AdminHome = () => {
 		},
 	];
 	const [userData, setUsersData] = useState([]);
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 	// const [tableData, setTableData] = useState([]);
 
 	/**
@@ -58,47 +59,99 @@ const AdminHome = () => {
 
 	useEffect(() => {
 		console.log(result);
-		if (result && result.length > 0) {
+		if (result.users && result.users.length > 0) {
+			const startIndex = (currentPage - 1) * 10;
+			console.log(result.users.length);
 			setUsersData(
-				result.map((item, index) => ({
+				result.users.map((item, index) => ({
 					...item,
-					key: index + 1,
+					key: startIndex + index + 1,
 				})),
 			);
 		}
+		if (result.totalCount) {
+			setTotalPages(result.totalCount);
+		}
+
+		console.log(currentPage);
+
+		// console.log('한 페이지 Length', result?.users?.length);
 	}, [result]);
-	console.log(userData);
+	const memoColumns = useMemo(() => [], [currentPage]);
 	const memoResult = useMemo(
 		() => (
 			<AdminTable
 				columns={columns}
 				dataSource={userData}
-				totalPages={userData.length}
+				totalPages={totalPages}
 			/>
 		),
-		[userData],
+		[userData, totalPages, memoColumns],
 	);
 
-	const removeHandler = userId => {
-		console.log(userId);
-
-		trigger({
+	const removeHandler = async userId => {
+		await trigger({
 			method: 'delete',
 			path: `/admin/user/${userId}`,
 			applyResult: true,
 		});
-		// setUsersData(data => data.filter(items => items.id !== id));
+
+		console.log(result);
+		if (result.users.length === 1) {
+			await trigger({
+				params: {
+					skip: (currentPage - 1) * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+		}
 	};
 
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
+	const pageChange = async pageNumber => {
+		console.log(pageNumber);
 
+		await trigger({
+			path: '/admin/user',
+			params: {
+				skip: pageNumber * 10 - 10,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+		// console.log(pageNumber);
+	};
 	return (
 		<AdminContent background={colorBgContainer}>
 			<Searchbar type={'Search'} />
 			{/* /로딩 컴포넌트 교체 예정 */}
-			{isLoading ? <h2>로딩중</h2> : memoResult}
+			{isLoading ? (
+				<h2>로딩중</h2>
+			) : (
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };

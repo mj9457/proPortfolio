@@ -13,8 +13,6 @@ import {
 	SubTitle,
 	Title,
 } from './UserMentorApply.styles';
-import { useSetRecoilState } from 'recoil';
-import { includeFooterState } from '../../recoil/atoms/index.atom';
 import useFooter from '../../hooks/useFooter';
 import MESSAGE from '../../constants/message';
 import useApi from '../../hooks/useApi';
@@ -22,9 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 const UserMentorApply = () => {
 	useFooter();
-	const setIncludeFooter = useSetRecoilState(includeFooterState);
 	const [selectedFile, setSelectedFile] = useState(null);
-	const [imageUrl, setImageUrl] = useState(null);
 	const [inputValue, setInputValue] = useState({
 		company: '',
 		career: '',
@@ -48,6 +44,8 @@ const UserMentorApply = () => {
 	const handleFileChange = e => {
 		const file = e.target.files[0];
 		const fileExt = file?.name.split('.').pop();
+		const rimiteSize = 5000 * 1024; // 5000KB를 바이트 단위로 변환
+		console.log(file.size);
 		if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
 			if (file === undefined) {
 				return;
@@ -55,13 +53,17 @@ const UserMentorApply = () => {
 			alert(MESSAGE.FILE.UPLOAD);
 			return;
 		}
-		console.log(file);
+		if (file.size >= rimiteSize) {
+			alert(
+				'이미지 용량이 너무 큽니다. 5000KB 미만의 이미지를 선택해주세요.',
+			);
+			return;
+		}
 		setSelectedFile(file);
 	};
 	const handleOnChange = e => {
 		console.log(e.target.type);
 		const { name, value } = e.target;
-		console.log(name, value);
 
 		if (e.target.type === 'text') {
 			setInputValue(prevState => ({
@@ -167,7 +169,14 @@ const UserMentorApply = () => {
 							></input>
 						</ImageBox>
 						<ButtonArea>
-							<Button size="big" variant="cancel" shape="default">
+							<Button
+								size="big"
+								variant="cancel"
+								shape="default"
+								onClick={() => {
+									navigate('/');
+								}}
+							>
 								취소하기
 							</Button>
 							<Button
