@@ -15,7 +15,7 @@ export const TopBox = styled.div`
 	${flexAlignCenter}
 	gap: 8px;
 
-	font-size: ${({ theme }) => theme.FONT_SIZE.md};
+	font-size: ${({ theme }) => theme.FONT_SIZE.big};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 
 	& span {

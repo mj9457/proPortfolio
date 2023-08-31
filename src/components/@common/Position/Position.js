@@ -13,11 +13,11 @@ function Position(props) {
 	});
 
 	useEffect(() => {
-		if (result && result.length > 0) {
-			setPositions([...result]);
+		if (result.positions && result.positions.length > 0) {
+			setPositions(result.positions);
 			console.log(error);
 		}
-	}, [result]);
+	}, [result.positions]);
 
 	return (
 		<Select

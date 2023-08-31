@@ -1,8 +1,9 @@
 import { styled } from 'styled-components';
+import { flexCenter } from '../../../styles/common';
 
 export const PaginationBox = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	${flexCenter}
 	gap: 10px;
 `;
+
+export const Number = styled.div``;

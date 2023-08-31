@@ -5,27 +5,26 @@ function Pagination(props) {
 	const { totalItems, currentPage, onPageChange } = props;
 
 	return (
-		<S.PaginationBox>
+		<div>
 			{/* 페이지네이션 버튼 표시 */}
-			<div>
-				<img src="/assets/img/icons/leftarrow.png" />
+			<S.PaginationBox>
 				{Array.from({ length: totalItems }, (_, index) => (
-					<button
+					<S.Number
 						key={index}
 						onClick={() => onPageChange(index + 1)} // 페이지 변경 핸들러 호출
 						style={{
 							margin: '5px',
 							padding: '5px 10px',
-							background: currentPage === index + 1 ? 'lightblue' : 'white',
+							color: currentPage === index + 1 ? '#3377FF' : '#585858',
+							cursor: 'pointer',
+							fontSize: 'large',
 						}}
 					>
 						{index + 1}
-					</button>
+					</S.Number>
 				))}
-
-				<img src="/assets/img/icons/rightarrow.png" />
-			</div>
-		</S.PaginationBox>
+			</S.PaginationBox>
+		</div>
 	);
 }
 

@@ -38,8 +38,8 @@ function Portfolio() {
 		if (mentor) setIsMentor(true);
 		else setIsMentor(false);
 
-		if (positionResult && positionResult.length > 0) {
-			setPositions(positionResult);
+		if (positionResult.positions) {
+			setPositions(positionResult.positions);
 			console.log(error);
 		}
 	}, [result, positionResult]);
