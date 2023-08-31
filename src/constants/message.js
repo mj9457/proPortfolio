@@ -34,7 +34,6 @@ const MESSAGE = {
 		LINK: '링크가 클립보드에 복사되었습니다.',
 	},
 	COMMENT: {
-		COMPLETE: '댓글을 작성하시겠습니까?',
 		EDIT: '댓글을 수정하시겠습니까?',
 		DELETE: '댓글을 삭제하시겠습니까?',
 	},
