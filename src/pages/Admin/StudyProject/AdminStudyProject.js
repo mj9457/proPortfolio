@@ -140,7 +140,7 @@ const AdminStudyProject = () => {
 				applyResult: true,
 			});
 			setCurrentClassification('프로젝트');
-		} else if (e === 'all') {
+		} else if (e === '') {
 			trigger({
 				params: {
 					skip: currentPage * 10 - 10,
