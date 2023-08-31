@@ -60,7 +60,7 @@ export const Position = styled.p`
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	margin-bottom: 16px;
-	max-width: 214px;
+	/* max-width: 214px; */
 	height: 30px;
 	text-overflow: ellipsis;
 	line-height: 16px;

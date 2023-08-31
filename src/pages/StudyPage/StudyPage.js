@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './StudyPage.styles';
 import Slider from '../../components/@common/Slider/Slider';
+import StudySlider from '../../components/pages/StudyPage/StudySlider/StudySlider';
 import SignupModal from '../../components/pages/SignUp/Modal/SignUpModal';
 import Button from '../../components/@common/Button/Button';
 import { checkToken } from '../../utils/cookie';
@@ -10,9 +11,10 @@ import StudyCategory from '../../components/pages/StudyPage/StudyCategory/StudyC
 function StudyPage() {
 	const navigate = useNavigate();
 	const [openModal, setOpenModal] = useState(false);
-	console.log('로그인 유무', checkToken());
+	const [userNickName, setUserNickName] = useState('');
 
 	const isLoggedIn = checkToken();
+	console.log('로그인 유무', checkToken());
 
 	const onClickAddPost = () => {
 		if (!isLoggedIn) {
@@ -26,12 +28,6 @@ function StudyPage() {
 	const handleSignupClose = () => {
 		setOpenModal(false);
 	};
-
-	// useEffect(() => {
-	// 	if (result && result.length > 0) {
-	// 		setStudyData(result);
-	// 	}
-	// }, [result]);
 
 	// useEffect(() => {
 	// 	getData();
@@ -73,10 +69,14 @@ function StudyPage() {
 					<S.TitleWrapper>
 						<S.TopBox>
 							<S.Title>
-								🔥 프론트엔드 추천 스터디/ 프로젝트
+								{isLoggedIn
+									? `🔥 ${userNickName}님 추천 스터디/ 프로젝트`
+									: '🔥 추천 스터디/ 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
-								포지션에 맞는 스터디, 프로젝트를 확인해보세요!
+								{isLoggedIn
+									? '포지션에 맞는 스터디, 프로젝트를 확인해보세요!'
+									: '로그인하고 스터디, 프로젝트에 참여해보세요!'}
 							</S.SubTitle>
 						</S.TopBox>
 						{/*  */}
@@ -91,9 +91,14 @@ function StudyPage() {
 					</S.TitleWrapper>
 
 					<S.PopularCardWrapper>
-						<Slider
+						<StudySlider
+							setUserNickName={setUserNickName}
 							background="whiteBackground"
-							url={'/projectStudy/recommend/latestProjectStudy'}
+							url={
+								isLoggedIn
+									? '/projectStudy/recommend/recommendProjectStudy'
+									: '/projectStudy/recommend/recommendProjectStudyForGuest'
+							}
 							slidesToShow={4}
 						/>
 					</S.PopularCardWrapper>

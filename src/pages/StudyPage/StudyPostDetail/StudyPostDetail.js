@@ -7,6 +7,7 @@ import EditComments from '../../../components/@common/EditComments/EditComments'
 import useApi from '../../../hooks/useApi';
 import { checkToken } from '../../../utils/cookie';
 import useFooter from '../../../hooks/useFooter';
+import Review from '../../../components/@common/Review/Review';
 
 function StudyPostDetail() {
 	useFooter();
@@ -297,6 +298,10 @@ function StudyPostDetail() {
 									isLoggedIn={isLoggedIn}
 									userData={user}
 									title={'댓글'}
+								/>
+								<Review
+									title={'댓글'}
+									getUrl={`/projectStudy/${postId}`}
 								/>
 							</S.CommentContainer>
 						</S.PostDetailBottom>

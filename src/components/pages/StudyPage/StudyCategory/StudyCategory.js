@@ -86,7 +86,7 @@ function StudyCategory() {
 		});
 	};
 
-	console.log('PROJECTSTUDY', projectStudy);
+	// console.log('PROJECTSTUDY', projectStudy);
 
 	return (
 		<>
