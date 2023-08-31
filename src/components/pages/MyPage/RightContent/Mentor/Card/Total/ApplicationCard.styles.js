@@ -47,7 +47,7 @@ export const UserInfoBox = styled.div`
 	gap: 0.5rem;
 `;
 
-export const UserImage = styled.div`
+export const UserImage = styled.img`
 	width: 2.5rem;
 	height: 2.5rem;
 	border-radius: 2.5rem;
@@ -105,18 +105,13 @@ export const RefuseButton = styled.button`
 	gap: 0.625rem;
 	border-radius: 0.25rem;
 	border: 1px solid #37f;
-	background: #fff;
 	cursor: pointer;
 
 	color: #37f;
+	background: var(--grey-white, #fff);
 	text-align: center;
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-
-	&:nth-child(2) {
-		color: var(--grey-white, #fff);
-		background: #37f;
-	}
 `;
 
 export const ApplyButton = styled.button`

@@ -17,12 +17,12 @@ function InfoViewModal({ setInfoModalOpenState, item }) {
 				<form>
 					<IM.InfoWrapper>
 						<IM.InfoTitle>
-							{MYPAGEOPTION.MENTOR.FORM.TITLE.APPLY}
+							{MYPAGEOPTION.MENTOR.FORM.TITLE.ACCEPTED}
 						</IM.InfoTitle>
 						<IM.InfoBox>
 							<IM.InfoSubTitleBox>
 								<IM.InfoSubTitle>
-									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.APPLY}
+									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.ACCEPTED}
 								</IM.InfoSubTitle>
 								<span>{item.title}</span>
 							</IM.InfoSubTitleBox>

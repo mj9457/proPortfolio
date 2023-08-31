@@ -10,7 +10,7 @@ import MESSAGE from '../../../constants/message';
 function ApplyModal(props) {
 	// path 가 params 에 있는 아이디 값 - 확인하려면 portfolioPost.js 확인 바람
 	const { setInfoModalOpenState, action, path, nowData } = props;
-
+	// console.log(nowData);
 	// 유저가 입력한 정보 state
 	const [textValue, setTextValue] = useState({
 		status: 'requested',
@@ -65,7 +65,7 @@ function ApplyModal(props) {
 			if (action === '수정') {
 				trigger({
 					method: 'put',
-					path: `/portfolio/${nowData._id}/mentoringRequests`,
+					path: `/portfolio/${path}/mentoringRequests`,
 					data: textValue,
 				});
 				alert(MESSAGE.MYPAGE.EDIT.COMPLETE);
