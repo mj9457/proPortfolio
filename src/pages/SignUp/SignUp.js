@@ -35,7 +35,7 @@ function SignUp() {
 
 	useEffect(() => {
 		if (error) {
-			console.log(result);
+			console.log(error);
 		}
 		console.log(error);
 	}, [error]);
@@ -81,7 +81,6 @@ function SignUp() {
 				position,
 			},
 		});
-		console.log(error);
 
 		// if (result.result === 'MongoServerError') {
 		// 	if (result.reason.includes('duplicate key')) {
@@ -107,8 +106,9 @@ function SignUp() {
 				<div>
 					<label>이름</label>
 					<Input
-						type="이름을 입력해 주세요"
+						type="text"
 						value={name}
+						placeholder="이름을 입력해 주세요"
 						size={'medium'}
 						onChange={handleNameChange}
 						error={nameError}
@@ -118,7 +118,8 @@ function SignUp() {
 				<div>
 					<label>닉네임</label>
 					<Input
-						type="한글, 영어, 숫자만 입력해주세요"
+						type="text"
+						placeholder="닉네임을 입력해 주세요"
 						value={nickName}
 						onChange={handleNicknameChange}
 						size={'medium'}

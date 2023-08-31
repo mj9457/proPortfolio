@@ -12,14 +12,10 @@ function Header() {
 	const [isMentor, setIsMentor] = useState(false);
 	const navigate = useNavigate();
 
-	const handleTokenChange = () => {
+	useEffect(() => {
 		const tokenStatus = checkToken();
 		setIsLoggedIn(tokenStatus);
-	};
-
-	useEffect(() => {
-		handleTokenChange();
-	}, [isLoggedIn]);
+	}, []);
 
 	const { result, trigger } = useApi({
 		path: isLoggedIn ? '/user' : '', // 유저인지 멘토인지 확인할 수 있는 api 필요
@@ -44,11 +40,15 @@ function Header() {
 	};
 
 	const handleLogoutClick = () => {
-		trigger({ path: '/auth/logout', method: 'post' });
-
-		setIsLoggedIn(false);
-		alert('로그아웃이 완료되었습니다.');
-		navigate('/');
+		trigger({ path: '/auth/logout', method: 'post' })
+			.then(() => {
+				setIsLoggedIn(false);
+				alert('로그아웃이 완료되었습니다.');
+				navigate(0);
+			})
+			.catch(error => {
+				console.error('로그아웃 중 오류 발생:', error);
+			});
 	};
 
 	return (
