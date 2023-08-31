@@ -31,6 +31,17 @@ export const TitleBox = styled.div`
 	}
 `;
 
+export const ButtonBox = styled.div`
+	${flexColumn}
+	justify-content: space-between;
+
+	& div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
+`;
+
 export const MentorCardBox = styled.div`
 	display: grid;
 	grid-gap: 20px;
