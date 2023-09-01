@@ -29,7 +29,7 @@ function Portfolio() {
 	const [positions, setPositions] = useState([]);
 	const [selectedValues, setSelectedValues] = useState({
 		position: '',
-		selectedSort: 'newest',
+		selectedSort: '',
 	});
 
 	// 무한 스크롤
@@ -147,23 +147,30 @@ function Portfolio() {
 	}, [observer.current, observerElement, mentorData, mentorDataTotal]);
 
 	// select 클릭
-	const handleChange = e => {
+	const handleChange = async e => {
 		setLimit(12);
 		setCurrentSkip(0);
 
 		const { value } = e.target;
 
+		setSelectedValues(prev => ({
+			...prev,
+			selectedSort: value,
+		}));
+	};
+
+	useEffect(() => {
 		trigger({
 			params: {
 				category: selectedValues.position,
-				sort: value,
+				sort: selectedValues.selectedSort,
 				limit,
 				skip: currentSkip,
 			},
 
 			applyResult: true,
 		});
-	};
+	}, [selectedValues]);
 
 	// 포지션 클릭
 	const handlePositionClick = positionValue => {
