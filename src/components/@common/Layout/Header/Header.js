@@ -30,7 +30,7 @@ function Header() {
 	});
 	const { result: notiResult, trigger: notiTrigger } = useApi({
 		path: '/notification',
-		shouldFetch: true,
+		shouldFetch: isLoggedIn && true,
 	});
 	const bellImg = '/assets/img/icons/bell.png';
 	const dotBellImg = '/assets/img/icons/dotbell.png';
@@ -41,25 +41,27 @@ function Header() {
 		// if(notiData.)
 	};
 	useEffect(() => {
-		// console.log(notiResult?.notifications?.length);
-		if (notiResult?.notifications?.length > 0) {
-			setNotiData(notiResult.notifications);
-			// if (notiResult?.notifications?.length === 0) {
-			// }
-			setNoti(true);
-		}
-		if (notiResult?.notifications?.length === 0) {
-			setNoti(false);
-		}
+		console.log(notiResult);
+		if (isLoggedIn) {
+			if (notiResult?.notifications?.length > 0) {
+				setNotiData(notiResult.notifications);
+				// if (notiResult?.notifications?.length === 0) {
+				// }
+				setNoti(true);
+			}
+			if (notiResult?.notifications?.length === 0) {
+				setNoti(false);
+			}
 
-		const fetchNotificationData = () => {
-			notiTrigger({});
-		};
-		// 1분마다 호출
-		const intervalId = setInterval(fetchNotificationData, 60000); // 60000 밀리초 = 1분
+			const fetchNotificationData = () => {
+				notiTrigger({});
+			};
+			// 1분마다 호출
+			const intervalId = setInterval(fetchNotificationData, 3000); // 60000 밀리초 = 1분
 
-		// 컴포넌트가 언마운트되면 타이머 해제
-		return () => clearInterval(intervalId);
+			// 컴포넌트가 언마운트되면 타이머 해제
+			return () => clearInterval(intervalId);
+		}
 	}, [notiResult, notiData]);
 
 	useEffect(() => {
@@ -100,9 +102,12 @@ function Header() {
 		}
 	};
 	const notiClickHandler = async (value, notiId, studyId) => {
-		// console.log(studyId);
+		console.log(value);
 		switch (value) {
 			case '멘토링 신청 요청이 왔습니다!':
+			case 'Your mentoring request has been completed.':
+			case '멘토링 신청서 상태가 변경되었습니다.':
+			case 'Your mentoring request has been rejectd.':
 				// 해당 알람 삭제 후
 				// 마이페이지로 이동
 				await notiTrigger({
@@ -141,6 +146,7 @@ function Header() {
 				navigate(`/study/detail/${studyId}`);
 
 				break;
+
 			default:
 				break;
 		}
@@ -198,6 +204,32 @@ function Header() {
 									멘토 전환
 								</Button>
 							)}
+							{notiBox ? (
+								<S.notiWrap>
+									{notiData.length !== 0 ? (
+										notiData?.map((item, index) => (
+											<S.notiBox
+												key={index}
+												onClick={() => {
+													notiClickHandler(
+														item.content,
+														item._id,
+														item.projectStudyId,
+													);
+												}}
+											>
+												<span>{item.content}</span>
+											</S.notiBox>
+										))
+									) : (
+										<S.notiBox>
+											<span>알림이 없습니다!</span>
+										</S.notiBox>
+									)}
+								</S.notiWrap>
+							) : (
+								''
+							)}
 						</>
 					) : (
 						<>
@@ -220,32 +252,6 @@ function Header() {
 					)}
 				</S.LoginBar>
 			</S.NavBox>
-			{notiBox ? (
-				<S.notiWrap>
-					{notiData.length !== 0 ? (
-						notiData?.map((item, index) => (
-							<S.notiBox
-								key={index}
-								onClick={() => {
-									notiClickHandler(
-										item.content,
-										item._id,
-										item.projectStudyId,
-									);
-								}}
-							>
-								<span>{item.content}</span>
-							</S.notiBox>
-						))
-					) : (
-						<S.notiBox>
-							<span>알림이 없습니다!</span>
-						</S.notiBox>
-					)}
-				</S.notiWrap>
-			) : (
-				''
-			)}
 
 			{openModal && <SignupModal onClose={handleSignupClose} />}
 		</S.Header>

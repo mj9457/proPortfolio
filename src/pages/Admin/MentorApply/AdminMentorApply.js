@@ -90,6 +90,7 @@ const AdminMentorApply = () => {
 		// console.log(result);
 		if (result.mentorRequests && result.mentorRequests.length > 0) {
 			const startIndex = (currentPage - 1) * 10;
+
 			setApplyData(
 				result.mentorRequests
 					.filter(item => item.status === 'requested')
@@ -104,6 +105,7 @@ const AdminMentorApply = () => {
 			}));
 			setData(newData);
 		}
+
 		if (result.total) {
 			setTotalPages(result.total);
 		}
