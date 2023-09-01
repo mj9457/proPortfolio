@@ -115,7 +115,7 @@ function StudyCategory() {
 				classification: classificationValue,
 				position: selectedValues.position,
 				limit,
-				skip: currentSkip,
+				skip: 0,
 			},
 			applyResult: true,
 		});
