@@ -1,5 +1,6 @@
 const VALIDATE = {
-	nickName: /^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$/,
+	name: /^[가-힣]{2,4}$/,
+	nickName: /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$$/,
 };
 
 export default VALIDATE;
