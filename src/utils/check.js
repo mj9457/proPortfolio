@@ -7,11 +7,11 @@ export const check = ex => {
 			message: MESSAGE.CHECK.POSITION,
 		},
 		{
-			checked: ex.company.length === 0,
+			checked: !ex.company || ex.company.length === 0,
 			message: MESSAGE.CHECK.COMPANY,
 		},
 		{
-			checked: ex.career.length === 0,
+			checked: !ex.company || ex.career.length === 0,
 			message: MESSAGE.CHECK.CAREER,
 		},
 		{

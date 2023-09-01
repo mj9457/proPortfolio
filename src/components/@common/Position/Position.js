@@ -8,7 +8,7 @@ function Position(props) {
 
 	const [positions, setPositions] = useState([]);
 
-	const { result, error } = useApi({
+	const { result } = useApi({
 		path: '/position',
 		shouldFetch: true,
 	});
@@ -16,7 +16,6 @@ function Position(props) {
 	useEffect(() => {
 		if (result.positions && result.positions.length > 0) {
 			setPositions(result.positions);
-			console.log(error);
 		}
 	}, [result.positions]);
 

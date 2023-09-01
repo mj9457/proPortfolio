@@ -9,7 +9,7 @@ import Line from '../../components/@common/Line/Line';
 import MentorCard from '../../components/pages/Portfolio/PortfolioCard/Card';
 import Button from '../../components/@common/Button/Button';
 import Select from '../../components/@common/Select/Select';
-import LoadingBar from '../../components/@common/Loading/LoadingBar';
+import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
 
 function Portfolio() {
 	// 로그인 유저 체크
@@ -20,8 +20,9 @@ function Portfolio() {
 
 	// 모든 멘토 데이터
 	const [mentorData, setMentorData] = useState([]);
+	const [mentorDataTotal, setMentorDataTotal] = useState(0);
 
-	// 인기 있냐? 모든 멘토냐?
+	// 인기 멘토
 	const [popularData, setPopularData] = useState([]);
 
 	// 포지션 === 카테고리 관리
@@ -39,7 +40,7 @@ function Portfolio() {
 	const observerElement = useRef();
 
 	// api 통신 1. 유저 정보 / 2. 포지션 === 카테고리 정보 / 3. 모든 멘토 데이터 호출
-	const { result, error } = useApi({
+	const { result } = useApi({
 		path: isLoggedIn ? '/user' : '',
 		shouldFetch: isLoggedIn,
 	});
@@ -63,10 +64,9 @@ function Portfolio() {
 		shouldFetch: true,
 	});
 	useEffect(() => {
-		console.log(mentorResult);
 		if (mentorResult.data && mentorResult.data.length > 0) {
-			// setMentorData(mentorResult.data);
-			// console.log(error);
+			setMentorData(prev => [...prev, ...mentorResult.data]);
+			setMentorDataTotal(mentorResult.total);
 
 			if (currentSkip <= 12) {
 				setMentorData(mentorResult.data);
@@ -89,12 +89,10 @@ function Portfolio() {
 
 		if (positionResult.positions) {
 			setPositions(positionResult.positions);
-			console.log(error);
 		}
 
 		if (mentorResult.data && mentorResult.data.length > 0) {
 			setMentorData(mentorResult.data);
-			console.log(error);
 		}
 
 		if (popularMentorResult && popularMentorResult.length > 0) {
@@ -104,10 +102,10 @@ function Portfolio() {
 
 	// 무한 스크롤
 	const handleObserver = entries => {
-		console.log(limit, currentSkip);
 		const target = entries[0];
+
+		if (mentorData.length >= mentorDataTotal) return;
 		if (target.isIntersecting && !isLoading) {
-			console.log('-----------------------');
 			setCurrentSkip(prevSkip => {
 				return prevSkip + limit;
 			});
@@ -121,19 +119,6 @@ function Portfolio() {
 				},
 				applyResult: true,
 			});
-			console.log(mentorResult.data);
-			// const newMentorData = mentorResult.data.filter(
-			// 	newData =>
-			// 		!mentorResult.data.some(
-			// 			existingData => existingData._id === newData._id,
-			// 		),
-			// );
-			// console.log(newMentorData);
-
-			// setMentorData(prevMentorData => [
-			// 	...prevMentorData,
-			// 	...newMentorData,
-			// ]);
 		}
 	};
 
@@ -150,12 +135,16 @@ function Portfolio() {
 			observer.current.observe(observerElement.current);
 		}
 
+		if (mentorData.length >= mentorDataTotal) {
+			observer.current.disconnect();
+		}
+
 		return () => {
 			if (observer.current) {
 				observer.current.disconnect();
 			}
 		};
-	}, [observer.current, observerElement]);
+	}, [observer.current, observerElement, mentorData, mentorDataTotal]);
 
 	// select 클릭
 	const handleChange = e => {
@@ -213,7 +202,11 @@ function Portfolio() {
 				{isMentor && (
 					<S.ApplyBox>
 						<a href="/portfolio/apply">
-							<Button variant={'add'} shape={'default'} size={'normal'}>
+							<Button
+								variant={'add'}
+								shape={'default'}
+								size={'normal'}
+							>
 								작성하기
 							</Button>
 						</a>
@@ -234,8 +227,12 @@ function Portfolio() {
 						positions.map(position => (
 							<S.PositionCategoryItem
 								key={position.id}
-								onClick={() => handlePositionClick(position.name)}
-								$isSelected={selectedValues.position === position.name}
+								onClick={() =>
+									handlePositionClick(position.name)
+								}
+								$isSelected={
+									selectedValues.position === position.name
+								}
 							>
 								{position.name}
 							</S.PositionCategoryItem>
@@ -251,13 +248,20 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 4개 */}
 				<S.MentorCardBox>
-					<>
-						{popularData.map((mentor, idx) => (
-							<div key={mentor._id + idx}>
-								<MentorCard variant={'blue'} mentor={mentor} />
-							</div>
-						))}
-					</>
+					{!Array.isArray(popularData) || popularData.length === 0 ? (
+						<EmptyMessage />
+					) : (
+						<>
+							{popularData.map((mentor, idx) => (
+								<div key={mentor._id + idx}>
+									<MentorCard
+										variant={'blue'}
+										mentor={mentor}
+									/>
+								</div>
+							))}
+						</>
+					)}
 				</S.MentorCardBox>
 			</div>
 
@@ -268,29 +272,38 @@ function Portfolio() {
 				<S.MentorTitleBox>
 					<span>🌟 모든 멘토</span>
 
-					<Select variant={'none'} font={'regular'} onChange={handleChange}>
+					<Select
+						variant={'none'}
+						font={'regular'}
+						onChange={handleChange}
+					>
 						<option value="newest">최신순</option>
 						<option value="popular">인기순</option>
 					</Select>
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					{isLoading && <LoadingBar />}
-					<>
-						{mentorData.map((mentor, idx) => (
-							<div key={mentor._id + idx}>
-								<MentorCard variant={'white'} mentor={mentor} />
-							</div>
-						))}
-
-						<div
-							style={{
-								height: '10px',
-								border: '1px solid white',
-							}}
-							ref={observerElement}
-						/>
-					</>
+					{!Array.isArray(mentorData) || mentorData.length === 0 ? (
+						<EmptyMessage />
+					) : (
+						<>
+							{mentorData.map((mentor, idx) => (
+								<div key={mentor._id + idx}>
+									<MentorCard
+										variant={'white'}
+										mentor={mentor}
+									/>
+								</div>
+							))}
+							<div
+								style={{
+									height: '10px',
+									border: '1px solid white',
+								}}
+								ref={observerElement}
+							/>
+						</>
+					)}
 				</S.MentorCardBox>
 			</S.MentorBox>
 		</S.PortfolioBox>

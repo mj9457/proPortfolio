@@ -33,12 +33,12 @@ function PortfolioPost() {
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
 	// api 통신
-	const { result: userResult, error: userError } = useApi({
+	const { result: userResult } = useApi({
 		path: isLoggedIn ? '/user' : '',
 		shouldFetch: isLoggedIn,
 	});
 
-	const { result, trigger, isLoading, error } = useApi({
+	const { result, trigger, isLoading } = useApi({
 		path: `/portfolio/${path}`,
 		shouldFetch: true,
 	});
@@ -51,12 +51,10 @@ function PortfolioPost() {
 	useEffect(() => {
 		if (result) {
 			setPost(result);
-			console.log(error);
 		}
 
 		if (userResult) {
 			setUserId(userResult);
-			console.log(userError);
 		}
 	}, [result, userResult]);
 
@@ -126,7 +124,9 @@ function PortfolioPost() {
 
 							{infoModalOpenState && (
 								<InfoEditModal
-									setInfoModalOpenState={setInfoModalOpenState}
+									setInfoModalOpenState={
+										setInfoModalOpenState
+									}
 									path={path}
 									action={'완료'}
 								/>

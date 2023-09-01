@@ -31,7 +31,7 @@ function IntroContents({ post }) {
 			<S.IntroBox>
 				<strong>2. 소개 내용</strong>
 
-				<span>{description}</span>
+				<pre>{description}</pre>
 			</S.IntroBox>
 		</>
 	);
