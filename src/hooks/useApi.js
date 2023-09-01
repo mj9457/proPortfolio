@@ -74,14 +74,15 @@ const useApi = ({
 					const urlWithParams = queryParams
 						? `${triggerPath}?${queryParams}`
 						: initPath;
-					console.log(urlWithParams);
+					// console.log(urlWithParams);
 					const triggerResult = await mapMethodToFetcher[initMethod](
 						urlWithParams,
 						initData,
 					);
-					console.log(triggerResult);
+					// console.log(triggerResult);
 					setResult(triggerResult);
 				} else {
+					// console.log(triggerResult);
 					setResult(triggerResult);
 				}
 			} catch (err) {

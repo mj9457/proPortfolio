@@ -65,7 +65,7 @@ const AdminStudyProject = () => {
 				<Space size="middle">
 					<a
 						// http://localhost:3000/study/detail/4
-						href={`http://localhost:3000/study/detail/${record._id}`}
+						href={`/study/detail/${record._id}`}
 						// href={`http://34.64.245.195/study/detail/${record._id}`}
 						target="_blank"
 						rel="noopener noreferrer"
@@ -94,7 +94,7 @@ const AdminStudyProject = () => {
 	// select option이 변경될 때
 
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result.projectStudies && result.projectStudies.length > 0) {
 			const startIndex = (currentPage - 1) * 10;
 			setTableData(
@@ -121,7 +121,7 @@ const AdminStudyProject = () => {
 	);
 	const changeSelectValue = async e => {
 		setCurrentPage(1);
-		console.log(currentPage);
+		// console.log(currentPage);
 		if (e === 'study') {
 			trigger({
 				params: {
@@ -183,8 +183,8 @@ const AdminStudyProject = () => {
 	} = theme.useToken();
 
 	const pageChange = async pageNumber => {
-		console.log(currentclassification);
-		console.log(pageNumber);
+		// console.log(currentclassification);
+		// console.log(pageNumber);
 
 		await trigger({
 			params: {
@@ -198,11 +198,11 @@ const AdminStudyProject = () => {
 
 	return (
 		<AdminContent background={colorBgContainer}>
-			<SearchInput
+			{/* <SearchInput
 				enterButton="검색"
 				placeholder=""
 				// onSearch={e => addCategoryHandler(e)}
-			/>
+			/> */}
 			{isLoading ? (
 				<LoadingBar />
 			) : (

@@ -59,10 +59,10 @@ const AdminHome = () => {
 	 */
 
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result.users && result.users.length > 0) {
 			const startIndex = (currentPage - 1) * 10;
-			console.log(result.users.length);
+			// console.log(result.users.length);
 			setUsersData(
 				result.users.map((item, index) => ({
 					...item,
@@ -74,7 +74,7 @@ const AdminHome = () => {
 			setTotalPages(result.totalCount);
 		}
 
-		console.log(currentPage);
+		// console.log(currentPage);
 
 		// console.log('한 페이지 Length', result?.users?.length);
 	}, [result]);
@@ -97,7 +97,7 @@ const AdminHome = () => {
 			applyResult: true,
 		});
 
-		console.log(result);
+		// console.log(result);
 		if (result.users.length === 1) {
 			await trigger({
 				params: {
@@ -120,7 +120,7 @@ const AdminHome = () => {
 		token: { colorBgContainer },
 	} = theme.useToken();
 	const pageChange = async pageNumber => {
-		console.log(pageNumber);
+		// console.log(pageNumber);
 
 		await trigger({
 			path: '/admin/user',
@@ -134,7 +134,7 @@ const AdminHome = () => {
 	};
 	return (
 		<AdminContent background={colorBgContainer}>
-			<Searchbar type={'Search'} />
+			{/* <Searchbar type={'Search'} /> */}
 			{/* /로딩 컴포넌트 교체 예정 */}
 			{isLoading ? (
 				<LoadingBar />

@@ -48,7 +48,7 @@ const Sidebar = () => {
 	 * Todo Refactoring 필요
 	 */
 	const pathCheck = name => {
-		console.log(name);
+		// console.log(name);
 		switch (name) {
 			case 'user':
 				tab = 'User';
@@ -79,11 +79,11 @@ const Sidebar = () => {
 	} = theme.useToken();
 	const onClickHandler = e => {
 		// url은 소문자
-		console.log(e);
+		// console.log(e);
 		// const result = e.key.toLowerCase();
 		// Tabs key로 구분
 		const result = pathName[navList.indexOf(e.key)]; // pathName에서 해당 탭의 index를 찾아 사용
-		console.log(result);
+		// console.log(result);
 		navigate(`/admin/${result}`);
 	};
 
@@ -106,7 +106,8 @@ const Sidebar = () => {
 				<AdminMenu
 					theme="light"
 					mode="inline"
-					defaultSelectedKeys={[tab]}
+					defaultSelectedKeys={'User'}
+					selectedKeys={[tab]}
 					items={items}
 					onClick={e => {
 						onClickHandler(e);

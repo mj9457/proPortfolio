@@ -50,7 +50,7 @@ const AdminMentorBoardList = () => {
 			render: (_, record) => (
 				<Space size="middle">
 					<a
-						href={`http://localhost:3000/portfolio/post/${record._id}`}
+						href={`/portfolio/post/${record._id}`}
 						// href={`http://34.64.245.195/study/detail/${record._id}`}
 						target="_blank"
 						rel="noopener noreferrer"
@@ -76,7 +76,7 @@ const AdminMentorBoardList = () => {
 	];
 
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result.portfolios && result.portfolios.length > 0) {
 			const startIndex = (currentPage - 1) * 10;
 			const modifiedData = result.portfolios.map((item, index) => ({
@@ -99,7 +99,7 @@ const AdminMentorBoardList = () => {
 		[tableData],
 	);
 	const pageChange = async pageNumber => {
-		console.log(pageNumber);
+		// console.log(pageNumber);
 
 		await trigger({
 			path: '/admin/portfolio',
@@ -144,11 +144,11 @@ const AdminMentorBoardList = () => {
 
 	return (
 		<AdminContent background={colorBgContainer}>
-			<SearchInput
+			{/* <SearchInput
 				enterButton="검색"
 				placeholder=""
 				// onSearch={e => addCategoryHandler(e)}
-			/>
+			/> */}
 			{isLoading ? (
 				<LoadingBar />
 			) : (

@@ -45,7 +45,7 @@ const UserMentorApply = () => {
 		const file = e.target.files[0];
 		const fileExt = file?.name.split('.').pop();
 		const rimiteSize = 5000 * 1024; // 5000KB를 바이트 단위로 변환
-		console.log(file.size);
+		// console.log(file.size);
 		if (!['jpeg', 'png', 'jpg', 'JPG', 'PNG', 'JPEG'].includes(fileExt)) {
 			if (file === undefined) {
 				return;
@@ -62,8 +62,8 @@ const UserMentorApply = () => {
 		setSelectedFile(file);
 	};
 	const handleOnChange = e => {
-		console.log(e.target.type);
-		const { name, value } = e.target;
+		// console.log(e.target.type);
+		const { value } = e.target;
 
 		if (e.target.type === 'text') {
 			setInputValue(prevState => ({
@@ -80,7 +80,7 @@ const UserMentorApply = () => {
 		// companyRef = e.target.value;
 	};
 	const handleSubmit = async () => {
-		console.log(inputValue.career === '');
+		// console.log(inputValue.career === '');
 		if (!inputValue.company.trim() || !inputValue.career) {
 			alert(MESSAGE.CHECK.MODAL);
 			return;
@@ -88,7 +88,7 @@ const UserMentorApply = () => {
 			alert('이미지를 첨부해주세요.');
 			return;
 		}
-		console.log(inputValue);
+		// console.log(inputValue);
 
 		// console.log(selectedFile?.name);
 
@@ -101,7 +101,7 @@ const UserMentorApply = () => {
 				Body: selectedFile,
 			},
 		});
-		console.log(upload);
+		// console.log(upload);
 		try {
 			const result = await upload.promise();
 			trigger({
@@ -115,7 +115,7 @@ const UserMentorApply = () => {
 			navigate('/');
 			// TODO API
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			// TODO 에러 세팅...
 			alert('파일의 용량이 너무 큽니다.');
 		}

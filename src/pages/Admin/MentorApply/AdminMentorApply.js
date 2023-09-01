@@ -25,6 +25,7 @@ const AdminMentorApply = () => {
 	const [selectedKey, setSelectedKey] = useState(null);
 	const [totalPages, setTotalPages] = useState(1);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [data, setData] = useState([{}]);
 
 	const columns = [
 		{
@@ -63,23 +64,18 @@ const AdminMentorApply = () => {
 			render: (_, record) => (
 				<Space size="middle">
 					<div>
-						{/* <Atags
-							onClick={() => {
-								approveHandler(record.key);
-							}}
-						>
-						</Atags> */}
 						<HandlerButton
 							type="primary"
 							onClick={() => {
-								approveHandler(record.userId, record._id);
+								approveHandler(
+									record.userId,
+									record._id,
+									record.key,
+								);
 							}}
 						>
 							승인
 						</HandlerButton>
-						{/* <Removetag onClick={() => refuseHandler(record.key)}>
-							거절
-						</Removetag> */}
 						<HandlerButton
 							onClick={() => refuseHandler(record._id)}
 						>
@@ -91,7 +87,7 @@ const AdminMentorApply = () => {
 		},
 	];
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result.mentorRequests && result.mentorRequests.length > 0) {
 			const startIndex = (currentPage - 1) * 10;
 			setApplyData(
@@ -102,11 +98,17 @@ const AdminMentorApply = () => {
 						key: index + startIndex + 1,
 					})),
 			);
+			const newData = result.mentorRequests.map(item => ({
+				company: item.company,
+				career: item.career,
+			}));
+			setData(newData);
 		}
 		if (result.total) {
 			setTotalPages(result.total);
 		}
 	}, [result]);
+	// console.log(data);
 	const memoColumns = useMemo(() => [], [selectedKey, isOpen]);
 	const memoResult = useMemo(
 		() => (
@@ -161,17 +163,28 @@ const AdminMentorApply = () => {
 		setIsOpen(false);
 	};
 	// 승인
-	const approveHandler = async (userId, requestId) => {
-		console.log(userId, requestId);
+	const approveHandler = async (userId, requestId, key) => {
+		let currentKey = key;
+		if (key >= 11) {
+			const remainder = key % 10;
+			currentKey = remainder === 0 ? 10 : remainder;
+		}
+		// console.log(currentKey - 1);
 		await trigger({
 			path: `/admin/user/${userId}/role`,
 			method: 'put',
-			data: { role: 'mentor' },
+			data: {
+				role: 'mentor',
+				career: data[currentKey - 1].career,
+				company: data[currentKey - 1].company,
+			},
 		});
 		await trigger({
 			path: `/mentorRequest/${requestId}`,
 			method: 'put',
-			data: { status: 'accepted' },
+			data: {
+				status: 'accepted',
+			},
 			applyResult: true,
 		});
 		if (result.mentorRequests.length === 1) {
@@ -199,7 +212,7 @@ const AdminMentorApply = () => {
 		token: { colorBgContainer },
 	} = theme.useToken();
 	const pageChange = async pageNumber => {
-		console.log(pageNumber);
+		// console.log(pageNumber);
 
 		await trigger({
 			path: '/mentorRequest',
@@ -224,11 +237,11 @@ const AdminMentorApply = () => {
 				/>
 			)}
 			<AdminContent background={colorBgContainer}>
-				<SearchInput
+				{/* <SearchInput
 					enterButton="검색"
 					placeholder=""
 					// onSearch={e => addCategoryHandler(e)}
-				/>
+				/> */}
 				{isLoading ? (
 					<LoadingBar />
 				) : (

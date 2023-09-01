@@ -171,7 +171,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '',
-				element: <ErrorFallback />,
+				element: <Navigate to="/admin/user" />,
 			},
 			{
 				path: 'user',

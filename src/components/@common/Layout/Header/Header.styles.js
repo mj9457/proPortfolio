@@ -14,6 +14,7 @@ export const Header = styled.header`
 	padding: 15px 0 20px 0;
 	${flexColumn}
 	align-items: center;
+	position: relative;
 `;
 
 export const ImgBox = styled.a`
@@ -67,5 +68,25 @@ export const LoginBar = styled.div`
 		&:visited {
 			color: ${({ theme }) => theme.PALETTE.black};
 		}
+	}
+`;
+export const notiWrap = styled.div`
+	z-index: 99;
+	position: absolute;
+	background-color: red;
+
+	right: 0;
+	top: 100px;
+	border-radius: 4px;
+	background: #f9f9f9;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`;
+export const notiBox = styled.div`
+	padding: 20px;
+	cursor: pointer;
+	> span {
+		color: ${({ theme }) => theme.PALETTE.black};
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	}
 `;

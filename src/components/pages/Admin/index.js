@@ -15,8 +15,7 @@ function AdminLayout() {
 		if (result) {
 			setCurrentRole(result.role);
 		}
-	}, [result, currentRole]);
-	console.log(currentRole);
+	}, [result]);
 	if (currentRole === 'admin') {
 		return (
 			<Layout>
