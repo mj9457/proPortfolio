@@ -9,6 +9,7 @@ import Searchbar from '../../../components/pages/Admin/Searchbar/Searchbar';
 import useApi from '../../../hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from './Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminHome = () => {
 	const { result, trigger, isLoading, error } = useApi({
@@ -136,7 +137,7 @@ const AdminHome = () => {
 			<Searchbar type={'Search'} />
 			{/* /로딩 컴포넌트 교체 예정 */}
 			{isLoading ? (
-				<h2>로딩중</h2>
+				<LoadingBar />
 			) : (
 				<>
 					{memoResult}

@@ -11,6 +11,7 @@ import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar
 import useApi from '../../../hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminStudyProject = () => {
 	// const { Option } = Select;
@@ -203,7 +204,7 @@ const AdminStudyProject = () => {
 				// onSearch={e => addCategoryHandler(e)}
 			/>
 			{isLoading ? (
-				<h2>로딩중</h2>
+				<LoadingBar />
 			) : (
 				<>
 					{memoResult}

@@ -10,6 +10,7 @@ import { Atags, HandlerButton } from './AdminMentorApply.styles';
 import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
 import useApi from '../../../hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminMentorApply = () => {
 	const { result, trigger, isLoading, error } = useApi({
@@ -229,7 +230,7 @@ const AdminMentorApply = () => {
 					// onSearch={e => addCategoryHandler(e)}
 				/>
 				{isLoading ? (
-					<h2>로딩중</h2>
+					<LoadingBar />
 				) : (
 					<>
 						{memoResult}

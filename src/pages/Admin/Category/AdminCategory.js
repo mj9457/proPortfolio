@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Input, Pagination, Space, theme } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Pagination, Space, theme } from 'antd';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { AdminContent } from '../../../components/pages/Admin/Common/Common.styles';
@@ -9,6 +9,7 @@ import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
 import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 const AdminCategory = () => {
 	// 수정 중인 행의 key를 저장
 	const [editingKey, setEditingKey] = useState(null);
@@ -217,7 +218,7 @@ const AdminCategory = () => {
 				value={inputValue}
 			/>
 			{isLoading ? (
-				<h2>로딩중</h2>
+				<LoadingBar />
 			) : (
 				<>
 					{memoResult}

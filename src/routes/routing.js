@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 const Layout = lazy(() => import('../components/@common/Layout'));
 

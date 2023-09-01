@@ -62,10 +62,6 @@ const useApi = ({
 		}) => {
 			try {
 				setIsLoading(true);
-				// const fetchResult = await mapMethodToFetcher[initMethod](
-				// 	`${initPath}${queryParams ? `?${queryParams}` : initPath}`,
-				// 	initData,
-				// );
 				const triggerResult = await mapMethodToFetcher[triggerMethod](
 					triggerPath,
 					triggerData,

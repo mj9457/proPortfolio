@@ -11,6 +11,7 @@ import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import useApi from '../../../hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminMentorBoardList = () => {
 	const [tableData, setTableData] = useState();
@@ -149,7 +150,7 @@ const AdminMentorBoardList = () => {
 				// onSearch={e => addCategoryHandler(e)}
 			/>
 			{isLoading ? (
-				<h2>로딩중</h2>
+				<LoadingBar />
 			) : (
 				<>
 					{memoResult}
