@@ -52,7 +52,6 @@ function Review(props) {
 
 		if (result.comments && result.comments.length > 0) {
 			setReview(result.comments);
-			console.log(error);
 		}
 	}, [result.comments, userResult]);
 
@@ -90,6 +89,8 @@ function Review(props) {
 
 	// 댓글 수정 완료
 	const handleComplete = () => {
+		console.log(edit);
+		console.log(getUrl);
 		trigger({
 			method: 'put',
 			path: `${getUrl}/comments/${edit}`,
@@ -126,6 +127,8 @@ function Review(props) {
 					data: selectedComment, // 삭제할 review data 들어갈 곳
 					applyResult: true,
 				});
+
+				setReview(prev => [...prev, ...result.comments]);
 
 				if (result.comments.length === 1) {
 					alert(MESSAGE.DELETE.COMPLETE);
@@ -184,20 +187,36 @@ function Review(props) {
 								<S.MiddleBox>
 									<S.NamingBox>
 										<strong>{comment.author}</strong>
-										<span>{dateAndTime(comment.createdAt)}</span>
+										<span>
+											{dateAndTime(comment.createdAt)}
+										</span>
 									</S.NamingBox>
 
 									{edit === comment._id ? (
 										<S.Buttons>
-											<button onClick={handleComplete}>완료</button>
-											<button onClick={() => setEdit(null)}>취소</button>
+											<button onClick={handleComplete}>
+												완료
+											</button>
+											<button
+												onClick={() => setEdit(null)}
+											>
+												취소
+											</button>
 										</S.Buttons>
 									) : (
 										<S.Buttons>
-											<button onClick={() => handleEdit(comment._id)}>
+											<button
+												onClick={() =>
+													handleEdit(comment._id)
+												}
+											>
 												수정
 											</button>
-											<button onClick={() => handleDelete(comment._id)}>
+											<button
+												onClick={() =>
+													handleDelete(comment._id)
+												}
+											>
 												삭제
 											</button>
 										</S.Buttons>
@@ -213,7 +232,9 @@ function Review(props) {
 											onChange={handleChange}
 										/>
 									) : (
-										<S.Contents>{comment.content}</S.Contents>
+										<S.Contents>
+											{comment.content}
+										</S.Contents>
 									)}
 								</div>
 

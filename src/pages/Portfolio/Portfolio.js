@@ -105,6 +105,7 @@ function Portfolio() {
 		const target = entries[0];
 
 		if (mentorData.length >= mentorDataTotal) return;
+
 		if (target.isIntersecting && !isLoading) {
 			setCurrentSkip(prevSkip => {
 				return prevSkip + limit;
@@ -147,7 +148,7 @@ function Portfolio() {
 	}, [observer.current, observerElement, mentorData, mentorDataTotal]);
 
 	// select 클릭
-	const handleChange = async e => {
+	const handleChange = e => {
 		setLimit(12);
 		setCurrentSkip(0);
 
@@ -157,20 +158,18 @@ function Portfolio() {
 			...prev,
 			selectedSort: value,
 		}));
-	};
 
-	useEffect(() => {
 		trigger({
 			params: {
 				category: selectedValues.position,
-				sort: selectedValues.selectedSort,
-				limit,
-				skip: currentSkip,
+				sort: value,
+				limit: 12,
+				skip: 0,
 			},
 
 			applyResult: true,
 		});
-	}, [selectedValues]);
+	};
 
 	// 포지션 클릭
 	const handlePositionClick = positionValue => {
@@ -186,7 +185,7 @@ function Portfolio() {
 			params: {
 				category: positionValue,
 				sort: selectedValues.selectedSort,
-				limit,
+				limit: 12,
 				skip: 0,
 			},
 
