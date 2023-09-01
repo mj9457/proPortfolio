@@ -35,15 +35,15 @@ function EditComments({ isLoggedIn, userData, title }) {
 
 	const handleCommentSubmit = async () => {
 		if (!isLoggedIn) {
-			alert('로그인한 회원만 입력할 수 있어요.');
+			alert(MESSAGE.LOGIN.REQUIRED);
 			return;
 		}
 		if (comment.content.trim() === '') {
-			alert('내용을 입력해주세요.');
+			alert(MESSAGE.CHECK.DESCRIPTION);
 			return;
 		}
 		if (comment.content.length > 1000) {
-			alert('1000자 이하로 입력해주세요.');
+			alert(MESSAGE.CHECK.DESCRIPTIONLENGTH);
 			return;
 		}
 
@@ -62,10 +62,6 @@ function EditComments({ isLoggedIn, userData, title }) {
 		// 임시
 		navigate(0);
 	};
-
-	useEffect(() => {
-		console.log('Test');
-	}, [comment]);
 
 	const particle = title === '후기' ? '를' : '을';
 

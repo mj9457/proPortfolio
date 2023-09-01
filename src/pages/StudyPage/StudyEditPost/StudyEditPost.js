@@ -41,6 +41,7 @@ function StudyEditPost() {
 		shouldFetch: false,
 	});
 
+	// console.log('POSTDATA', postData);
 	useEffect(() => {
 		if (userData) {
 			setSelectedOptions(prevOptions => ({
@@ -62,7 +63,7 @@ function StudyEditPost() {
 	}, [postId]);
 
 	useEffect(() => {
-		if (postData) {
+		if (postData._id) {
 			setIsEdit(true);
 
 			const initialDeadline = new Date(selectedOptions.deadline);
@@ -82,7 +83,7 @@ function StudyEditPost() {
 				recruitsStatus: '모집중',
 			}));
 		}
-	}, [postData]);
+	}, [postData._id]);
 
 	const handleOptionChange = (name, value) => {
 		setSelectedOptions(prevOptions => ({
@@ -202,7 +203,7 @@ function StudyEditPost() {
 
 			{/* 상세 설명 */}
 			<S.PostBox>
-				<S.Title>✨ 프로젝트/스터디를 소개 해주세요.</S.Title>
+				<S.Title>✨ 스터디 / 프로젝트를 소개 해주세요.</S.Title>
 				<PostForm
 					selectedOptions={selectedOptions}
 					postId={postId}

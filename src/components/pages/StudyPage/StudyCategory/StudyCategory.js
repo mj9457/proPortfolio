@@ -3,6 +3,7 @@ import * as S from './StudyCategory.styles';
 import PostCard from '../PostCard/PostCard';
 import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
+import LoadingBar from '../../../@common/Loading/LoadingBar';
 
 function StudyCategory() {
 	const [category, setCategory] = useState([
@@ -45,6 +46,17 @@ function StudyCategory() {
 		shouldFetch: true,
 	});
 
+	useEffect(() => {
+		if (
+			resultProjectStudy.projectStudies &&
+			resultProjectStudy.projectStudies.length > 0
+		) {
+			if (currentSkip <= 6) {
+				setProjectStudy(resultProjectStudy.projectStudies);
+			}
+		}
+	}, [resultProjectStudy.projectStudies]);
+
 	const handleObserver = entries => {
 		const target = entries[0];
 
@@ -52,6 +64,8 @@ function StudyCategory() {
 			setCurrentSkip(prevSkip => {
 				return prevSkip + limit;
 			});
+
+			if (resultProjectStudy.projectStudies.length === 0) return;
 
 			triggerProjectStudy({
 				path: '/projectStudy',
@@ -75,8 +89,6 @@ function StudyCategory() {
 				...prevProjectStudy,
 				...newProjectStudies,
 			]);
-
-			// console.log(currentSkip);
 		}
 	};
 
@@ -89,6 +101,13 @@ function StudyCategory() {
 
 		observer.current = new IntersectionObserver(handleObserver, options);
 
+		if (
+			resultProjectStudy.projectStudies &&
+			resultProjectStudy.projectStudies.length === 0
+		) {
+			observer.current.disconnect();
+		}
+
 		if (observerElement.current) {
 			observer.current.observe(observerElement.current);
 		}
@@ -98,7 +117,7 @@ function StudyCategory() {
 				observer.current.disconnect();
 			}
 		};
-	}, [observer.current, observerElement]);
+	}, [observer.current, observerElement, resultProjectStudy.projectStudies]);
 
 	// 전체, 스터디, 프로젝트 클릭
 	const handleCategoryClick = classificationValue => {
@@ -148,27 +167,6 @@ function StudyCategory() {
 		}
 	}, [positionResult]);
 
-	useEffect(() => {
-		// console.log(currentSkip);
-
-		if (
-			resultProjectStudy.projectStudies &&
-			resultProjectStudy.projectStudies.length > 0
-		) {
-			// console.log('길이', projectStudy.length);
-
-			// if (currentSkip > 0) {
-			// 	// const newData = resultProjectStudy.projectStudies;
-			// 	// const updatedProjectStudy = [...projectStudy, ...newData];
-			// 	// setProjectStudy(updatedProjectStudy);
-			// }
-
-			if (currentSkip <= 6) {
-				setProjectStudy(resultProjectStudy.projectStudies);
-			}
-		}
-	}, [resultProjectStudy]);
-
 	return (
 		<>
 			<S.CategoryList>
@@ -214,7 +212,7 @@ function StudyCategory() {
 			</S.CategoryBottomList>
 
 			<S.PostCardContainer>
-				{isLoading && <S.EmptyText>로딩 중입니다...!</S.EmptyText>}
+				{isLoading && <LoadingBar />}
 				{!Array.isArray(projectStudy) || projectStudy.length === 0 ? (
 					<EmptyMessage />
 				) : (

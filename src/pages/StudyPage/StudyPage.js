@@ -6,6 +6,7 @@ import StudySlider from '../../components/pages/StudyPage/StudySlider/StudySlide
 import SignupModal from '../../components/pages/SignUp/Modal/SignUpModal';
 import Button from '../../components/@common/Button/Button';
 import { checkToken } from '../../utils/cookie';
+import MESSAGE from '../../constants/message';
 import StudyCategory from '../../components/pages/StudyPage/StudyCategory/StudyCategory';
 
 function StudyPage() {
@@ -18,48 +19,17 @@ function StudyPage() {
 
 	const onClickAddPost = () => {
 		if (!isLoggedIn) {
-			alert('로그인이 필요합니다.\n로그인 후 글을 작성해주세요!');
+			alert(MESSAGE.LOGIN.REQUIRED);
 			setOpenModal(true);
 		} else {
 			navigate('/study/post');
+			setUserNickName('');
 		}
 	};
 
 	const handleSignupClose = () => {
 		setOpenModal(false);
 	};
-
-	// useEffect(() => {
-	// 	getData();
-	// }, [page]);
-
-	// const handleObserver = entries => {
-	// 	const target = entries[0];
-	// 	if (target.isIntersecting) {
-	// 		setPage(prevPage => prevPage + 1);
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	const options = {
-	// 		root: null,
-	// 		rootMargin: '0px',
-	// 		threshold: 1.0,
-	// 	};
-
-	// 	if (loading) return;
-	// 	observer.current = new IntersectionObserver(handleObserver, options);
-
-	// 	if (observer.current && observerElement.current) {
-	// 		observer.current.observe(observerElement.current);
-	// 	}
-
-	// 	return () => {
-	// 		if (observer.current) {
-	// 			observer.current.disconnect();
-	// 		}
-	// 	};
-	// }, [loading]);
 
 	return (
 		<>
@@ -70,13 +40,13 @@ function StudyPage() {
 						<S.TopBox>
 							<S.Title>
 								{isLoggedIn
-									? `🔥 ${userNickName}님 추천 스터디/ 프로젝트`
+									? `🔥 ${userNickName} 님 추천 스터디 / 프로젝트`
 									: '🔥 추천 스터디/ 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
 								{isLoggedIn
-									? '포지션에 맞는 스터디, 프로젝트를 확인해보세요!'
-									: '로그인하고 스터디, 프로젝트에 참여해보세요!'}
+									? '포지션에 맞는 스터디, 프로젝트를 확인해 보세요!'
+									: '로그인하고 스터디, 프로젝트에 참여해 보세요!'}
 							</S.SubTitle>
 						</S.TopBox>
 						{/*  */}
@@ -92,7 +62,8 @@ function StudyPage() {
 
 					<S.PopularCardWrapper>
 						<StudySlider
-							setUserNickName={setUserNickName}
+							isLoggedIn={isLoggedIn}
+							setUserNickName={isLoggedIn ? setUserNickName : ''}
 							$background="whiteBackground"
 							url={
 								isLoggedIn

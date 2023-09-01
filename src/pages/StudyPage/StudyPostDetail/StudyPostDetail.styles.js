@@ -1,11 +1,21 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import {
 	bodyContainer,
 	flexAlignCenter,
 	flexColumn,
 } from '../../../styles/common';
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const Container = styled.div`
+	animation: ${fadeIn} 0.5s ease forwards;
 	${bodyContainer}
 	padding-top: 5.25rem;
 `;

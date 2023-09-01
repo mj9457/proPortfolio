@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { STUDYOPTIONS } from '../../../../../constants/study';
 import * as S from './MultiSelectDropdown.styles';
 import useApi from '../../../../../hooks/useApi';
+import MESSAGE from '../../../../../constants/message';
 
 function MultiSelectDropdown({ onPositionsChange, selectedData }) {
 	const CheckBox = useRef(null);
@@ -36,7 +37,7 @@ function MultiSelectDropdown({ onPositionsChange, selectedData }) {
 			if (selectedPositions.length < 4) {
 				updatedPositions = [...selectedPositions, positionName];
 			} else {
-				alert('최대 4개까지만 선택할 수 있습니다.');
+				alert(MESSAGE.CHECK.POSITIONLENGTH);
 				return;
 			}
 		}

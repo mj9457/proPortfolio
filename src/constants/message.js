@@ -5,6 +5,7 @@ const MESSAGE = {
 	LOGIN: {
 		FAILURE: '아이디 또는 비밀번호를 다시 확인해 주세요.',
 		ERROR: '로그인에 문제가 발생했습니다. 잠시 후에 다시 시도해 주세요.',
+		REQUIRED: '로그인이 필요해요.',
 	},
 	ERROR: {
 		DEFAULT: '에러가 발생했습니다. 다시 시도해 주세요',
@@ -15,18 +16,22 @@ const MESSAGE = {
 		COMPANY: '다니는 회사를 입력해 주세요.',
 		TITLE: '제목을 작성해 주세요.',
 		TITLELENGTH: '제목은 50자 이하로 작성해 주세요.',
-		DESCRIPTION: '소개 내용을 작성해 주세요.',
+		DESCRIPTION: '내용을 작성해 주세요.',
 		DESCRIPTIONLENGTH: '내용은 1000자 이하로 작성해 주세요.',
 		COMMUNICATION: '연락 가능한 링크를 입력해 주세요.',
 		CAREER: '경력을 입력해 주세요.',
 		ALL: '모든 항목을 선택해 주세요.',
 		MODAL: '항목이 비었습니다.\n다시 한번 확인해 주세요.',
+		POSITIONLENGTH: '최대 4개까지만 선택할 수 있습니다.',
 	},
 	POST: {
 		COMPLETE: '게시글 작성이 완료되었습니다.',
 		EDIT: '작성한 글을 수정하시겠습니까?',
 		EDITFIN: '게시글 수정이 완료되었습니다.',
 		DELETE: '게시글을 삭제하시겠습니까?',
+		CANCEL: '작성을 취소하시겠습니까?',
+		DEADLINE:
+			'마감한 게시글은 수정 및 마감 취소가 불가능해요.\n모집을 마감할까요? ',
 	},
 	STUDY: {
 		DEADLINE:
@@ -72,6 +77,9 @@ const MESSAGE = {
 	FILE: {
 		UPLOAD: 'JPEG, JPG, PNG 파일만 업로드 가능합니다.',
 		NOFILE: '이미지를 첨부해 주세요.',
+	},
+	LINK: {
+		COMPLETE: '링크가 클립보드에 복사되었습니다.',
 	},
 	DELETE: {
 		COMPLETE: '삭제가 완료되었습니다.',

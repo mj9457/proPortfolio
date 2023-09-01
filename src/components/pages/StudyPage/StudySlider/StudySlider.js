@@ -4,7 +4,13 @@ import * as H from './StudySlider.styles';
 import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
 
-function StudySlider({ $background, url, slidesToShow, setUserNickName }) {
+function StudySlider({
+	isLoggedIn,
+	$background,
+	url,
+	slidesToShow,
+	setUserNickName,
+}) {
 	const [slide, setSlide] = useState(0);
 	const [studyInfoData, setStudyInfoData] = useState([]);
 
@@ -15,7 +21,11 @@ function StudySlider({ $background, url, slidesToShow, setUserNickName }) {
 
 	useEffect(() => {
 		if (result && result.projectStudies) {
-			setUserNickName(result.nickName);
+			if (isLoggedIn) {
+				setUserNickName(result.nickName);
+			}
+			// console.log(result);
+			// console.log(userNickName);
 			setStudyInfoData(result.projectStudies);
 		}
 	}, [result]);

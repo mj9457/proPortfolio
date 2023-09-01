@@ -5,6 +5,7 @@ import * as S from './PostForm.style';
 import Button from '../../../../@common/Button/Button';
 import Textarea from '../../../../@common/Textarea/Textarea';
 import useApi from '../../../../../hooks/useApi';
+import MESSAGE from '../../../../../constants/message';
 
 function PostForm({ selectedOptions, postId, postData }) {
 	const navigate = useNavigate();
@@ -33,26 +34,29 @@ function PostForm({ selectedOptions, postId, postData }) {
 
 	const validationChecks = [
 		{
+			check: !values.title || values.title.trim().length === 0,
+			message: MESSAGE.CHECK.TITLE,
+		},
+
+		{
 			check: values.title && values.title.length > 50,
-			message: '제목은 50자 이하로 입력해주세요.',
+			message: MESSAGE.CHECK.TITLELENGTH,
 		},
+
 		{
-			check: values.title && values.title.trim().length === 0,
-			message: '제목을 작성해주세요.',
-		},
-		{
-			check: values.description && values.description.trim().length === 0,
-			message: '소개 내용을 작성해주세요.',
+			check:
+				!values.description || values.description.trim().length === 0,
+			message: MESSAGE.CHECK.DESCRIPTION,
 		},
 		{
 			check: values.description && values.description.length > 1000,
-			message: '내용은 1000자 이하로 작성해주세요.',
+			message: MESSAGE.CHECK.DESCRIPTIONLENGTH,
 		},
 		{
 			check:
-				selectedOptions.howContactContent &&
+				!selectedOptions.howContactContent ||
 				selectedOptions.howContactContent.trim().length === 0,
-			message: '연락 가능한 링크를 입력해주세요.',
+			message: MESSAGE.CHECK.COMMUNICATION,
 		},
 		{
 			check: Object.keys(selectedOptions).some(optionKey => {
@@ -64,10 +68,9 @@ function PostForm({ selectedOptions, postId, postData }) {
 				}
 				return false;
 			}),
-			message: '모든 항목을 선택해주세요.',
+			message: MESSAGE.CHECK.ALL,
 		},
 	];
-	// console.log('selectedOptions', selectedOptions);
 
 	const { trigger, isLoading, error, result } = useApi({
 		path: '/projectStudy',
@@ -105,7 +108,6 @@ function PostForm({ selectedOptions, postId, postData }) {
 					data: postData,
 				});
 			}
-
 			// navigate(`/study/detail/${response.data.id}`)
 			navigate(`/study`);
 		} catch (error) {
@@ -114,7 +116,7 @@ function PostForm({ selectedOptions, postId, postData }) {
 	};
 
 	const onClickCancel = e => {
-		if (confirm('작성을 취소할까요?')) {
+		if (confirm(MESSAGE.POST.CANCEL)) {
 			navigate('/study');
 		}
 	};

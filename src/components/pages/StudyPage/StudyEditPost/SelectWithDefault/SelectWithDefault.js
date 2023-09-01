@@ -15,7 +15,7 @@ function SelectWithDefault({ options, selectedValue, defaultValue, onChange }) {
 			onChange={onChange}
 			value={selectedValue}
 		>
-			<option hidden>{defaultValue}을 선택해주세요.</option>
+			<option hidden>{defaultValue}을 선택해 주세요.</option>
 			{options.map(el => (
 				<option key={el.value}>{el.name}</option>
 			))}
