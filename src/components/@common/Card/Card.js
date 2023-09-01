@@ -16,8 +16,8 @@ function MentorCard(props) {
 	});
 
 	useEffect(() => {
-		if (result.data && result.data.length > 0) {
-			setMentorData([...result.data]);
+		if (result && result.length > 0) {
+			setMentorData([...result]);
 			console.log(error);
 		}
 	}, [result]);
