@@ -85,11 +85,11 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: '/signup',
+				path: '/register',
 				element: <SignUp />,
 			},
 			{
-				path: '/signupdone',
+				path: '/register/done',
 				element: <SignUpDone />,
 			},
 			{
@@ -198,30 +198,3 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-
-// import Layout from '../components/@common/Layout';
-
-// import Home from '../pages/Home/Home';
-// import SignUp from '../pages/SignUp/SignUp';
-
-// import MyPage from '../pages/MyPage/MyPage';
-// import MentoringHistory from '../pages/MyPage/Mentor/MentoringHistory/MentoringHistory';
-// import AccountManage from '../pages/MyPage/AccountManage/AccountManage';
-// import AccountWithdrawal from '../pages/MyPage/AccountWithdrawal/AccountWithdrawal';
-// import MyPageLayout from '../components/pages/MyPage/MyPageLayout/MyPageLayout';
-// import MentoringListPage from '../pages/MyPage/Mentor/MentoringList/MentoringListPage';
-
-// import Portfolio from '../pages/Portfolio/Portfolio';
-// import PortfolioApply from '../pages/Portfolio/PortfolioApply/PortfolioApply';
-// import PortfolioPost from '../pages/Portfolio/PortfolioPost/PortfolioPost';
-
-// import StudyPage from '../pages/StudyPage/StudyPage';
-// import StudyEditPost from '../pages/StudyPage/StudyEditPost/StudyEditPost';
-// import StudyPostDetail from '../pages/StudyPage/StudyPostDetail/StudyPostDetail';
-
-// import AdminCategory from '../pages/Admin/Category/AdminCategory';
-// import AdminHome from '../pages/Admin/Home/Admin';
-// import AdminLayout from '../components/pages/Admin';
-// import AdminMentorApply from '../pages/Admin/MentorApply/AdminMentorApply';
-// import AdminStudyProject from '../pages/Admin/StudyProject/AdminStudyProject';
-// import AdminMentorBoardList from '../pages/Admin/MentorBoardList/AdminMentorBoardList';

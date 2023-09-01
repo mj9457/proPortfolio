@@ -1,5 +1,14 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { flexCenter, flexColumn } from '../../../../styles/common';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const variantCSS = {
 	blue: css`
@@ -23,6 +32,7 @@ export const PopularCard = styled.a`
 	border-radius: 10px;
 	text-decoration: none;
 	color: ${({ theme }) => theme.PALETTE.black};
+	animation: ${fadeIn} 1s ease forwards;
 
 	&:visited {
 		color: ${({ theme }) => theme.PALETTE.black};
