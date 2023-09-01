@@ -1,9 +1,9 @@
-import { css, styled } from 'styled-components';
+import styled from 'styled-components';
+import { flexCenter, flexColumn } from '../../styles/common';
 
 export const Wrap = styled.div`
 	width: 100%;
-	display: flex;
-	justify-content: center;
+	${flexCenter};
 `;
 
 export const RegisterForm = styled.form`
@@ -17,15 +17,13 @@ export const RegisterForm = styled.form`
 		margin-bottom: 64px;
 	}
 	> div {
-		display: flex;
-		flex-direction: column;
+		${flexColumn};
 		text-align: left;
 		gap: 16px;
 		margin-bottom: 16px;
 
 		> label {
-			font-size: 16px;
-			font-weight: 400;
+			font-size: ${({ theme }) => theme.FONT_SIZE.md};
 		}
 		> select {
 			width: 360px;

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { flexColumn } from '../../../styles/common';
 
 const backgroundCSS = {
 	whiteBackground: css`
@@ -22,16 +23,15 @@ export const Container = styled.div`
 `;
 
 export const StudyInfoCard = styled.a`
-	${({ background }) => backgroundCSS[background]}
-	display: flex;
-	flex-direction: column;
+	${({ $background }) => backgroundCSS[$background]}
+	${flexColumn};
 	justify-content: center;
 	cursor: pointer;
 	text-decoration: none;
 	border-radius: 10px;
 	box-sizing: border-box;
 	height: 200px;
-	padding: 20px;
+	padding: 30px;
 `;
 export const Category = styled.p`
 	color: ${({ theme }) => theme.PALETTE.white};

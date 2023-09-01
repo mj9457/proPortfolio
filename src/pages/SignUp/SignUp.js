@@ -7,6 +7,7 @@ import { getCookie } from '../../utils/cookie';
 import Position from '../../components/@common/Position/Position';
 import useFooter from '../../hooks/useFooter';
 import useApi from '../../hooks/useApi';
+import VALIDATE from '../../constants/regex';
 
 function SignUp() {
 	const [name, setName] = useState('');
@@ -18,7 +19,7 @@ function SignUp() {
 	const navigate = useNavigate();
 	useFooter();
 
-	const { result, trigger, isLoading, error } = useApi({});
+	const { trigger } = useApi({});
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -33,13 +34,6 @@ function SignUp() {
 		fetchUserData();
 	}, []);
 
-	useEffect(() => {
-		if (error) {
-			console.log(error);
-		}
-		console.log(error);
-	}, [error]);
-
 	const handleNameChange = event => {
 		const newName = event.target.value;
 		if (newName.length <= 10) {
@@ -52,9 +46,9 @@ function SignUp() {
 
 	const handleNicknameChange = event => {
 		const value = event.target.value;
-		const regex = /^[ㄱ-ㅎ|가-힣|a-zA-Z0-9]*$/;
+		setNickName(value);
 		if (value.length <= 10) {
-			if (regex.test(value)) {
+			if (VALIDATE.nickName.test(value)) {
 				setNickName(value);
 				setNicknameError('');
 			} else {
@@ -64,6 +58,7 @@ function SignUp() {
 			setNicknameError('닉네임은 10자 이하로 입력해 주세요');
 		}
 	};
+
 	const handleJobChange = event => {
 		setPosition(event.target.value);
 	};
@@ -71,28 +66,27 @@ function SignUp() {
 	const handleSubmit = async event => {
 		event.preventDefault();
 
-		await trigger({
-			path: '/auth/signup',
-			method: 'post',
-			data: {
-				name,
-				email,
-				nickName,
-				position,
-			},
-		});
-
-		// if (result.result === 'MongoServerError') {
-		// 	if (result.reason.includes('duplicate key')) {
-		// 		alert('이미 사용중인 닉네임입니다.');
-		// 		return;
-		// 	} else {
-		// 		alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
-		// 		return;
-		// 	}
-		// }
-
-		// navigate('/signupdone');
+		try {
+			await trigger({
+				path: '/auth/signup',
+				method: 'post',
+				data: {
+					name,
+					email,
+					nickName,
+					position,
+				},
+			});
+			navigate('/signupdone');
+		} catch (err) {
+			if (err.response.data.result === 'MongoServerError') {
+				if (err.response.data.reason.includes('duplicate key')) {
+					alert('이미 사용중인 닉네임입니다.');
+				} else {
+					alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+				}
+			}
+		}
 	};
 
 	return (
@@ -151,3 +145,5 @@ function SignUp() {
 }
 
 export default SignUp;
+
+// 주석 처리 

@@ -4,11 +4,11 @@ import * as H from './Slider.styles';
 import useApi from '../../../hooks/useApi';
 import EmptyMessage from '../../@common/EmptyMessage/EmptyMessage';
 
-function Slider({ background, url, slidesToShow }) {
+function Slider({ $background, url, slidesToShow }) {
 	const [slide, setSlide] = useState(0);
 	const [studyInfoData, setStudyInfoData] = useState([]);
 
-	const { result, trigger, isLoading, error } = useApi({
+	const { result } = useApi({
 		path: `${url}`,
 		shouldFetch: true,
 	});
@@ -43,7 +43,7 @@ function Slider({ background, url, slidesToShow }) {
 									key={index}
 									postId={studyInfo._id}
 									classification={studyInfo.classification}
-									background={background}
+									$background={$background}
 									title={studyInfo.title}
 									process={studyInfo.process}
 									recruits={studyInfo.recruits}

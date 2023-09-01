@@ -51,6 +51,15 @@ function Header() {
 			});
 	};
 
+	const handleMentorApplyClick = () => {
+		if (!isLoggedIn) {
+			alert('로그인 후 이용 가능합니다.');
+			setOpenModal(true);
+		} else {
+			navigate('/usermentorapply');
+		}
+	};
+
 	return (
 		<S.Header>
 			<S.ImgBox href="/">
@@ -59,13 +68,13 @@ function Header() {
 
 			<S.NavBox>
 				<S.NavBar>
-					<S.NavLinkItem to="/" activeClassName="active">
+					<S.NavLinkItem to="/" activeclassname="active">
 						홈
 					</S.NavLinkItem>
-					<S.NavLinkItem to="/portfolio" activeClassName="active">
+					<S.NavLinkItem to="/portfolio" activeclassname="active">
 						포트폴리오 리뷰
 					</S.NavLinkItem>
-					<S.NavLinkItem to="/study" activeClassName="active">
+					<S.NavLinkItem to="/study" activeclassname="active">
 						프로젝트 / 스터디 모집
 					</S.NavLinkItem>
 				</S.NavBar>
@@ -106,9 +115,7 @@ function Header() {
 								variant={'primary'}
 								shape={'default'}
 								size={'small'}
-								onClick={() => {
-									navigate('/usermentorapply');
-								}}
+								onClick={handleMentorApplyClick}
 							>
 								멘토 전환
 							</Button>

@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
+import { flexCenter } from '../../../styles/common';
 
 export const IndicatorContainer = styled.div`
 	position: absolute;
 	bottom: -32px;
-	display: flex;
-	justify-content: center;
+	${flexCenter};
 	width: 100%;
 `;
 
