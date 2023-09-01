@@ -50,6 +50,7 @@ function Information(props) {
 					name="career"
 					defaultValue={portfolioId ? mentorPost.career : career}
 					onChange={handleChange}
+					type="number"
 				/>
 			</S.Contents>
 		</S.InfoBox>

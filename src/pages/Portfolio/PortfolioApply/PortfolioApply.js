@@ -98,7 +98,7 @@ function PortfolioApply() {
 	};
 
 	// 글 작성하기 & 수정하기 버튼 클릭
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		const fail = check(mentorPost).filter(el => el.checked);
 
 		// 유효성 검사 후
@@ -108,7 +108,7 @@ function PortfolioApply() {
 		} else {
 			// url에 portfolioId가 있다면 수정
 			if (portfolioId) {
-				postTrigger({
+				await postTrigger({
 					method: 'put',
 					path: `/portfolio/${portfolioId}`,
 					data: mentorPost,
@@ -116,14 +116,20 @@ function PortfolioApply() {
 				alert(MESSAGE.POST.EDITFIN);
 				navigate(-1);
 			} else {
-				// 없다면 작성
-				trigger({
-					method: 'post',
-					path: '/portfolio',
-					data: mentorPost,
-				});
-				alert(MESSAGE.POST.COMPLETE);
-				navigate('/portfolio');
+				try {
+					await trigger({
+						method: 'post',
+						path: '/portfolio',
+						data: mentorPost,
+					});
+
+					alert(MESSAGE.POST.COMPLETE);
+					navigate('/portfolio');
+				} catch (err) {
+					if (err.response.data.result === 'Conflict') {
+						alert(err.response.data.reason);
+					}
+				}
 			}
 		}
 	};
