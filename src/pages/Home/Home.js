@@ -60,7 +60,7 @@ function Home() {
 				)}
 				<H.NewStudy>
 					<H.TitleBox>
-						<H.Title>🔥 방금 올라온 프로젝트 / 스터디</H.Title>
+						<H.Title>🔥 방금 올라온 스터디 / 프로젝트</H.Title>
 						<H.ViewAll href="/study">
 							전체보기
 							<img

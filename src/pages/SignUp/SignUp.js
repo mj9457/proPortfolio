@@ -36,26 +36,25 @@ function SignUp() {
 
 	const handleNameChange = event => {
 		const newName = event.target.value;
-		if (newName.length <= 10) {
+		setName(newName);
+		if (VALIDATE.name.test(newName)) {
 			setName(newName);
 			setNameError('');
 		} else {
-			setNameError('이름은 10자 이하로 입력해 주세요');
+			setNameError('2자에서 10자 사이의 한글로 입력해 주세요.');
 		}
 	};
 
 	const handleNicknameChange = event => {
-		const value = event.target.value;
-		setNickName(value);
-		if (value.length <= 10) {
-			if (VALIDATE.nickName.test(value)) {
-				setNickName(value);
-				setNicknameError('');
-			} else {
-				setNicknameError('한글, 영어, 숫자만 입력 가능합니다.');
-			}
+		const newNickName = event.target.value;
+		setNickName(newNickName);
+		if (VALIDATE.nickName.test(newNickName)) {
+			setNickName(newNickName);
+			setNicknameError('');
 		} else {
-			setNicknameError('닉네임은 10자 이하로 입력해 주세요');
+			setNicknameError(
+				'2자에서 10자 사이의 한글, 영어, 숫자로 입력해 주세요.',
+			);
 		}
 	};
 
@@ -65,6 +64,11 @@ function SignUp() {
 
 	const handleSubmit = async event => {
 		event.preventDefault();
+
+		if (!name || !email || !nickName || !position) {
+			alert('모든 필수 정보를 입력해 주세요.');
+			return;
+		}
 
 		try {
 			await trigger({

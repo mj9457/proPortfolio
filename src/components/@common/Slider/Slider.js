@@ -77,3 +77,5 @@ function Slider({ $background, url, slidesToShow }) {
 }
 
 export default Slider;
+
+// 주석처리
