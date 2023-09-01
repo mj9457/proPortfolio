@@ -5,7 +5,7 @@ import useFooter from '../../../hooks/useFooter';
 function SignUpDone() {
 	useFooter();
 	const handleConfirmClick = () => {
-		window.location.href = 'http://localhost:3000/api/auth/login/naver';
+		window.location.href = '/api/auth/login/naver';
 	};
 	return (
 		<S.Wrap>

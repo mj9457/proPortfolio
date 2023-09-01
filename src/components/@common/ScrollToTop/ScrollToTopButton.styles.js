@@ -20,6 +20,7 @@ export const ScrollButton = styled.button`
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	box-sizing: border-box;
 	padding: 10px;
+	opacity: 0.7;
 	svg {
 		fill: #7d7d7d;
 		width: 9px;

@@ -53,7 +53,7 @@ function SignUp() {
 			setNicknameError('');
 		} else {
 			setNicknameError(
-				'2자에서 10자 사이의 한글, 영어, 숫자로 입력해 주세요.',
+				'한글, 영어, 숫자, 공백 포함 2자에서 10자 사이로 입력해 주세요.',
 			);
 		}
 	};
@@ -81,7 +81,7 @@ function SignUp() {
 					position,
 				},
 			});
-			navigate('/signupdone');
+			navigate('/signup/done');
 		} catch (err) {
 			if (err.response.data.result === 'MongoServerError') {
 				if (err.response.data.reason.includes('duplicate key')) {
