@@ -8,6 +8,7 @@ import MESSAGE from '../../../constants/message';
 import Textarea from '../Textarea/Textarea';
 import { checkToken } from '../../../utils/cookie';
 import Pagination from '../Pagination/Pagination';
+import LoadingBar from '../Loading/LoadingBar';
 
 function Review(props) {
 	const { title, getUrl } = props;
@@ -175,7 +176,7 @@ function Review(props) {
 
 			<S.BottomBox>
 				{isLoading ? (
-					<h2>로딩 중입니다.</h2>
+					<LoadingBar />
 				) : (
 					<>
 						{review.map((comment, idx) => (

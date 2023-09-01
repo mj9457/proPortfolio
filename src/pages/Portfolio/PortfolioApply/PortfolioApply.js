@@ -46,8 +46,8 @@ function PortfolioApply() {
 	});
 
 	const { result: postResult, trigger: postTrigger } = useApi({
-		path: `/portfolio/${portfolioId}`,
-		shouldFetch: true,
+		path: portfolioId ? `/portfolio/${portfolioId}` : '',
+		shouldFetch: portfolioId,
 	});
 
 	// 원래 유저에 들어가 있던 정보 setMentorPost에 넣어주기

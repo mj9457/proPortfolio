@@ -2,28 +2,31 @@ const Loading = () => {
 	return (
 		<div
 			style={{
-				position: 'absolute',
-				top: '40%',
-				left: '50%',
-				transform: 'translate(-50%, -50%)',
-				backgroundColor: 'rgba(255, 255, 255, 0.5)', // 흰색 배경의 투명도를 조절합니다.
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				padding: '20px',
+				width: '100vw',
+				position: 'fixed',
+				height: '100vh',
+				top: '0',
+				bottom: '0',
+				left: '0',
+				right: '0',
+				backgroundColor: 'rgba(255, 255, 255, 0.5)',
 			}}
 		>
-			<div>
-				<img src="/assets/img/icons/loading.gif" alt="로딩 아이콘" />
-			</div>
 			<div
 				style={{
-					marginTop: '18px',
-					fontSize: '24px',
-					fontFamily: 'Pretendard-Medium',
+					position: 'absolute',
+					top: '46%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					padding: '20px',
 				}}
 			>
-				로딩 중입니다. 잠시만 기다려 주세요.
+				<div>
+					<img src="/assets/img/icons/loading.gif" alt="로딩 아이콘" />
+				</div>
 			</div>
 		</div>
 	);
