@@ -25,7 +25,6 @@ function Home() {
 	useEffect(() => {
 		if (result && result.portfolios && result.portfolios.length > 0) {
 			setRecommendedMentors([...result.portfolios]);
-			console.log(error);
 		}
 	}, [result]);
 
