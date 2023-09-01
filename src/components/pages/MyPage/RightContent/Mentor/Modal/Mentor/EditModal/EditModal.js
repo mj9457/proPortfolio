@@ -8,9 +8,9 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 		advice: '',
 		action: 'complete',
 	}); // 작성한 첨삭 내용 (멘토)
-	const [signupData, setSignupData] = useState([]); // 멘토링 신청 정보 (일반 유저)
-	const [mentoringData, setMentoringData] = useState([]); // 멘토링 작성 정보 (멘토)
-	const [error, setError] = useState(null); // 에러 state
+	// const [signupData, setSignupData] = useState([]); // 멘토링 신청 정보 (일반 유저)
+	// const [mentoringData, setMentoringData] = useState([]); // 멘토링 작성 정보 (멘토)
+	// const [error, setError] = useState(null); // 에러 state
 
 	// 멘토가 입력한 정보 change
 	const handleChange = e => {
@@ -29,26 +29,27 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 
 	// 멘토
 	const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
+
 	const requestId = item._id; // 멘토가 신청 받은 id
+
 	const postData = textareaValue; // 수락할때 보내줄 데이터,
 
 	// 멘토가 입력한 정보 submit => post로 서버에 전달
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		if (e.target[0].value === mentoringData.title) {
+		if (e.target[0].value === item.title) {
 			alert('변경 내용이 없습니다.');
 			closeModal();
 		} else {
+			// console.log(textareaValue);
+			// console.log('🚀 ~ 멘토가 올린 신청 게시글의 id:', portfolioId);
+			// console.log('🚀 ~ 멘토가 신청 받은 id: ', requestId);
+			// console.log('🚀 ~ 수락할때 보내줄 데이터: ', postData);
 			trigger({
 				method: 'post',
 				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
 				data: postData,
-				shouldFetch: true,
-			});
-			trigger({
-				method: 'get',
-				path: `/portfolio/mentor/mentoringRequests`,
 				shouldFetch: true,
 			});
 			alert('첨삭 되었습니다.');
@@ -92,7 +93,6 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 									name={'advice'}
 									size={'regular'}
 									placeholder={'첨삭 내용 작성'}
-									defaultValue={mentoringData.title}
 									onChange={handleChange}
 								/>
 							</EM.InfoSubTitleBox>

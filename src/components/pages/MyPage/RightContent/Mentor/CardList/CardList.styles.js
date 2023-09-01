@@ -14,7 +14,7 @@ export const SubContentBar = styled.div`
 	align-items: center;
 	align-content: center;
 	flex-wrap: wrap;
-	width: 100%;
+	width: 52.5rem;
 	border-bottom: 1px solid #ccc;
 `;
 

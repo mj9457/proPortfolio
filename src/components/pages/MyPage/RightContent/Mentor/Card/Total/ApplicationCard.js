@@ -16,7 +16,7 @@ import { userItem } from '../../../../../../../recoil/atoms/myPage/myPage.atom';
 // 카드 리스트
 function ApplicationCard({ categoryKey, item }) {
 	// useEffect(() => {
-	// 	console.log('categoryKey', categoryKey, 'itme: ', item);
+	// 	console.log('categoryKey', categoryKey, 'item: ', item);
 	// }, [categoryKey]);
 	// 모달창 노출 여부 state
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
@@ -42,43 +42,162 @@ function ApplicationCard({ categoryKey, item }) {
 		setNowData(e);
 	};
 
+	return (
+		<>
+			{categoryKey === 'accepted' ? (
+				<CardLayout
+					showInfoModal={showInfoModal}
+					infoModalOpenState={infoModalOpenState}
+					setInfoModalOpenState={setInfoModalOpenState}
+					showEditModal={showEditModal}
+					editModalOpenState={editModalOpenState}
+					setEditModalOpenState={setEditModalOpenState}
+					categoryKey={categoryKey}
+					item={item}
+					nowData={nowData}
+					nowDataFun={nowDataFun}
+				></CardLayout>
+			) : categoryKey === 'completed' ? (
+				<CardLayout
+					showInfoModal={showInfoModal}
+					infoModalOpenState={infoModalOpenState}
+					setInfoModalOpenState={setInfoModalOpenState}
+					showEditModal={showEditModal}
+					editModalOpenState={editModalOpenState}
+					setEditModalOpenState={setEditModalOpenState}
+					categoryKey={categoryKey}
+					item={item}
+					nowData={nowData}
+					nowDataFun={nowDataFun}
+				></CardLayout>
+			) : categoryKey === 'rejected' ? (
+				<CardLayout
+					showInfoModal={showInfoModal}
+					infoModalOpenState={infoModalOpenState}
+					setInfoModalOpenState={setInfoModalOpenState}
+					showRefuseModal={showRefuseModal}
+					refuseModalOpenState={refuseModalOpenState}
+					setRefuseModalOpenState={setRefuseModalOpenState}
+					categoryKey={categoryKey}
+					item={item}
+					nowData={nowData}
+					nowDataFun={nowDataFun}
+				></CardLayout>
+			) : (
+				<CardLayout
+					showInfoModal={showInfoModal}
+					infoModalOpenState={infoModalOpenState}
+					setInfoModalOpenState={setInfoModalOpenState}
+					showRefuseModal={showRefuseModal}
+					refuseModalOpenState={refuseModalOpenState}
+					setRefuseModalOpenState={setRefuseModalOpenState}
+					categoryKey={categoryKey}
+					item={item}
+					nowData={nowData}
+					nowDataFun={nowDataFun}
+				></CardLayout>
+			)}
+		</>
+	);
+}
+
+export default ApplicationCard;
+
+function CardLayout(props) {
+	const { categoryKey, item } = props;
+	const { nowData, nowDataFun } = props;
+	const { showInfoModal, infoModalOpenState, setInfoModalOpenState } = props;
+	const { showEditModal, editModalOpenState, setEditModalOpenState } = props;
+	const { showRefuseModal, refuseModalOpenState, setRefuseModalOpenState } =
+		props;
+
+	// useEffect(() => {
+	// 	console.log(userItems);
+	// }, [userItems]);
+
+	// useEffect(() => {
+	// 	console.log(mentoringItems);
+	// }, [mentoringItems]);
+
+	// 유저 데이터
+	const user = useRecoilValue(userItem);
+
+	const movePageToPortFolio = item => {
+		console.log(item);
+		window.location.replace(`/portfolio/post/${item.portfolioId}`); // 멘토링 게시물 (멘토)
+	};
+
+	const { trigger } = useApi({});
+
+	// 멘토 - 멘토링 신청 수락하기 / 거절하기
+	const acceptedHandler = async item => {
+		// 멘토
+		const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
+		const requestId = item._id; // 멘토가 신청 받은 id
+		const acceptedPostData = { status: 'accepted' }; // 수락할때 보내줄 데이터,
+
+		trigger({
+			method: 'post',
+			path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
+			data: acceptedPostData,
+			shouldFetch: true,
+		});
+	}; // 유저
+	const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
+	const requestId = item.userId; // 멘토가 신청 받은 id
+	const requestedPostData = { status: 'rejected' }; // 취소할때 보내줄 데이터,
+
+	const rejectMentoring = item => {
+		console.log(portfolioId, requestId, requestedPostData);
+		trigger({
+			method: 'post',
+			path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
+			data: requestedPostData,
+			shouldFetch: true,
+		});
+	};
+	useEffect(() => {
+		console.log(item);
+	}, [item]);
 	// const portfolioId = item.portfolioId; // 유저가 불러올 멘토링 신청한 멘토의 아이디 ( 유저 : 멘토의 아이디 )
-	// const userId = item.userId; // 멘토가 불러올 멘토링을 신청한 유저의 아이디 ( 멘토 : 유저의 아이디 )
+	const userId = item.userId; // 멘토가 불러올 멘토링을 신청한 유저의 아이디 ( 멘토 : 유저의 아이디 )
 	// // console.log('멘토링의 멘토 아이디 : ', portfolioId);
-	// // console.log('멘토링 신청한 유저 아이디 :', userId);
+	useEffect(() => {
+		console.log('멘토링 신청한 유저 아이디 :', userId);
+	}, [userId]);
 
 	// // 멘토 신청 받은 건
-	// const [userData, setUserData] = useState([]); // 유저가 불러올 멘토링 신청한 멘토의 정보
-	// const [mentorData, setMentorData] = useState([]); // 멘토가 불러올 멘토링을 신청한 유저의 정보
+	const [userData, setUserData] = useState([]); // 유저가 불러올 멘토링 신청한 멘토의 정보
+	const [mentorData, setMentorData] = useState([]); // 멘토가 불러올 멘토링을 신청한 유저의 정보
 
-	// const { result: userDatas } = useApi({
-	// 	path: `/user/${userId}/profile`,
-	// 	shouldFetch: true,
-	// });
-	// const { result: mentorDatas } = useApi({
-	// 	path: `/portfolio/${portfolioId}`,
-	// 	shouldFetch: true,
-	// });
+	const { result: userDatas } = useApi({
+		path: `/user/${userId}/profile`,
+		shouldFetch: true,
+	});
+	const { result: mentorDatas } = useApi({
+		path: `/portfolio/${portfolioId}`,
+		shouldFetch: true,
+	});
 
-	// useEffect(() => {
-	// 	if (userDatas) {
-	// 		setUserData(userDatas);
-	// 	}
-	// }, [userDatas]);
+	useEffect(() => {
+		if (userDatas) {
+			setUserData(userDatas);
+		}
+	}, [userDatas]);
 
-	// useEffect(() => {
-	// 	if (mentorDatas) {
-	// 		setMentorData(mentorDatas);
-	// 	}
-	// }, [mentorDatas]);
+	useEffect(() => {
+		if (mentorDatas) {
+			setMentorData(mentorDatas);
+		}
+	}, [mentorDatas]);
 
-	// // useEffect(() => {
-	// // 	console.log('userData : ', userDatas);
-	// // }, [userDatas]);
+	useEffect(() => {
+		console.log('userData : ', userData);
+	}, [userData]);
 
-	// // useEffect(() => {
-	// // 	console.log('mentorData : ', mentorDatas);
-	// // }, [mentorDatas]);
+	useEffect(() => {
+		console.log('mentorData : ', mentorData);
+	}, [mentorData]);
 
 	// const userItems = {
 	// 	...item,
@@ -100,157 +219,6 @@ function ApplicationCard({ categoryKey, item }) {
 
 	return (
 		<>
-			{categoryKey === 'accepted' ? (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showEditModal={showEditModal}
-					editModalOpenState={editModalOpenState}
-					setEditModalOpenState={setEditModalOpenState}
-					categoryKey={categoryKey}
-					item={item}
-					// userItems={userItems}
-					// mentoringItems={mentoringItems}
-					nowData={nowData}
-					nowDataFun={nowDataFun}
-				></CardLayout>
-			) : categoryKey === 'completed' ? (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showEditModal={showEditModal}
-					editModalOpenState={editModalOpenState}
-					setEditModalOpenState={setEditModalOpenState}
-					categoryKey={categoryKey}
-					item={item}
-					// userItems={userItems}
-					// mentoringItems={mentoringItems}
-					nowData={nowData}
-					nowDataFun={nowDataFun}
-				></CardLayout>
-			) : categoryKey === 'rejected' ? (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showRefuseModal={showRefuseModal}
-					refuseModalOpenState={refuseModalOpenState}
-					setRefuseModalOpenState={setRefuseModalOpenState}
-					categoryKey={categoryKey}
-					item={item}
-					// userItems={userItems}
-					// mentoringItems={mentoringItems}
-					nowData={nowData}
-					nowDataFun={nowDataFun}
-				></CardLayout>
-			) : (
-				<CardLayout
-					showInfoModal={showInfoModal}
-					infoModalOpenState={infoModalOpenState}
-					setInfoModalOpenState={setInfoModalOpenState}
-					showRefuseModal={showRefuseModal}
-					refuseModalOpenState={refuseModalOpenState}
-					setRefuseModalOpenState={setRefuseModalOpenState}
-					categoryKey={categoryKey}
-					item={item}
-					// userItems={userItems}
-					// mentoringItems={mentoringItems}
-					nowData={nowData}
-					nowDataFun={nowDataFun}
-				></CardLayout>
-			)}
-		</>
-	);
-}
-
-export default ApplicationCard;
-
-function CardLayout(props) {
-	// const { categoryKey, item, userItems, mentoringItems } = props;
-	const { categoryKey, item } = props;
-	const { nowData, nowDataFun } = props;
-	const { showInfoModal, infoModalOpenState, setInfoModalOpenState } = props;
-	const { showEditModal, editModalOpenState, setEditModalOpenState } = props;
-	const { showRefuseModal, refuseModalOpenState, setRefuseModalOpenState } =
-		props;
-
-	// useEffect(() => {
-	// 	console.log(userItems);
-	// }, [userItems]);
-
-	// useEffect(() => {
-	// 	console.log(mentoringItems);
-	// }, [mentoringItems]);
-
-	// 유저 데이터
-	const user = useRecoilValue(userItem);
-
-	const portfolioId = item.portfolioId;
-
-	const movePageToPortFolio = item => {
-		window.open(
-			`http://localhost:3000/portfolio/post/${portfolioId}`,
-			'_blank',
-			'noopener, noreferrer',
-		); // 멘토링 게시물 (멘토)
-	};
-
-	// /// ////////////////////////////////////////////////
-	// // 멘토
-	// // 멘토링 신청 게시글(portfolioId)
-	// const [portfolioId, setPorfoiloId] = useState();
-	// const { result: mentoringRequests } = useApi({
-	// 	path: `/portfolio/mentor/mentoringRequests`,
-	// 	shouldFetch: true,
-	// });
-
-	// useEffect(() => {
-	// 	if (mentoringRequests) {
-	// 		setPorfoiloId(mentoringRequests);
-	// 	}
-	// }, [mentoringRequests]);
-
-	// console.log('포폴 ID: ', portfolioId);
-	// /// ////////////////////////////////////////////////
-
-	const { trigger } = useApi({});
-
-	const acceptedHandler = async (event, item) => {
-		console.log(event);
-		console.log(event.target.innerText);
-		console.log('target1: ', item);
-
-		// 멘토
-		const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
-		const requestId = item._id; // 멘토가 신청 받은 id
-		const acceptedPostData = { status: 'accepted' }; // 수락할때 보내줄 데이터,
-		const requestedPostData = { status: 'requested' }; // 거절 취소할때 보내줄 데이터,
-
-		console.log('portfolioId', portfolioId);
-		console.log('requestId', requestId);
-		console.log('postData', acceptedPostData);
-
-		if (event.target.innerText === '수락하기') {
-			trigger({
-				method: 'post',
-				path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
-				data: acceptedPostData,
-				shouldFetch: true,
-			});
-		} else {
-			trigger({
-				method: 'post',
-				path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
-				data: requestedPostData,
-				shouldFetch: true,
-			});
-		}
-	};
-
-	return (
-		<>
 			<CCS.CardWrapper>
 				<CCS.Wrapper>
 					{user.role === 'mentor' ? (
@@ -260,15 +228,15 @@ function CardLayout(props) {
 						<CCS.UserImage
 							src={
 								user.role === 'mentor'
-									? item?.profileImageUrl
-									: item?.profileImageUrl
+									? userDatas?.profileImageUrl
+									: mentorDatas?.profileImageUrl
 							}
 						></CCS.UserImage>
 						<CCS.UserInfoBox>
 							<CCS.UserName>
 								{user.role === 'mentor'
-									? item?.name
-									: item?.name}
+									? userDatas?.name
+									: mentorDatas?.name}
 							</CCS.UserName>
 							{user.role === 'mentor' ? (
 								<CCS.ApplicationTitle
@@ -281,11 +249,11 @@ function CardLayout(props) {
 								</CCS.ApplicationTitle>
 							) : (
 								<CCS.ApplicationTitle
-									onClick={item => {
+									onClick={() => {
 										movePageToPortFolio(item);
 									}}
 								>
-									{item?.title}
+									{mentorDatas?.title}
 								</CCS.ApplicationTitle>
 							)}
 							{user.role === 'mentor'
@@ -298,13 +266,11 @@ function CardLayout(props) {
 										/>
 								  )
 								: infoModalOpenState && (
-										<ApplyModal
+										<InfoViewModal
 											setInfoModalOpenState={
 												setInfoModalOpenState
 											}
-											action={'수정'}
-											path={'/'}
-											nowData={nowData}
+											item={item}
 										/>
 								  )}
 						</CCS.UserInfoBox>
@@ -351,7 +317,7 @@ function CardLayout(props) {
 												setEditModalOpenState={
 													setEditModalOpenState
 												}
-												item={nowData}
+												item={item}
 											/>
 									  )
 									: editModalOpenState && (
@@ -360,31 +326,18 @@ function CardLayout(props) {
 												setEditModalOpenState={
 													setEditModalOpenState
 												}
-												item={nowData}
+												item={item}
 											/>
 									  )}
 							</>
 						) : categoryKey === 'rejected' ? (
 							<>
-								{user.role === 'mentor' ? (
+								{user.role === 'mentor' ? undefined : (
 									<CCS.OneButton
-										onClick={event => {
-											alert(MESSAGE.MYPAGE.REFUSE.CANCLE);
-											console.log(
-												MESSAGE.MYPAGE.REFUSE.COMPLETE,
-											);
-											alert(MESSAGE.MYPAGE.APPLY.CONFIRM);
-											acceptedHandler(event, item);
-											window.location.replace('/mypage');
+										onClick={() => {
+											showRefuseModal();
 										}}
 									>
-										{
-											MYPAGEOPTION.MENTOR.BUTTONTITLE
-												.REJECTEDCANCLE
-										}
-									</CCS.OneButton>
-								) : (
-									<CCS.OneButton onClick={showRefuseModal}>
 										{
 											MYPAGEOPTION.MENTEE.BUTTONTITLE
 												.REFUSEVIEW
@@ -396,6 +349,7 @@ function CardLayout(props) {
 										setRefuseModalOpenState={
 											setRefuseModalOpenState
 										}
+										item={item}
 									/>
 								)}
 							</>
@@ -404,12 +358,12 @@ function CardLayout(props) {
 								{user.role === 'mentor' ? (
 									<>
 										<CCS.ApplyButton
-											onClick={event => {
+											onClick={() => {
 												alert(
 													MESSAGE.MYPAGE.APPLY
 														.CONFIRM,
 												);
-												acceptedHandler(event, item);
+												acceptedHandler(item);
 												window.location.replace(
 													'/mypage',
 												);
@@ -448,11 +402,15 @@ function CardLayout(props) {
 											신청서 보기
 										</CCS.ApplyButton>
 										<CCS.RefuseButton
-											onClick={() =>
+											onClick={event => {
 												alert(
 													'멘토링 신청이 취소되었습니다.',
-												)
-											}
+												);
+												rejectMentoring(item);
+												window.location.replace(
+													'/mypage',
+												);
+											}}
 										>
 											{
 												MYPAGEOPTION.MENTEE.BUTTONTITLE
@@ -460,13 +418,11 @@ function CardLayout(props) {
 											}
 										</CCS.RefuseButton>
 										{infoModalOpenState && (
-											<ApplyModal
+											<InfoViewModal
 												setInfoModalOpenState={
 													setInfoModalOpenState
 												}
-												action={'수정'}
-												path={item.portfolioId}
-												nowData={item}
+												item={item}
 											/>
 										)}
 									</>

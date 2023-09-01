@@ -27,7 +27,7 @@ function PostListData() {
 	const showPost = postId => {
 		console.log(postId);
 		window.open(
-			`http://localhost:3000/study/detail/${postId}`,
+			`/study/detail/${postId}`,
 			'_blank',
 			'noopener, noreferrer',
 		); // 프로젝트 / 스터디 게시물 (유저)

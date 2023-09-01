@@ -6,7 +6,7 @@ import useApi from '../../../../../../../../hooks/useApi';
 
 // 멘토 - 멘토링 거절 사유 작성 모달
 function RefuseModal({ setRefuseModalOpenState, item }) {
-	const [textareaValue, setTextareaValue] = useState({
+	const [textValue, setTextValue] = useState({
 		message: '',
 		action: 'reject',
 	}); // 작성한 거절 내용 (멘토)
@@ -14,8 +14,8 @@ function RefuseModal({ setRefuseModalOpenState, item }) {
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
 		const { name, value } = e.target;
-		setTextareaValue({
-			...textareaValue,
+		setTextValue({
+			...textValue,
 			[name]: value,
 		});
 	};
@@ -28,27 +28,26 @@ function RefuseModal({ setRefuseModalOpenState, item }) {
 	// 멘토
 	const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
 	const requestId = item._id; // 멘토가 신청 받은 id
-	const postData = textareaValue; // 수락할때 보내줄 데이터,
+	const postsData = textValue; // 수락할때 보내줄 데이터,
 
 	// 유저가 입력한 정보 submit
 	const handleSubmit = e => {
 		e.preventDefault();
 
 		// 빈값 체크
-		if (!textareaValue?.message) {
+		if (!textValue?.message) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
 			// 유저 작성한 신청서 post로 전달
-			console.log(portfolioId, requestId, postData);
+			console.log(portfolioId, requestId, postsData);
 			trigger({
 				method: 'post',
 				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
-				data: postData,
+				data: postsData,
 				shouldFetch: true,
 			});
 
 			alert('거절되었습니다.');
-			closeModal();
 			window.location.replace('/mypage');
 		}
 	};

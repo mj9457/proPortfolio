@@ -59,7 +59,7 @@ export const UserCardImg = styled.div`
 	align-items: center;
 	gap: 0.5rem;
 
-	& img {
+	#image {
 		width: 5rem;
 		height: 5rem;
 		background:
@@ -68,9 +68,21 @@ export const UserCardImg = styled.div`
 		border-radius: 100%;
 	}
 
+	#alttext {
+		text-align: center;
+	}
+
 	& span {
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 		font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+	}
+
+	& button {
+		background: none;
+	}
+
+	& input:nth-child(3) {
+		display: none;
 	}
 `;
 

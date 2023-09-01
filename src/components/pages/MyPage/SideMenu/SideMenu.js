@@ -55,11 +55,11 @@ function SideMenu() {
 					</button>
 				</SM.History>
 				<SM.Info>
-					<button onClick={() => handleClickButton('AccountManage')}>
+					<button onClick={() => handleClickButton('accountmanage')}>
 						내 정보 관리
 					</button>
 					<button
-						onClick={() => handleClickButton('AccountWithdrawal')}
+						onClick={() => handleClickButton('accountwithdrawal')}
 					>
 						회원 탈퇴
 					</button>

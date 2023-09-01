@@ -28,7 +28,7 @@ function MentoringPostListData() {
 	const showPost = postId => {
 		console.log(postId);
 		window.open(
-			`http://localhost:3000/portfolio/post/${postId}`,
+			`/portfolio/post/${postId}`,
 			'_blank',
 			'noopener, noreferrer',
 		); // 멘토링 게시물 (멘토)

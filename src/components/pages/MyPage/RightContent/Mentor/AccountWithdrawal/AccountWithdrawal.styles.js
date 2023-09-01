@@ -37,6 +37,11 @@ export const SubTitleBox = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 0.5rem;
+	width: 39.8125rem;
+
+	& span:nth-child(2) {
+		line-height: 22px;
+	}
 `;
 
 export const SubTitle = styled.div`

@@ -11,6 +11,84 @@ import { useRecoilState } from 'recoil';
 import useApi from '../../../../hooks/useApi';
 
 function MentoringListPage() {
+	// const { result: user } = useApi({
+	// 	path: '/user',
+	// 	method: 'get',
+	// 	shouldFetch: true,
+	// });
+	// const { result, isLoading, error, trigger } = useApi({
+	// 	path: '/portfolio/user/myMentoringRequests?status=requested',
+	// 	method: 'get',
+	// 	shouldFetch: true,
+	// });
+
+	// useEffect(() => {
+	// 	callApi();
+	// }, []);
+	// const handleTriggerClick = () => {
+	// 	// trigger 함수를 호출하여 API 요청을 실행합니다.
+	// 	trigger({
+	// 		method: 'get',
+	// 		applyResult: true,
+	// 	});
+	// };
+
+	// const callApi = () => {
+	// 	if (user.role === 'mentor') {
+	// 		trigger({
+	// 			path: '/portfolio/mentor/mentoringRequests?status=requested',
+	// 			method: 'get',
+	// 			applyResult: true,
+	// 		});
+	// 	} else {
+	// 		trigger({
+	// 			path: '/portfolio/user/myMentoringRequests?status=accepted',
+	// 			method: 'get',
+	// 			applyResult: true,
+	// 		})
+	// 			.then(() => {
+	// 				// 첫 번째 요청이 완료된 후에 두 번째 trigger 호출 (1초 후)
+	// 				setTimeout(() => {
+	// 					return trigger({
+	// 						path: '/portfolio/user/myMentoringRequests?status=requested',
+	// 						method: 'get',
+	// 						applyResult: true,
+	// 					});
+	// 				}, 100);
+	// 			})
+	// 			.then(() => {
+	// 				// 첫 번째 요청이 완료된 후에 두 번째 trigger 호출 (1초 후)
+	// 				setTimeout(() => {
+	// 					return trigger({
+	// 						path: '/portfolio/user/myMentoringRequests?status=completed',
+	// 						method: 'get',
+	// 						applyResult: true,
+	// 					});
+	// 				}, 100);
+	// 			})
+	// 			.catch(error => {
+	// 				console.error(error);
+	// 			});
+	// 	}
+	// };
+
+	// if (isLoading) {
+	// 	return <div>Loading...</div>;
+	// }
+
+	// if (error) {
+	// 	return <div>Error occurred!</div>;
+	// }
+
+	// return (
+	// 	<div>
+	// 		{/* Display the result here */}
+	// 		{JSON.stringify(result)}
+
+	// 		{/* Button to trigger the API request */}
+	// 		<button onClick={handleTriggerClick}>Trigger Request</button>
+	// 	</div>
+	// );
 	// const [mentoringData, setMentoringData] = useRecoilState(mentoringItem);
 	// const [applyData, setApplyData] = useRecoilState(applyItem);
 	// const [userData, setUserData] = useRecoilState(userItem);
@@ -62,6 +140,132 @@ function MentoringListPage() {
 	// 		}
 	// 	}, [applyResult]);
 	// });
+	// /// ///////////////////////////////////////////
+	// // 유저 정보 통신(GET)
+	// const [userData, setUserData] = useRecoilState(userItem);
+	// const { result: users, trigger: usersTrigger } = useApi({
+	// 	method: 'get',
+	// 	path: `/user`,
+	// 	shouldFetch: true,
+	// });
+	// useEffect(() => {
+	// 	if (users) {
+	// 		setUserData(users);
+	// 	}
+	// }, [users]);
+
+	// useEffect(() => {
+	// 	console.log(userData);
+	// }, [userData]);
+
+	// const [mentoringData, setMentoringData] = useRecoilState(mentoringItem);
+	// const [applyData, setApplyData] = useRecoilState(applyItem);
+
+	// const { trigger, isLoading, error, result } = useApi({
+	// 	path: '/portfolio',
+	// 	method: 'get',
+	// });
+
+	// const onLoad = async e => {
+	// 	try {
+	// 		if (userData.role === 'mentor') {
+	// 			console.log('userData.role : ', userData.role);
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/mentor/mentoringRequests?status=requested`,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/mentor/mentoringRequests?status=accepted`,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/mentor/mentoringRequests?status=completed`,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/mentor/mentoringRequests?status=rejected`,
+	// 			});
+	// 		} else {
+	// 			console.log('userData.role: ', userData.role);
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/user/myMentoringRequests?status=requested`,
+	// 				applyResult: true,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/user/myMentoringRequests?status=accepted`,
+	// 				applyResult: true,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/user/myMentoringRequests?status=completed`,
+	// 				applyResult: true,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/user/myMentoringRequests?status=rejected`,
+	// 				applyResult: true,
+	// 			});
+	// 			trigger({
+	// 				method: 'get',
+	// 				path: `/portfolio/user/myMentoringRequests?status=cancled`,
+	// 				applyResult: true,
+	// 			});
+	// 		}
+	// 	} catch (err) {
+	// 		console.error(err);
+	// 	}
+	// };
+
+	// // setMentoringData({
+	// // 	requested: requestedMentoringData,
+	// // 	accepted: acceptedMentoringData,
+	// // 	completed: completedMentoringData,
+	// // 	rejected: rejectedMentoringData,
+	// // });
+	// // setApplyData({
+	// // 	requested: requestedApplyDatas,
+	// // 	accepted: acceptedApplyDatas,
+	// // 	completed: completedApplyDatas,
+	// // 	rejected: rejectedApplyDatas,
+	// // 	cancled: cancledApplyDatas,
+	// // });
+
+	// useEffect(() => {
+	// 	onLoad();
+	// }, []);
+
+	// useEffect(() => {
+	// 	// if (result) {
+	// 	// 	setUserData(result);
+	// 	// }
+	// 	// console.log('result : ', result);
+
+	// 	if (result && userData.role === 'mentor') {
+	// 		setMentoringData({
+	// 			requested: result,
+	// 			accepted: result,
+	// 			completed: result,
+	// 			rejected: result,
+	// 		});
+	// 	}
+
+	// 	if (result && userData.role === 'user') {
+	// 		setApplyData({
+	// 			requested: result,
+	// 			accepted: result,
+	// 			completed: result,
+	// 			rejected: result,
+	// 			cancled: result,
+	// 		});
+	// 	}
+	// }, [result]);
+
+	// console.log(userData);
+
+	/// ///////////////////////////////////////////
 
 	// 멘토 신청 받은 건
 	const [requestedMentoringData, setRequestedMentoringData] = useState([]);
@@ -162,7 +366,7 @@ function MentoringListPage() {
 		// console.log('(유저)리뷰 완료 건: ', completedApplyData);
 	}, [completedApplyDatas]);
 
-	// 유저 취소 건
+	// 유저 거절 건
 	const [rejectedApplyData, setRejectedApplyData] = useState([]);
 	const { result: rejectedApplyDatas } = useApi({
 		path: `/portfolio/user/myMentoringRequests?status=rejected`,
@@ -173,7 +377,7 @@ function MentoringListPage() {
 		if (rejectedApplyDatas && rejectedApplyDatas.length > 0) {
 			setRejectedApplyData(rejectedApplyDatas);
 		}
-		// console.log('(유저)취소 건: ', rejectedApplyData);
+		// console.log('(유저)거절 건: ', rejectedApplyData);
 	}, [rejectedApplyDatas]);
 
 	/// //////////////////////////////////////////////
