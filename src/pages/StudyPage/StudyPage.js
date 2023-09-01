@@ -14,7 +14,7 @@ function StudyPage() {
 	const [userNickName, setUserNickName] = useState('');
 
 	const isLoggedIn = checkToken();
-	console.log('로그인 유무', checkToken());
+	// console.log('로그인 유무', checkToken());
 
 	const onClickAddPost = () => {
 		if (!isLoggedIn) {

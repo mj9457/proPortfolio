@@ -1,6 +1,7 @@
 import * as S from './PostCard.styles';
 import { Link } from 'react-router-dom';
 import Chip from '../../../@common/Chip/Chip';
+import { useEffect } from 'react';
 
 function PostCard({ data }) {
 	const {
@@ -30,16 +31,21 @@ function PostCard({ data }) {
 
 				<S.BottomBox>
 					<S.RightBox>
-						{position.map((name, idx) => (
-							<S.PositionBox key={idx}>
-								<S.Position>{name}</S.Position>
-							</S.PositionBox>
-						))}
+						{position &&
+							position.length > 0 &&
+							position.map((name, idx) => (
+								<S.PositionBox key={idx}>
+									<S.Position>{name}</S.Position>
+								</S.PositionBox>
+							))}
 					</S.RightBox>
 
 					<S.Day>
 						<p>마감 기간</p>
-						<p>{deadline.split('T')[0].replace(/-/g, '. ')}</p>
+						<p>
+							{deadline &&
+								deadline.split('T')[0].replace(/-/g, '. ')}
+						</p>
 					</S.Day>
 				</S.BottomBox>
 			</Link>

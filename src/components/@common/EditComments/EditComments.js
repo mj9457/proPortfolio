@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './EditComments.styles';
 import Button from '../../../components/@common/Button/Button';
 import useApi from '../../../hooks/useApi';
@@ -7,6 +7,7 @@ import MESSAGE from '../../../constants/message';
 
 function EditComments({ isLoggedIn, userData, title }) {
 	const { postId } = useParams();
+	const navigate = useNavigate();
 
 	const [comment, setComment] = useState({
 		author: '',
@@ -52,14 +53,21 @@ function EditComments({ isLoggedIn, userData, title }) {
 		await trigger({
 			data: commentData,
 		});
-		console.log(commentData);
+
 		setComment(prevComment => ({
 			...prevComment,
 			content: '',
 		}));
+
+		// 임시
+		navigate(0);
 	};
 
-	const particle = title === '후기' ? '을' : '를';
+	useEffect(() => {
+		console.log('Test');
+	}, [comment]);
+
+	const particle = title === '후기' ? '를' : '을';
 
 	return (
 		<S.Container>

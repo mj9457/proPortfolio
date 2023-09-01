@@ -51,10 +51,10 @@ function MultiSelectDropdown({ onPositionsChange, selectedData }) {
 	});
 
 	useEffect(() => {
-		if (result && result.length > 0) {
-			setPositions(result);
+		if (result.positions && result.positions.length > 0) {
+			setPositions(result.positions);
 		}
-	}, [result]);
+	}, [result.positions]);
 
 	return (
 		<S.MultiselectContainer>
