@@ -200,7 +200,11 @@ function MentoringListPage() {
 			requestedMentoringData &&
 			acceptedMentoringData &&
 			completedMentoringData &&
-			rejectedMentoringData
+			rejectedMentoringData &&
+			requestedApplyData &&
+			acceptedApplyData &&
+			completedApplyData &&
+			rejectedApplyData
 		) {
 			// 모든 데이터가 로드되었다면 Recoil 상태 업데이트
 			setMentoringData({
@@ -209,12 +213,6 @@ function MentoringListPage() {
 				completed: completedMentoringData,
 				rejected: rejectedMentoringData,
 			});
-		} else if (
-			requestedApplyData &&
-			acceptedApplyData &&
-			completedApplyData &&
-			rejectedApplyData
-		) {
 			setApplyData({
 				requested: requestedApplyDatas,
 				accepted: acceptedApplyDatas,
