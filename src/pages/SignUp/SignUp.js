@@ -145,5 +145,3 @@ function SignUp() {
 }
 
 export default SignUp;
-
-// 주석 처리 

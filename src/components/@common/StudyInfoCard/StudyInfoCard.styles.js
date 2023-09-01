@@ -31,7 +31,8 @@ export const StudyInfoCard = styled.a`
 	border-radius: 10px;
 	box-sizing: border-box;
 	height: 200px;
-	padding: 30px;
+	padding: 20px;
+	min-width: 254px;
 `;
 export const Category = styled.p`
 	color: ${({ theme }) => theme.PALETTE.white};
@@ -60,10 +61,14 @@ export const Position = styled.p`
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	margin-bottom: 16px;
-	/* max-width: 214px; */
 	height: 30px;
-	text-overflow: ellipsis;
 	line-height: 16px;
+	display: -webkit-box;
+	word-wrap: break-word;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 export const DetailInfoWrapper = styled.div`
