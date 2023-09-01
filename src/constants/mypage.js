@@ -12,7 +12,7 @@ const MYPAGEOPTION = {
 			ACCEPTED: '수락하기',
 			REJECTED: '거절하기',
 			EDIT: '첨삭하기',
-			EDITVIEW: '첨삭 내용 보기',
+			EDITVIEW: '첨삭 보기',
 			REJECTEDCANCLE: '거절 취소하기',
 			CLOSE: '닫기',
 		},
@@ -46,6 +46,7 @@ const MYPAGEOPTION = {
 			CANCLE: '취소하기',
 			EDITVIEW: '리뷰 내용 보기',
 			REFUSEVIEW: '취소 사유 보기',
+			REVIEWEDIT: '후기 작성',
 		},
 	},
 

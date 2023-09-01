@@ -12,6 +12,7 @@ import MESSAGE from '../../../../../../../constants/message';
 import useApi from '../../../../../../../hooks/useApi';
 import { useRecoilValue } from 'recoil';
 import { userItem } from '../../../../../../../recoil/atoms/myPage/myPage.atom';
+import ReviewModal from '../../Modal/Mentee/ReviewModal/ReviewModal';
 
 // 카드 리스트
 function ApplicationCard({ categoryKey, item }) {
@@ -22,6 +23,7 @@ function ApplicationCard({ categoryKey, item }) {
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 	const [editModalOpenState, setEditModalOpenState] = useState(false);
 	const [refuseModalOpenState, setRefuseModalOpenState] = useState(false);
+	const [reviewModalOpenState, setReviewModalOpenState] = useState(false);
 
 	// 모달창에 전달할 현재 데이터
 	const [nowData, setNowData] = useState();
@@ -35,6 +37,10 @@ function ApplicationCard({ categoryKey, item }) {
 	};
 	const showRefuseModal = () => {
 		setRefuseModalOpenState(true);
+	};
+
+	const showReviewModal = () => {
+		setReviewModalOpenState(true);
 	};
 
 	// 현재 데이터 변경
@@ -65,6 +71,9 @@ function ApplicationCard({ categoryKey, item }) {
 					showEditModal={showEditModal}
 					editModalOpenState={editModalOpenState}
 					setEditModalOpenState={setEditModalOpenState}
+					showReviewModal={showReviewModal}
+					reviewModalOpenState={reviewModalOpenState}
+					setReviewModalOpenState={setReviewModalOpenState}
 					categoryKey={categoryKey}
 					item={item}
 					nowData={nowData}
@@ -109,6 +118,8 @@ function CardLayout(props) {
 	const { showInfoModal, infoModalOpenState, setInfoModalOpenState } = props;
 	const { showEditModal, editModalOpenState, setEditModalOpenState } = props;
 	const { showRefuseModal, refuseModalOpenState, setRefuseModalOpenState } =
+		props;
+	const { showReviewModal, reviewModalOpenState, setReviewModalOpenState } =
 		props;
 
 	// useEffect(() => {
@@ -302,14 +313,45 @@ function CardLayout(props) {
 							</>
 						) : categoryKey === 'completed' ? (
 							<>
-								<CCS.OneButton
-									onClick={() => {
-										showEditModal();
-										nowDataFun(item);
-									}}
-								>
-									{MYPAGEOPTION.MENTOR.BUTTONTITLE.EDITVIEW}
-								</CCS.OneButton>
+								{user.role === 'mentor' ? (
+									<CCS.OneButton
+										onClick={() => {
+											showEditModal();
+											nowDataFun(item);
+										}}
+									>
+										{
+											MYPAGEOPTION.MENTOR.BUTTONTITLE
+												.EDITVIEW
+										}
+									</CCS.OneButton>
+								) : (
+									<>
+										<CCS.RefuseButton
+											onClick={() => {
+												showEditModal();
+												nowDataFun(item);
+											}}
+										>
+											{
+												MYPAGEOPTION.MENTOR.BUTTONTITLE
+													.EDITVIEW
+											}
+										</CCS.RefuseButton>
+										<CCS.ApplyButton
+											onClick={() => {
+												showReviewModal();
+												nowDataFun(item);
+											}}
+										>
+											{
+												MYPAGEOPTION.MENTEE.BUTTONTITLE
+													.REVIEWEDIT
+											}
+										</CCS.ApplyButton>
+									</>
+								)}
+
 								{user.role === 'mentor'
 									? editModalOpenState && (
 											<EditViewModal
@@ -329,6 +371,15 @@ function CardLayout(props) {
 												item={item}
 											/>
 									  )}
+								{reviewModalOpenState && (
+									<ReviewModal
+										categoryKey={categoryKey}
+										setReviewModalOpenState={
+											setReviewModalOpenState
+										}
+										item={item}
+									/>
+								)}
 							</>
 						) : categoryKey === 'rejected' ? (
 							<>
