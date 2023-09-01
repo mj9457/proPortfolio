@@ -2,13 +2,26 @@ import { useState, useEffect, useRef } from 'react';
 import * as RVM from './ReviewModal.styles';
 import Textarea from '../../../../../../../@common/Textarea/Textarea';
 import useApi from '../../../../../../../../hooks/useApi';
+import { useRecoilValue } from 'recoil';
+import { userItem } from '../../../../../../../../recoil/atoms/myPage/myPage.atom';
 
 // 멘토 - 멘토링 거절 사유 작성 모달
 function ReviewModal({ setReviewModalOpenState, item }) {
+	const userData = useRecoilValue(userItem);
+
 	const [textValue, setTextValue] = useState({
-		message: '',
-		action: 'reject',
-	}); // 작성한 거절 내용 (멘토)
+		author: '',
+		ownerId: '',
+		content: '',
+	});
+
+	useEffect(() => {
+		if (userData) {
+			textValue.author = userData.nickName;
+			textValue.ownerId = userData._id;
+		}
+		console.log(userData);
+	}, [userData]);
 
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
@@ -34,7 +47,7 @@ function ReviewModal({ setReviewModalOpenState, item }) {
 		e.preventDefault();
 
 		// 빈값 체크
-		if (!textValue?.message) {
+		if (!textValue?.content) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
 			// 유저 작성한 신청서 post로 전달
@@ -66,9 +79,9 @@ function ReviewModal({ setReviewModalOpenState, item }) {
 							<RVM.InfoSubTitleBox>
 								<RVM.InfoSubTitle>후기</RVM.InfoSubTitle>
 								<Textarea
-									name={'message'}
+									name={'content'}
 									size={'regular'}
-									placeholder={'거절 사유를 적어주세요'}
+									placeholder={'후기를 적어주세요'}
 									onChange={handleChange}
 								/>
 							</RVM.InfoSubTitleBox>

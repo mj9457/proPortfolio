@@ -66,6 +66,7 @@ export const UserCardImg = styled.div`
 			url(<path-to-image>),
 			lightgray 50% / cover no-repeat;
 		border-radius: 100%;
+		pointer-events: none;
 	}
 
 	#alttext {
@@ -79,6 +80,7 @@ export const UserCardImg = styled.div`
 
 	& button {
 		background: none;
+		cursor: pointer;
 	}
 
 	& input:nth-child(3) {

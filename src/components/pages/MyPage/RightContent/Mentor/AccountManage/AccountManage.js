@@ -153,7 +153,7 @@ function AccountManage() {
 									: user?.profileImageUrl
 							}
 							alt="프로필"
-							onClick={handleFileChange}
+							readOnly
 						></input>
 						<button type="button" onClick={fileUploadHandler}>
 							프로필 수정
