@@ -64,7 +64,7 @@ function MultiSelectDropdown({ onPositionsChange, selectedData }) {
 					<option>
 						{selectedPositions.length > 0
 							? selectedPositions.join(', ')
-							: '모집하는 직무를 선택해주세요.(최대 4개)'}
+							: '모집하는 직무를 선택해 주세요.(최대 4개)'}
 					</option>
 				</select>
 				<S.OverSelect></S.OverSelect>

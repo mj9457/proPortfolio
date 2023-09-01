@@ -15,10 +15,17 @@ function EditComments({ isLoggedIn, userData, title }) {
 		content: '',
 	});
 
-	if (userData) {
-		comment.author = userData.nickName;
-		comment.ownerId = userData._id;
-	}
+	useEffect(() => {
+		if (userData) {
+			comment.author = userData.nickName;
+			comment.ownerId = userData._id;
+		}
+	}, [userData]);
+
+	// if (userData) {
+	// 	comment.author = userData.nickName;
+	// 	comment.ownerId = userData._id;
+	// }
 	const { trigger, isLoading, error, result } = useApi({
 		path: `/projectStudy/${postId}/comments`,
 		method: 'post',

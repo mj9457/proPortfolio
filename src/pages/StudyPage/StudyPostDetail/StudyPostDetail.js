@@ -7,13 +7,15 @@ import EditComments from '../../../components/@common/EditComments/EditComments'
 import useApi from '../../../hooks/useApi';
 import { checkToken } from '../../../utils/cookie';
 import useFooter from '../../../hooks/useFooter';
-import Review from '../../../components/@common/Review/Review';
 import MESSAGE from '../../../constants/message';
+import Review from '../../../components/@common/Review/Review';
 
 function StudyPostDetail() {
 	useFooter();
 	const { postId } = useParams();
-	const [isLoggedIn, setIsLoggedIn] = useState(null);
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+
+	// console.log('isLoggedIn', isLoggedIn);
 
 	const [postDetail, setPostDetail] = useState(null);
 	const [user, setUser] = useState(null);
@@ -30,11 +32,17 @@ function StudyPostDetail() {
 		shouldFetch: isLoggedIn,
 	});
 
+	// console.log('USERDATA', userData, user);
+
 	useEffect(() => {
 		if (userData) {
+			// console.log('USERDATA', userData);
 			setUser(userData);
+			// console.log('USER', user);
 		}
 	}, [userData]);
+
+	// console.log('user', user);
 
 	// useEffect(() => {
 	// 	setUser(userData);
@@ -44,6 +52,8 @@ function StudyPostDetail() {
 		path: `/projectStudy/${postId}`,
 		shouldFetch: true,
 	});
+
+	// console.log('postDetail', postDetail);
 
 	useEffect(() => {
 		if (result) {
@@ -56,22 +66,7 @@ function StudyPostDetail() {
 
 	const isUser = userData._id === result.ownerId;
 
-	const dateAndTime = updatedAt => {
-		const serverDate = new Date(updatedAt);
-		const date = serverDate.toLocaleDateString('ko-KR');
-		const options = {
-			hour: 'numeric',
-			minute: 'numeric',
-			second: 'numeric',
-			hour12: false,
-		};
-		const time = serverDate.toLocaleTimeString('en-US', options);
-
-		return `${date} ${time}`;
-	};
-
 	const {
-		updatedAt,
 		ownerId,
 		profileImageUrl,
 		recruitsStatus,
@@ -81,6 +76,7 @@ function StudyPostDetail() {
 		howContactContent,
 		createdAt,
 		process,
+		name,
 		nickName,
 		recruits,
 		deadline,
@@ -150,7 +146,11 @@ function StudyPostDetail() {
 								</S.UserProfileContainer>
 								{/* 작성 날짜 */}
 								<S.Date>
-									{createdAt ? dateAndTime(createdAt) : ''}
+									{createdAt
+										? new Date(postDetail.createdAt)
+												.toLocaleDateString()
+												.replace(/\.$/, '')
+										: ''}
 								</S.Date>
 							</S.PostInfoContainer>
 						</S.PostDetailTop>

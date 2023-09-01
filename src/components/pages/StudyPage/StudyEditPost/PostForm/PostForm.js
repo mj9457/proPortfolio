@@ -134,7 +134,7 @@ function PostForm({ selectedOptions, postId, postData }) {
 				name="description"
 				size={'large'}
 				maxLength={1000}
-				placeholder="프로젝트, 스터디에 대해 소개해주세요!"
+				placeholder="스터디, 프로젝트에 대해 소개해 주세요!"
 				value={values.description}
 				onChange={handleChange}
 			/>
