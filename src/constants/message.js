@@ -45,7 +45,7 @@ const MESSAGE = {
 	},
 	MYPAGE: {
 		APPLY: {
-			REQUSET: '수락하시겠습니까?',
+			CONFIRM: '포트폴리오 리뷰 신청이 수락되었습니다.',
 		},
 		EDIT: {
 			COMPLETE: '수정이 완료되었습니다.',

@@ -19,3 +19,8 @@ export const applyItem = atom({
 		rejected: [],
 	},
 });
+
+export const userItem = atom({
+	key: 'userItem',
+	default: {},
+});

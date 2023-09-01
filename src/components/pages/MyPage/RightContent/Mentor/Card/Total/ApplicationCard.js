@@ -6,16 +6,12 @@ import InfoViewModal from '../../Modal/Mentor/InfoViewModal/InfoViewModal';
 import RefuseViewModal from '../../Modal/Mentee/RefuseViewModal/RefuseViewModal';
 import InfoEditModal from '../../Modal/Mentee/InfoEditModal/InfoEditModal';
 import EditViewModal from '../../Modal/Mentee/EditViewModal/EditViewModal';
-import { useRecoilValue } from 'recoil';
-import {
-	applyItem,
-	mentoringItem,
-} from '../../../../../../../recoil/atoms/myPage/myPage.atom';
-import axios from 'axios';
 import ApplyModal from '../../../../../../@common/ApplyModal/ApplyModal';
 import MYPAGEOPTION from '../../../../../../../constants/mypage';
 import MESSAGE from '../../../../../../../constants/message';
 import useApi from '../../../../../../../hooks/useApi';
+import { useRecoilValue } from 'recoil';
+import { userItem } from '../../../../../../../recoil/atoms/myPage/myPage.atom';
 
 // 카드 리스트
 function ApplicationCard({ categoryKey, item }) {
@@ -46,56 +42,61 @@ function ApplicationCard({ categoryKey, item }) {
 		setNowData(e);
 	};
 
-	// 유저 정보 담을 state
-	const [user, setUser] = useState({});
-	// 유저 정보 통신(GET)
-	const { result: users } = useApi({
-		path: `/user`,
-		shouldFetch: true,
-	});
+	// const portfolioId = item.portfolioId; // 유저가 불러올 멘토링 신청한 멘토의 아이디 ( 유저 : 멘토의 아이디 )
+	// const userId = item.userId; // 멘토가 불러올 멘토링을 신청한 유저의 아이디 ( 멘토 : 유저의 아이디 )
+	// // console.log('멘토링의 멘토 아이디 : ', portfolioId);
+	// // console.log('멘토링 신청한 유저 아이디 :', userId);
 
-	// 유저 정보가 변경될 때 리렌더링
-	useEffect(() => {
-		if (users) {
-			setUser(users);
-		}
-	}, [users]);
+	// // 멘토 신청 받은 건
+	// const [userData, setUserData] = useState([]); // 유저가 불러올 멘토링 신청한 멘토의 정보
+	// const [mentorData, setMentorData] = useState([]); // 멘토가 불러올 멘토링을 신청한 유저의 정보
 
-	const [mData, setMData] = useState('');
+	// const { result: userDatas } = useApi({
+	// 	path: `/user/${userId}/profile`,
+	// 	shouldFetch: true,
+	// });
+	// const { result: mentorDatas } = useApi({
+	// 	path: `/portfolio/${portfolioId}`,
+	// 	shouldFetch: true,
+	// });
 
-	// 게시글 삭제
-	const onDelete = targetId => {
-		async function deleteList() {
-			try {
-				if (user.role === 'mentor') {
-					const response = await axios.delete(
-						`https://jsonplaceholder.typicode.com/posts/:${targetId}`, // 요청 주소 다르게
-					);
-					console.log(response);
-					console.log(response.data);
-					// const newpostList = mData.filter(
-					// 	data => data.id !== targetId,
-					// );
-					// console.log(newpostList);
-					// setMData(newpostList);
-				} else {
-					const response = await axios.delete(
-						`https://jsonplaceholder.typicode.com/posts/:${targetId}`, // 요청 주소를 다르게
-					);
-					console.log(response);
-					console.log(response.data);
-					// const newpostList = mData.filter(
-					// 	data => data.id !== targetId,
-					// );
-					// console.log(newpostList);
-					// setMData(newpostList);
-				}
-			} catch (err) {
-				console.log(err);
-			}
-		}
-		deleteList();
-	};
+	// useEffect(() => {
+	// 	if (userDatas) {
+	// 		setUserData(userDatas);
+	// 	}
+	// }, [userDatas]);
+
+	// useEffect(() => {
+	// 	if (mentorDatas) {
+	// 		setMentorData(mentorDatas);
+	// 	}
+	// }, [mentorDatas]);
+
+	// // useEffect(() => {
+	// // 	console.log('userData : ', userDatas);
+	// // }, [userDatas]);
+
+	// // useEffect(() => {
+	// // 	console.log('mentorData : ', mentorDatas);
+	// // }, [mentorDatas]);
+
+	// const userItems = {
+	// 	...item,
+	// 	...userData,
+	// };
+
+	// const mentoringItems = {
+	// 	...item,
+	// 	...mentorData,
+	// };
+
+	// // useEffect(() => {
+	// // 	console.log('내가바로 새로운 유저아이템:', userItems);
+	// // }, [userItems]);
+
+	// // useEffect(() => {
+	// // 	console.log('내가바로 새로운 멘토링아이템:', mentoringItems);
+	// // }, [mentoringItems]);
 
 	return (
 		<>
@@ -109,7 +110,8 @@ function ApplicationCard({ categoryKey, item }) {
 					setEditModalOpenState={setEditModalOpenState}
 					categoryKey={categoryKey}
 					item={item}
-					onDelete={onDelete}
+					// userItems={userItems}
+					// mentoringItems={mentoringItems}
 					nowData={nowData}
 					nowDataFun={nowDataFun}
 				></CardLayout>
@@ -123,6 +125,8 @@ function ApplicationCard({ categoryKey, item }) {
 					setEditModalOpenState={setEditModalOpenState}
 					categoryKey={categoryKey}
 					item={item}
+					// userItems={userItems}
+					// mentoringItems={mentoringItems}
 					nowData={nowData}
 					nowDataFun={nowDataFun}
 				></CardLayout>
@@ -136,7 +140,8 @@ function ApplicationCard({ categoryKey, item }) {
 					setRefuseModalOpenState={setRefuseModalOpenState}
 					categoryKey={categoryKey}
 					item={item}
-					onDelete={onDelete}
+					// userItems={userItems}
+					// mentoringItems={mentoringItems}
 					nowData={nowData}
 					nowDataFun={nowDataFun}
 				></CardLayout>
@@ -150,7 +155,8 @@ function ApplicationCard({ categoryKey, item }) {
 					setRefuseModalOpenState={setRefuseModalOpenState}
 					categoryKey={categoryKey}
 					item={item}
-					onDelete={onDelete}
+					// userItems={userItems}
+					// mentoringItems={mentoringItems}
 					nowData={nowData}
 					nowDataFun={nowDataFun}
 				></CardLayout>
@@ -162,48 +168,26 @@ function ApplicationCard({ categoryKey, item }) {
 export default ApplicationCard;
 
 function CardLayout(props) {
-	const { categoryKey, onDelete, item } = props;
+	// const { categoryKey, item, userItems, mentoringItems } = props;
+	const { categoryKey, item } = props;
 	const { nowData, nowDataFun } = props;
 	const { showInfoModal, infoModalOpenState, setInfoModalOpenState } = props;
 	const { showEditModal, editModalOpenState, setEditModalOpenState } = props;
 	const { showRefuseModal, refuseModalOpenState, setRefuseModalOpenState } =
 		props;
 
-	useEffect(() => {
-		console.log('내가바로 새로운 아이템:', item);
-	}, [item]);
+	// useEffect(() => {
+	// 	console.log(userItems);
+	// }, [userItems]);
 
-	// 유저 정보 담을 state
-	const [user, setUser] = useState({});
-	// 유저 정보 통신(GET)
-	const { result: users, trigger } = useApi({
-		path: `/user`,
-		shouldFetch: true,
-	});
+	// useEffect(() => {
+	// 	console.log(mentoringItems);
+	// }, [mentoringItems]);
+
+	// 유저 데이터
+	const user = useRecoilValue(userItem);
 
 	const portfolioId = item.portfolioId;
-
-	// 멘토 신청 받은 건
-	const [MD1, setMD1] = useState([]);
-	const { result: MD } = useApi({
-		path: `/portfolio/${portfolioId}`,
-		shouldFetch: true,
-	});
-
-	useEffect(() => {
-		if (MD && MD.length > 0) {
-			setMD1(MD);
-		}
-	}, [MD]);
-
-	const newItem = {
-		...item,
-		...MD,
-	};
-
-	useEffect(() => {
-		// console.log('내가바로 새로운 아이템:', newItem);
-	}, [newItem]);
 
 	const movePageToPortFolio = item => {
 		window.open(
@@ -213,32 +197,55 @@ function CardLayout(props) {
 		); // 멘토링 게시물 (멘토)
 	};
 
-	const acceptedHandler = async e => {
-		console.log('target: ', e);
-		const [requestId] = [e.userId];
-		const postData = { ...e, status: 'accepted' };
+	// /// ////////////////////////////////////////////////
+	// // 멘토
+	// // 멘토링 신청 게시글(portfolioId)
+	// const [portfolioId, setPorfoiloId] = useState();
+	// const { result: mentoringRequests } = useApi({
+	// 	path: `/portfolio/mentor/mentoringRequests`,
+	// 	shouldFetch: true,
+	// });
 
+	// useEffect(() => {
+	// 	if (mentoringRequests) {
+	// 		setPorfoiloId(mentoringRequests);
+	// 	}
+	// }, [mentoringRequests]);
+
+	// console.log('포폴 ID: ', portfolioId);
+	// /// ////////////////////////////////////////////////
+
+	const { trigger } = useApi({});
+
+	const acceptedHandler = async (event, item) => {
+		console.log(event);
+		console.log(event.target.innerText);
+		console.log('target1: ', item);
+
+		// 멘토
+		const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
+		const requestId = item._id; // 멘토가 신청 받은 id
+		const acceptedPostData = { status: 'accepted' }; // 수락할때 보내줄 데이터,
+		const requestedPostData = { status: 'requested' }; // 거절 취소할때 보내줄 데이터,
+
+		console.log('portfolioId', portfolioId);
 		console.log('requestId', requestId);
-		console.log('postData', postData);
+		console.log('postData', acceptedPostData);
 
-		try {
-			const portfolioId = trigger({
-				method: 'get',
-				path: `/portfolio/mentor/mentoringRequests`,
-				shouldFetch: true,
-			});
-			console.log('portfolioId', portfolioId);
-			// 멘토 신청 수락 건
-			const response = await trigger({
+		if (event.target.innerText === '수락하기') {
+			trigger({
 				method: 'post',
-				// path: `/portfolio/mentor/respondToMentoringRequest/:64ef4afb42ccfe9185e18727/${portfolioId}`,
-				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
+				path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
+				data: acceptedPostData,
 				shouldFetch: true,
-				data: postData,
 			});
-			console.log(response);
-		} catch (err) {
-			console.log(err);
+		} else {
+			trigger({
+				method: 'post',
+				path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
+				data: requestedPostData,
+				shouldFetch: true,
+			});
 		}
 	};
 
@@ -246,34 +253,42 @@ function CardLayout(props) {
 		<>
 			<CCS.CardWrapper>
 				<CCS.Wrapper>
-					{users.role === 'mentor' ? (
+					{user.role === 'mentor' ? (
 						<CCS.Title>{MYPAGEOPTION.MENTOR.CARDTITLE}</CCS.Title>
 					) : undefined}
 					<CCS.UserBox>
 						<CCS.UserImage
-							src={newItem?.profileImageUrl}
+							src={
+								user.role === 'mentor'
+									? item?.profileImageUrl
+									: item?.profileImageUrl
+							}
 						></CCS.UserImage>
 						<CCS.UserInfoBox>
-							<CCS.UserName>{newItem?.name}</CCS.UserName>
-							{users.role === 'mentor' ? (
+							<CCS.UserName>
+								{user.role === 'mentor'
+									? item?.name
+									: item?.name}
+							</CCS.UserName>
+							{user.role === 'mentor' ? (
 								<CCS.ApplicationTitle
 									onClick={() => {
-										showInfoModal(newItem);
-										nowDataFun(newItem);
+										showInfoModal(item);
+										nowDataFun(item);
 									}}
 								>
-									{newItem?.title}
+									{item?.title}
 								</CCS.ApplicationTitle>
 							) : (
 								<CCS.ApplicationTitle
 									onClick={item => {
-										movePageToPortFolio(newItem);
+										movePageToPortFolio(item);
 									}}
 								>
-									{newItem?.title}
+									{item?.title}
 								</CCS.ApplicationTitle>
 							)}
-							{users.role === 'mentor'
+							{user.role === 'mentor'
 								? infoModalOpenState && (
 										<InfoViewModal
 											setInfoModalOpenState={
@@ -298,11 +313,11 @@ function CardLayout(props) {
 					<CCS.ButtonBox>
 						{categoryKey === 'accepted' ? (
 							<>
-								{users.role === 'mentor' ? (
+								{user.role === 'mentor' ? (
 									<CCS.OneButton
 										onClick={() => {
 											showEditModal();
-											nowDataFun(newItem);
+											nowDataFun(item);
 										}}
 									>
 										{MYPAGEOPTION.MENTOR.BUTTONTITLE.EDIT}
@@ -324,17 +339,14 @@ function CardLayout(props) {
 								<CCS.OneButton
 									onClick={() => {
 										showEditModal();
-										nowDataFun(newItem);
+										nowDataFun(item);
 									}}
 								>
-									{users.role === 'mentor'
-										? MYPAGEOPTION.MENTOR.BUTTONTITLE.MODIFY
-										: MYPAGEOPTION.MENTEE.BUTTONTITLE
-												.EDITVIEW}
+									{MYPAGEOPTION.MENTOR.BUTTONTITLE.EDITVIEW}
 								</CCS.OneButton>
-								{users.role === 'mentor'
+								{user.role === 'mentor'
 									? editModalOpenState && (
-											<EditModal
+											<EditViewModal
 												categoryKey={categoryKey}
 												setEditModalOpenState={
 													setEditModalOpenState
@@ -354,13 +366,16 @@ function CardLayout(props) {
 							</>
 						) : categoryKey === 'rejected' ? (
 							<>
-								{users.role === 'mentor' ? (
+								{user.role === 'mentor' ? (
 									<CCS.OneButton
-										onClick={() => {
+										onClick={event => {
 											alert(MESSAGE.MYPAGE.REFUSE.CANCLE);
 											console.log(
 												MESSAGE.MYPAGE.REFUSE.COMPLETE,
 											);
+											alert(MESSAGE.MYPAGE.APPLY.CONFIRM);
+											acceptedHandler(event, item);
+											window.location.replace('/mypage');
 										}}
 									>
 										{
@@ -386,16 +401,18 @@ function CardLayout(props) {
 							</>
 						) : (
 							<>
-								{users.role === 'mentor' ? (
+								{user.role === 'mentor' ? (
 									<>
 										<CCS.ApplyButton
-											onClick={() => {
+											onClick={event => {
 												alert(
 													MESSAGE.MYPAGE.APPLY
-														.REQUSET,
+														.CONFIRM,
 												);
-												console.log(newItem);
-												acceptedHandler(newItem);
+												acceptedHandler(event, item);
+												window.location.replace(
+													'/mypage',
+												);
 											}}
 										>
 											{
@@ -416,7 +433,7 @@ function CardLayout(props) {
 												setRefuseModalOpenState={
 													setRefuseModalOpenState
 												}
-												onDelete={onDelete}
+												item={item}
 											/>
 										)}
 									</>
@@ -448,8 +465,8 @@ function CardLayout(props) {
 													setInfoModalOpenState
 												}
 												action={'수정'}
-												path={newItem.portfolioId}
-												nowData={newItem}
+												path={item.portfolioId}
+												nowData={item}
 											/>
 										)}
 									</>

@@ -12,7 +12,7 @@ const MYPAGEOPTION = {
 			ACCEPTED: '수락하기',
 			REJECTED: '거절하기',
 			EDIT: '첨삭하기',
-			MODIFY: '수정하기',
+			EDITVIEW: '첨삭 내용 보기',
 			REJECTEDCANCLE: '거절 취소하기',
 			CLOSE: '닫기',
 		},

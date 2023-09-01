@@ -5,10 +5,10 @@ import { useRecoilValue } from 'recoil';
 import {
 	mentoringItem,
 	applyItem,
+	userItem,
 } from '../../../../../../recoil/atoms/myPage/myPage.atom';
 import MYPAGEOPTION from '../../../../../../constants/mypage';
 import MESSAGE from '../../../../../../constants/message';
-import useApi from '../../../../../../hooks/useApi';
 
 // 카드 리스트
 function CardList() {
@@ -54,24 +54,12 @@ function CardList() {
 		setCategory(e.target.id);
 	};
 
-	// 유저 정보 담을 state
-	const [user, setUser] = useState({});
-	// 유저 정보 통신(GET)
-	const { result: users } = useApi({
-		path: `/user`,
-		shouldFetch: true,
-	});
-
-	// 유저 정보가 변경될 때 리렌더링
-	useEffect(() => {
-		if (users) {
-			setUser(users);
-		}
-	}, [users]);
+	// 유저 데이터
+	const user = useRecoilValue(userItem);
 
 	return (
 		<>
-			{users.role === 'mentor' ? (
+			{user.role === 'mentor' ? (
 				<>
 					{category === 'accepted' ? (
 						<CardListLayout
@@ -107,7 +95,7 @@ function CardList() {
 						/>
 					)}
 				</>
-			) : users.role === 'user' ? (
+			) : user.role === 'user' ? (
 				<>
 					{category === 'accepted' ? (
 						<CardListLayout
@@ -151,19 +139,8 @@ function CardList() {
 export default CardList;
 
 function CardListLayout({ length, fun, categoryKey, subTitles, item }) {
-	// 유저 정보 담을 state
-	const [user, setUser] = useState({});
-	// 유저 정보 통신(GET)
-	const { result: users } = useApi({
-		path: `/user`,
-		shouldFetch: true,
-	});
-	// 유저 정보가 변경될 때 리렌더링
-	useEffect(() => {
-		if (users) {
-			setUser(users);
-		}
-	}, [users]);
+	// 유저 데이터
+	const user = useRecoilValue(userItem);
 
 	return (
 		<>
@@ -173,22 +150,22 @@ function CardListLayout({ length, fun, categoryKey, subTitles, item }) {
 						{categoryKey === 'accepted' ? (
 							<>
 								<CL.NonClicked id={'requested'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.requested
 										: subTitles.mentee.requested}
 								</CL.NonClicked>
 								<CL.Clicked id={'accepted'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.accepted
 										: subTitles.mentee.accepted}
 								</CL.Clicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.NonClicked>
 								<CL.NonClicked id={'rejected'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.rejected
 										: subTitles.mentee.rejected}
 								</CL.NonClicked>
@@ -196,22 +173,22 @@ function CardListLayout({ length, fun, categoryKey, subTitles, item }) {
 						) : categoryKey === 'completed' ? (
 							<>
 								<CL.NonClicked id={'requested'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.requested
 										: subTitles.mentee.requested}
 								</CL.NonClicked>
 								<CL.NonClicked id={'accepted'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.accepted
 										: subTitles.mentee.accepted}
 								</CL.NonClicked>
 								<CL.Clicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.Clicked>
 								<CL.NonClicked id={'rejected'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.rejected
 										: subTitles.mentee.rejected}
 								</CL.NonClicked>
@@ -219,22 +196,22 @@ function CardListLayout({ length, fun, categoryKey, subTitles, item }) {
 						) : categoryKey === 'rejected' ? (
 							<>
 								<CL.NonClicked id={'requested'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.requested
 										: subTitles.mentee.requested}
 								</CL.NonClicked>
 								<CL.NonClicked id={'accepted'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.accepted
 										: subTitles.mentee.accepted}
 								</CL.NonClicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.NonClicked>
 								<CL.Clicked id={'rejected'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.rejected
 										: subTitles.mentee.rejected}
 								</CL.Clicked>
@@ -242,22 +219,22 @@ function CardListLayout({ length, fun, categoryKey, subTitles, item }) {
 						) : (
 							<>
 								<CL.Clicked id={'requested'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.requested
 										: subTitles.mentee.requested}
 								</CL.Clicked>
 								<CL.NonClicked id={'accepted'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.accepted
 										: subTitles.mentee.accepted}
 								</CL.NonClicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.NonClicked>
 								<CL.NonClicked id={'rejected'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.rejected
 										: subTitles.mentee.rejected}
 								</CL.NonClicked>

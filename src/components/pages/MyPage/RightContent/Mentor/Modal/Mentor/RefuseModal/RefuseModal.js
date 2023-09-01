@@ -5,40 +5,51 @@ import Textarea from '../../../../../../../@common/Textarea/Textarea';
 import useApi from '../../../../../../../../hooks/useApi';
 
 // 멘토 - 멘토링 거절 사유 작성 모달
-function RefuseModal({ setRefuseModalOpenState }) {
-	const [textValue, setTextValue] = useState({
-		refuseContent: '',
-	});
+function RefuseModal({ setRefuseModalOpenState, item }) {
+	const [textareaValue, setTextareaValue] = useState({
+		message: '',
+		action: 'reject',
+	}); // 작성한 거절 내용 (멘토)
 
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
 		const { name, value } = e.target;
-		setTextValue({
-			...textValue,
+		setTextareaValue({
+			...textareaValue,
 			[name]: value,
 		});
 	};
+
+	const { result, trigger } = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
+
+	// 멘토
+	const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
+	const requestId = item._id; // 멘토가 신청 받은 id
+	const postData = textareaValue; // 수락할때 보내줄 데이터,
 
 	// 유저가 입력한 정보 submit
 	const handleSubmit = e => {
 		e.preventDefault();
 
 		// 빈값 체크
-		if (!textValue?.refuseContent) {
+		if (!textareaValue?.message) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
 			// 유저 작성한 신청서 post로 전달
-			console.log(textValue);
-			const { result, trigger, isLoading, error } = useApi({
-				method: 'put',
-				path: '/portfolio/mentor/mentoringRequests',
-				data: textValue,
+			console.log(portfolioId, requestId, postData);
+			trigger({
+				method: 'post',
+				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
+				data: postData,
 				shouldFetch: true,
 			});
-			console.log(result);
 
 			alert('거절되었습니다.');
 			closeModal();
+			window.location.replace('/mypage');
 		}
 	};
 
@@ -57,7 +68,7 @@ function RefuseModal({ setRefuseModalOpenState }) {
 							<RM.InfoSubTitleBox>
 								<RM.InfoSubTitle>거절 사유</RM.InfoSubTitle>
 								<Textarea
-									name={'refuseContent'}
+									name={'message'}
 									size={'regular'}
 									placeholder={'거절 사유를 적어주세요'}
 									onChange={handleChange}
