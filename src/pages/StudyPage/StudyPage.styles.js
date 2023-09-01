@@ -20,7 +20,9 @@ export const Title = styled.h2`
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
-export const SubTitle = styled.h3``;
+export const SubTitle = styled.h3`
+	text-indent: 40px;
+`;
 
 export const TopBox = styled.div``;
 

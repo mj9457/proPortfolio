@@ -22,7 +22,7 @@ export const Container = styled.div`
 	${flexColumn}
 	border-radius: 15px;
 	opacity: 0;
-	animation: ${fadeIn} 0.6s ease forwards;
+	animation: ${fadeIn} 1s ease forwards;
 	a {
 		text-decoration: none;
 		color: inherit;
@@ -78,7 +78,7 @@ export const PostText = styled.p`
 
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	line-height: 1.5;
-	height: 67px;
+	/* height: 67px; */
 	margin-bottom: 25px;
 `;
 

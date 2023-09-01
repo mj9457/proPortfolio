@@ -45,38 +45,6 @@ function StudyCategory() {
 		shouldFetch: true,
 	});
 
-	// const handleObserver = entries => {
-	//    const target = entries[0];
-	//    if (target.isIntersecting) {
-	//       console.log('통과');
-	//       setSkip(prevSkip => {
-	//          const newSkip = prevSkip + limit;
-	//          triggerProjectStudy({
-	//             path: '/projectStudy',
-	//             params: {
-	//                classification: selectedValues.classification,
-	//                position: selectedValues.position,
-	//                limit,
-	//                skip: newSkip,
-	//             },
-	//             shouldFetch: true,
-	//             applyResult: true,
-	//          });
-
-	//          return newSkip;
-	//       });
-	//       console.log('SKIP', skip);
-	//       console.log('projectStudy', projectStudy);
-	//       setProjectStudy(prevProjectStudy => [
-	//          ...prevProjectStudy,
-	//          ...resultProjectStudy,
-	//       ]);
-	//       console.log('projectStudy22222222222222222222', projectStudy);
-	//    }
-	// };
-
-	// ***********************************************
-
 	const handleObserver = entries => {
 		const target = entries[0];
 
@@ -108,12 +76,7 @@ function StudyCategory() {
 				...newProjectStudies,
 			]);
 
-			console.log(currentSkip);
-
-			window.scrollTo({
-				top: window.scrollY - 250,
-				behavior: 'smooth',
-			});
+			// console.log(currentSkip);
 		}
 	};
 
@@ -147,15 +110,6 @@ function StudyCategory() {
 			classification: classificationValue,
 		}));
 
-		console.log(
-			'selectedValues',
-			selectedValues,
-			'classificationValue',
-			classificationValue,
-			'selectedValues.position',
-			selectedValues.position,
-		);
-
 		triggerProjectStudy({
 			params: {
 				classification: classificationValue,
@@ -188,12 +142,6 @@ function StudyCategory() {
 		});
 	};
 
-	// useEffect(() => {
-	//    console.log('STudyproject1', projectStudy);
-	//    console.log('selectedValues', selectedValues);
-	//    console.log('STudyproject2', projectStudy);
-	// }, [selectedValues]);
-
 	useEffect(() => {
 		if (positionResult.positions && positionResult.positions.length > 0) {
 			setPosition(positionResult.positions);
@@ -201,13 +149,13 @@ function StudyCategory() {
 	}, [positionResult]);
 
 	useEffect(() => {
-		console.log(currentSkip);
+		// console.log(currentSkip);
 
 		if (
 			resultProjectStudy.projectStudies &&
 			resultProjectStudy.projectStudies.length > 0
 		) {
-			console.log('길이', projectStudy.length);
+			// console.log('길이', projectStudy.length);
 
 			// if (currentSkip > 0) {
 			// 	// const newData = resultProjectStudy.projectStudies;
@@ -220,9 +168,6 @@ function StudyCategory() {
 			}
 		}
 	}, [resultProjectStudy]);
-
-	// ***********************************************************************
-	// ***********************************************************************
 
 	return (
 		<>
@@ -283,7 +228,7 @@ function StudyCategory() {
 						<div
 							style={{
 								height: '10px',
-								border: '1px solid white',
+								border: '1px solid transparent',
 							}}
 							ref={observerElement}
 						/>

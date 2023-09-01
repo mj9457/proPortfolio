@@ -35,9 +35,9 @@ function StudyPostDetail() {
 
 	useEffect(() => {
 		if (userData) {
-			console.log('USERDATA', userData);
+			// console.log('USERDATA', userData);
 			setUser(userData);
-			console.log('USER', user);
+			// console.log('USER', user);
 		}
 	}, [userData]);
 
@@ -58,9 +58,8 @@ function StudyPostDetail() {
 			setIsRecruitClosed(
 				result.recruitsStatus === '모집마감' ? true : false,
 			);
-			console.log('RESULT', postDetail);
 		}
-	}, [result]);
+	}, [result, postDetail]);
 
 	// console.log('isRecruitClosed', isRecruitClosed);
 
@@ -124,7 +123,7 @@ function StudyPostDetail() {
 	};
 
 	const handleLinkCopy = async () => {
-		console.log(howContactContent);
+		// console.log(howContactContent);
 		try {
 			await navigator.clipboard.writeText(howContactContent);
 			alert('링크가 클립보드에 복사되었습니다.');

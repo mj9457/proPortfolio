@@ -11,6 +11,7 @@ import SelectWithDefault from '../../../components/pages/StudyPage/StudyEditPost
 
 function StudyEditPost() {
 	const [isEdit, setIsEdit] = useState(false);
+	// console.log('isEdit', isEdit);
 	const [selectedOptions, setSelectedOptions] = useState({
 		classification: '',
 		process: '',
@@ -36,8 +37,8 @@ function StudyEditPost() {
 
 	// 게시글 정보
 	const { result: postData, trigger: getEditPostData } = useApi({
-		path: `/projectStudy/${postId}`,
-		shouldFetch: true,
+		path: '',
+		shouldFetch: false,
 	});
 
 	useEffect(() => {
@@ -53,7 +54,17 @@ function StudyEditPost() {
 	}, [userData]);
 
 	useEffect(() => {
-		if (postData && postId) {
+		if (postId) {
+			getEditPostData({
+				path: `/projectStudy/${postId}`,
+			});
+		}
+	}, [postId]);
+
+	useEffect(() => {
+		if (postData) {
+			setIsEdit(true);
+
 			const initialDeadline = new Date(selectedOptions.deadline);
 			setSelectedOptions(prevOptions => ({
 				...prevOptions,

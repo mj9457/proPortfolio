@@ -4,7 +4,7 @@ import * as H from './StudySlider.styles';
 import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
 
-function StudySlider({ background, url, slidesToShow, setUserNickName }) {
+function StudySlider({ $background, url, slidesToShow, setUserNickName }) {
 	const [slide, setSlide] = useState(0);
 	const [studyInfoData, setStudyInfoData] = useState([]);
 
@@ -49,7 +49,7 @@ function StudySlider({ background, url, slidesToShow, setUserNickName }) {
 										key={index}
 										postId={data._id}
 										classification={data.classification}
-										background={background}
+										$background={$background}
 										title={data.title}
 										process={data.process}
 										recruits={data.recruits}

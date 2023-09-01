@@ -43,6 +43,7 @@ export const PositionCategoryItem = styled.button`
 	color: ${({ theme, $isSelected }) =>
 		$isSelected ? 'white' : theme.PALETTE.mainColor};
 	border: 1px solid ${({ theme }) => theme.PALETTE.mainColor};
+	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 
 	&:hover {
 		transition: all ease 0.2s;

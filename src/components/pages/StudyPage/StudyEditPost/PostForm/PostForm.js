@@ -105,6 +105,7 @@ function PostForm({ selectedOptions, postId, postData }) {
 					data: postData,
 				});
 			}
+
 			// navigate(`/study/detail/${response.data.id}`)
 			navigate(`/study`);
 		} catch (error) {

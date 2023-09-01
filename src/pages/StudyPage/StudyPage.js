@@ -93,7 +93,7 @@ function StudyPage() {
 					<S.PopularCardWrapper>
 						<StudySlider
 							setUserNickName={setUserNickName}
-							background="whiteBackground"
+							$background="whiteBackground"
 							url={
 								isLoggedIn
 									? '/projectStudy/recommend/recommendProjectStudy'
