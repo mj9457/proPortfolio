@@ -62,6 +62,17 @@ function Portfolio() {
 		path: '/portfolio/recommend/topMentor',
 		shouldFetch: true,
 	});
+	useEffect(() => {
+		console.log(mentorResult);
+		if (mentorResult.data && mentorResult.data.length > 0) {
+			// setMentorData(mentorResult.data);
+			// console.log(error);
+
+			if (currentSkip <= 12) {
+				setMentorData(mentorResult.data);
+			}
+		}
+	}, [mentorResult]);
 
 	// 로그인 체크
 	useEffect(() => {
@@ -89,21 +100,19 @@ function Portfolio() {
 		if (popularMentorResult && popularMentorResult.length > 0) {
 			setPopularData(popularMentorResult);
 		}
-	}, [result, positionResult, mentorResult, popularMentorResult]);
+	}, [result, positionResult, popularMentorResult]);
 
 	// 무한 스크롤
 	const handleObserver = entries => {
+		console.log(limit, currentSkip);
 		const target = entries[0];
-
 		if (target.isIntersecting && !isLoading) {
-			console.log('머리 박는 순간', currentSkip);
+			console.log('-----------------------');
 			setCurrentSkip(prevSkip => {
 				return prevSkip + limit;
 			});
 
-			console.log('머리 박는 순간 지나고 나서', currentSkip);
 			trigger({
-				path: '/portfolio',
 				params: {
 					category: selectedValues.position,
 					sort: selectedValues.selectedSort,
@@ -112,23 +121,19 @@ function Portfolio() {
 				},
 				applyResult: true,
 			});
+			console.log(mentorResult.data);
+			// const newMentorData = mentorResult.data.filter(
+			// 	newData =>
+			// 		!mentorResult.data.some(
+			// 			existingData => existingData._id === newData._id,
+			// 		),
+			// );
+			// console.log(newMentorData);
 
-			console.log('mentorData 11211111111111', mentorData);
-
-			const newMentorData = mentorResult.data.filter(
-				newData =>
-					!mentorResult.data.some(
-						existingData => existingData._id === newData._id,
-					),
-			);
-
-			console.log('mentorData 222222223222222', mentorData);
-
-			setMentorData(prevMentorData => [...prevMentorData, ...newMentorData]);
-
-			console.log('mentorData 3333333333333333', mentorData);
-
-			console.log(currentSkip);
+			// setMentorData(prevMentorData => [
+			// 	...prevMentorData,
+			// 	...newMentorData,
+			// ]);
 		}
 	};
 
@@ -199,25 +204,6 @@ function Portfolio() {
 		}
 	}, [positionResult.positions]);
 
-	useEffect(() => {
-		if (mentorResult.data && mentorResult.data.length > 0) {
-			// setMentorData(mentorResult.data);
-			// console.log(error);
-
-			if (currentSkip <= 12) {
-				setMentorData(mentorResult.data);
-			} else {
-				const newMentorData = mentorResult.data.filter(
-					newData =>
-						!mentorResult.data.some(
-							existingData => existingData._id === newData._id,
-						),
-				);
-				setMentorData(prevMentorData => [...prevMentorData, ...newMentorData]);
-			}
-		}
-	}, [mentorResult]);
-
 	return (
 		<S.PortfolioBox>
 			<S.BannerBox>
@@ -265,7 +251,6 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 4개 */}
 				<S.MentorCardBox>
-					{isLoading && <LoadingBar />}
 					<>
 						{popularData.map((mentor, idx) => (
 							<div key={mentor._id + idx}>
