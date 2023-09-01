@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { checkToken } from '../../utils/cookie';
 import useApi from '../../hooks/useApi';
@@ -6,9 +6,10 @@ import useApi from '../../hooks/useApi';
 import * as S from './Portfolio.styles';
 
 import Line from '../../components/@common/Line/Line';
-import MentorCard from '../../components/@common/Card/Card';
+import MentorCard from '../../components/pages/Portfolio/PortfolioCard/Card';
 import Button from '../../components/@common/Button/Button';
 import Select from '../../components/@common/Select/Select';
+import LoadingBar from '../../components/@common/Loading/LoadingBar';
 
 function Portfolio() {
 	// 로그인 유저 체크
@@ -17,17 +18,48 @@ function Portfolio() {
 	// 멘토 체크
 	const [isMentor, setIsMentor] = useState(false);
 
+	// 모든 멘토 데이터
+	const [mentorData, setMentorData] = useState([]);
+
+	// 인기 있냐? 모든 멘토냐?
+	const [popularData, setPopularData] = useState([]);
+
 	// 포지션 === 카테고리 관리
 	const [positions, setPositions] = useState([]);
+	const [selectedValues, setSelectedValues] = useState({
+		position: '',
+		selectedSort: 'newest',
+	});
 
-	// api 통신 1. 유저 정보 / 2. 포지션 === 카테고리 정보
-	const { result, trigger, isLoading, error } = useApi({
+	// 무한 스크롤
+	const [limit, setLimit] = useState(12);
+	const [currentSkip, setCurrentSkip] = useState(12);
+
+	const observer = useRef();
+	const observerElement = useRef();
+
+	// api 통신 1. 유저 정보 / 2. 포지션 === 카테고리 정보 / 3. 모든 멘토 데이터 호출
+	const { result, error } = useApi({
 		path: isLoggedIn ? '/user' : '',
 		shouldFetch: isLoggedIn,
 	});
 
 	const { result: positionResult } = useApi({
 		path: '/position',
+		shouldFetch: true,
+	});
+
+	const {
+		result: mentorResult,
+		isLoading,
+		trigger,
+	} = useApi({
+		path: '/portfolio',
+		shouldFetch: true,
+	});
+
+	const { result: popularMentorResult } = useApi({
+		path: '/portfolio/recommend/topMentor',
 		shouldFetch: true,
 	});
 
@@ -48,7 +80,143 @@ function Portfolio() {
 			setPositions(positionResult.positions);
 			console.log(error);
 		}
-	}, [result, positionResult]);
+
+		if (mentorResult.data && mentorResult.data.length > 0) {
+			setMentorData(mentorResult.data);
+			console.log(error);
+		}
+
+		if (popularMentorResult && popularMentorResult.length > 0) {
+			setPopularData(popularMentorResult);
+		}
+	}, [result, positionResult, mentorResult, popularMentorResult]);
+
+	// 무한 스크롤
+	const handleObserver = entries => {
+		const target = entries[0];
+
+		if (target.isIntersecting && !isLoading) {
+			console.log('머리 박는 순간', currentSkip);
+			setCurrentSkip(prevSkip => {
+				return prevSkip + limit;
+			});
+
+			console.log('머리 박는 순간 지나고 나서', currentSkip);
+			trigger({
+				path: '/portfolio',
+				params: {
+					category: selectedValues.position,
+					sort: selectedValues.selectedSort,
+					limit,
+					skip: currentSkip,
+				},
+				applyResult: true,
+			});
+
+			console.log('mentorData 11211111111111', mentorData);
+
+			const newMentorData = mentorResult.data.filter(
+				newData =>
+					!mentorResult.data.some(
+						existingData => existingData._id === newData._id,
+					),
+			);
+
+			console.log('mentorData 222222223222222', mentorData);
+
+			setMentorData(prevMentorData => [...prevMentorData, ...newMentorData]);
+
+			console.log('mentorData 3333333333333333', mentorData);
+
+			console.log(currentSkip);
+		}
+	};
+
+	useEffect(() => {
+		const options = {
+			root: null,
+			rootMargin: '0px',
+			threshold: 1.0,
+		};
+
+		observer.current = new IntersectionObserver(handleObserver, options);
+
+		if (observerElement.current) {
+			observer.current.observe(observerElement.current);
+		}
+
+		return () => {
+			if (observer.current) {
+				observer.current.disconnect();
+			}
+		};
+	}, [observer.current, observerElement]);
+
+	// select 클릭
+	const handleChange = e => {
+		setLimit(12);
+		setCurrentSkip(0);
+
+		const { value } = e.target;
+
+		trigger({
+			params: {
+				category: selectedValues.position,
+				sort: value,
+				limit,
+				skip: currentSkip,
+			},
+
+			applyResult: true,
+		});
+	};
+
+	// 포지션 클릭
+	const handlePositionClick = positionValue => {
+		setLimit(12);
+		setCurrentSkip(0);
+
+		setSelectedValues(prev => ({
+			...prev,
+			position: positionValue,
+		}));
+
+		trigger({
+			params: {
+				category: positionValue,
+				sort: selectedValues.selectedSort,
+				limit,
+				skip: 0,
+			},
+
+			applyResult: true,
+		});
+	};
+
+	useEffect(() => {
+		if (positionResult.positions && positionResult.positions.length > 0) {
+			setPositions(positionResult.positions);
+		}
+	}, [positionResult.positions]);
+
+	useEffect(() => {
+		if (mentorResult.data && mentorResult.data.length > 0) {
+			// setMentorData(mentorResult.data);
+			// console.log(error);
+
+			if (currentSkip <= 12) {
+				setMentorData(mentorResult.data);
+			} else {
+				const newMentorData = mentorResult.data.filter(
+					newData =>
+						!mentorResult.data.some(
+							existingData => existingData._id === newData._id,
+						),
+				);
+				setMentorData(prevMentorData => [...prevMentorData, ...newMentorData]);
+			}
+		}
+	}, [mentorResult]);
 
 	return (
 		<S.PortfolioBox>
@@ -69,20 +237,23 @@ function Portfolio() {
 
 			<S.ButtonBox>
 				<div>
-					<Button variant={'primary'} shape={'round'} size={'medium'}>
+					<S.PositionCategoryItem
+						onClick={() => handlePositionClick('')}
+						$isSelected={selectedValues.position === ''}
+					>
 						전체
-					</Button>
+					</S.PositionCategoryItem>
 
-					{positions.map((position, idx) => (
-						<Button
-							variant={'primary'}
-							shape={'round'}
-							size={'medium'}
-							key={idx}
-						>
-							{position.name}
-						</Button>
-					))}
+					{positions &&
+						positions.map(position => (
+							<S.PositionCategoryItem
+								key={position.id}
+								onClick={() => handlePositionClick(position.name)}
+								$isSelected={selectedValues.position === position.name}
+							>
+								{position.name}
+							</S.PositionCategoryItem>
+						))}
 				</div>
 			</S.ButtonBox>
 
@@ -92,38 +263,49 @@ function Portfolio() {
 					<span>✨ 지금 인기 있는 멘토</span>
 				</S.TitleBox>
 
-				{/* 지금 인기 있는 멘토들 목록 */}
+				{/* 지금 인기 있는 멘토들 목록 4개 */}
 				<S.MentorCardBox>
-					{isLoading ? (
-						<h2>로딩 중입니다.</h2>
-					) : (
-						<MentorCard
-							variant={'blue'}
-							url={'/portfolio/recommend/topMentor'}
-						/>
-					)}
+					{isLoading && <LoadingBar />}
+					<>
+						{popularData.map((mentor, idx) => (
+							<div key={mentor._id + idx}>
+								<MentorCard variant={'blue'} mentor={mentor} />
+							</div>
+						))}
+					</>
 				</S.MentorCardBox>
 			</div>
 
 			<Line size={'small'} />
 
 			<S.MentorBox>
-				{/* 모든 멘토 제목 */}
+				{/* 모든 멘토 제목 쫘르르르륵~ */}
 				<S.MentorTitleBox>
 					<span>🌟 모든 멘토</span>
 
-					<Select variant={'none'} font={'regular'}>
-						<option value="popular">인기순</option>
+					<Select variant={'none'} font={'regular'} onChange={handleChange}>
 						<option value="newest">최신순</option>
+						<option value="popular">인기순</option>
 					</Select>
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					{isLoading ? (
-						<h2>로딩 중입니다.</h2>
-					) : (
-						<MentorCard variant={'white'} url={'/portfolio'} />
-					)}
+					{isLoading && <LoadingBar />}
+					<>
+						{mentorData.map((mentor, idx) => (
+							<div key={mentor._id + idx}>
+								<MentorCard variant={'white'} mentor={mentor} />
+							</div>
+						))}
+
+						<div
+							style={{
+								height: '10px',
+								border: '1px solid white',
+							}}
+							ref={observerElement}
+						/>
+					</>
 				</S.MentorCardBox>
 			</S.MentorBox>
 		</S.PortfolioBox>
