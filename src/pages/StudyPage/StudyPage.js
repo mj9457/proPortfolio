@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './StudyPage.styles';
 import Slider from '../../components/@common/Slider/Slider';
 import StudySlider from '../../components/pages/StudyPage/StudySlider/StudySlider';
@@ -30,6 +30,12 @@ function StudyPage() {
 	const handleSignupClose = () => {
 		setOpenModal(false);
 	};
+
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}, [pathname]);
 
 	return (
 		<>
