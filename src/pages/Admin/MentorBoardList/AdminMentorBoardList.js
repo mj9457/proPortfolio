@@ -67,7 +67,9 @@ const AdminMentorBoardList = () => {
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<HandlerButton onClick={() => removeHandler(record._id)}>
+					<HandlerButton
+						onClick={() => removeHandler(record._id, record.key)}
+					>
 						삭제
 					</HandlerButton>
 				</Space>
@@ -110,19 +112,28 @@ const AdminMentorBoardList = () => {
 		});
 		setCurrentPage(pageNumber);
 	};
-	const removeHandler = async key => {
+	const removeHandler = async (key, index) => {
 		await trigger({
 			path: `/admin/portfolio/${key}`,
 			method: 'delete',
 			applyResult: true,
 		});
 		if (result.portfolios.length === 1) {
-			await trigger({
-				params: {
-					skip: (currentPage - 1) * 10 - 10,
-				},
-				applyResult: true,
-			});
+			if (index === 1) {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+					},
+				});
+			} else {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+					},
+					applyResult: true,
+				});
+			}
+			// console.log(currentPage);
 			setCurrentPage(prev => prev - 1);
 		} else {
 			await trigger({

@@ -83,7 +83,9 @@ const AdminStudyProject = () => {
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<HandlerButton onClick={() => removeHandler(record._id)}>
+					<HandlerButton
+						onClick={() => removeHandler(record._id, record.key)}
+					>
 						삭제
 					</HandlerButton>
 				</Space>
@@ -151,20 +153,29 @@ const AdminStudyProject = () => {
 			setCurrentClassification('');
 		}
 	};
-	const removeHandler = async key => {
+	const removeHandler = async (key, index) => {
 		await trigger({
 			path: `/admin/${key}`,
 			method: 'delete',
 			applyResult: true,
 		});
 		if (result.projectStudies.length === 1) {
-			await trigger({
-				params: {
-					skip: (currentPage - 1) * 10 - 10,
-					classification: currentclassification,
-				},
-				applyResult: true,
-			});
+			if (index === 1) {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						classification: currentclassification,
+					},
+				});
+			} else {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						classification: currentclassification,
+					},
+					applyResult: true,
+				});
+			}
 			setCurrentPage(prev => prev - 1);
 		} else {
 			await trigger({

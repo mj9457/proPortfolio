@@ -41,7 +41,7 @@ function Header() {
 		// if(notiData.)
 	};
 	useEffect(() => {
-		console.log(notiResult);
+		// console.log(notiResult);
 		if (isLoggedIn) {
 			if (notiResult?.notifications?.length > 0) {
 				setNotiData(notiResult.notifications);
@@ -57,7 +57,7 @@ function Header() {
 				notiTrigger({});
 			};
 			// 1분마다 호출
-			const intervalId = setInterval(fetchNotificationData, 3000); // 60000 밀리초 = 1분
+			const intervalId = setInterval(fetchNotificationData, 60000); // 60000 밀리초 = 1분
 
 			// 컴포넌트가 언마운트되면 타이머 해제
 			return () => clearInterval(intervalId);
@@ -102,7 +102,6 @@ function Header() {
 		}
 	};
 	const notiClickHandler = async (value, notiId, studyId) => {
-		console.log(value);
 		switch (value) {
 			case '멘토링 신청 요청이 왔습니다!':
 			case 'Your mentoring request has been completed.':
