@@ -36,11 +36,11 @@ export const SubTitleBox = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 0.5rem;
+	gap: 0.7rem;
 	width: 39.8125rem;
 
 	& span:nth-child(2) {
-		line-height: 22px;
+		line-height: 1.6;
 	}
 `;
 

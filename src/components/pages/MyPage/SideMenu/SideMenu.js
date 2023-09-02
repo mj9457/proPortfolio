@@ -31,7 +31,7 @@ function SideMenu() {
 		<SM.Wrapper>
 			<SM.MainTitle>
 				{user.role === 'mentor'
-					? `${user.name} 멘토님`
+					? `${user.name} 멘토 님`
 					: `${user.name} 님`}
 			</SM.MainTitle>
 			<SM.SubTitleWrapper>
@@ -51,7 +51,7 @@ function SideMenu() {
 						</button>
 					) : undefined}
 					<button onClick={() => handleClickButton('postlist')}>
-						프로젝트 / 스터디
+						스터디 / 프로젝트
 					</button>
 				</SM.History>
 				<SM.Info>

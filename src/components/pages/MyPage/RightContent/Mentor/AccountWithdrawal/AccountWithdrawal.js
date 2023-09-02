@@ -59,8 +59,8 @@ function AccountWithdrawal() {
 				</AM.SubTitleBox>
 				<AM.SubTitleBox>
 					<span>
-						탈퇴 후에는 아이디와 데이터 복구가 불가능합니다.신중하게
-						선택해주세요.
+						탈퇴 후에는 아이디와 데이터 복구가 불가능합니다.
+						신중하게 선택해 주세요.
 					</span>
 					<span>
 						프로필 등록 정보, 멘토링 관련 정보, 스터디 / 프로젝트
