@@ -7,7 +7,7 @@ function SignUpModal({ onClose }) {
 		<H.ModalWrapper>
 			<H.ModalContentWrapper>
 				<button onClick={onClose}>
-					<img src="./assets/img/icons/closebtn.png" alt="닫기" />
+					<img src="/assets/img/icons/closebtn.png" alt="닫기" />
 				</button>
 				<H.Contents>
 					<H.Title>포폴에 오신것을 환영합니다 !</H.Title>
