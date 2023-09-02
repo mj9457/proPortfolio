@@ -184,6 +184,9 @@ function Header() {
 						<>
 							<a onClick={handleLogoutClick}>로그아웃</a>
 							<a href="/mypage">마이페이지</a>
+							{result && result.role === 'admin' && (
+								<a href="/admin/user">관리자 페이지</a>
+							)}
 							<a onClick={notiHandler}>
 								<img
 									src={noti ? dotBellImg : bellImg}
