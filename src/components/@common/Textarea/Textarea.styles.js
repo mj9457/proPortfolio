@@ -22,4 +22,5 @@ export const TextSpace = styled.textarea`
 	resize: none;
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
+	line-height: 1.5;
 `;

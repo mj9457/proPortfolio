@@ -56,7 +56,7 @@ const MYPAGEOPTION = {
 		},
 		WITHDRAWER: {
 			TITLE: '회원 탈퇴',
-			BUTTONTITLE: '탈퇴 하기',
+			BUTTONTITLE: '탈퇴하기',
 		},
 	},
 };
