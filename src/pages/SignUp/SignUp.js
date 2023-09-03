@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import * as S from './SignUp.styles';
 import Button from '../../components/@common/Button/Button';
 import Input from '../../components/@common/Input/Input';
 import { getCookie } from '../../utils/cookie';
+import Position from '../../components/@common/Position/Position';
+import useFooter from '../../hooks/useFooter';
+import useApi from '../../hooks/useApi';
+import VALIDATE from '../../constants/regex';
 
 function SignUp() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [nickName, setNickName] = useState('');
 	const [position, setPosition] = useState('');
+	const [nameError, setNameError] = useState('');
+	const [nicknameError, setNicknameError] = useState('');
 	const navigate = useNavigate();
+	useFooter();
+
+	const { trigger } = useApi({});
 
 	useEffect(() => {
 		async function fetchUserData() {
@@ -26,42 +34,64 @@ function SignUp() {
 		fetchUserData();
 	}, []);
 
-	function handleNameChange(event) {
-		setName(event.target.value);
-	}
-	function handleNicknameChange(event) {
-		setNickName(event.target.value);
-	}
+	const handleNameChange = event => {
+		const newName = event.target.value;
+		setName(newName);
+		if (VALIDATE.name.test(newName)) {
+			setName(newName);
+			setNameError('');
+		} else {
+			setNameError('2자에서 10자 사이의 한글로 입력해 주세요.');
+		}
+	};
 
-	function handleJobChange(event) {
+	const handleNicknameChange = event => {
+		const newNickName = event.target.value;
+		setNickName(newNickName);
+		if (VALIDATE.nickName.test(newNickName)) {
+			setNickName(newNickName);
+			setNicknameError('');
+		} else {
+			setNicknameError(
+				'한글, 영어, 숫자, 공백 포함 2자에서 10자 사이로 입력해 주세요.',
+			);
+		}
+	};
+
+	const handleJobChange = event => {
 		setPosition(event.target.value);
-	}
+	};
 
-	async function handleSubmit(event) {
+	const handleSubmit = async event => {
 		event.preventDefault();
 
+		if (!name || !email || !nickName || !position) {
+			alert('모든 필수 정보를 입력해 주세요.');
+			return;
+		}
+
 		try {
-			const response = await axios.post(
-				'http://34.64.245.195/api/auth/signup',
-				{
+			await trigger({
+				path: '/auth/signup',
+				method: 'post',
+				data: {
 					name,
 					email,
 					nickName,
 					position,
 				},
-			);
-
-			if (response.status === 200 || response.status === 201) {
-				alert('회원가입이 성공적으로 완료되었습니다!');
-				navigate('/signupdone');
-			} else {
-				alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+			});
+			navigate('/signup/done');
+		} catch (err) {
+			if (err.response.data.result === 'MongoServerError') {
+				if (err.response.data.reason.includes('duplicate key')) {
+					alert('이미 사용중인 닉네임입니다.');
+				} else {
+					alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
+				}
 			}
-		} catch (error) {
-			console.error('Error:', error);
-			alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
 		}
-	}
+	};
 
 	return (
 		<S.Wrap>
@@ -76,29 +106,34 @@ function SignUp() {
 					<Input
 						type="text"
 						value={name}
+						placeholder="이름을 입력해 주세요"
 						size={'medium'}
 						onChange={handleNameChange}
+						error={nameError}
 					/>
+					{nameError && <S.StyledError>{nameError}</S.StyledError>}
 				</div>
 				<div>
 					<label>닉네임</label>
 					<Input
 						type="text"
+						placeholder="닉네임을 입력해 주세요"
 						value={nickName}
 						onChange={handleNicknameChange}
 						size={'medium'}
 					/>
+					{nicknameError && (
+						<S.StyledError>{nicknameError}</S.StyledError>
+					)}
 				</div>
 				<div>
 					<label>직무</label>
-					<select value={position} onChange={handleJobChange}>
-						<option value="">선택하세요</option>
-						<option value="백엔드 개발">백엔드 개발</option>
-						<option value="프론트엔드 개발">프론트엔드 개발</option>
-						<option value="안드로이드 개발">안드로이드 개발</option>
-						<option value="IOS 개발">IOS 개발</option>
-						<option value="웹 퍼블리셔">웹 퍼블리셔</option>
-					</select>
+					<Position
+						onChange={handleJobChange}
+						position={position}
+						size={'regular'}
+						font={'regular'}
+					/>
 				</div>
 				<Button
 					variant={'primary'}

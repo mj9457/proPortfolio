@@ -1,30 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import * as IM from './InfoViewModal.styles';
 import axios from 'axios';
-import Input from '../../../../../../../@common/Input/Input';
-import Textarea from '../../../../../../../@common/Textarea/Textarea';
+import MYPAGEOPTION from '../../../../../../../../constants/mypage';
+import { useParams } from 'react-router-dom';
 
 // 멘토 - 멘토링 신청서 보기 모달
-function InfoViewModal({ setInfoModalOpenState }) {
-	const [textareaValue, setTextareaValue] = useState(''); //
-	const [error, setError] = useState(null); // 에러 state
-
-	// 서버통신 (GET)
-	useEffect(() => {
-		async function getInfo() {
-			try {
-				const response = await axios.get(
-					'https://jsonplaceholder.typicode.com/todos/1',
-				);
-				setTextareaValue(response.data);
-				console.log(response.data);
-			} catch (err) {
-				setError(err);
-			}
-		}
-		getInfo();
-	}, []);
-
+function InfoViewModal({ setInfoModalOpenState, item }) {
 	// 모달 끄기
 	const closeModal = () => {
 		setInfoModalOpenState(false);
@@ -35,29 +16,42 @@ function InfoViewModal({ setInfoModalOpenState }) {
 			<IM.Modal>
 				<form>
 					<IM.InfoWrapper>
-						<IM.InfoTitle>신청 정보</IM.InfoTitle>
+						<IM.InfoTitle>
+							{MYPAGEOPTION.MENTOR.FORM.TITLE.ACCEPTED}
+						</IM.InfoTitle>
 						<IM.InfoBox>
 							<IM.InfoSubTitleBox>
-								<IM.InfoSubTitle>신청 제목</IM.InfoSubTitle>
-								<span>{textareaValue.title || undefined}</span>
-							</IM.InfoSubTitleBox>
-							<IM.InfoSubTitleBox>
-								<IM.InfoSubTitle>질문 내용</IM.InfoSubTitle>
-								<span>{textareaValue.title}</span>
-							</IM.InfoSubTitleBox>
-							<IM.InfoSubTitleBox>
-								<IM.InfoSubTitle>이메일 주소</IM.InfoSubTitle>
-								<span>{textareaValue.title}</span>
+								<IM.InfoSubTitle>
+									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.ACCEPTED}
+								</IM.InfoSubTitle>
+								<span>{item.title}</span>
 							</IM.InfoSubTitleBox>
 							<IM.InfoSubTitleBox>
 								<IM.InfoSubTitle>
-									포트폴리오 주소
+									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.CONTENT}
 								</IM.InfoSubTitle>
-								<span>{textareaValue.title}</span>
+								<span>{item.content}</span>
+							</IM.InfoSubTitleBox>
+							<IM.InfoSubTitleBox>
+								<IM.InfoSubTitle>
+									{MYPAGEOPTION.MENTOR.FORM.SUBTITLE.EMAIL}
+								</IM.InfoSubTitle>
+								<span>{item.email}</span>
+							</IM.InfoSubTitleBox>
+							<IM.InfoSubTitleBox>
+								<IM.InfoSubTitle>
+									{
+										MYPAGEOPTION.MENTOR.FORM.SUBTITLE
+											.PORTFOLIO
+									}
+								</IM.InfoSubTitle>
+								<span>{item.portfolioAddress}</span>
 							</IM.InfoSubTitleBox>
 						</IM.InfoBox>
 					</IM.InfoWrapper>
-					<IM.ModalButton onClick={closeModal}>닫기</IM.ModalButton>
+					<IM.ModalButton onClick={closeModal}>
+						{MYPAGEOPTION.MENTOR.BUTTONTITLE.CLOSE}
+					</IM.ModalButton>
 				</form>
 			</IM.Modal>
 		</>

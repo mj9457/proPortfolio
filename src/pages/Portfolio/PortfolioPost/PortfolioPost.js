@@ -1,89 +1,111 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import useFooter from '../../../hooks/useFooter';
+import useApi from '../../../hooks/useApi';
+import { checkToken } from '../../../utils/cookie';
+import MESSAGE from '../../../constants/message';
 
 import * as S from './PortfolioPost.styles';
-import useFooter from '../../../hooks/useFooter';
 
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
 import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
 import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
-import MESSAGE from '../../../constants/message';
-import useApi from '../../../hooks/useApi';
 
 function PortfolioPost() {
 	useFooter();
 
-	// user role 확인 후 멘토의 경우 수정/삭제 버튼 보여주고 / 일반 유저의 경우 신청하기 버튼 오픈
-	// 멘토 중에서도 작성자의 경우만 수정/삭제 버튼이 활성화 되게 로직 작성
-	// 일반 유저가 신청하기를 하고 모달로 post를 보냈을 경우 신청하기 버튼 비활성화
+	const navigate = useNavigate();
 
-	// id 값
+	// params 가져오기
 	const params = useParams();
 	const path = params._id;
 
-	const navigate = useNavigate();
+	// 로그인 유무
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 
-	const [contents, setContents] = useState({});
+	const [post, setPost] = useState({});
+	const [userId, setUserId] = useState({});
+
+	// modal open state
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
 
-	// axios 통신
+	// api 통신
+	const { result: userResult } = useApi({
+		path: isLoggedIn ? '/user' : '',
+		shouldFetch: isLoggedIn,
+	});
+
+	const { result, trigger, isLoading } = useApi({
+		path: `/portfolio/${path}`,
+		shouldFetch: true,
+	});
+
 	useEffect(() => {
-		const getContent = async () => {
-			try {
-				const res = await axios.get(
-					`http://localhost:8080/api/portfolio/${path}`,
-				);
-				const data = res.data;
-
-				setContents(data);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		getContent();
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
 	}, []);
 
-	// 모달 open
+	useEffect(() => {
+		if (result) {
+			setPost(result);
+		}
+
+		if (userResult) {
+			setUserId(userResult);
+		}
+	}, [result, userResult]);
+
+	// 버튼 클릭시 → 모달 open
 	const handleOpenModal = () => {
 		setInfoModalOpenState(true);
 	};
 
-	// 수정하기
+	// 현재 로그인한 유저 아이디랑 게시글 오너 아이디랑 맞는지 확인
+	const userCheck = userId._id === post.ownerId;
+
+	// 로그인한 유저 아이디의 role 이 유저인지 확인
+	const roleCheck = userId.role === 'user';
+
+	// 게시글 수정
 	const handleEdit = () => {
 		if (confirm(MESSAGE.POST.EDIT)) {
 			navigate(`/portfolio/edit/${path}`);
 		}
 	};
 
-	// 삭제하기
-	const { trigger, isLoading, error } = useApi({
-		path: `/api/portfolio/${path}`,
-		method: 'delete',
-	});
-
+	// 게시글 삭제
 	const handleDelete = () => {
 		if (confirm(MESSAGE.POST.DELETE)) {
-			trigger({});
+			trigger({ path: `/portfolio/${path}`, method: 'delete' });
+			alert(MESSAGE.DELETE.COMPLETE);
 			navigate('/portfolio');
-			alert(MESSAGE.POST.DELETECOMPLETE);
 		}
 	};
 
-	const { nickName, title, updatedAt, profileImageUrl } = contents;
+	const { nickName, title, updatedAt, profileImageUrl } = post;
 
-	// date & profileImage
-	const date = String(updatedAt).slice(0, 19).split('T');
-	const image = !profileImageUrl
-		? '/assets/img/profile/profileImage.png'
-		: profileImageUrl;
+	// 날짜와 프로필 이미지
+	const dateAndTime = updatedAt => {
+		const serverDate = new Date(updatedAt);
+		const date = serverDate.toLocaleDateString('ko-KR');
+		const options = {
+			hour: 'numeric',
+			minute: 'numeric',
+			second: 'numeric',
+			hour12: false,
+		};
+		const time = serverDate.toLocaleTimeString('en-US', options);
+
+		return `${date} ${time}`;
+	};
 
 	return (
 		<>
-			{contents && (
+			{isLoading && <p>로딩 중입니다.</p>}
+			{post && (
 				<S.PostBox>
 					<S.TitleBox>
 						<span>{title}</span>
@@ -92,14 +114,12 @@ function PortfolioPost() {
 					<S.ContentsBox>
 						<S.MentorBox>
 							<S.NameBox>
-								<img src={image} />
+								<img src={profileImageUrl} />
 								<strong>{nickName}</strong>
 
 								<Line size={'height'} />
 
-								<span>
-									{date[0]} {date[1]}
-								</span>
+								<span>{dateAndTime(updatedAt)}</span>
 							</S.NameBox>
 
 							{infoModalOpenState && (
@@ -107,49 +127,47 @@ function PortfolioPost() {
 									setInfoModalOpenState={
 										setInfoModalOpenState
 									}
-									postAddress={
-										'https://jsonplaceholder.typicode.com/posts'
-									}
+									path={path}
 									action={'완료'}
 								/>
 							)}
 
-							<Button
-								variant={'primary'}
-								shape={'default'}
-								size={'normal'}
-								onClick={handleOpenModal}
-							>
-								신청하기
-							</Button>
+							{roleCheck && (
+								<Button
+									variant={'primary'}
+									shape={'default'}
+									size={'normal'}
+									onClick={handleOpenModal}
+								>
+									신청하기
+								</Button>
+							)}
 						</S.MentorBox>
-
 						<Line size={'small'} />
-
-						<IntroContents contents={contents} />
-
+						<IntroContents post={post} />
 						<Line size={'small'} />
+						{isLoggedIn && userCheck && (
+							<S.ButtonBox>
+								<Button
+									variant={'primary'}
+									shape={'default'}
+									size={'normal'}
+									onClick={handleEdit}
+								>
+									수정
+								</Button>
+								<Button
+									variant={'cancel'}
+									shape={'default'}
+									size={'normal'}
+									onClick={handleDelete}
+								>
+									삭제
+								</Button>
+							</S.ButtonBox>
+						)}
 
-						<S.ButtonBox>
-							<Button
-								variant={'primary'}
-								shape={'default'}
-								size={'normal'}
-								onClick={handleEdit}
-							>
-								수정
-							</Button>
-							<Button
-								variant={'cancel'}
-								shape={'default'}
-								size={'normal'}
-								onClick={handleDelete}
-							>
-								삭제
-							</Button>
-						</S.ButtonBox>
-
-						<Review title={'후기'} />
+						<Review title={'후기'} getUrl={`/portfolio/${path}`} />
 					</S.ContentsBox>
 				</S.PostBox>
 			)}

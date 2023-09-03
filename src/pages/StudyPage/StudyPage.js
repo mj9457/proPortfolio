@@ -1,81 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './StudyPage.styles';
-// import PopularCard from '../../components/pages/StudyPage/PopularCard/PopularCard';
-import PostCard from '../../components/pages/StudyPage/PostCard/PostCard';
-// import Slider from '../../components/pages/StudyPage/Slider/Slider';
 import Slider from '../../components/@common/Slider/Slider';
+import StudySlider from '../../components/pages/StudyPage/StudySlider/StudySlider';
+import SignupModal from '../../components/pages/SignUp/Modal/SignUpModal';
 import Button from '../../components/@common/Button/Button';
-import Category from '../../components/@common/Category/Category';
+import { checkToken } from '../../utils/cookie';
+import MESSAGE from '../../constants/message';
+import StudyCategory from '../../components/pages/StudyPage/StudyCategory/StudyCategory';
 
 function StudyPage() {
 	const navigate = useNavigate();
-	const [studyData, setStudyData] = useState([]);
+	const [openModal, setOpenModal] = useState(false);
+	const [userNickName, setUserNickName] = useState('');
 
-	const URL = '/mock/study.json';
-	useEffect(() => {
-		const getPost = async () => {
-			try {
-				const res = await axios.get(URL);
-				const data = res.data.data;
-				// console.log(data);
-
-				setStudyData([...data]);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		getPost();
-	}, []);
+	const isLoggedIn = checkToken();
+	// console.log('로그인 유무', checkToken());
 
 	const onClickAddPost = () => {
-		navigate('/study/post');
+		if (!isLoggedIn) {
+			alert(MESSAGE.LOGIN.REQUIRED);
+			setOpenModal(true);
+		} else {
+			navigate('/study/post');
+			setUserNickName('');
+		}
 	};
+
+	const handleSignupClose = () => {
+		setOpenModal(false);
+	};
+
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}, [pathname]);
+
 	return (
 		<>
 			<S.Container>
 				<S.PopularContents>
 					{/* 인기 스터디, 프로젝트 */}
 					<S.TitleWrapper>
-						<S.Title>🔥 프론트엔드 추천 스터디/ 프로젝트</S.Title>
-						<S.SubTitle>
-							포지션에 맞는 스터디, 프로젝트를 확인해보세요!
-						</S.SubTitle>
-					</S.TitleWrapper>
-
-					<S.PopularCardWrapper>
-						<Slider
-							background="whiteBackground"
-							url={'/mock/studyInfo.json'}
-						/>
-					</S.PopularCardWrapper>
-
-					{/* 스터디, 프로젝트 목록 */}
-				</S.PopularContents>
-
-				<S.StudyContents>
-					<S.TitleWrapper>
-						<S.Title>✨ 함께 성장할 동료를 찾아보세요!</S.Title>
-					</S.TitleWrapper>
-
-					{/* 상단 필터 카테고리 버튼 영역 */}
-					<S.CategoryList>
-						<S.CategoryItem>전체</S.CategoryItem>
-						<S.CategoryItem>스터디</S.CategoryItem>
-						<S.CategoryItem>프로젝트</S.CategoryItem>
-					</S.CategoryList>
-
-					<S.CategoryBottomList>
-						<S.PositionCategoryList>
-							<Category
-								variant={'reverse'}
-								shape={'round'}
-								size={'small'}
-							/>
-						</S.PositionCategoryList>
+						<S.TopBox>
+							<S.Title>
+								{isLoggedIn
+									? `🔥 ${userNickName} 님 추천 스터디 / 프로젝트`
+									: '🔥 추천 스터디/ 프로젝트'}
+							</S.Title>
+							<S.SubTitle>
+								{isLoggedIn
+									? '포지션에 맞는 스터디, 프로젝트를 확인해 보세요!'
+									: '로그인하고 스터디, 프로젝트에 참여해 보세요!'}
+							</S.SubTitle>
+						</S.TopBox>
 						{/*  */}
 						<Button
 							variant={'add'}
@@ -85,16 +64,36 @@ function StudyPage() {
 						>
 							글쓰기
 						</Button>
-					</S.CategoryBottomList>
+					</S.TitleWrapper>
 
-					{/* 하단 글 리스트 영역 */}
-					<S.PostCardContainer>
-						{studyData.map((studyData, idx) => (
-							<PostCard data={studyData} key={idx} />
-						))}
-					</S.PostCardContainer>
+					<S.PopularCardWrapper>
+						<StudySlider
+							isLoggedIn={isLoggedIn}
+							setUserNickName={isLoggedIn ? setUserNickName : ''}
+							$background="whiteBackground"
+							url={
+								isLoggedIn
+									? '/projectStudy/recommend/recommendProjectStudy'
+									: '/projectStudy/recommend/recommendProjectStudyForGuest'
+							}
+							slidesToShow={4}
+						/>
+					</S.PopularCardWrapper>
+				</S.PopularContents>
+
+				<S.StudyContents>
+					<S.TitleWrapper>
+						<S.Title>✨ 함께 성장할 동료를 찾아보세요!</S.Title>
+					</S.TitleWrapper>
+
+					{/* 필터 카테고리 버튼 영역 */}
+					<S.CategoryContainer>
+						<StudyCategory />
+					</S.CategoryContainer>
 				</S.StudyContents>
 			</S.Container>
+
+			{openModal && <SignupModal onClose={handleSignupClose} />}
 		</>
 	);
 }

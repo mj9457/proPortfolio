@@ -1,23 +1,19 @@
 import styled from 'styled-components';
+import {
+	ModalBackground,
+	flexCenter,
+	flexColumn,
+} from '../../../../styles/common';
 
 export const ModalWrapper = styled.div`
-	display: ${props => (props.open ? 'block' : 'none')};
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.2);
+	${ModalBackground}
+	${flexCenter};
 	z-index: 9999;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 `;
 
 export const ModalContentWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	background-color: #fff;
+	${flexColumn};
+	background-color: ${({ theme }) => theme.PALETTE.white};
 	position: fixed;
 	padding: 30px;
 	width: 500px;

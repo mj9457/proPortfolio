@@ -1,10 +1,10 @@
 import * as SM from './SideMenu.styles';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { userData } from '../../../../recoil/atoms/myPage/myPage.atom';
+import { useEffect, useState } from 'react';
+import useApi from '../../../../hooks/useApi';
 
 // 왼쪽 메뉴
-function SideMenu({ userState }) {
+function SideMenu() {
 	const navigate = useNavigate();
 
 	// 버튼 클릭시 페이지 전환
@@ -12,32 +12,54 @@ function SideMenu({ userState }) {
 		navigate(`/mypage/${[path]}`);
 	};
 
-	const user = useRecoilValue(userData);
-	// 데이터 정상적으로 불러와지면 삭제
-	const newUser = { ...user };
-	newUser.role = 'mentor';
+	// 유저 정보 담을 state
+	const [user, setUser] = useState({});
+
+	// 유저 정보 불러오기
+	const { result: users } = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (users) {
+			setUser(users);
+		}
+	}, [users]);
 
 	return (
 		<SM.Wrapper>
-			<SM.MainTitle>{userState}</SM.MainTitle>
-
+			<SM.MainTitle>
+				{user.role === 'mentor'
+					? `${user.name} 멘토 님`
+					: `${user.name} 님`}
+			</SM.MainTitle>
 			<SM.SubTitleWrapper>
 				<SM.History>
 					<button onClick={() => handleClickButton('mentoringlist')}>
-						{newUser.role === 'mentor'
+						{user.role === 'mentor'
 							? '멘토링 신청 받은 내역'
 							: '멘토링 신청 내역'}
 					</button>
+					{user.role === 'mentor' ? (
+						<button
+							onClick={() =>
+								handleClickButton('mentoringpostlist')
+							}
+						>
+							멘토링 작성 내역
+						</button>
+					) : undefined}
 					<button onClick={() => handleClickButton('postlist')}>
-						게시물 작성 내역
+						스터디 / 프로젝트
 					</button>
 				</SM.History>
 				<SM.Info>
-					<button onClick={() => handleClickButton('AccountManage')}>
+					<button onClick={() => handleClickButton('accountmanage')}>
 						내 정보 관리
 					</button>
 					<button
-						onClick={() => handleClickButton('AccountWithdrawal')}
+						onClick={() => handleClickButton('accountwithdrawal')}
 					>
 						회원 탈퇴
 					</button>

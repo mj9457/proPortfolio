@@ -31,6 +31,36 @@ export const TitleBox = styled.div`
 	}
 `;
 
+export const ButtonBox = styled.div`
+	${flexColumn}
+	justify-content: space-between;
+
+	& div {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
+`;
+
+export const PositionCategoryItem = styled.button`
+	padding: 11px 20px;
+	text-align: center;
+	border-radius: 50px;
+	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	cursor: pointer;
+	background-color: ${({ theme, $isSelected }) =>
+		$isSelected ? theme.PALETTE.mainColor : 'white'};
+	color: ${({ theme, $isSelected }) =>
+		$isSelected ? 'white' : theme.PALETTE.mainColor};
+	border: 1px solid ${({ theme }) => theme.PALETTE.mainColor};
+
+	&:hover {
+		transition: all ease 0.2s;
+		background-color: ${({ theme }) => theme.PALETTE.mainColor};
+		color: ${({ theme }) => theme.PALETTE.white};
+	}
+`;
+
 export const MentorCardBox = styled.div`
 	display: grid;
 	grid-gap: 20px;

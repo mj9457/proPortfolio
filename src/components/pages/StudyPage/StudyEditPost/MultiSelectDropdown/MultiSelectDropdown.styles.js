@@ -15,7 +15,7 @@ export const SelectBox = styled.div`
 	border-radius: 4px;
 
 	> select {
-		padding-left: 12px;
+		padding-left: 8px;
 		width: 100%;
 		height: 42px;
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
@@ -29,6 +29,8 @@ export const CheckBoxContainer = styled.div`
 	background-color: ${({ theme }) => theme.PALETTE.white};
 	${flexColumn}
 	width: 400px;
+	max-height: 150px;
+	overflow-y: scroll;
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	border-radius: 4px;
 	position: absolute;

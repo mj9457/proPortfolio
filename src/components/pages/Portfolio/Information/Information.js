@@ -1,38 +1,32 @@
 import * as S from './Information.styles';
 
 import Input from '../../../@common/Input/Input';
-import Select from '../../../@common/Select/Select';
+import Position from '../../../@common/Position/Position';
 
 function Information(props) {
-	const { onChange, name } = props;
+	const { handleChange, user, mentorPost, portfolioId } = props;
+	const { name, career, company } = user;
 
 	return (
 		<S.InfoBox>
 			<S.Contents>
 				<S.ContentsTitle>직무</S.ContentsTitle>
-				<Select
+
+				<Position
+					variant={'default'}
 					size={'regular'}
 					font={'regular'}
-					onChange={onChange}
-					name="position"
-				>
-					<option hidden>선택</option>
-					<option value="frontend">프론트엔드 개발</option>
-					<option value="backend">백엔드 개발</option>
-					<option value="fullstack">풀스택 개발</option>
-					<option value="android">안드로이드 개발</option>
-					<option value="ios">IOS 개발</option>
-				</Select>
+					value={mentorPost.position}
+					onChange={handleChange}
+				/>
 			</S.Contents>
 
 			<S.Contents>
 				<S.ContentsTitle>이름</S.ContentsTitle>
 				<Input
 					size={'regular'}
-					placeholder="이름을 입력해 주세요."
-					onChange={onChange}
 					name="name"
-					value={name}
+					value={portfolioId ? mentorPost.name : name}
 					readOnly
 				/>
 			</S.Contents>
@@ -42,8 +36,21 @@ function Information(props) {
 				<Input
 					size={'regular'}
 					placeholder="회사명을 입력해 주세요."
-					onChange={onChange}
 					name="company"
+					defaultValue={portfolioId ? mentorPost.company : company}
+					onChange={handleChange}
+				/>
+			</S.Contents>
+
+			<S.Contents>
+				<S.ContentsTitle>경력</S.ContentsTitle>
+				<Input
+					size={'regular'}
+					placeholder="경력을 입력해 주세요."
+					name="career"
+					defaultValue={portfolioId ? mentorPost.career : career}
+					onChange={handleChange}
+					type="number"
 				/>
 			</S.Contents>
 		</S.InfoBox>

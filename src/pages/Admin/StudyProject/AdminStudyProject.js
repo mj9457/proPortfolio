@@ -1,6 +1,6 @@
-import { Select, Space, theme } from 'antd';
+import { Pagination, Select, Space, theme } from 'antd';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import {
@@ -8,79 +8,50 @@ import {
 	Removetag,
 } from '../../../components/pages/Admin/Common/Common.styles';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import useApi from '../../../hooks/useApi';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminStudyProject = () => {
-	const { Option } = Select;
-	const data = [
-		{
-			key: '1',
-			type: '프로젝트',
-			maintitle: '쇼핑몰 프로젝트 모집',
-			name: '김현규',
-		},
-		{
-			key: '2',
-			type: '스터디',
-			maintitle: '공부하실분',
-			name: '김기범',
-		},
-		{
-			key: '3',
-			type: '스터디',
-			maintitle: '프론트 스터디 모집',
-			name: '조아연',
-		},
-		{
-			key: '4',
-			type: '스터디',
-			maintitle: 'JavaScript 알고리즘 스터디',
-			name: '이헤진',
-		},
-		{
-			key: '5',
-			type: '프로젝트',
-			maintitle: '클론 프로젝트 팀원 모집',
-			name: '예은선',
-		},
-		{
-			key: '6',
-			type: '스터디',
-			maintitle: '백엔드 스터디 모집',
-			name: '박민준',
-		},
-	];
+	// const { Option } = Select;
+	const [tableData, setTableData] = useState();
+	const [currentclassification, setCurrentClassification] = useState('');
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: 'admin/projectStudies',
+		shouldFetch: true,
+	});
 	const columns = [
 		{
-			title: '글 번호',
+			title: '번호',
 			dataIndex: 'key',
 			key: 'key',
 		},
 		{
 			title: (
 				<Select
-					defaultValue="all"
+					defaultValue={currentclassification}
 					style={{ width: 100 }}
 					options={[
-						{ value: 'all', label: '전체' },
+						{ value: '', label: '전체' },
 						{ value: 'project', label: '프로젝트' },
 						{ value: 'study', label: '스터디' },
 					]}
 					onChange={e => {
 						changeSelectValue(e);
 					}}
-				>
-					<Option value="all">전체</Option>
-					<Option value="project">프로젝트</Option>
-					<Option value="study">스터디</Option>
-				</Select>
+				/>
 			),
-			key: 'type',
-			dataIndex: 'type',
+			key: 'classification',
+			dataIndex: 'classification',
 		},
 		{
 			title: '제목',
-			dataIndex: 'maintitle',
-			key: 'maintitle',
+			dataIndex: 'title',
+			key: 'title',
 		},
 		{
 			title: '작성자',
@@ -93,9 +64,14 @@ const AdminStudyProject = () => {
 			render: (_, record) => (
 				<Space size="middle">
 					<a
-						onClick={() => {
-							openApplyModal(record);
-						}}
+						// http://localhost:3000/study/detail/4
+						href={`/study/detail/${record._id}`}
+						// href={`http://34.64.245.195/study/detail/${record._id}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						// onClick={() => {
+						// 	openNewWindow(record._id);
+						// }}
 					>
 						자세히 보기
 					</a>
@@ -107,58 +83,154 @@ const AdminStudyProject = () => {
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<Removetag onClick={() => refuseHandler(record.key)}>
+					<HandlerButton
+						onClick={() => removeHandler(record._id, record.key)}
+					>
 						삭제
-					</Removetag>
+					</HandlerButton>
 				</Space>
 			),
 		},
 	];
-	// select option이 변경될 때
-	const changeSelectValue = e => {
-		console.log(modifiedData);
-		// 한 페이지에 나타낼 개수대로 가져오는 api 협의
-		if (e === 'study') {
-			// Todo 스터디만 가져오는 API
-			setTableData(data.filter(item => item.type === '스터디'));
-		} else if (e === 'project') {
-			// Todo 프로젝트만 가져오는 API
-			setTableData(data.filter(item => item.type === '프로젝트'));
-		} else {
-			// 구분없이 가져오는 API
-			setTableData(modifiedData);
-		}
-	};
-	const refuseHandler = key => {
-		// Todo
-		// 거절 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
-	};
-	// 자세히 보기
-	const openApplyModal = () => {
-		console.log('OPEN');
-	};
-	const modifiedData = data.map((item, index) => ({
-		...item,
-		key: String(index + 1), // 번호 값을 index로부터 생성
-	}));
-	const {
-		token: { colorBgContainer },
-	} = theme.useToken();
-	const [tableData, setTableData] = useState(modifiedData);
 
-	return (
-		<AdminContent background={colorBgContainer}>
-			<SearchInput
-				enterButton="검색"
-				placeholder=""
-				// onSearch={e => addCategoryHandler(e)}
-			/>
+	// select option이 변경될 때
+
+	useEffect(() => {
+		// console.log(result);
+		if (result.projectStudies && result.projectStudies.length > 0) {
+			const startIndex = (currentPage - 1) * 10;
+			setTableData(
+				result.projectStudies.map((item, index) => ({
+					...item,
+					key: startIndex + index + 1,
+				})),
+			);
+		}
+		if (result.totalCount) {
+			setTotalPages(result.totalCount);
+		}
+	}, [result]);
+	const memoColumns = useMemo(() => [], [currentclassification]);
+	const memoResult = useMemo(
+		() => (
 			<AdminTable
 				columns={columns}
 				dataSource={tableData}
 				totalPages={0}
 			/>
+		),
+		[tableData, memoColumns, currentPage],
+	);
+	const changeSelectValue = async e => {
+		setCurrentPage(1);
+		// console.log(currentPage);
+		if (e === 'study') {
+			trigger({
+				params: {
+					classification: '스터디',
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentClassification('스터디');
+			// Todo 스터디만 가져오는 API
+		} else if (e === 'project') {
+			trigger({
+				params: {
+					classification: '프로젝트',
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentClassification('프로젝트');
+		} else if (e === '') {
+			trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentClassification('');
+		}
+	};
+	const removeHandler = async (key, index) => {
+		await trigger({
+			path: `/admin/${key}`,
+			method: 'delete',
+			applyResult: true,
+		});
+		if (result.projectStudies.length === 1) {
+			if (index === 1) {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						classification: currentclassification,
+					},
+				});
+			} else {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						classification: currentclassification,
+					},
+					applyResult: true,
+				});
+			}
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+					classification: currentclassification,
+				},
+				applyResult: true,
+			});
+		}
+	};
+	// 자세히 보기
+
+	const {
+		token: { colorBgContainer },
+	} = theme.useToken();
+
+	const pageChange = async pageNumber => {
+		// console.log(currentclassification);
+		// console.log(pageNumber);
+
+		await trigger({
+			params: {
+				skip: pageNumber * 10 - 10,
+				classification: currentclassification,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+	};
+
+	return (
+		<AdminContent background={colorBgContainer}>
+			{/* <SearchInput
+				enterButton="검색"
+				placeholder=""
+				// onSearch={e => addCategoryHandler(e)}
+			/> */}
+			{isLoading ? (
+				<LoadingBar />
+			) : (
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };

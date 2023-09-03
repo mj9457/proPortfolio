@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
+import useApi from '../../../hooks/useApi';
 
 import * as S from './Card.styles';
-import useApi from '../../../hooks/useApi';
+
+import EmptyMessage from '../EmptyMessage/EmptyMessage';
 
 function MentorCard(props) {
 	const { variant, url } = props;
 
 	const [mentorData, setMentorData] = useState([]);
 
-	const { result, trigger, isLoading, error } = useApi({
+	const { result, isLoading, error } = useApi({
 		path: `${url}`,
 		shouldFetch: true,
 	});
@@ -23,6 +25,7 @@ function MentorCard(props) {
 	return (
 		<>
 			{isLoading && <h2>로딩 중입니다.</h2>}
+			{mentorData.length === 0 && <EmptyMessage />}
 			{mentorData.map((mentor, idx) => (
 				<S.PopularCard
 					variant={variant}
@@ -34,13 +37,7 @@ function MentorCard(props) {
 					</S.CoachNumBox>
 
 					<S.ImgBox>
-						<img
-							src={
-								!mentor.profileImageUrl
-									? '/assets/img/profile/profileImage.png'
-									: mentor.profileImageUrl
-							}
-						/>
+						<img src={mentor.profileImageUrl} />
 					</S.ImgBox>
 
 					<S.ContentsBox>
@@ -56,9 +53,7 @@ function MentorCard(props) {
 								<S.ContentSpan>{mentor.position}</S.ContentSpan>
 							</div>
 							<div>
-								<S.ContentSpan>
-									경력 {mentor.career}년
-								</S.ContentSpan>
+								<S.ContentSpan>경력 {mentor.career}년</S.ContentSpan>
 							</div>
 						</S.Contents>
 					</S.ContentsBox>

@@ -1,59 +1,26 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Space, theme } from 'antd';
+import { Pagination, Space, theme } from 'antd';
 import {
 	AdminContent,
 	Removetag,
 } from '../../../components/pages/Admin/Common/Common.styles';
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import Searchbar from '../../../components/pages/Admin/Searchbar/Searchbar';
-import axios from 'axios';
-import { api } from '../../../utils/api';
 import useApi from '../../../hooks/useApi';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import { PaginationWrap } from './Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminHome = () => {
-	// const data = [
-	// 	{
-	// 		key: '1',
-	// 		name: '김현규',
-	// 		nickname: '닉넴1',
-	// 		email: 'eilce1@naver.com',
-	// 	},
-	// 	{
-	// 		key: '2',
-	// 		name: '김기범',
-	// 		nickname: '닉넴2',
-	// 		email: 'eilce2@naver.com',
-	// 	},
-	// 	{
-	// 		key: '3',
-	// 		name: '조아연',
-	// 		nickname: '닉넴3',
-	// 		email: 'eilce3@naver.com',
-	// 	},
-	// 	{
-	// 		key: '4',
-	// 		name: '이헤진',
-	// 		nickname: '닉넴4',
-	// 		email: 'eilce4@naver.com',
-	// 	},
-	// 	{
-	// 		key: '5',
-	// 		name: '예은선',
-	// 		nickname: '닉넴5',
-	// 		email: 'eilce5@naver.com',
-	// 	},
-	// 	{
-	// 		key: '6',
-	// 		name: '박민준',
-	// 		nickname: '닉넴6',
-	// 		email: 'eilce@naver.com',
-	// 	},
-	// ];
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/admin/user',
+		shouldFetch: true,
+	});
 	const columns = [
 		{
 			title: '번호',
-			dataIndex: 'id',
-			key: 'id',
+			dataIndex: 'key',
+			key: 'key',
 		},
 		{
 			title: '이름',
@@ -62,8 +29,8 @@ const AdminHome = () => {
 		},
 		{
 			title: '닉네임',
-			dataIndex: 'username',
-			key: 'username',
+			dataIndex: 'nickName',
+			key: 'nickName',
 		},
 		{
 			title: '이메일',
@@ -75,128 +42,118 @@ const AdminHome = () => {
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<Removetag onClick={() => removeHandler(record.id)}>
+					<HandlerButton onClick={() => removeHandler(record._id)}>
 						삭제
-					</Removetag>
+					</HandlerButton>
 				</Space>
 			),
 		},
 	];
 	const [userData, setUsersData] = useState([]);
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 	// const [tableData, setTableData] = useState([]);
 
 	/**
 	 * 사용 예시
 	 */
-	// const { result, trigger, isLoading, error } = useApi({
-	// 	path: '/users',
-	// 	shouldFetch: true,
-	// });
 
-	// useEffect(() => {
-	// 	if (result && result.length > 0) {
-	// 		const modifiedData = result.map((item, index) => ({
-	// 			...item,
-	// 			key: index,
-	// 			// id: item.id, // 번호 값을 index로부터 생성
-	// 		}));
-	// 		setUsersData(modifiedData);
-	// 	}
-	// }, [result]);
-
-	// useEffect(() => {
-	// 	console.log('useApi error :: \n', error);
-	// }, [error]);
-
-	// if (test1) {
-	// }
-
-	const getUserList = async () => {
-		try {
-			const response = await axios.get(
-				'https://jsonplaceholder.typicode.com/users',
-			);
-			console.log(response.data);
-			const modifiedData = response.data.map((item, index) => ({
-				...item,
-				key: index,
-				// id: item.id, // 번호 값을 index로부터 생성
-			}));
-			setUsersData(modifiedData);
-		} catch (error) {
-			console.error('API 호출 중 오류:', error);
-		}
-	};
 	useEffect(() => {
-		getUserList();
-	}, []);
+		// console.log(result);
+		if (result.users && result.users.length > 0) {
+			const startIndex = (currentPage - 1) * 10;
+			// console.log(result.users.length);
+			setUsersData(
+				result.users.map((item, index) => ({
+					...item,
+					key: startIndex + index + 1,
+				})),
+			);
+		}
+		if (result.totalCount) {
+			setTotalPages(result.totalCount);
+		}
 
-	// console.log(userData);
-	// console.log(data);
+		// console.log(currentPage);
 
-	const removeHandler = id => {
-		console.log(id);
-		setUsersData(data => data.filter(items => items.id !== id));
+		// console.log('한 페이지 Length', result?.users?.length);
+	}, [result]);
+	const memoColumns = useMemo(() => [], [currentPage]);
+	const memoResult = useMemo(
+		() => (
+			<AdminTable
+				columns={columns}
+				dataSource={userData}
+				totalPages={totalPages}
+			/>
+		),
+		[userData, totalPages, memoColumns],
+	);
+
+	const removeHandler = async userId => {
+		await trigger({
+			method: 'delete',
+			path: `/admin/user/${userId}`,
+			applyResult: true,
+		});
+
+		// console.log(result);
+		if (result.users.length === 1) {
+			await trigger({
+				params: {
+					skip: (currentPage - 1) * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+		}
 	};
 
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
+	const pageChange = async pageNumber => {
+		// console.log(pageNumber);
 
+		await trigger({
+			path: '/admin/user',
+			params: {
+				skip: pageNumber * 10 - 10,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+		// console.log(pageNumber);
+	};
 	return (
 		<AdminContent background={colorBgContainer}>
-			<Searchbar type={'Search'} />
+			{/* <Searchbar type={'Search'} /> */}
 			{/* /로딩 컴포넌트 교체 예정 */}
-			{/* {isLoading && <h2>IsLoading</h2>} */}
-			<AdminTable
-				columns={columns}
-				dataSource={userData}
-				totalPages={0}
-			/>
+			{isLoading ? (
+				<LoadingBar />
+			) : (
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };
 export default AdminHome;
-
-// <Layout
-// 	style={{
-// 		textAlign: 'center',
-// 		background: colorBgContainer,
-// 		backgroundColor: 'red',
-// 	}}
-// 	>
-// 	</Layout>
-// <AdminContent
-// 	style={{
-// 		// margin: '24px 16px',
-// 		overflow: 'initial',
-// 	}}
-// >
-// 	<div
-// 		style={{
-// 			padding: 24,
-// 			textAlign: 'center',
-// 			// background: colorBgContainer,
-// 		}}
-// 	>
-// 		{/* {currentView} */}
-// 		<AdminTable
-// 			columns={columns}
-// 			dataSource={data}
-// 			totalPages={totalPages}
-// 		/>
-// 	</div>
-// </AdminContent>
-
-// <Layout>
-// 	{/* <Layout
-// 		className="site-layout"
-// 		style={{
-// 			marginLeft: 20,
-// 			marginTop: 80,
-// 			width: '100px',
-// 		}}
-// 	>
-
-// 	</Layout> */}
-// </Layout>

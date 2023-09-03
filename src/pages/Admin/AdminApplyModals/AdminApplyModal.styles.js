@@ -86,6 +86,14 @@ const ImgBox = styled.div`
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
 	}
+	> div {
+		background: url(${props => props.url});
+		background-size: contain;
+		width: 100%;
+		height: 100%;
+		background-repeat: no-repeat;
+		cursor: pointer;
+	}
 `;
 const ButtonArea = styled.div`
 	margin-top: 32px;
@@ -121,21 +129,24 @@ const OriginalImageWrap = styled.div`
 	/* right: calc(50% - 100px); */
 	/* width: 100%;
 	height: 100vh; */
-	position: relative;
-	width: 1080px;
-	margin: 0 auto;
+	/* position: absolute;
+	top: 250px; */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `;
 const OriginalImageBox = styled.div`
-	position: absolute;
-	top: 250px;
-	> div:first-child {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
+	/* position: absolute;
+	top: 250px; */
+	position: relative;
+	width: 650px;
+	margin: 0 auto;
 `;
 const OriginalImage = styled.img`
 	width: 100%;
+	/* width: 1000px; */
+	/* height: 500px; */
 `;
 export {
 	ApplyModalWrap,

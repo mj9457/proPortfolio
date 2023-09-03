@@ -1,45 +1,85 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useApi from '../../../hooks/useApi';
+
 import * as AM from './ApplyModal.styles';
+
 import Textarea from '../Textarea/Textarea';
 import Input from '../Input/Input';
-import axios from 'axios';
+import MESSAGE from '../../../constants/message';
 
-function ApplyModal({ setInfoModalOpenState, postAddress, action }) {
+function ApplyModal(props) {
+	// path 가 params 에 있는 아이디 값 - 확인하려면 portfolioPost.js 확인 바람
+	const { setInfoModalOpenState, action, path, nowData } = props;
+	// console.log(nowData);
 	// 유저가 입력한 정보 state
 	const [textValue, setTextValue] = useState({
+		status: 'requested',
+		email: '',
+		portfolioAddress: '',
 		title: '',
 		content: '',
-		email: '',
-		portfolio: '',
 	});
+
+	// axios 통신 → 화면에 그려주는 작업
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/portfolio/', // 본인이 신청한 글 볼 수 있는 api
+		shouldFetch: true,
+	});
+
+	useEffect(() => {
+		if (result) {
+			setTextValue(prev => ({
+				...prev,
+				status: 'requested',
+				email: result.email,
+				portfolioAddress: result.portfolioAddress,
+				title: result.title,
+				content: result.content,
+			}));
+
+			console.log(error);
+		}
+	}, [result]);
 
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
+		const { name, value } = e.target;
+
 		setTextValue({
 			...textValue,
-			[e.target.name]: e.target.value,
+			[name]: value,
 		});
 	};
+
+	const { title, content, email, portfolioAddress } = textValue;
 
 	// 유저가 입력한 정보 submit
 	const handleSubmit = e => {
 		e.preventDefault();
 
 		// 빈값 체크
-		if (
-			!textValue.title ||
-			!textValue.content ||
-			!textValue.email ||
-			!textValue.portfolio
-		) {
-			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
+		if (!title || !content || !email || !portfolioAddress) {
+			alert(MESSAGE.CHECK.MODAL);
 		} else {
-			// 유저 작성한 신청서 post로 전달
-			axios
-				.post(postAddress, textValue)
-				.then(res => console.log(res))
-				.then(alert(`${action} 완료되었습니다.`))
-				.then(closeModal);
+			// action 이 수정일 때는 api method 가 put
+			if (action === '수정') {
+				trigger({
+					method: 'put',
+					path: `/portfolio/${path}/mentoringRequests`,
+					data: textValue,
+				});
+				alert(MESSAGE.MYPAGE.EDIT.COMPLETE);
+				closeModal();
+			} else {
+				// action 이 완료일 때는 api method 가 post
+				trigger({
+					method: 'post',
+					path: `/portfolio/${path}/mentoringRequests`,
+					data: textValue,
+				});
+				alert(MESSAGE.APPLY.COMPLETE);
+				closeModal();
+			}
 		}
 	};
 
@@ -61,7 +101,12 @@ function ApplyModal({ setInfoModalOpenState, postAddress, action }) {
 									type="text"
 									name="title"
 									size={'regular'}
-									placeholder="신청 제목"
+									placeholder="신청 제목을 작성해 주세요!"
+									defaultValue={
+										result?.title
+											? result?.title
+											: nowData?.title
+									}
 									onChange={handleChange}
 								/>
 							</AM.InfoSubTitleBox>
@@ -71,7 +116,12 @@ function ApplyModal({ setInfoModalOpenState, postAddress, action }) {
 									name={'content'}
 									size={'regular'}
 									placeholder={
-										'질문할 내용을 자세하게 적어주세요!'
+										'질문할 내용을 자세하게 작성해 주세요!'
+									}
+									defaultValue={
+										result?.content
+											? result?.content
+											: nowData?.content
 									}
 									onChange={handleChange}
 								/>
@@ -83,6 +133,11 @@ function ApplyModal({ setInfoModalOpenState, postAddress, action }) {
 									name="email"
 									size={'regular'}
 									placeholder="example@naver.com"
+									defaultValue={
+										result?.email
+											? result?.email
+											: nowData?.email
+									}
 									onChange={handleChange}
 								/>
 							</AM.InfoSubTitleBox>
@@ -92,9 +147,14 @@ function ApplyModal({ setInfoModalOpenState, postAddress, action }) {
 								</AM.InfoSubTitle>
 								<Input
 									type="text"
-									name="portfolio"
+									name="portfolioAddress"
 									size={'regular'}
 									placeholder="https://github/example"
+									defaultValue={
+										result?.portfolioAddress
+											? result?.portfolioAddress
+											: nowData?.portfolioAddress
+									}
 									onChange={handleChange}
 								/>
 							</AM.InfoSubTitleBox>

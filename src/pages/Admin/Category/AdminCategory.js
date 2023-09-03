@@ -1,43 +1,30 @@
-import { useEffect, useState } from 'react';
-import { Button, Input, Space, theme } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Pagination, Space, theme } from 'antd';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { AdminContent } from '../../../components/pages/Admin/Common/Common.styles';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import useApi from '../../../hooks/useApi';
+import MESSAGE from '../../../constants/message';
+import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 const AdminCategory = () => {
-	// Todo API 호출
-	const data = [
-		{
-			key: 1,
-			name: `백엔드 개발`,
-		},
-		{
-			key: 2,
-			name: '프론트 개발',
-		},
-		{
-			key: 3,
-			name: '풀 스택 개발',
-		},
-		{
-			key: 4,
-			name: '안드로이드 개발',
-		},
-		{
-			key: 5,
-			name: 'ios 개발',
-		},
-		{
-			key: 6,
-			name: '크로스 플랫폼 앱 개발',
-		},
-	];
 	// 수정 중인 행의 key를 저장
 	const [editingKey, setEditingKey] = useState(null);
-	const [tableData, setTableData] = useState(data);
+	const [tableData, setTableData] = useState();
 	const [tempData, setTempData] = useState({});
+	const [inputValue, setInputValue] = useState('');
+	const [categoryInput, setCategoryInput] = useState('');
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/position',
+		shouldFetch: true,
+	});
+
 	const columns = [
 		{
 			title: '카테고리 명',
@@ -49,8 +36,8 @@ const AdminCategory = () => {
 				return isEditing ? (
 					<>
 						<TableInput
-							value={tempData[record.key] || record.name}
-							onChange={e => handleInputChange(e, record.key)}
+							value={tempData[record.key]}
+							onChange={e => handleInputChange(e, record._id)}
 						/>
 						<SaveButton
 							onClick={() => {
@@ -77,7 +64,7 @@ const AdminCategory = () => {
 							onClick={() => {
 								handleEdit(record.key);
 							}}
-						>
+							>
 							수정
 						</Atags> */}
 						<HandlerButton
@@ -101,25 +88,63 @@ const AdminCategory = () => {
 			),
 		},
 	];
+
+	useEffect(() => {
+		console.log(result);
+		if (result.positions && result.positions.length > 0) {
+			setTableData(
+				result.positions.map(item => ({
+					...item,
+					key: item._id,
+					name: item.name,
+				})),
+			);
+		}
+		if (result.total) {
+			setTotalPages(result.total);
+		}
+	}, [result]);
+
+	const memoColumns = useMemo(() => [...columns], [tempData, editingKey]);
+	const memoResult = useMemo(
+		() => <AdminTable columns={columns} dataSource={tableData} />,
+		[tableData, memoColumns],
+	);
+
 	// Input onChange Handler
 	const handleInputChange = (e, key) => {
 		// 새로운 배열에 값 저장
+		console.log(key);
+		setCategoryInput(e.target.value);
 		setTempData({ ...tempData, [key]: e.target.value });
+		console.log(tempData);
 	};
 	// Button Save Handler
-	const handleSave = key => {
+	const handleSave = async key => {
+		if (!categoryInput.trim()) {
+			alert(MESSAGE.CHECK.MODAL);
+			return;
+		}
 		console.log(key);
-		const updatedData = tableData.map(item =>
-			item.key === key ? { ...item, name: tempData[key] } : item,
-		);
-		console.log(updatedData);
-		setTableData(updatedData);
+		await trigger({
+			path: `/position/${key}`,
+			data: { name: categoryInput },
+			method: 'put',
+			applyResult: true,
+		});
 		setEditingKey(null);
+
+		// const updatedData = tableData.map(item =>
+		// 	item.key === key ? { ...item, name: tempData[key] } : item,
+		// );
+		// console.log(updatedData);
+		// setTableData(updatedData);
 		// Todo 카테고리 수정 API
 	};
 	// 수정 버튼을 눌렀을 때 Edit 상태 업데이트
 	const handleEdit = key => {
 		setEditingKey(key);
+
 		setTempData({
 			...tempData,
 			[key]: tableData.find(item => item.key === key).name,
@@ -130,19 +155,58 @@ const AdminCategory = () => {
 		setEditingKey(null);
 	};
 	// 삭제
-	const removeHandler = key => {
-		setTableData(data => data.filter(items => items.key !== key));
+	const removeHandler = async key => {
+		await trigger({
+			method: 'delete',
+			path: `/position/${key}`,
+			applyResult: true,
+		});
+		if (result.positions.length === 1) {
+			await trigger({
+				params: {
+					skip: (currentPage - 1) * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+		}
 	};
-	const addCategoryHandler = e => {
-		console.log('추가하기');
-		const lastKey = tableData[tableData.length - 1].key;
-		const newKey = lastKey + 1;
-		setTableData([...tableData, { key: newKey, name: e }]);
+	// 카테고리 추가
+	const addCategoryHandler = async () => {
+		console.log(inputValue);
+		await trigger({
+			method: 'post',
+			data: { name: inputValue },
+			applyResult: true,
+		});
+		setInputValue('');
+		console.log(result);
 	};
+	// console.log(tableData);
 
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
+
+	const pageChange = async pageNumber => {
+		console.log(pageNumber);
+
+		await trigger({
+			path: '/position',
+			params: {
+				skip: pageNumber * 10 - 10,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+	};
 
 	return (
 		<AdminContent background={colorBgContainer}>
@@ -150,17 +214,26 @@ const AdminCategory = () => {
 				enterButton="추가"
 				placeholder="추가 할 카테고리를 입력해주세요"
 				onSearch={e => addCategoryHandler(e)}
+				onChange={e => setInputValue(e.target.value)}
+				value={inputValue}
 			/>
-			{/* <Searchbar
-				type={'ADD'}
-				// value={set}
-				placeholder="추가 할 카테고리를 입력하세요."
-			/>  */}
-			<AdminTable
-				columns={columns}
-				dataSource={tableData}
-				totalPages={0}
-			/>
+			{isLoading ? (
+				<LoadingBar />
+			) : (
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };

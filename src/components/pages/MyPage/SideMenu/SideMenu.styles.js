@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 2.5rem;
-	width: 20%;
 `;
 
 export const MainTitle = styled.div`

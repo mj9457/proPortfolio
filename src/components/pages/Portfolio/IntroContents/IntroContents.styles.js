@@ -19,6 +19,10 @@ export const IntroBox = styled.div`
 		font-size: ${({ theme }) => theme.FONT_SIZE.md};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	}
+
+	& pre {
+		line-height: 1.6;
+	}
 `;
 
 export const IntroContents = styled.div`

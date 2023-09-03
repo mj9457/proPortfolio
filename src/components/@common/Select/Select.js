@@ -1,11 +1,11 @@
 import * as S from './Select.styles';
 
 function Select(props) {
-	const { children, size, font, ...rest } = props;
+	const { children, variant, size, font, ...rest } = props;
 
 	return (
 		<>
-			<S.Selected size={size} font={font} {...rest}>
+			<S.Selected size={size} font={font} variant={variant} {...rest}>
 				{children}
 			</S.Selected>
 		</>

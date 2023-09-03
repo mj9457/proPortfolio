@@ -1,34 +1,52 @@
 import * as S from './PostCard.styles';
 import { Link } from 'react-router-dom';
 import Chip from '../../../@common/Chip/Chip';
-import Line from '../../../@common/Line/Line';
+import { useEffect } from 'react';
 
 function PostCard({ data }) {
-	// console.log(data);
-
-	const { postId, status, title, content, position, category } = data;
+	const {
+		_id,
+		recruitsStatus,
+		title,
+		description,
+		position,
+		classification,
+		deadline,
+	} = data;
 
 	return (
 		<S.Container>
-			<Link to={`/study/detail/${postId}`}>
+			<Link to={`/study/detail/${_id}`}>
 				<S.ChipWrapper>
-					<Chip category={category} />
-					<Chip status={status} />
+					<Chip classification={classification} />
+					<S.ChipBox $recruitsStatus={recruitsStatus}>
+						<S.ChipText $recruitsStatus={recruitsStatus}>
+							{recruitsStatus}
+						</S.ChipText>
+					</S.ChipBox>
 				</S.ChipWrapper>
 
 				<S.Title>{title}</S.Title>
-				<S.PostText>{content}</S.PostText>
+				<S.PostText>{description}</S.PostText>
 
 				<S.BottomBox>
 					<S.RightBox>
-						{position.map((name, idx) => (
-							<S.PositionBox key={idx}>
-								<S.Position>{name}</S.Position>
-							</S.PositionBox>
-						))}
+						{position &&
+							position.length > 0 &&
+							position.map((name, idx) => (
+								<S.PositionBox key={idx}>
+									<S.Position>{name}</S.Position>
+								</S.PositionBox>
+							))}
 					</S.RightBox>
 
-					<S.Day>마감 10일 전</S.Day>
+					<S.Day>
+						<p>마감 기간</p>
+						<p>
+							{deadline &&
+								deadline.split('T')[0].replace(/-/g, '. ')}
+						</p>
+					</S.Day>
 				</S.BottomBox>
 			</Link>
 		</S.Container>

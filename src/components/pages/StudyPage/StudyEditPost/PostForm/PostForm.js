@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as S from './PostForm.style';
 import Button from '../../../../@common/Button/Button';
 import Textarea from '../../../../@common/Textarea/Textarea';
+import useApi from '../../../../../hooks/useApi';
+import MESSAGE from '../../../../../constants/message';
 
-function PostForm({ selectedOptions }) {
+function PostForm({ selectedOptions, postId, postData }) {
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		title: '',
-		content: '',
+		description: '',
 	});
+	const isTitle = postData.title;
+	const isDescription = postData.description;
+
+	useEffect(() => {
+		if (isTitle && isDescription) {
+			setValues({
+				title: postData.title,
+				description: postData.description,
+			});
+		}
+	}, [isTitle]);
 
 	const handleChange = e => {
 		setValues({
@@ -21,23 +34,33 @@ function PostForm({ selectedOptions }) {
 
 	const validationChecks = [
 		{
-			check: values.title.length > 30,
-			message: '제목은 30자 이하로 입력해주세요.',
+			check: !values.title || values.title.trim().length === 0,
+			message: MESSAGE.CHECK.TITLE,
+		},
+
+		{
+			check: values.title && values.title.length > 50,
+			message: MESSAGE.CHECK.TITLELENGTH,
+		},
+
+		{
+			check:
+				!values.description || values.description.trim().length === 0,
+			message: MESSAGE.CHECK.DESCRIPTION,
 		},
 		{
-			check: values.title.trim().length === 0,
-			message: '제목을 작성해주세요.',
+			check: values.description && values.description.length > 1000,
+			message: MESSAGE.CHECK.DESCRIPTIONLENGTH,
 		},
 		{
-			check: values.content.trim().length === 0,
-			message: '소개 내용을 작성해주세요.',
+			check:
+				!selectedOptions.howContactContent ||
+				selectedOptions.howContactContent.trim().length === 0,
+			message: MESSAGE.CHECK.COMMUNICATION,
 		},
 		{
-			check: selectedOptions.link.trim().length === 0,
-			message: '연락 가능한 링크를 입력해주세요.',
-		},
-		{
-			check: Object.values(selectedOptions).some(option => {
+			check: Object.keys(selectedOptions).some(optionKey => {
+				const option = selectedOptions[optionKey];
 				if (typeof option === 'string') {
 					return option.trim().length === 0;
 				} else if (Array.isArray(option)) {
@@ -45,9 +68,14 @@ function PostForm({ selectedOptions }) {
 				}
 				return false;
 			}),
-			message: '모든 항목을 선택해주세요.',
+			message: MESSAGE.CHECK.ALL,
 		},
 	];
+
+	const { trigger, isLoading, error, result } = useApi({
+		path: '/projectStudy',
+		method: 'post',
+	});
 
 	const handleSubmit = async e => {
 		const validationFailures = validationChecks.filter(
@@ -61,24 +89,34 @@ function PostForm({ selectedOptions }) {
 		}
 
 		try {
-			// const URL = '';
-			// const response = await axios.post(URL, {
-			// 	title,
-			// 	content,
-			// selectedOptions
-			// });
+			const postData = {
+				...selectedOptions,
+				title: values.title,
+				description: values.description,
+			};
 
-			// console.log(response.data);
-			console.log(selectedOptions);
-			alert('성공');
+			if (postId) {
+				await trigger({
+					path: `/projectStudy/${postId}`,
+					method: 'put',
+					data: postData,
+				});
+			} else {
+				await trigger({
+					path: '/projectStudy',
+					method: 'post',
+					data: postData,
+				});
+			}
 			// navigate(`/study/detail/${response.data.id}`)
+			navigate(`/study`);
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	const onClickCancel = e => {
-		if (confirm('작성을 취소할까요?')) {
+		if (confirm(MESSAGE.POST.CANCEL)) {
 			navigate('/study');
 		}
 	};
@@ -88,15 +126,16 @@ function PostForm({ selectedOptions }) {
 			<S.PostInput
 				placeholder="제목을 입력하세요."
 				name="title"
-				maxLength={30}
+				maxLength={50}
 				value={values.title}
 				onChange={handleChange}
 			/>
 			<Textarea
-				name="content"
+				name="description"
 				size={'large'}
-				placeholder="프로젝트, 스터디에 대해 소개해주세요!"
-				value={values.content}
+				maxLength={1000}
+				placeholder="스터디, 프로젝트에 대해 소개해 주세요!"
+				value={values.description}
 				onChange={handleChange}
 			/>
 

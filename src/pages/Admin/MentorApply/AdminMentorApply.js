@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Button, Space, theme } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Button, Pagination, Space, theme } from 'antd';
 import {
 	AdminContent,
 	Removetag,
@@ -8,40 +8,25 @@ import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
 import { Atags, HandlerButton } from './AdminMentorApply.styles';
 import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
+import useApi from '../../../hooks/useApi';
+import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminMentorApply = () => {
-	const data = [
-		{
-			key: '1',
-			name: '김현규',
-			email: 'eilce1@naver.com',
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/mentorRequest',
+		shouldFetch: true,
+		params: {
+			status: 'requested',
 		},
-		{
-			key: '2',
-			name: '김기범',
-			email: 'eilce2@naver.com',
-		},
-		{
-			key: '3',
-			name: '조아연',
-			email: 'eilce3@naver.com',
-		},
-		{
-			key: '4',
-			name: '이헤진',
-			email: 'eilce4@naver.com',
-		},
-		{
-			key: '5',
-			name: '예은선',
-			email: 'eilce5@naver.com',
-		},
-		{
-			key: '6',
-			name: '박민준',
-			email: 'eilce@naver.com',
-		},
-	];
+	});
+	const [applyData, setApplyData] = useState([]);
+	const [isOpen, setIsOpen] = useState(false);
+	const [selectedKey, setSelectedKey] = useState(null);
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [data, setData] = useState([{}]);
+
 	const columns = [
 		{
 			title: '번호',
@@ -79,25 +64,22 @@ const AdminMentorApply = () => {
 			render: (_, record) => (
 				<Space size="middle">
 					<div>
-						{/* <Atags
-							onClick={() => {
-								approveHandler(record.key);
-							}}
-						>
-						</Atags> */}
 						<HandlerButton
 							type="primary"
 							onClick={() => {
-								approveHandler(record.key);
+								approveHandler(
+									record.userId,
+									record._id,
+									record.key,
+								);
 							}}
 						>
 							승인
 						</HandlerButton>
-						{/* <Removetag onClick={() => refuseHandler(record.key)}>
-							거절
-						</Removetag> */}
 						<HandlerButton
-							onClick={() => refuseHandler(record.key)}
+							onClick={() =>
+								refuseHandler(record._id, record.key)
+							}
 						>
 							거절
 						</HandlerButton>
@@ -106,10 +88,44 @@ const AdminMentorApply = () => {
 			),
 		},
 	];
-	// 모달 열기
+	useEffect(() => {
+		// console.log(result);
+		if (result.mentorRequests && result.mentorRequests.length > 0) {
+			const startIndex = (currentPage - 1) * 10;
 
-	const [isOpen, setIsOpen] = useState(false);
-	const [selectedKey, setSelectedKey] = useState(null);
+			setApplyData(
+				result.mentorRequests
+					.filter(item => item.status === 'requested')
+					.map((item, index) => ({
+						...item,
+						key: index + startIndex + 1,
+					})),
+			);
+			const newData = result.mentorRequests.map(item => ({
+				company: item.company,
+				career: item.career,
+			}));
+			// console.log(newData);
+			setData(newData);
+		}
+
+		if (result.total) {
+			setTotalPages(result.total);
+		}
+	}, [result]);
+	// console.log(data);
+	const memoColumns = useMemo(() => [], [selectedKey, isOpen]);
+	const memoResult = useMemo(
+		() => (
+			<AdminTable
+				columns={columns}
+				dataSource={applyData}
+				totalPages={totalPages}
+			/>
+		),
+		[applyData, memoColumns, currentPage],
+	);
+
 	// 자세히 보기
 	const openApplyModal = key => {
 		setSelectedKey(key);
@@ -119,55 +135,158 @@ const AdminMentorApply = () => {
 		setSelectedKey(null);
 		setIsOpen(false);
 	};
-	const refuseHandler = key => {
-		// Todo
-		// 거절 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
-		console.log(key);
+	// 거절
+	const refuseHandler = async (requestId, key) => {
+		// console.log(key);
+
+		await trigger({
+			path: `/mentorRequest/${requestId}`,
+			method: 'put',
+			data: { status: 'rejected' },
+			applyResult: true,
+		});
+		if (result.mentorRequests.length === 1) {
+			if (key === 1) {
+				// console.log('key값이 1일때~~~~~~~~~~~');
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						status: 'requested',
+					},
+				});
+			} else {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						status: 'requested',
+					},
+					applyResult: true,
+				});
+			}
+
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+					status: 'requested',
+				},
+				applyResult: true,
+			});
+		}
+
 		// setTableData(data => data.filter(items => items.key !== key));
 		// 모든 처리 후
 		setSelectedKey(null);
 		setIsOpen(false);
 	};
-	const approveHandler = key => {
-		console.log(key);
-		// Todo
-		// 승인 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
-		// 모든 처리 후
+	// 승인
+	const approveHandler = async (userId, requestId, key) => {
+		let currentKey = key;
+		if (key >= 11) {
+			const remainder = key % 10;
+			currentKey = remainder === 0 ? 10 : remainder;
+		}
+		// console.log(currentKey - 1);
+		await trigger({
+			path: `/admin/user/${userId}/role`,
+			method: 'put',
+			data: {
+				role: 'mentor',
+				career: data[currentKey - 1].career,
+				company: data[currentKey - 1].company,
+			},
+		});
+		await trigger({
+			path: `/mentorRequest/${requestId}`,
+			method: 'put',
+			data: {
+				status: 'accepted',
+			},
+			applyResult: true,
+		});
+		if (result.mentorRequests.length === 1) {
+			if (key === 1) {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						status: 'requested',
+					},
+				});
+			} else {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+						status: 'requested',
+					},
+					applyResult: true,
+				});
+			}
+
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+					status: 'requested',
+				},
+				applyResult: true,
+			});
+		}
 		setSelectedKey(null);
 		setIsOpen(false);
 	};
-	const modifiedData = data.map((item, index) => ({
-		...item,
-		key: String(index + 1), // 번호 값을 index로부터 생성
-	}));
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
-	const [tableData, setTableData] = useState(modifiedData);
+	const pageChange = async pageNumber => {
+		// console.log(pageNumber);
+
+		await trigger({
+			path: '/mentorRequest',
+			params: {
+				skip: pageNumber * 10 - 10,
+				status: 'requested',
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
+		// console.log(pageNumber);
+	};
 
 	return (
 		<>
 			{isOpen && (
 				<AdminApplyModal
 					onClose={closeModal}
-					id={selectedKey}
+					userInfo={selectedKey}
 					approveHandler={approveHandler}
 					refuseHandler={refuseHandler}
 				/>
 			)}
 			<AdminContent background={colorBgContainer}>
-				<SearchInput
+				{/* <SearchInput
 					enterButton="검색"
 					placeholder=""
 					// onSearch={e => addCategoryHandler(e)}
-				/>
-				<AdminTable
-					columns={columns}
-					dataSource={tableData}
-					totalPages={0}
-				/>
+				/> */}
+				{isLoading ? (
+					<LoadingBar />
+				) : (
+					<>
+						{memoResult}
+						<PaginationWrap>
+							<Pagination
+								current={currentPage}
+								defaultCurrent={currentPage}
+								total={totalPages}
+								onChange={e => {
+									pageChange(e);
+								}}
+							/>
+						</PaginationWrap>
+					</>
+				)}
 			</AdminContent>
 		</>
 	);

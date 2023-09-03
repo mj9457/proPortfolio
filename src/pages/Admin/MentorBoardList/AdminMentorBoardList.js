@@ -1,6 +1,6 @@
-import { Select, Space, theme } from 'antd';
+import { Pagination, Select, Space, theme } from 'antd';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
 import {
@@ -8,61 +8,36 @@ import {
 	Removetag,
 } from '../../../components/pages/Admin/Common/Common.styles';
 import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
+import useApi from '../../../hooks/useApi';
+import { PaginationWrap } from '../Home/Admin.styles';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 const AdminMentorBoardList = () => {
-	const data = [
-		{
-			key: '1',
-			job: '프론트 엔드',
-			maintitle: '프론트 엔드의 기본',
-			name: '김현규',
-		},
-		{
-			key: '2',
-			job: '백엔드 ',
-			maintitle: 'Spring으로 백엔드',
-			name: '김기범',
-		},
-		{
-			key: '3',
-			job: 'ios 개발',
-			maintitle: 'Swift 강의함',
-			name: '조아연',
-		},
-		{
-			key: '4',
-			job: '백엔드 엔드',
-			maintitle: 'node의 모든것',
-			name: '이헤진',
-		},
-		{
-			key: '5',
-			job: '프론트 엔드 ',
-			maintitle: 'React 장인',
-			name: '예은선',
-		},
-		{
-			key: '6',
-			job: '백엔드 ',
-			maintitle: 'Nest.js의 시작',
-			name: '박민준',
-		},
-	];
+	const [tableData, setTableData] = useState();
+	const [totalPages, setTotalPages] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	// select option이 변경될 때
+	const { result, trigger, isLoading, error } = useApi({
+		path: '/admin/portfolio',
+		shouldFetch: true,
+	});
 	const columns = [
 		{
-			title: '글 번호',
+			title: '번호',
 			dataIndex: 'key',
 			key: 'key',
 		},
 		{
 			title: '직무',
-			dataIndex: 'job',
-			key: 'job',
+			dataIndex: 'position',
+			key: 'position',
 		},
 		{
 			title: '제목',
-			dataIndex: 'maintitle',
-			key: 'maintitle',
+			dataIndex: 'title',
+			key: 'title',
 		},
 		{
 			title: '작성자',
@@ -75,9 +50,13 @@ const AdminMentorBoardList = () => {
 			render: (_, record) => (
 				<Space size="middle">
 					<a
-						onClick={() => {
-							openApplyModal(record);
-						}}
+						href={`/portfolio/post/${record._id}`}
+						// href={`http://34.64.245.195/study/detail/${record._id}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						// onClick={() => {
+						// 	openApplyModal(record);
+						// }}
 					>
 						자세히 보기
 					</a>
@@ -85,62 +64,119 @@ const AdminMentorBoardList = () => {
 			),
 		},
 		{
-			title: '버튼',
 			key: 'action',
 			render: (_, record) => (
 				<Space size="middle">
-					<Removetag onClick={() => refuseHandler(record.key)}>
+					<HandlerButton
+						onClick={() => removeHandler(record._id, record.key)}
+					>
 						삭제
-					</Removetag>
+					</HandlerButton>
 				</Space>
 			),
 		},
 	];
-	// select option이 변경될 때
-	const changeSelectValue = e => {
-		console.log(modifiedData);
-		// 한 페이지에 나타낼 개수대로 가져오는 api 협의
-		if (e === 'study') {
-			// Todo 스터디만 가져오는 API
-			setTableData(data.filter(item => item.type === '스터디'));
-		} else if (e === 'project') {
-			// Todo 프로젝트만 가져오는 API
-			setTableData(data.filter(item => item.type === '프로젝트'));
-		} else {
-			// 구분없이 가져오는 API
+
+	useEffect(() => {
+		// console.log(result);
+		if (result.portfolios && result.portfolios.length > 0) {
+			const startIndex = (currentPage - 1) * 10;
+			const modifiedData = result.portfolios.map((item, index) => ({
+				...item,
+				key: startIndex + index + 1, // 번호 값을 index로부터 생성
+			}));
 			setTableData(modifiedData);
 		}
+		if (result.totalCount) {
+			setTotalPages(result.totalCount);
+		}
+	}, [result]);
+
+	const memoResult = useMemo(
+		() => (
+			<>
+				<AdminTable columns={columns} dataSource={tableData} />
+			</>
+		),
+		[tableData],
+	);
+	const pageChange = async pageNumber => {
+		// console.log(pageNumber);
+
+		await trigger({
+			path: '/admin/portfolio',
+			params: {
+				skip: pageNumber * 10 - 10,
+			},
+			applyResult: true,
+		});
+		setCurrentPage(pageNumber);
 	};
-	const refuseHandler = key => {
-		// Todo
-		// 거절 후 filter로 재배열
-		// 처리한 신청서는 없어져야함
+	const removeHandler = async (key, index) => {
+		await trigger({
+			path: `/admin/portfolio/${key}`,
+			method: 'delete',
+			applyResult: true,
+		});
+		if (result.portfolios.length === 1) {
+			if (index === 1) {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+					},
+				});
+			} else {
+				await trigger({
+					params: {
+						skip: (currentPage - 1) * 10 - 10,
+					},
+					applyResult: true,
+				});
+			}
+			// console.log(currentPage);
+			setCurrentPage(prev => prev - 1);
+		} else {
+			await trigger({
+				params: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+		}
 	};
 	// 자세히 보기
-	const openApplyModal = () => {
-		console.log('OPEN');
-	};
-	const modifiedData = data.map((item, index) => ({
-		...item,
-		key: String(index + 1), // 번호 값을 index로부터 생성
-	}));
+	// const openApplyModal = () => {
+	// 	console.log('OPEN');
+	// };
+
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
-	const [tableData, setTableData] = useState(modifiedData);
 
 	return (
 		<AdminContent background={colorBgContainer}>
-			<SearchInput
+			{/* <SearchInput
 				enterButton="검색"
 				placeholder=""
 				// onSearch={e => addCategoryHandler(e)}
-			/>
-			<AdminTable
-				columns={columns}
-				dataSource={tableData}
-				totalPages={0}
-			/>
+			/> */}
+			{isLoading ? (
+				<LoadingBar />
+			) : (
+				<>
+					{memoResult}
+					<PaginationWrap>
+						<Pagination
+							current={currentPage}
+							defaultCurrent={currentPage}
+							total={totalPages}
+							onChange={e => {
+								pageChange(e);
+							}}
+						/>
+					</PaginationWrap>
+				</>
+			)}
 		</AdminContent>
 	);
 };

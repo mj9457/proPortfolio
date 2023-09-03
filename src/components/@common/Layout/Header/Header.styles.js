@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
 import {
 	bodyContainer,
 	flexAlignCenter,
@@ -12,6 +14,7 @@ export const Header = styled.header`
 	padding: 15px 0 20px 0;
 	${flexColumn}
 	align-items: center;
+	position: relative;
 `;
 
 export const ImgBox = styled.a`
@@ -30,6 +33,22 @@ export const NavBox = styled.div`
 	${flexAlignCenter}
 	justify-content: space-between;
 	width: 100%;
+`;
+
+export const NavBar = styled.div`
+	display: flex;
+	justify-content: baseline;
+`;
+
+export const NavLinkItem = styled(NavLink)`
+	text-decoration: none;
+	margin: 0 10px;
+	color: ${({ theme }) => theme.PALETTE.black};
+
+	&.active {
+		color: ${({ theme }) => theme.PALETTE.mainColor};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	}
 `;
 
 export const LoginBar = styled.div`
@@ -51,11 +70,23 @@ export const LoginBar = styled.div`
 		}
 	}
 `;
+export const notiWrap = styled.div`
+	z-index: 99;
+	position: absolute;
+	background-color: red;
 
-export const NavBar = styled(LoginBar)`
-	width: 315px;
-
-	& a {
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
+	right: 0;
+	top: 100px;
+	border-radius: 4px;
+	background: #f9f9f9;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`;
+export const notiBox = styled.div`
+	padding: 20px;
+	cursor: pointer;
+	> span {
+		color: ${({ theme }) => theme.PALETTE.black};
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	}
 `;

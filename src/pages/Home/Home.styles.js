@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { bodyContainer } from '../../styles/common';
+import { bodyContainer, flexSpaceBetweenCenter } from '../../styles/common';
 
 export const Wrap = styled.div`
 	width: 100%;
@@ -24,8 +24,7 @@ export const NewStudy = styled.div`
 `;
 export const TitleBox = styled.div`
 	width: 100%;
-	display: flex;
-	justify-content: space-between;
+	${flexSpaceBetweenCenter};
 `;
 export const Title = styled.span`
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};

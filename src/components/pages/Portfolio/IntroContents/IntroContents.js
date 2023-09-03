@@ -1,7 +1,7 @@
 import * as S from './IntroContents.styles';
 
-function IntroContents({ contents }) {
-	const { name, career, position, company, description } = contents;
+function IntroContents({ post }) {
+	const { name, career, position, company, description } = post;
 
 	return (
 		<>
@@ -31,7 +31,7 @@ function IntroContents({ contents }) {
 			<S.IntroBox>
 				<strong>2. 소개 내용</strong>
 
-				<span>{description}</span>
+				<pre>{description}</pre>
 			</S.IntroBox>
 		</>
 	);

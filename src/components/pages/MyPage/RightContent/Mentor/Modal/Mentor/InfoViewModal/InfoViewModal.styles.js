@@ -27,7 +27,7 @@ export const InfoWrapper = styled.div`
 
 export const InfoTitle = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
-	font-size: ${({ theme }) => theme.FONT_SIZE.md};
+	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
 export const InfoBox = styled.div`

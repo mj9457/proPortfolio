@@ -43,6 +43,11 @@ const shapeCSS = {
 };
 
 const sizeCSS = {
+	comment: css`
+		width: 120px;
+		padding: 10px;
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	`,
 	small: css`
 		padding: 0.38rem 0.94rem;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};

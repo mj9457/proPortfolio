@@ -8,7 +8,7 @@ export const ChipBox = styled.div`
 
 	/* 프로젝트*/
 	${props =>
-		props.category === 'project' &&
+		props.$category === '프로젝트' &&
 		css`
 			background-color: ${({ theme }) => theme.PALETTE.mainColor};
 			color: ${({ theme }) => theme.PALETTE.white};
@@ -16,7 +16,7 @@ export const ChipBox = styled.div`
 
 	/* 스터디 */
   ${props =>
-		props.category === 'study' &&
+		props.$category === '스터디' &&
 		css`
 			border: 1px solid ${({ theme }) => theme.PALETTE.mainColor};
 			color: ${({ theme }) => theme.PALETTE.mainColor};

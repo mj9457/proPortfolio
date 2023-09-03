@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import * as RM from './RefuseModal.styles';
 import axios from 'axios';
 import Textarea from '../../../../../../../@common/Textarea/Textarea';
+import useApi from '../../../../../../../../hooks/useApi';
 
 // 멘토 - 멘토링 거절 사유 작성 모달
-function RefuseModal({ setRefuseModalOpenState }) {
+function RefuseModal({ setRefuseModalOpenState, item }) {
 	const [textValue, setTextValue] = useState({
-		content: '',
-	});
+		message: '',
+		action: 'reject',
+	}); // 작성한 거절 내용 (멘토)
 
 	// 유저가 입력한 정보 change
 	const handleChange = e => {
@@ -18,22 +20,35 @@ function RefuseModal({ setRefuseModalOpenState }) {
 		});
 	};
 
+	const { result, trigger } = useApi({
+		path: `/user`,
+		shouldFetch: true,
+	});
+
+	// 멘토
+	const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
+	const requestId = item._id; // 멘토가 신청 받은 id
+	const postsData = textValue; // 수락할때 보내줄 데이터,
+
 	// 유저가 입력한 정보 submit
 	const handleSubmit = e => {
 		e.preventDefault();
 
 		// 빈값 체크
-		if (!textValue.content) {
+		if (!textValue?.message) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
 			// 유저 작성한 신청서 post로 전달
-			axios
-				.post('https://jsonplaceholder.typicode.com/posts', textValue)
-				.then(res => {
-					console.log(res.data);
-					alert(`거절되었습니다. 사유는 ${res.data.content}입니다.`);
-					closeModal();
-				});
+			console.log(portfolioId, requestId, postsData);
+			trigger({
+				method: 'post',
+				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
+				data: postsData,
+				shouldFetch: true,
+			});
+
+			alert('거절되었습니다.');
+			window.location.replace('/mypage');
 		}
 	};
 
@@ -52,7 +67,7 @@ function RefuseModal({ setRefuseModalOpenState }) {
 							<RM.InfoSubTitleBox>
 								<RM.InfoSubTitle>거절 사유</RM.InfoSubTitle>
 								<Textarea
-									name={'content'}
+									name={'message'}
 									size={'regular'}
 									placeholder={'거절 사유를 적어주세요'}
 									onChange={handleChange}

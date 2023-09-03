@@ -3,8 +3,9 @@ import * as IEM from './InfoEditModal.styles';
 import Textarea from '../../../../../../../@common/Textarea/Textarea';
 import Input from '../../../../../../../@common/Input/Input';
 import axios from 'axios';
+import useApi from '../../../../../../../../hooks/useApi';
 
-function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
+function InfoEditModal({ setInfoModalOpenState, nowData }) {
 	// 유저가 입력한 정보 state
 	const [textValue, setTextValue] = useState({
 		title: '',
@@ -34,12 +35,14 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 		) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
-			// 유저 작성한 신청서 post로 전달
-			axios
-				.post(postAddress, textValue)
-				.then(res => console.log(res))
-				.then(alert(`${action} 완료되었습니다.`))
-				.then(closeModal);
+			console.log(textValue);
+			// 유저 작성한 신청서 put로 전달
+			const { result, trigger, isLoading, error } = useApi({
+				method: 'put',
+				path: `/portfolio/${nowData.userId}/mentoringRequests`,
+				data: textValue,
+			});
+			console.log(result);
 		}
 	};
 
@@ -48,21 +51,6 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 		setInfoModalOpenState(false);
 	};
 
-	// 모달창 가장 바깥쪽 태그를 감싸주는 역할 (일단 사용 안함)
-	const wrapperRef = useRef();
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	});
-
-	const handleClickOutside = event => {
-		if (event.target === wrapperRef.current) {
-			setInfoModalOpenState(false);
-		}
-	};
 	return (
 		<>
 			<IEM.Modal>
@@ -77,6 +65,7 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 									name="title"
 									size={'regular'}
 									placeholder="신청 제목"
+									defaultValue={nowData.title}
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
@@ -88,6 +77,7 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 									placeholder={
 										'질문할 내용을 자세하게 적어주세요!'
 									}
+									defaultValue={nowData.content}
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
@@ -97,7 +87,8 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 									type="email"
 									name="email"
 									size={'regular'}
-									placeholder="exIEMple@naver.com"
+									placeholder="example@naver.com"
+									defaultValue={nowData.email}
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
@@ -109,7 +100,8 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 									type="text"
 									name="portfolio"
 									size={'regular'}
-									placeholder="https://github/exIEMple"
+									placeholder="https://github/example"
+									defaultValue={nowData.portfolioAddress}
 									onChange={handleChange}
 								/>
 							</IEM.InfoSubTitleBox>
@@ -120,7 +112,7 @@ function InfoEditModal({ setInfoModalOpenState, postAddress, action }) {
 							닫기
 						</IEM.CancelButton>
 						<IEM.CompleteButton type="submit">
-							{action}
+							수정
 						</IEM.CompleteButton>
 					</IEM.ButtonBox>
 				</form>

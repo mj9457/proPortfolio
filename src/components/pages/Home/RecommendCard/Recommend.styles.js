@@ -23,6 +23,7 @@ export const ProfileImage = styled.img`
 	width: 80px;
 	height: 80px;
 	margin-bottom: 16px;
+	border-radius: 80px;
 `;
 export const NickName = styled.p`
 	color: #151618;

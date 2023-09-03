@@ -1,200 +1,268 @@
 import * as CL from './CardList.styles';
 import ApplicationCard from '../Card/Total/ApplicationCard';
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
 	mentoringItem,
-	userData,
+	applyItem,
+	userItem,
 } from '../../../../../../recoil/atoms/myPage/myPage.atom';
+import MYPAGEOPTION from '../../../../../../constants/mypage';
 import MESSAGE from '../../../../../../constants/message';
 
 // 카드 리스트
 function CardList() {
+	// 멘토링 신청 받은 내역, 멘토링 신청 내역
 	const mentoringData = useRecoilValue(mentoringItem);
-	const totalLength = mentoringData.total.length;
-	const applyLength = mentoringData.apply.length;
-	const completedLength = mentoringData.completed.length;
-	const refuseLength = mentoringData.refuse.length;
+	const applyData = useRecoilValue(applyItem);
 
-	const subTitles = {
+	// 멘토링 신청 받은 내역, 멘토링 신청 내역 길이 리스트
+	const itemLength = {
 		mentor: {
-			total: MESSAGE.MYPAGE.MENTOR.SUBTITLE.TOTAL,
-			apply: MESSAGE.MYPAGE.MENTOR.SUBTITLE.APPLY,
-			completed: MESSAGE.MYPAGE.MENTOR.SUBTITLE.COMPLETED,
-			refuse: MESSAGE.MYPAGE.MENTOR.SUBTITLE.REFUSE,
+			requested: mentoringData?.requested?.length || 0,
+			accepted: mentoringData?.accepted?.length || 0,
+			completed: mentoringData?.completed?.length || 0,
+			rejected: mentoringData?.rejected?.length || 0,
 		},
 		mentee: {
-			total: MESSAGE.MYPAGE.MENTEE.SUBTITLE.TOTAL,
-			apply: MESSAGE.MYPAGE.MENTEE.SUBTITLE.APPLY,
-			completed: MESSAGE.MYPAGE.MENTEE.SUBTITLE.COMPLETED,
-			refuse: MESSAGE.MYPAGE.MENTEE.SUBTITLE.REFUSE,
+			requested: applyData?.requested?.length || 0,
+			accepted: applyData?.accepted?.length || 0,
+			completed: applyData?.completed?.length || 0,
+			rejected: applyData?.rejected?.length || 0,
 		},
 	};
 
+	// 카테고리 부제목 리스트
+	const subTitles = {
+		mentor: {
+			requested: MYPAGEOPTION?.MENTOR?.SUBTITLE?.REQUESTED || '',
+			accepted: MYPAGEOPTION?.MENTOR?.SUBTITLE?.ACCEPTED || '',
+			completed: MYPAGEOPTION?.MENTOR?.SUBTITLE?.COMPLETED || '',
+			rejected: MYPAGEOPTION?.MENTOR?.SUBTITLE?.REJECTED || '',
+		},
+		mentee: {
+			requested: MYPAGEOPTION?.MENTEE?.SUBTITLE?.REQUESTED || '',
+			accepted: MYPAGEOPTION?.MENTEE?.SUBTITLE?.ACCEPTED || '',
+			completed: MYPAGEOPTION?.MENTEE?.SUBTITLE?.COMPLETED || '',
+			rejected: MYPAGEOPTION?.MENTEE?.SUBTITLE?.REJECTED || '',
+		},
+	};
+
+	// 현재 누른 카테고리 설정
 	const [category, setCategory] = useState('');
 	const buttonHandler = e => {
 		setCategory(e.target.id);
 	};
 
+	// 유저 데이터
+	const user = useRecoilValue(userItem);
+
 	return (
 		<>
-			{category === 'apply' ? (
-				<CardListLayout
-					length={applyLength}
-					fun={buttonHandler}
-					categoryKey={category}
-					subTitles={subTitles}
-				/>
-			) : category === 'completed' ? (
-				<CardListLayout
-					length={completedLength}
-					fun={buttonHandler}
-					categoryKey={category}
-					subTitles={subTitles}
-				/>
-			) : category === 'refuse' ? (
-				<CardListLayout
-					length={refuseLength}
-					fun={buttonHandler}
-					categoryKey={category}
-					subTitles={subTitles}
-				/>
-			) : (
-				<CardListLayout
-					length={totalLength}
-					fun={buttonHandler}
-					categoryKey={category}
-					subTitles={subTitles}
-				/>
-			)}
+			{user.role === 'mentor' ? (
+				<>
+					{category === 'accepted' ? (
+						<CardListLayout
+							length={itemLength.mentor.accepted}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={mentoringData.accepted}
+						/>
+					) : category === 'completed' ? (
+						<CardListLayout
+							length={itemLength.mentor.completed}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={mentoringData.completed}
+						/>
+					) : category === 'rejected' ? (
+						<CardListLayout
+							length={itemLength.mentor.rejected}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={mentoringData.rejected}
+						/>
+					) : (
+						<CardListLayout
+							length={itemLength.mentor.requested}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={mentoringData.requested}
+						/>
+					)}
+				</>
+			) : user.role === 'user' ? (
+				<>
+					{category === 'accepted' ? (
+						<CardListLayout
+							length={itemLength.mentee.accepted}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={applyData.accepted}
+						/>
+					) : category === 'completed' ? (
+						<CardListLayout
+							length={itemLength.mentee.completed}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={applyData.completed}
+						/>
+					) : category === 'rejected' ? (
+						<CardListLayout
+							length={itemLength.mentee.rejected}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={applyData.rejected}
+						/>
+					) : (
+						<CardListLayout
+							length={itemLength.mentee.requested}
+							fun={buttonHandler}
+							categoryKey={category}
+							subTitles={subTitles}
+							item={applyData.requested}
+						/>
+					)}
+				</>
+			) : undefined}
 		</>
 	);
 }
 
 export default CardList;
 
-function CardListLayout({ length, fun, categoryKey, subTitles }) {
-	const user = useRecoilValue(userData);
-	const users = { ...user };
-	users.role = 'mentor';
+function CardListLayout({ length, fun, categoryKey, subTitles, item }) {
+	// 유저 데이터
+	const user = useRecoilValue(userItem);
+
 	return (
 		<>
 			<CL.SubContentBox>
 				<CL.SubContentBar>
 					<CL.SubTitleFlexBox>
-						{categoryKey === 'apply' ? (
+						{categoryKey === 'accepted' ? (
 							<>
-								<CL.NonClicked id={'total'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.total
-										: subTitles.mentee.total}
+								<CL.NonClicked id={'requested'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.requested
+										: subTitles.mentee.requested}
 								</CL.NonClicked>
-								<CL.Clicked id={'apply'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.apply
-										: subTitles.mentee.apply}
+								<CL.Clicked id={'accepted'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.accepted
+										: subTitles.mentee.accepted}
 								</CL.Clicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.NonClicked>
-								<CL.NonClicked id={'refuse'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.refuse
-										: subTitles.mentee.refuse}
+								<CL.NonClicked id={'rejected'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.rejected
+										: subTitles.mentee.rejected}
 								</CL.NonClicked>
 							</>
 						) : categoryKey === 'completed' ? (
 							<>
-								<CL.NonClicked id={'total'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.total
-										: subTitles.mentee.total}
+								<CL.NonClicked id={'requested'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.requested
+										: subTitles.mentee.requested}
 								</CL.NonClicked>
-								<CL.NonClicked id={'apply'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.apply
-										: subTitles.mentee.apply}
+								<CL.NonClicked id={'accepted'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.accepted
+										: subTitles.mentee.accepted}
 								</CL.NonClicked>
 								<CL.Clicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.Clicked>
-								<CL.NonClicked id={'refuse'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.refuse
-										: subTitles.mentee.refuse}
+								<CL.NonClicked id={'rejected'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.rejected
+										: subTitles.mentee.rejected}
 								</CL.NonClicked>
 							</>
-						) : categoryKey === 'refuse' ? (
+						) : categoryKey === 'rejected' ? (
 							<>
-								<CL.NonClicked id={'total'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.total
-										: subTitles.mentee.total}
+								<CL.NonClicked id={'requested'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.requested
+										: subTitles.mentee.requested}
 								</CL.NonClicked>
-								<CL.NonClicked id={'apply'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.apply
-										: subTitles.mentee.apply}
+								<CL.NonClicked id={'accepted'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.accepted
+										: subTitles.mentee.accepted}
 								</CL.NonClicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.NonClicked>
-								<CL.Clicked id={'refuse'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.refuse
-										: subTitles.mentee.refuse}
+								<CL.Clicked id={'rejected'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.rejected
+										: subTitles.mentee.rejected}
 								</CL.Clicked>
 							</>
 						) : (
 							<>
-								<CL.Clicked id={'total'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.total
-										: subTitles.mentee.total}
+								<CL.Clicked id={'requested'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.requested
+										: subTitles.mentee.requested}
 								</CL.Clicked>
-								<CL.NonClicked id={'apply'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.apply
-										: subTitles.mentee.apply}
+								<CL.NonClicked id={'accepted'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.accepted
+										: subTitles.mentee.accepted}
 								</CL.NonClicked>
 								<CL.NonClicked id={'completed'} onClick={fun}>
-									{users.role === 'mentor'
+									{user.role === 'mentor'
 										? subTitles.mentor.completed
 										: subTitles.mentee.completed}
 								</CL.NonClicked>
-								<CL.NonClicked id={'refuse'} onClick={fun}>
-									{users.role === 'mentor'
-										? subTitles.mentor.refuse
-										: subTitles.mentee.refuse}
+								<CL.NonClicked id={'rejected'} onClick={fun}>
+									{user.role === 'mentor'
+										? subTitles.mentor.rejected
+										: subTitles.mentee.rejected}
 								</CL.NonClicked>
 							</>
 						)}
 					</CL.SubTitleFlexBox>
 					<p>총 {length}건</p>
 				</CL.SubContentBar>
-
 				{length === 0 ? (
-					<CL.NonSubContentListBox>
-						{MESSAGE.NODATA.LIST}
-					</CL.NonSubContentListBox>
+					<>
+						<CL.NonSubContentListBox>
+							{MESSAGE.MYPAGE.NODATA.LIST}
+						</CL.NonSubContentListBox>
+					</>
 				) : (
-					<CL.SubContentListBox>
-						{users.role === 'mentor' ? (
-							<ApplicationCard
-								categoryKey={categoryKey}
-							></ApplicationCard>
-						) : (
-							<ApplicationCard
-								categoryKey={categoryKey}
-							></ApplicationCard>
-						)}
-					</CL.SubContentListBox>
+					<>
+						<CL.SubContentListBox>
+							{item.map((element, index) => {
+								return (
+									<ApplicationCard
+										key={index}
+										categoryKey={categoryKey}
+										item={element}
+									></ApplicationCard>
+								);
+							})}
+						</CL.SubContentListBox>
+					</>
 				)}
 			</CL.SubContentBox>
 		</>

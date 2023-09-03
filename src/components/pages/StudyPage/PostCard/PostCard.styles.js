@@ -1,18 +1,28 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import {
 	flexColumn,
 	flexAlignCenter,
 	flexCenter,
 } from '../../../../styles/common';
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const Container = styled.div`
 	cursor: pointer;
 	width: 100%;
-	height: 267px;
 	padding: 1.875rem;
 	border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
 	${flexColumn}
 	border-radius: 15px;
+	opacity: 0;
+	animation: ${fadeIn} 1s ease forwards;
 	a {
 		text-decoration: none;
 		color: inherit;
@@ -30,6 +40,12 @@ export const ChipBox = styled.div`
 	padding: 0.45rem 0.9rem;
 	border-radius: 0.9375rem;
 	width: fit-content;
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			background-color: ${({ theme }) => theme.PALETTE.gray[100]};
+		`}
 `;
 
 export const ChipText = styled.p`
@@ -37,6 +53,12 @@ export const ChipText = styled.p`
 	font-size: 1rem;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			color: ${({ theme }) => theme.PALETTE.gray[300]};
+		`}
 `;
 
 export const Title = styled.span`
@@ -56,7 +78,7 @@ export const PostText = styled.p`
 
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	line-height: 1.5;
-	height: 67px;
+	/* height: 67px; */
 	margin-bottom: 25px;
 `;
 
@@ -93,6 +115,8 @@ export const PositionBox = styled.div`
 	}
 `;
 
-export const Day = styled.p`
+export const Day = styled.div`
+	${flexAlignCenter};
+	gap: 8px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 `;
