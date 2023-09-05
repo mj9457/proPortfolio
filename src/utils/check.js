@@ -32,3 +32,33 @@ export const check = ex => {
 		},
 	];
 };
+
+export const checkModal = modal => {
+	return [
+		{
+			checked: !modal.title || modal.title.length === 0,
+			message: MESSAGE.CHECK.TITLE,
+		},
+		{
+			checked: modal.title && modal.title.length > 50,
+			message: MESSAGE.CHECK.TITLELENGTH,
+		},
+		{
+			checked: !modal.content || modal.content.length === 0,
+			message: MESSAGE.CHECK.DESCRIPTION,
+		},
+		{
+			checked: modal.content && modal.content.length > 1000,
+			message: MESSAGE.CHECK.DESCRIPTIONLENGTH,
+		},
+		{
+			checked: !modal.email && modal.email.length === 0,
+			message: MESSAGE.CHECK.EMAIL,
+		},
+		{
+			checked:
+				!modal.portfolioAddress && modal.portfolioAddress.length === 0,
+			message: MESSAGE.CHECK.PORTFOLIO,
+		},
+	];
+};

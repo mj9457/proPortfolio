@@ -35,6 +35,10 @@ const fontCSS = {
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
 	`,
+	large: css`
+		font-size: ${({ theme }) => theme.FONT_SIZE.md};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+	`,
 };
 
 export const Selected = styled.select`

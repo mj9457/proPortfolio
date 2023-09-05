@@ -68,18 +68,13 @@ function Review(props) {
 	// 댓글 수정
 	const handleEdit = id => {
 		const selectedComment = review.find(comment => comment._id === id);
+		const { ...newEditReview } = selectedComment;
 		const alertMessage =
 			title === '후기' ? MESSAGE.REVIEW.EDIT : MESSAGE.COMMENT.EDIT;
 
 		if (selectedComment.ownerId === userInfo._id) {
 			if (confirm(alertMessage)) {
-				setEditReview({
-					author: selectedComment.author,
-					content: selectedComment.content,
-					ownerId: selectedComment.ownerId,
-					createdAt: selectedComment.createdAt,
-				});
-
+				setEditReview(newEditReview);
 				setEdit(id);
 			}
 		} else {
@@ -89,8 +84,6 @@ function Review(props) {
 
 	// 댓글 수정 완료
 	const handleComplete = () => {
-		console.log(edit);
-		console.log(getUrl);
 		trigger({
 			method: 'put',
 			path: `${getUrl}/comments/${edit}`,
@@ -101,8 +94,8 @@ function Review(props) {
 	};
 
 	// 페이지 변경 핸들러
-	const handlePageChange = pageNumber => {
-		trigger({
+	const handlePageChange = async pageNumber => {
+		await trigger({
 			params: {
 				skip: pageNumber * 10 - 10,
 				limit: 10,

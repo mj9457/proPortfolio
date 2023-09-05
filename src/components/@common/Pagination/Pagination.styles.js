@@ -7,3 +7,10 @@ export const PaginationBox = styled.div`
 `;
 
 export const Number = styled.div``;
+
+export const Button = styled.div`
+	& img {
+		width: 10px;
+		height: 12px;
+	}
+`;

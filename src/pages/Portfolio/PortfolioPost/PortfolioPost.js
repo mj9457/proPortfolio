@@ -11,8 +11,8 @@ import * as S from './PortfolioPost.styles';
 import IntroContents from '../../../components/pages/Portfolio/IntroContents/IntroContents';
 import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
-import InfoEditModal from '../../../components/@common/ApplyModal/ApplyModal';
 import Button from '../../../components/@common/Button/Button';
+import ApplyModal from '../../../components/@common/ApplyModal/ApplyModal';
 
 function PortfolioPost() {
 	useFooter();
@@ -30,7 +30,7 @@ function PortfolioPost() {
 	const [userId, setUserId] = useState({});
 
 	// modal open state
-	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// api 통신
 	const { result: userResult } = useApi({
@@ -60,7 +60,7 @@ function PortfolioPost() {
 
 	// 버튼 클릭시 → 모달 open
 	const handleOpenModal = () => {
-		setInfoModalOpenState(true);
+		setIsModalOpen(true);
 	};
 
 	// 현재 로그인한 유저 아이디랑 게시글 오너 아이디랑 맞는지 확인
@@ -122,13 +122,10 @@ function PortfolioPost() {
 								<span>{dateAndTime(updatedAt)}</span>
 							</S.NameBox>
 
-							{infoModalOpenState && (
-								<InfoEditModal
-									setInfoModalOpenState={
-										setInfoModalOpenState
-									}
+							{isModalOpen && (
+								<ApplyModal
+									setIsModalOpen={setIsModalOpen}
 									path={path}
-									action={'완료'}
 								/>
 							)}
 

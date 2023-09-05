@@ -20,7 +20,6 @@ export const Modal = styled.div`
 
 export const InfoWrapper = styled.div`
 	${flexColumn}
-	width: 400px;
 	align-items: center;
 	gap: 32px;
 `;
@@ -57,21 +56,4 @@ export const InfoSubTitle = styled.div`
 export const ButtonBox = styled.div`
 	display: flex;
 	gap: 16px;
-`;
-
-export const CancelButton = styled.button`
-	width: 192px;
-	height: 48px;
-	cursor: pointer;
-	border-radius: 4px;
-	color: ${({ theme }) => theme.PALETTE.black};
-	background: ${({ theme }) => theme.PALETTE.gray[200]};
-
-	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-	font-size: ${({ theme }) => theme.FONT_SIZE.md};
-`;
-
-export const CompleteButton = styled(CancelButton)`
-	background: ${({ theme }) => theme.PALETTE.mainColor};
-	color: ${({ theme }) => theme.PALETTE.white};
 `;

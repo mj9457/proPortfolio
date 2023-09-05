@@ -63,6 +63,7 @@ function Portfolio() {
 		path: '/portfolio/recommend/topMentor',
 		shouldFetch: true,
 	});
+
 	useEffect(() => {
 		if (mentorResult.data && mentorResult.data.length > 0) {
 			setMentorData(prev => [...prev, ...mentorResult.data]);
@@ -232,7 +233,7 @@ function Portfolio() {
 					{positions &&
 						positions.map(position => (
 							<S.PositionCategoryItem
-								key={position.id}
+								key={position._id}
 								onClick={() =>
 									handlePositionClick(position.name)
 								}
@@ -258,8 +259,8 @@ function Portfolio() {
 						<EmptyMessage />
 					) : (
 						<>
-							{popularData.map((mentor, idx) => (
-								<div key={mentor._id + idx}>
+							{popularData.map(mentor => (
+								<div key={mentor._id}>
 									<MentorCard
 										variant={'blue'}
 										mentor={mentor}
@@ -280,7 +281,7 @@ function Portfolio() {
 
 					<Select
 						variant={'none'}
-						font={'regular'}
+						font={'large'}
 						onChange={handleChange}
 					>
 						<option value="newest">최신순</option>
@@ -293,8 +294,8 @@ function Portfolio() {
 						<EmptyMessage />
 					) : (
 						<>
-							{mentorData.map((mentor, idx) => (
-								<div key={mentor._id + idx}>
+							{mentorData.map(mentor => (
+								<div key={mentor._id}>
 									<MentorCard
 										variant={'white'}
 										mentor={mentor}

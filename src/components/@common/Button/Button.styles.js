@@ -64,6 +64,10 @@ const sizeCSS = {
 		padding: 1rem 4.25rem;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
+	bigger: css`
+		padding: 1rem 5.25rem;
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+	`,
 	full: css`
 		width: 100%;
 		padding: 0.94rem 10.75rem;
