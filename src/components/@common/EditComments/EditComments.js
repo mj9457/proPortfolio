@@ -17,15 +17,14 @@ function EditComments({ isLoggedIn, userData, title }) {
 
 	useEffect(() => {
 		if (userData) {
-			comment.author = userData.nickName;
-			comment.ownerId = userData._id;
+			setComment(prev => ({
+				...prev,
+				author: userData.nickName,
+				ownerId: userData._id,
+			}));
 		}
 	}, [userData]);
 
-	// if (userData) {
-	// 	comment.author = userData.nickName;
-	// 	comment.ownerId = userData._id;
-	// }
 	const { trigger, isLoading, error, result } = useApi({
 		path: `/projectStudy/${postId}/comments`,
 		method: 'post',
@@ -49,7 +48,7 @@ function EditComments({ isLoggedIn, userData, title }) {
 			alert(MESSAGE.CHECK.DESCRIPTION);
 			return;
 		}
-		if (comment.content.length > 1000) {
+		if (comment.content.length > 200) {
 			alert(MESSAGE.CHECK.DESCRIPTIONLENGTH);
 			return;
 		}
@@ -78,7 +77,7 @@ function EditComments({ isLoggedIn, userData, title }) {
 				<textarea
 					placeholder={`${title}${particle} 등록하세요.`}
 					value={comment.content}
-					maxLength={1000}
+					maxLength={200}
 					onChange={handleCommentChange}
 				></textarea>
 				<S.ButtonWrapper>

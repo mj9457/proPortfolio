@@ -17,7 +17,7 @@ const MESSAGE = {
 		TITLE: '제목을 입력해 주세요.',
 		TITLELENGTH: '제목은 50자 이하로 입력해 주세요.',
 		DESCRIPTION: '내용을 입력해 주세요.',
-		DESCRIPTIONLENGTH: '내용은 1000자 이하로 입력해 주세요.',
+		DESCRIPTIONLENGTH: '내용은 200자 이하로 입력해 주세요.',
 		COMMUNICATION: '연락 가능한 링크를 입력해 주세요.',
 		CAREER: '경력을 입력해 주세요.',
 		ALL: '모든 항목을 선택해 주세요.',

@@ -9,6 +9,7 @@ import { checkToken } from '../../../utils/cookie';
 import useFooter from '../../../hooks/useFooter';
 import MESSAGE from '../../../constants/message';
 import Review from '../../../components/@common/Review/Review';
+import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 
 function StudyPostDetail() {
 	useFooter();
@@ -112,6 +113,8 @@ function StudyPostDetail() {
 		}
 	};
 
+	// console.log('howContactContent', howContactContent);
+
 	const handleLinkCopy = async () => {
 		try {
 			await navigator.clipboard.writeText(howContactContent);
@@ -124,7 +127,7 @@ function StudyPostDetail() {
 	return (
 		<>
 			<S.Container>
-				{postDetail !== null ? (
+				{!isLoading ? (
 					<>
 						{/* 게시글 상단 정보 */}
 						<S.PostDetailTop>
@@ -295,7 +298,7 @@ function StudyPostDetail() {
 						</S.PostDetailBottom>
 					</>
 				) : (
-					<p>Loading...</p>
+					<LoadingBar />
 				)}
 			</S.Container>
 		</>

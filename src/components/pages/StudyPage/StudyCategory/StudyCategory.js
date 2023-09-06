@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 import React, { useState, useEffect, useRef } from 'react';
 import * as S from './StudyCategory.styles';
 import PostCard from '../PostCard/PostCard';
@@ -128,16 +129,6 @@ function StudyCategory() {
 			...prev,
 			classification: classificationValue,
 		}));
-
-		triggerProjectStudy({
-			params: {
-				classification: classificationValue,
-				position: selectedValues.position,
-				limit,
-				skip: 0,
-			},
-			applyResult: true,
-		});
 	};
 
 	// 포지션 클릭
@@ -150,16 +141,22 @@ function StudyCategory() {
 			position: positionValue,
 		}));
 
+		if (selectedValues.position !== positionValue) {
+			setProjectStudy([]);
+		}
+	};
+
+	useEffect(() => {
 		triggerProjectStudy({
 			params: {
 				classification: selectedValues.classification,
-				position: positionValue,
+				position: selectedValues.position,
 				limit,
 				skip: 0,
 			},
 			applyResult: true,
 		});
-	};
+	}, [selectedValues.classification, selectedValues.position]);
 
 	useEffect(() => {
 		if (positionResult.positions && positionResult.positions.length > 0) {
@@ -212,8 +209,10 @@ function StudyCategory() {
 			</S.CategoryBottomList>
 
 			<S.PostCardContainer>
-				{isLoading && <LoadingBar />}
-				{!Array.isArray(projectStudy) || projectStudy.length === 0 ? (
+				{isLoading ? (
+					<LoadingBar />
+				) : !Array.isArray(projectStudy) ||
+				  projectStudy.length === 0 ? (
 					<EmptyMessage />
 				) : (
 					<>

@@ -22,7 +22,7 @@ export const Container = styled.div`
 	${flexColumn}
 	border-radius: 15px;
 	opacity: 0;
-	animation: ${fadeIn} 1s ease forwards;
+	animation: ${fadeIn} 0.7s ease forwards;
 	a {
 		text-decoration: none;
 		color: inherit;
