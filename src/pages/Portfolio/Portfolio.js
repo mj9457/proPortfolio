@@ -12,10 +12,12 @@ import Select from '../../components/@common/Select/Select';
 import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
 import { Link } from 'react-router-dom';
 import LoadingBar from '../../components/@common/Loading/LoadingBar';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoil/atoms/index.atom';
 
 function Portfolio() {
 	// 로그인 유저 체크
-	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	const { isAuth, role, isLoading: authLoading } = useRecoilValue(userAtom);
 
 	// 멘토 체크
 	const [isMentor, setIsMentor] = useState(false);
@@ -41,12 +43,7 @@ function Portfolio() {
 	const observer = useRef();
 	const observerElement = useRef();
 
-	// api 통신 1. 유저 정보 / 2. 포지션 === 카테고리 정보 / 3. 모든 멘토 데이터 호출
-	const { result } = useApi({
-		path: isLoggedIn ? '/user' : '',
-		shouldFetch: isLoggedIn,
-	});
-
+	// api 통신 1. 포지션 === 카테고리 정보 / 2. 모든 멘토 데이터 호출
 	const { result: positionResult } = useApi({
 		path: '/position',
 		shouldFetch: true,
@@ -67,25 +64,22 @@ function Portfolio() {
 	});
 
 	useEffect(() => {
-		if (mentorResult.data && mentorResult.data.length > 0) {
+		/**
+		 * data: [],pages:0, total:0
+		 */
+		// if (mentorResult.data && mentorResult.data.length > 0) {
+		if (mentorResult.data && Array.isArray(mentorResult.data)) {
 			setMentorData(prev => [...prev, ...mentorResult.data]);
 			setMentorDataTotal(mentorResult.total);
-
 			if (currentSkip <= 12) {
 				setMentorData(mentorResult.data);
 			}
 		}
 	}, [mentorResult]);
 
-	// 로그인 체크
-	useEffect(() => {
-		const tokenStatus = checkToken();
-		setIsLoggedIn(tokenStatus);
-	}, []);
-
 	// 멘토 롤 체크 && 카테고리 값 들어오는지 체크
 	useEffect(() => {
-		const mentor = result.role === 'mentor';
+		const mentor = role === 'mentor';
 
 		if (mentor) setIsMentor(true);
 		else setIsMentor(false);
@@ -101,7 +95,7 @@ function Portfolio() {
 		if (popularMentorResult && popularMentorResult.length > 0) {
 			setPopularData(popularMentorResult);
 		}
-	}, [result, positionResult, popularMentorResult]);
+	}, [positionResult, popularMentorResult]);
 
 	// 무한 스크롤
 	const handleObserver = entries => {
@@ -115,7 +109,7 @@ function Portfolio() {
 			});
 
 			trigger({
-				params: {
+				data: {
 					category: selectedValues.position,
 					sort: selectedValues.selectedSort,
 					limit,
@@ -151,7 +145,7 @@ function Portfolio() {
 	}, [observer.current, observerElement, mentorData, mentorDataTotal]);
 
 	// select 클릭
-	const handleChange = e => {
+	const handleChangeSelect = e => {
 		setLimit(12);
 		setCurrentSkip(0);
 
@@ -161,9 +155,9 @@ function Portfolio() {
 			...prev,
 			selectedSort: value,
 		}));
-
+		console.log(selectedValues);
 		trigger({
-			params: {
+			data: {
 				category: selectedValues.position,
 				sort: value,
 				limit: 12,
@@ -185,13 +179,12 @@ function Portfolio() {
 		}));
 
 		trigger({
-			params: {
+			data: {
 				category: positionValue,
 				sort: selectedValues.selectedSort,
 				limit: 12,
 				skip: 0,
 			},
-
 			applyResult: true,
 		});
 
@@ -288,7 +281,7 @@ function Portfolio() {
 					<Select
 						variant={'none'}
 						font={'large'}
-						onChange={handleChange}
+						onChange={handleChangeSelect}
 					>
 						<option value="newest">최신순</option>
 						<option value="popular">인기순</option>

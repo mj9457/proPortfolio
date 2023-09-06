@@ -27,9 +27,13 @@ function PortfolioPost() {
 	// 로그인 유저 체크
 	const { isAuth, role, _id } = useRecoilValue(userAtom);
 
+	// post list
 	const [post, setPost] = useState({});
-	const [userId, setUserId] = useState({});
+
+	// role === mentor
 	const [isMentor, setIsMentor] = useState(false);
+
+	// user._id === post.ownerId
 	const [check, setCheck] = useState(false);
 
 	// modal open state
