@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { checkToken } from '../../../../utils/cookie';
 import * as S from './Header.styles';
 import SignupModal from '../../../pages/SignUp/Modal/SignUpModal';
@@ -39,6 +39,7 @@ function Header() {
 		// if(notiData.)
 	};
 	useEffect(() => {
+		// console.log(isAuth);
 		if (isAuth) {
 			if (notiResult?.notifications?.length > 0) {
 				setNotiData(notiResult.notifications);
@@ -72,7 +73,7 @@ function Header() {
 		try {
 			// await trigger({ path: '/auth/logout' });
 			// setIsLoggedIn(false);
-			console.log('handleLogoutClick');
+			// console.log('handleLogoutClick');
 			await logoutTrigger({});
 			alert('로그아웃이 완료되었습니다.');
 			navigate(0);
@@ -151,9 +152,11 @@ function Header() {
 
 	return (
 		<S.Header>
-			<S.ImgBox href="/">
-				<S.Image src="/assets/img/logo/logo.svg" />
-			</S.ImgBox>
+			<Link to="/">
+				<S.ImgBox>
+					<S.Image src="/assets/img/logo/logo.svg" />
+				</S.ImgBox>
+			</Link>
 			<S.NavBox>
 				<S.NavBar>
 					<S.NavLinkItem to="/" activeclassname="active">
@@ -170,12 +173,14 @@ function Header() {
 					{!isLoading && isAuth && (
 						<>
 							<a onClick={handleLogoutClick}>로그아웃</a>
-							<a href="/mypage">마이페이지</a>
-							{/* {result && result.role === 'admin' && (
-								<a href="/admin/user">관리자 페이지</a>
-							)} */}
+							<S.NavLinkItem
+								to="/mypage"
+								activeclassname="active"
+							>
+								마이페이지
+							</S.NavLinkItem>
 							{role === 'admin' && (
-								<a href="/admin/user">관리자 페이지</a>
+								<Link to="/admin/user">관리자 페이지</Link>
 							)}
 							<a onClick={notiHandler}>
 								<img

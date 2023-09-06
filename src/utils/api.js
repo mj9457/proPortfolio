@@ -27,7 +27,6 @@ api.interceptors.request.use(
 		throw err;
 	},
 );
-const successStatusCodes = [200, 201, 203];
 // 응답 인터셉터
 api.interceptors.response.use(
 	res => {
