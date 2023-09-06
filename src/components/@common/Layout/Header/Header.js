@@ -81,16 +81,15 @@ function Header() {
 		setOpenModal(false);
 	};
 
-	const handleLogoutClick = () => {
-		trigger({ path: '/auth/logout', method: 'post' })
-			.then(() => {
-				setIsLoggedIn(false);
-				alert('로그아웃이 완료되었습니다.');
-				navigate(0);
-			})
-			.catch(error => {
-				console.error('로그아웃 중 오류 발생:', error);
-			});
+	const handleLogoutClick = async () => {
+		try {
+			await trigger({ path: '/auth/logout', method: 'post' });
+			setIsLoggedIn(false);
+			alert('로그아웃이 완료되었습니다.');
+			// navigate(0);
+		} catch (error) {
+			alert('로그아웃이 실패 하였습니다.');
+		}
 	};
 
 	const handleMentorApplyClick = () => {
@@ -166,7 +165,6 @@ function Header() {
 			<S.ImgBox href="/">
 				<S.Image src="/assets/img/logo/logo.svg" />
 			</S.ImgBox>
-
 			<S.NavBox>
 				<S.NavBar>
 					<S.NavLinkItem to="/" activeclassname="active">
@@ -254,7 +252,6 @@ function Header() {
 					)}
 				</S.LoginBar>
 			</S.NavBox>
-
 			{openModal && <SignupModal onClose={handleSignupClose} />}
 		</S.Header>
 	);
