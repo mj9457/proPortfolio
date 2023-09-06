@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.a`
+export const Container = styled.div`
 	display: flex;
 	width: 200px;
 	height: 260px;

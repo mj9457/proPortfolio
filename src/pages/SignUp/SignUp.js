@@ -106,7 +106,7 @@ function SignUp() {
 					<Input
 						type="text"
 						value={name}
-						placeholder="이름을 입력해 주세요"
+						placeholder="이름을 입력해 주세요."
 						size={'medium'}
 						onChange={handleNameChange}
 						error={nameError}
@@ -117,7 +117,7 @@ function SignUp() {
 					<label>닉네임</label>
 					<Input
 						type="text"
-						placeholder="닉네임을 입력해 주세요"
+						placeholder="닉네임을 입력해 주세요."
 						value={nickName}
 						onChange={handleNicknameChange}
 						size={'medium'}

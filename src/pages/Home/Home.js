@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import * as H from './Home.styles';
 import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCard';
 import MentorCard from '../../components/@common/Card/Card';
@@ -60,13 +61,15 @@ function Home() {
 				<H.NewStudy>
 					<H.TitleBox>
 						<H.Title>🔥 방금 올라온 스터디 / 프로젝트</H.Title>
-						<H.ViewAll href="/study">
-							전체보기
-							<img
-								src="/assets/img/icons/bluearrow.svg"
-								alt="파란화살표"
-							/>
-						</H.ViewAll>
+						<Link to="/study">
+							<H.ViewAll>
+								전체보기
+								<img
+									src="/assets/img/icons/bluearrow.svg"
+									alt="파란화살표"
+								/>
+							</H.ViewAll>
+						</Link>
 					</H.TitleBox>
 					<H.SlideStudyCard>
 						<Slider
@@ -79,13 +82,16 @@ function Home() {
 				<H.PopularMento>
 					<H.TitleBox>
 						<H.Title>✨ 지금 인기 있는 멘토</H.Title>
-						<H.ViewAll href="/portfolio">
-							전체보기
-							<img
-								src="/assets/img/icons/bluearrow.svg"
-								alt="파란화살표"
-							/>
-						</H.ViewAll>
+						<Link to="/portfolio">
+							{' '}
+							<H.ViewAll>
+								전체보기
+								<img
+									src="/assets/img/icons/bluearrow.svg"
+									alt="파란화살표"
+								/>
+							</H.ViewAll>
+						</Link>
 					</H.TitleBox>
 					<H.PopularCards>
 						<MentorCard

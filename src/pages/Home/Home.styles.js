@@ -3,6 +3,9 @@ import { bodyContainer, flexSpaceBetweenCenter } from '../../styles/common';
 
 export const Wrap = styled.div`
 	width: 100%;
+	a {
+		text-decoration: none;
+	}
 `;
 
 export const Content = styled.div`
@@ -31,7 +34,7 @@ export const Title = styled.span`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	margin-bottom: 32px;
 `;
-export const ViewAll = styled.a`
+export const ViewAll = styled.div`
 	color: ${({ theme }) => theme.PALETTE.mainColor};
 	> img {
 		margin-left: 8px;

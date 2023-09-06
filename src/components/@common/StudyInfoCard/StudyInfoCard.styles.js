@@ -20,9 +20,12 @@ export const Container = styled.div`
 		box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
 	}
 	border-radius: 10px;
+	a {
+		text-decoration: none;
+	}
 `;
 
-export const StudyInfoCard = styled.a`
+export const StudyInfoCard = styled.div`
 	${({ $background }) => backgroundCSS[$background]}
 	${flexColumn};
 	justify-content: center;

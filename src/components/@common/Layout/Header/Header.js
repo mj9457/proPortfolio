@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { checkToken } from '../../../../utils/cookie';
 import * as S from './Header.styles';
 import SignupModal from '../../../pages/SignUp/Modal/SignUpModal';
@@ -162,9 +162,11 @@ function Header() {
 
 	return (
 		<S.Header>
-			<S.ImgBox href="/">
-				<S.Image src="/assets/img/logo/logo.svg" />
-			</S.ImgBox>
+			<Link to="/">
+				<S.ImgBox>
+					<S.Image src="/assets/img/logo/logo.svg" />
+				</S.ImgBox>
+			</Link>
 			<S.NavBox>
 				<S.NavBar>
 					<S.NavLinkItem to="/" activeclassname="active">
@@ -181,9 +183,14 @@ function Header() {
 					{isLoggedIn ? (
 						<>
 							<a onClick={handleLogoutClick}>로그아웃</a>
-							<a href="/mypage">마이페이지</a>
+							<S.NavLinkItem
+								to="/mypage"
+								activeclassname="active"
+							>
+								마이페이지
+							</S.NavLinkItem>
 							{result && result.role === 'admin' && (
-								<a href="/admin/user">관리자 페이지</a>
+								<Link to="/admin/user">관리자 페이지</Link>
 							)}
 							<a onClick={notiHandler}>
 								<img

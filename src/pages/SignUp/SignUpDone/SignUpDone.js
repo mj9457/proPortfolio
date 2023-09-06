@@ -15,7 +15,7 @@ function SignUpDone() {
 					alt="highfive"
 				/>
 				<div>
-					<p>가입이 완료 되었습니다.</p>
+					<p>가입이 완료되었습니다.</p>
 					<p>이제 포폴의 서비스를 이용해 보세요!</p>
 				</div>
 
