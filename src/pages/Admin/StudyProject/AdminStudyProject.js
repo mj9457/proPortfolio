@@ -121,13 +121,12 @@ const AdminStudyProject = () => {
 		[tableData, memoColumns, currentPage],
 	);
 	const changeSelectValue = async e => {
-		setCurrentPage(1);
 		// console.log(currentPage);
 		if (e === 'study') {
 			trigger({
 				data: {
 					classification: '스터디',
-					skip: currentPage * 10 - 10,
+					skip: 0,
 				},
 				applyResult: true,
 			});
@@ -137,7 +136,7 @@ const AdminStudyProject = () => {
 			trigger({
 				data: {
 					classification: '프로젝트',
-					skip: currentPage * 10 - 10,
+					skip: 0,
 				},
 				applyResult: true,
 			});
@@ -145,12 +144,13 @@ const AdminStudyProject = () => {
 		} else if (e === '') {
 			trigger({
 				data: {
-					skip: currentPage * 10 - 10,
+					skip: 0,
 				},
 				applyResult: true,
 			});
 			setCurrentClassification('');
 		}
+		setCurrentPage(1);
 	};
 	const removeHandler = async (key, index) => {
 		await trigger({
