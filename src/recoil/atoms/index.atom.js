@@ -12,6 +12,7 @@ export const userAtom = atom({
 		isAuth: false,
 		nickName: '',
 		role: '',
+		_id: '',
 		isLoading: false,
 	},
 });

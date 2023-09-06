@@ -1,9 +1,8 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import useFooter from '../../../hooks/useFooter';
 import useApi from '../../../hooks/useApi';
-import { checkToken } from '../../../utils/cookie';
 import MESSAGE from '../../../constants/message';
 
 import * as S from './PortfolioPost.styles';
@@ -13,6 +12,8 @@ import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
 import Button from '../../../components/@common/Button/Button';
 import ApplyModal from '../../../components/@common/ApplyModal/ApplyModal';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../../recoil/atoms/index.atom';
 
 function PortfolioPost() {
 	useFooter();
@@ -23,51 +24,43 @@ function PortfolioPost() {
 	const params = useParams();
 	const path = params._id;
 
-	// 로그인 유무
-	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	// 로그인 유저 체크
+	const { isAuth, role, _id } = useRecoilValue(userAtom);
 
 	const [post, setPost] = useState({});
 	const [userId, setUserId] = useState({});
+	const [isMentor, setIsMentor] = useState(false);
+	const [check, setCheck] = useState(false);
 
 	// modal open state
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// api 통신
-	const { result: userResult } = useApi({
-		path: isLoggedIn ? '/user' : '',
-		shouldFetch: isLoggedIn,
-	});
-
 	const { result, trigger, isLoading } = useApi({
 		path: `/portfolio/${path}`,
 		shouldFetch: true,
 	});
 
 	useEffect(() => {
-		const tokenStatus = checkToken();
-		setIsLoggedIn(tokenStatus);
-	}, []);
-
-	useEffect(() => {
 		if (result) {
 			setPost(result);
 		}
 
-		if (userResult) {
-			setUserId(userResult);
-		}
-	}, [result, userResult]);
+		// 로그인 한 아이디와 글 주인의 아이디가 같은지 확인
+		if (_id === post.ownerId) {
+			setCheck(true);
+		} else setCheck(false);
+
+		// 로그인 한 유저의 롤이 멘토인지 확인
+		if (role === 'mentor') {
+			setIsMentor(true);
+		} else setIsMentor(false);
+	}, [result, _id, role]);
 
 	// 버튼 클릭시 → 모달 open
 	const handleOpenModal = () => {
 		setIsModalOpen(true);
 	};
-
-	// 현재 로그인한 유저 아이디랑 게시글 오너 아이디랑 맞는지 확인
-	const userCheck = userId._id === post.ownerId;
-
-	// 로그인한 유저 아이디의 role 이 유저인지 확인
-	const roleCheck = userId.role === 'user';
 
 	// 게시글 수정
 	const handleEdit = () => {
@@ -102,6 +95,12 @@ function PortfolioPost() {
 		return `${date} ${time}`;
 	};
 
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}, [pathname]);
+
 	return (
 		<>
 			{isLoading && <p>로딩 중입니다.</p>}
@@ -129,7 +128,7 @@ function PortfolioPost() {
 								/>
 							)}
 
-							{roleCheck && (
+							{isMentor === false && (
 								<Button
 									variant={'primary'}
 									shape={'default'}
@@ -140,10 +139,14 @@ function PortfolioPost() {
 								</Button>
 							)}
 						</S.MentorBox>
+
 						<Line size={'small'} />
+
 						<IntroContents post={post} />
+
 						<Line size={'small'} />
-						{isLoggedIn && userCheck && (
+
+						{isAuth && isMentor && check && (
 							<S.ButtonBox>
 								<Button
 									variant={'primary'}

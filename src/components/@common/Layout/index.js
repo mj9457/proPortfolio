@@ -33,6 +33,7 @@ function Layout() {
 			isAuth: false,
 			nickName: '',
 			role: '',
+			_id: '',
 			isLoading: false,
 		}));
 		const notRedirect = excludeRedirectPath.find(ex =>
@@ -60,6 +61,7 @@ function Layout() {
 				isAuth: true,
 				nickName: authResult.nickName,
 				role: authResult.role,
+				_id: authResult._id,
 				isLoading: false,
 			}));
 			if (error) {
@@ -77,6 +79,7 @@ function Layout() {
 
 	// includeFooter가 true일 때만 Footer가 나타나도록 설정
 	const includeFooter = useRecoilValue(includeFooterState);
+
 	return (
 		<>
 			<Header />
