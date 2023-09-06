@@ -161,7 +161,7 @@ const AdminCategory = () => {
 		});
 		if (result.positions.length === 1) {
 			await trigger({
-				params: {
+				data: {
 					skip: (currentPage - 1) * 10 - 10,
 				},
 				applyResult: true,
@@ -169,7 +169,7 @@ const AdminCategory = () => {
 			setCurrentPage(prev => prev - 1);
 		} else {
 			await trigger({
-				params: {
+				data: {
 					skip: currentPage * 10 - 10,
 				},
 				applyResult: true,
@@ -198,7 +198,7 @@ const AdminCategory = () => {
 
 		await trigger({
 			path: '/position',
-			params: {
+			data: {
 				skip: pageNumber * 10 - 10,
 			},
 			applyResult: true,

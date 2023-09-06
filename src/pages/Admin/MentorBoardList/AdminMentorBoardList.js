@@ -105,7 +105,7 @@ const AdminMentorBoardList = () => {
 
 		await trigger({
 			path: '/admin/portfolio',
-			params: {
+			data: {
 				skip: pageNumber * 10 - 10,
 			},
 			applyResult: true,
@@ -121,13 +121,13 @@ const AdminMentorBoardList = () => {
 		if (result.portfolios.length === 1) {
 			if (index === 1) {
 				await trigger({
-					params: {
+					data: {
 						skip: (currentPage - 1) * 10 - 10,
 					},
 				});
 			} else {
 				await trigger({
-					params: {
+					data: {
 						skip: (currentPage - 1) * 10 - 10,
 					},
 					applyResult: true,
@@ -137,7 +137,7 @@ const AdminMentorBoardList = () => {
 			setCurrentPage(prev => prev - 1);
 		} else {
 			await trigger({
-				params: {
+				data: {
 					skip: currentPage * 10 - 10,
 				},
 				applyResult: true,

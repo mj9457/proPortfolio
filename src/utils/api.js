@@ -31,11 +31,7 @@ const successStatusCodes = [200, 201, 203];
 // 응답 인터셉터
 api.interceptors.response.use(
 	res => {
-		if (successStatusCodes.includes(res.status)) {
-			return res.data;
-		} else {
-			return res.status;
-		}
+		return res.data;
 	},
 	err => {
 		throw err;

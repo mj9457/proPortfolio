@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { deleteApi, getApi, patchApi, postApi, putApi } from '../utils/api';
+import { useErrorBoundary } from 'react-error-boundary';
 
 /**
  * TODO React swr로 리팩토링
@@ -17,23 +18,20 @@ const useApi = ({
 	method: initMethod = 'get', // GET 메서드(기본값)
 	data: initData = {}, // 초기 데이터 (선택사항)
 	shouldFetch = false, // 컴포넌트 마운트 시 자동으로 요청
-	params: initParams = {},
+	// params: initParams = {},
 	showBoundary = true, // 비동기에러 표시여부
 }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [result, setResult] = useState({});
 	const [_, occurredError] = useState({});
+	const { showBoundary: handleError } = useErrorBoundary();
 
 	const initFetch = useCallback(async () => {
 		try {
 			setIsLoading(true);
-			const queryParams = new URLSearchParams(initParams).toString();
-			const urlWithParams = queryParams
-				? `${initPath}?${queryParams}`
-				: initPath;
 			const fetchResult = await mapMethodToFetcher[initMethod](
-				urlWithParams,
+				initPath,
 				initData,
 			);
 			setResult(fetchResult);
@@ -56,50 +54,34 @@ const useApi = ({
 			path: triggerPath = initPath,
 			method: triggerMethod = initMethod,
 			data: triggerData = initData,
-			params: triggerParams = {},
 			applyResult = false,
 			showBoundary = true,
 		}) => {
 			try {
 				setIsLoading(true);
+				// throw new Error('this is custom error');
 				const triggerResult = await mapMethodToFetcher[triggerMethod](
 					triggerPath,
 					triggerData,
 				);
 				if (applyResult) {
-					const queryParams = new URLSearchParams(
-						triggerParams,
-					).toString();
-					// query가 있을 때 query로 호출, 없을때는 initPath로 호출
-					const urlWithParams = queryParams
-						? `${triggerPath}?${queryParams}`
-						: initPath;
-					// console.log(urlWithParams);
-					const triggerResult = await mapMethodToFetcher[initMethod](
-						urlWithParams,
-						initData,
-					);
-					// console.log(triggerResult);
 					setResult(triggerResult);
 				} else {
-					// console.log(triggerResult);
-					setResult(triggerResult);
+					return triggerResult;
 				}
 			} catch (err) {
 				// 비동기 에러 검출 가능
 				if (showBoundary) {
-					setError(err);
-					throw err;
+					handleError(err);
 				} else {
 					// 비동기 에러 검출 가능
-					occurredError(() => {
-						throw new Error(err);
-					});
+
+					setError(err);
 				}
 			}
 			setIsLoading(false);
 		},
-		[initMethod, initData, initPath, initParams],
+		[initMethod, initData, initPath],
 	);
 
 	useEffect(() => {

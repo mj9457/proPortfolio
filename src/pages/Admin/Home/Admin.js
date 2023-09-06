@@ -98,7 +98,7 @@ const AdminHome = () => {
 		// console.log(result);
 		if (result.users.length === 1) {
 			await trigger({
-				params: {
+				data: {
 					skip: (currentPage - 1) * 10 - 10,
 				},
 				applyResult: true,
@@ -106,7 +106,7 @@ const AdminHome = () => {
 			setCurrentPage(prev => prev - 1);
 		} else {
 			await trigger({
-				params: {
+				data: {
 					skip: currentPage * 10 - 10,
 				},
 				applyResult: true,
@@ -122,7 +122,7 @@ const AdminHome = () => {
 
 		await trigger({
 			path: '/admin/user',
-			params: {
+			data: {
 				skip: pageNumber * 10 - 10,
 			},
 			applyResult: true,

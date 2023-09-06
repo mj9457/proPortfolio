@@ -16,7 +16,7 @@ const AdminMentorApply = () => {
 	const { result, trigger, isLoading, error } = useApi({
 		path: '/mentorRequest',
 		shouldFetch: true,
-		params: {
+		data: {
 			status: 'requested',
 		},
 	});
@@ -142,14 +142,14 @@ const AdminMentorApply = () => {
 				// console.log('key값이 1일때~~~~~~~~~~~');
 				console.log(currentPage);
 				await trigger({
-					params: {
+					data: {
 						status: 'requested',
 					},
 					applyResult: true,
 				});
 			} else {
 				await trigger({
-					params: {
+					data: {
 						skip: (currentPage - 1) * 10 - 10,
 						status: 'requested',
 					},
@@ -164,7 +164,7 @@ const AdminMentorApply = () => {
 			}
 		} else {
 			await trigger({
-				params: {
+				data: {
 					skip: currentPage * 10 - 10,
 					status: 'requested',
 				},
@@ -206,7 +206,7 @@ const AdminMentorApply = () => {
 			if (key === 1) {
 				console.log(currentPage);
 				await trigger({
-					params: {
+					data: {
 						skip: 0,
 						status: 'requested',
 					},
@@ -215,7 +215,7 @@ const AdminMentorApply = () => {
 				setCurrentPage(1);
 			} else {
 				await trigger({
-					params: {
+					data: {
 						skip: (currentPage - 1) * 10 - 10,
 						status: 'requested',
 					},
@@ -226,7 +226,7 @@ const AdminMentorApply = () => {
 			setCurrentPage(prev => prev - 1);
 		} else {
 			await trigger({
-				params: {
+				data: {
 					skip: currentPage * 10 - 10,
 					status: 'requested',
 				},
@@ -244,7 +244,7 @@ const AdminMentorApply = () => {
 
 		await trigger({
 			path: '/mentorRequest',
-			params: {
+			data: {
 				skip: pageNumber * 10 - 10,
 				status: 'requested',
 			},
