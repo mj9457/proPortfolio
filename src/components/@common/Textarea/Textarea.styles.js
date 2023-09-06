@@ -23,4 +23,5 @@ export const TextSpace = styled.textarea`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	line-height: 1.5;
+	white-space: pre-wrap;
 `;

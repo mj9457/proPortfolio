@@ -75,6 +75,8 @@ export const Buttons = styled.div`
 `;
 
 export const Contents = styled.pre`
+	width: 1080px;
+	white-space: pre-wrap;
 	line-height: 1.5;
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};

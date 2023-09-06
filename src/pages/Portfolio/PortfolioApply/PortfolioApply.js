@@ -155,6 +155,7 @@ function PortfolioApply() {
 				<S.ContentsBox>
 					<span>2. 멘토링 소개 제목을 작성해 주세요.</span>
 					<Input
+						maxLength="50"
 						size={'large'}
 						placeholder="제목을 입력해 주세요."
 						defaultValue={portfolioId ? mentorPost.title : ''}
@@ -166,6 +167,7 @@ function PortfolioApply() {
 				<S.ContentsBox>
 					<span>3. 멘토링 소개 내용을 작성해 주세요.</span>
 					<Textarea
+						maxLength="1000"
 						size={'regular'}
 						placeholder={'소개 글 및 경력은 필수로 입력해 주세요.'}
 						defaultValue={portfolioId ? mentorPost.description : ''}

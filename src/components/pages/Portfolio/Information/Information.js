@@ -34,6 +34,7 @@ function Information(props) {
 			<S.Contents>
 				<S.ContentsTitle>재직 회사</S.ContentsTitle>
 				<Input
+					maxLength="30"
 					size={'regular'}
 					placeholder="회사명을 입력해 주세요."
 					name="company"

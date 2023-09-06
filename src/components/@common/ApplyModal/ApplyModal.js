@@ -85,6 +85,7 @@ function ApplyModal(props) {
 						<S.InfoSubTitleBox>
 							<S.InfoSubTitle>신청 제목</S.InfoSubTitle>
 							<Input
+								maxLength="50"
 								type="text"
 								name="title"
 								size={'regular'}
@@ -96,6 +97,7 @@ function ApplyModal(props) {
 						<S.InfoSubTitleBox>
 							<S.InfoSubTitle>질문 내용</S.InfoSubTitle>
 							<Textarea
+								maxLength="1000"
 								name={'content'}
 								size={'regular'}
 								placeholder={

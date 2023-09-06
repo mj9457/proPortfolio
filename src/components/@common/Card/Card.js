@@ -18,7 +18,6 @@ function MentorCard(props) {
 	useEffect(() => {
 		if (result && result.length > 0) {
 			setMentorData([...result]);
-			console.log(error);
 		}
 	}, [result]);
 
@@ -53,7 +52,9 @@ function MentorCard(props) {
 								<S.ContentSpan>{mentor.position}</S.ContentSpan>
 							</div>
 							<div>
-								<S.ContentSpan>경력 {mentor.career}년</S.ContentSpan>
+								<S.ContentSpan>
+									경력 {mentor.career}년
+								</S.ContentSpan>
 							</div>
 						</S.Contents>
 					</S.ContentsBox>

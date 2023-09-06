@@ -219,6 +219,7 @@ function Review(props) {
 								<div>
 									{edit === comment._id ? (
 										<Textarea
+											maxLength="200"
 											size={'full'}
 											name="content"
 											defaultValue={editReview.content}
