@@ -70,11 +70,6 @@ const AdminMentorBoardList = lazy(() =>
 	import('../pages/Admin/MentorBoardList/AdminMentorBoardList'),
 );
 
-// error page
-const ErrorFallback = lazy(() =>
-	import('../components/@common/Error/ErrorFallback'),
-);
-
 const router = createBrowserRouter([
 	{
 		path: '/',

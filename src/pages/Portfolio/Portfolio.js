@@ -11,6 +11,7 @@ import Button from '../../components/@common/Button/Button';
 import Select from '../../components/@common/Select/Select';
 import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
 import { Link } from 'react-router-dom';
+import LoadingBar from '../../components/@common/Loading/LoadingBar';
 
 function Portfolio() {
 	// 로그인 유저 체크
@@ -193,6 +194,10 @@ function Portfolio() {
 
 			applyResult: true,
 		});
+
+		if (selectedValues.position !== positionValue) {
+			setMentorData([]);
+		}
 	};
 
 	useEffect(() => {
@@ -200,6 +205,10 @@ function Portfolio() {
 			setPositions(positionResult.positions);
 		}
 	}, [positionResult.positions]);
+
+	useEffect(() => {
+		console.log({ mentorData });
+	}, [mentorData]);
 
 	return (
 		<S.PortfolioBox>
@@ -291,25 +300,30 @@ function Portfolio() {
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					{!Array.isArray(mentorData) || mentorData.length === 0 ? (
-						<EmptyMessage />
-					) : (
+					{isLoading && <LoadingBar />}
+					{!isLoading && (
 						<>
-							{mentorData.map(mentor => (
-								<div key={mentor._id}>
-									<MentorCard
-										variant={'white'}
-										mentor={mentor}
+							{!mentorData.length ? (
+								<EmptyMessage />
+							) : (
+								<>
+									{mentorData.map(mentor => (
+										<div key={mentor._id}>
+											<MentorCard
+												variant={'white'}
+												mentor={mentor}
+											/>
+										</div>
+									))}
+									<div
+										style={{
+											height: '10px',
+											border: '1px solid white',
+										}}
+										ref={observerElement}
 									/>
-								</div>
-							))}
-							<div
-								style={{
-									height: '10px',
-									border: '1px solid white',
-								}}
-								ref={observerElement}
-							/>
+								</>
+							)}
 						</>
 					)}
 				</S.MentorCardBox>
