@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { bodyContainer, flexCenter, flexColumn } from '../../../styles/common';
+import { Link } from 'react-router-dom';
 
 export const ErrorBox = styled.div`
 	${bodyContainer}
@@ -25,8 +26,8 @@ export const LetterBox = styled.div`
 
 export const ButtonBox = styled.div`
 	margin-top: 40px;
+`;
 
-	& a {
-		text-decoration: none;
-	}
+export const StyledLink = styled(Link)`
+	text-decoration: none;
 `;

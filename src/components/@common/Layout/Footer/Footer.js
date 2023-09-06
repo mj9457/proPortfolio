@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Line from '../../Line/Line';
 import * as S from './Footer.styles';
 
@@ -6,9 +7,9 @@ function Footer() {
 		<S.Footer>
 			<S.Container>
 				<S.IntroBox>
-					<a href="/">
+					<Link to="/">
 						<S.Image src="/assets/img/logo/logo.svg" />
-					</a>
+					</Link>
 
 					<S.Intro>
 						<span>최고의 멘토들의 코칭을 경험해 보세요.</span>

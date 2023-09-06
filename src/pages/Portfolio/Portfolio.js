@@ -10,6 +10,7 @@ import MentorCard from '../../components/pages/Portfolio/PortfolioCard/Card';
 import Button from '../../components/@common/Button/Button';
 import Select from '../../components/@common/Select/Select';
 import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
+import { Link } from 'react-router-dom';
 
 function Portfolio() {
 	// 로그인 유저 체크
@@ -208,7 +209,7 @@ function Portfolio() {
 
 				{isMentor && (
 					<S.ApplyBox>
-						<a href="/portfolio/apply">
+						<Link to="/portfolio/apply">
 							<Button
 								variant={'add'}
 								shape={'default'}
@@ -216,7 +217,7 @@ function Portfolio() {
 							>
 								작성하기
 							</Button>
-						</a>
+						</Link>
 					</S.ApplyBox>
 				)}
 			</S.BannerBox>

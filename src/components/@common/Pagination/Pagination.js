@@ -38,24 +38,31 @@ function Pagination(props) {
 				<S.Button onClick={goToPrevPage}>
 					<img src="/assets/img/icons/leftarrow.png" alt="Previous" />
 				</S.Button>
-				{Array.from({ length: endPage - startPage + 1 }, (_, index) => (
-					<S.Number
-						key={startPage + index}
-						onClick={() => onPageChange(startPage + index)}
-						style={{
-							margin: '5px',
-							padding: '5px 10px',
-							color:
-								currentPage === startPage + index
-									? '#3377FF'
-									: '#585858',
-							cursor: 'pointer',
-							fontSize: 'large',
-						}}
-					>
-						{startPage + index}
-					</S.Number>
-				))}
+				{totalItems === 0 ? (
+					<S.Number>1</S.Number>
+				) : (
+					Array.from(
+						{ length: endPage - startPage + 1 },
+						(_, index) => (
+							<S.Number
+								key={startPage + index}
+								onClick={() => onPageChange(startPage + index)}
+								style={{
+									margin: '5px',
+									padding: '5px 10px',
+									color:
+										currentPage === startPage + index
+											? '#3377FF'
+											: '#585858',
+									cursor: 'pointer',
+									fontSize: 'large',
+								}}
+							>
+								{startPage + index}
+							</S.Number>
+						),
+					)
+				)}
 				<S.Button onClick={goToNextPage}>
 					<img src="/assets/img/icons/rightarrow.png" alt="Next" />
 				</S.Button>

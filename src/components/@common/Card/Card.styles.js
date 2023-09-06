@@ -21,26 +21,24 @@ export const StyledLink = styled(Link)`
 	}
 `;
 
-export const PopularCard = styled.a`
+export const PopularCard = styled.div`
 	${({ variant }) => variantCSS[variant]}
-	${flexColumn}
 	width: 255px;
 	height: 320px;
 	padding: 20px;
-	justify-content: center;
-	gap: 16px;
-	border-radius: 10px;
-	text-decoration: none;
-	color: ${({ theme }) => theme.PALETTE.black};
-
-	&:visited {
-		color: ${({ theme }) => theme.PALETTE.black};
-	}
 
 	&:hover {
 		transform: scale(1.05);
 		transition: 0.5s;
 	}
+`;
+
+export const CardBox = styled.div`
+	${flexColumn}
+	justify-content: center;
+	gap: 16px;
+	border-radius: 10px;
+	color: ${({ theme }) => theme.PALETTE.black};
 `;
 
 export const CoachNumBox = styled.div`

@@ -18,7 +18,7 @@ function ErrorFallback({ error }) {
 			</S.LetterBox>
 
 			<S.ButtonBox>
-				<a href="/">
+				<S.StyledLink to="/">
 					<Button
 						variant={'reverse'}
 						shape={'medium'}
@@ -26,7 +26,7 @@ function ErrorFallback({ error }) {
 					>
 						홈으로 이동
 					</Button>
-				</a>
+				</S.StyledLink>
 			</S.ButtonBox>
 		</S.ErrorBox>
 	);
