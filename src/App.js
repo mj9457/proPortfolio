@@ -14,7 +14,7 @@ import ErrorFallback from './components/@common/Error/ErrorFallback';
 function App() {
 	return (
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
-			<Suspense fallback={Loading()}>
+			<Suspense fallback={<Loading />}>
 				<RecoilRoot>
 					<ThemeProvider theme={theme}>
 						<GlobalStyles />
