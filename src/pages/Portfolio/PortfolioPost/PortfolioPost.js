@@ -1,6 +1,8 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
+import { userAtom } from '../../../recoil/atoms/index.atom';
 import useFooter from '../../../hooks/useFooter';
 import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
@@ -12,8 +14,6 @@ import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
 import Button from '../../../components/@common/Button/Button';
 import ApplyModal from '../../../components/@common/ApplyModal/ApplyModal';
-import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../../recoil/atoms/index.atom';
 
 function PortfolioPost() {
 	useFooter();

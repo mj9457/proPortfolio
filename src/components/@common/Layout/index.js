@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { includeFooterState, userAtom } from '../../../recoil/atoms/index.atom';
+import useApi from '../../../hooks/useApi';
+
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { includeFooterState, userAtom } from '../../../recoil/atoms/index.atom';
 import ScrollToTopButton from '../ScrollToTop/ScrollToTopButton';
-import useApi from '../../../hooks/useApi';
 
 const excludeAuthPath = ['/signup'];
 const excludeRedirectPath = [

@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { Link } from 'react-router-dom';
 
-import { checkToken } from '../../utils/cookie';
 import useApi from '../../hooks/useApi';
+import { userAtom } from '../../recoil/atoms/index.atom';
 
 import * as S from './Portfolio.styles';
 
@@ -10,14 +12,11 @@ import MentorCard from '../../components/pages/Portfolio/PortfolioCard/Card';
 import Button from '../../components/@common/Button/Button';
 import Select from '../../components/@common/Select/Select';
 import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
-import { Link } from 'react-router-dom';
 import LoadingBar from '../../components/@common/Loading/LoadingBar';
-import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../recoil/atoms/index.atom';
 
 function Portfolio() {
 	// 로그인 유저 체크
-	const { isAuth, role, isLoading: authLoading } = useRecoilValue(userAtom);
+	const { isAuth, role } = useRecoilValue(userAtom);
 
 	// 멘토 체크
 	const [isMentor, setIsMentor] = useState(false);
@@ -64,13 +63,10 @@ function Portfolio() {
 	});
 
 	useEffect(() => {
-		/**
-		 * data: [],pages:0, total:0
-		 */
-		// if (mentorResult.data && mentorResult.data.length > 0) {
 		if (mentorResult.data && Array.isArray(mentorResult.data)) {
 			setMentorData(prev => [...prev, ...mentorResult.data]);
 			setMentorDataTotal(mentorResult.total);
+
 			if (currentSkip <= 12) {
 				setMentorData(mentorResult.data);
 			}
@@ -133,9 +129,7 @@ function Portfolio() {
 			observer.current.observe(observerElement.current);
 		}
 
-		if (mentorData.length >= mentorDataTotal) {
-			observer.current.disconnect();
-		}
+		if (mentorData.length >= mentorDataTotal) observer.current.disconnect();
 
 		return () => {
 			if (observer.current) {
@@ -155,7 +149,7 @@ function Portfolio() {
 			...prev,
 			selectedSort: value,
 		}));
-		console.log(selectedValues);
+
 		trigger({
 			data: {
 				category: selectedValues.position,
@@ -188,9 +182,9 @@ function Portfolio() {
 			applyResult: true,
 		});
 
-		if (selectedValues.position !== positionValue) {
-			setMentorData([]);
-		}
+		// if (selectedValues.position !== positionValue) {
+		// 	setMentorData([]);
+		// }
 	};
 
 	useEffect(() => {
@@ -304,6 +298,7 @@ function Portfolio() {
 											/>
 										</div>
 									))}
+
 									<div
 										style={{
 											height: '10px',
