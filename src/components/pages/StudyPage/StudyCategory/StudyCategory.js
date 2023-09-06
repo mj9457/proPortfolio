@@ -129,6 +129,10 @@ function StudyCategory() {
 			...prev,
 			classification: classificationValue,
 		}));
+
+		if (selectedValues.classificationValue !== classificationValue) {
+			setProjectStudy([]);
+		}
 	};
 
 	// 포지션 클릭
