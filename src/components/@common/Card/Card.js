@@ -26,42 +26,44 @@ function MentorCard(props) {
 			{isLoading && <h2>로딩 중입니다.</h2>}
 			{mentorData.length === 0 && <EmptyMessage />}
 			{mentorData.map((mentor, idx) => (
-				<S.PopularCard
-					variant={variant}
-					href={`/portfolio/post/${mentor._id}`}
-					key={idx}
-				>
-					<S.CoachNumBox>
-						<span>👊 코칭 {mentor.coachingCount}회</span>
-					</S.CoachNumBox>
+				<S.PopularCard variant={variant} key={idx}>
+					<S.StyledLink to={`/portfolio/post/${mentor._id}`}>
+						<S.CoachNumBox>
+							<span>👊 코칭 {mentor.coachingCount}회</span>
+						</S.CoachNumBox>
 
-					<S.ImgBox>
-						<img src={mentor.profileImageUrl} />
-					</S.ImgBox>
+						<S.ImgBox>
+							<img src={mentor.profileImageUrl} />
+						</S.ImgBox>
 
-					<S.ContentsBox>
-						<div>
-							<S.Name>{mentor.nickName}</S.Name>
-						</div>
-
-						<S.Contents>
+						<S.ContentsBox>
 							<div>
-								<S.ContentSpan>{mentor.company}</S.ContentSpan>
+								<S.Name>{mentor.nickName}</S.Name>
 							</div>
-							<div>
-								<S.ContentSpan>{mentor.position}</S.ContentSpan>
-							</div>
-							<div>
-								<S.ContentSpan>
-									경력 {mentor.career}년
-								</S.ContentSpan>
-							</div>
-						</S.Contents>
-					</S.ContentsBox>
 
-					<S.TitleBox>
-						&quot;<span>{mentor.title}</span>&quot;
-					</S.TitleBox>
+							<S.Contents>
+								<div>
+									<S.ContentSpan>
+										{mentor.company}
+									</S.ContentSpan>
+								</div>
+								<div>
+									<S.ContentSpan>
+										{mentor.position}
+									</S.ContentSpan>
+								</div>
+								<div>
+									<S.ContentSpan>
+										경력 {mentor.career}년
+									</S.ContentSpan>
+								</div>
+							</S.Contents>
+						</S.ContentsBox>
+
+						<S.TitleBox>
+							&quot;<span>{mentor.title}</span>&quot;
+						</S.TitleBox>
+					</S.StyledLink>
 				</S.PopularCard>
 			))}
 		</>

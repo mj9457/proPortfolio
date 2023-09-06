@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import * as S from './Card.styles';
 
 function MentorCard(props) {
@@ -13,8 +14,8 @@ function MentorCard(props) {
 	}, [mentor]);
 
 	return (
-		<>
-			<S.PopularCard variant={variant} href={`/portfolio/post/${data._id}`}>
+		<S.StyledLink to={`/portfolio/post/${data._id}`}>
+			<S.PopularCard variant={variant}>
 				<S.CoachNumBox>
 					<span>👊 코칭 {data.coachingCount}회</span>
 				</S.CoachNumBox>
@@ -45,7 +46,7 @@ function MentorCard(props) {
 					&quot;<span>{data.title}</span>&quot;
 				</S.TitleBox>
 			</S.PopularCard>
-		</>
+		</S.StyledLink>
 	);
 }
 
