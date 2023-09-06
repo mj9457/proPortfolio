@@ -206,10 +206,6 @@ function Portfolio() {
 		}
 	}, [positionResult.positions]);
 
-	useEffect(() => {
-		console.log({ mentorData });
-	}, [mentorData]);
-
 	return (
 		<S.PortfolioBox>
 			<S.BannerBox>
