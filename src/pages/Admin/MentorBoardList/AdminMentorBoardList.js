@@ -79,7 +79,7 @@ const AdminMentorBoardList = () => {
 
 	useEffect(() => {
 		// console.log(result);
-		if (result.portfolios && result.portfolios.length > 0) {
+		if (result.portfolios) {
 			const startIndex = (currentPage - 1) * 10;
 			const modifiedData = result.portfolios.map((item, index) => ({
 				...item,
@@ -87,9 +87,9 @@ const AdminMentorBoardList = () => {
 			}));
 			setTableData(modifiedData);
 		}
-		if (result.totalCount) {
-			setTotalPages(result.totalCount);
-		}
+		setTotalPages(result.totalCount);
+		// if (result.totalCount) {
+		// }
 	}, [result]);
 
 	const memoResult = useMemo(

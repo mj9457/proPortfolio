@@ -60,7 +60,7 @@ const AdminHome = () => {
 
 	useEffect(() => {
 		// console.log(result);
-		if (result.users && result.users.length > 0) {
+		if (result.users) {
 			const startIndex = (currentPage - 1) * 10;
 			// console.log(result.users.length);
 			setUsersData(
@@ -70,9 +70,7 @@ const AdminHome = () => {
 				})),
 			);
 		}
-		if (result.totalCount) {
-			setTotalPages(result.totalCount);
-		}
+		setTotalPages(result.totalCount);
 
 		// console.log(currentPage);
 

@@ -73,20 +73,57 @@ export const LoginBar = styled.div`
 export const notiWrap = styled.div`
 	z-index: 99;
 	position: absolute;
-	background-color: red;
 
 	right: 0;
 	top: 100px;
 	border-radius: 4px;
-	background: #f9f9f9;
-	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	background: white;
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+
+	padding: 32px 32px 64px;
+	> div {
+		margin-bottom: 16px;
+	}
+	> div:last-child {
+		margin-bottom: 0;
+	}
 `;
 export const notiBox = styled.div`
-	padding: 20px;
 	cursor: pointer;
+	border-bottom: 0.5px solid #e9e9e9;
+	padding-bottom: 8px;
 	> span {
 		color: ${({ theme }) => theme.PALETTE.black};
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	}
+	> span:last-child {
+		display: block;
+		margin-top: 4px;
+		color: #c1c1c1;
+		font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.extraLight};
+	}
+	width: 360px;
+`;
+export const notiTitle = styled.div`
+	text-align: center;
+	border-bottom: 4px solid #e3edff;
+	padding-bottom: 16px;
+	margin-bottom: 32px;
+	> span {
+		color: ${({ theme }) => theme.PALETTE.black};
+		font-size: ${({ theme }) => theme.FONT_SIZE.big};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+	}
+`;
+export const notiNone = styled.div`
+	margin-top: 32px;
+	text-align: center;
+	width: 360px;
+	> span {
+		color: ${({ theme }) => theme.PALETTE.black};
+		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	}
 `;

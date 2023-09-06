@@ -97,7 +97,7 @@ const AdminStudyProject = () => {
 
 	useEffect(() => {
 		// console.log(result);
-		if (result.projectStudies && result.projectStudies.length > 0) {
+		if (result.projectStudies) {
 			const startIndex = (currentPage - 1) * 10;
 			setTableData(
 				result.projectStudies.map((item, index) => ({
@@ -106,9 +106,8 @@ const AdminStudyProject = () => {
 				})),
 			);
 		}
-		if (result.totalCount) {
-			setTotalPages(result.totalCount);
-		}
+
+		setTotalPages(result.totalCount);
 	}, [result]);
 	const memoColumns = useMemo(() => [], [currentclassification]);
 	const memoResult = useMemo(

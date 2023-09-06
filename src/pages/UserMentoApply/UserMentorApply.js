@@ -3,7 +3,6 @@ import Button from '../../components/@common/Button/Button';
 import AWS from 'aws-sdk';
 import {
 	ApplyCard,
-	ApplyInput,
 	ButtonArea,
 	Container,
 	ContentArea,
@@ -17,6 +16,7 @@ import useFooter from '../../hooks/useFooter';
 import MESSAGE from '../../constants/message';
 import useApi from '../../hooks/useApi';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../components/@common/Input/Input';
 
 const UserMentorApply = () => {
 	useFooter();
@@ -127,39 +127,43 @@ const UserMentorApply = () => {
 					<Title>멘토 전환 신청</Title>
 					<ContentArea>
 						<SubTitle>
-							1. 멘토님의 기본 정보를 입력해주세요.
+							1. 멘토 님의 기본 정보를 입력해 주세요.
 						</SubTitle>
 						<ContentBox>
 							<span>재직회사</span>
-							<ApplyInput
+							<Input
 								value={inputValue.company}
-								placeholder="회사명을 입력해주세요."
+								placeholder="회사명을 입력해 주세요."
 								onChange={e => {
 									handleOnChange(e);
 								}}
-							></ApplyInput>
+								size="regular"
+							/>
 						</ContentBox>
 						<ContentBox>
 							<span>경력</span>
-							<ApplyInput
+
+							<Input
 								value={inputValue.career}
 								type="number"
-								placeholder="연차를 입력해주세요."
+								placeholder="연차를 입력해 주세요."
 								onChange={handleOnChange}
-							></ApplyInput>
+								size="regular"
+							/>
 						</ContentBox>
 						<SubTitle>
-							2. 사원증 혹은 재직증명서를 업로드 해 주세요.
+							2. 사원증 혹은 재직 증명서를 업로드해 주세요.
 						</SubTitle>
 						<ImageBox>
 							<span>이미지</span>
-							<ApplyInput
+
+							<Input
 								readOnly
-								placeholder="파일을 업로드해주세요."
+								placeholder="파일을 업로드해 주세요."
 								value={selectedFile ? selectedFile.name : ''}
-							></ApplyInput>
+							/>
 							<FileButton onClick={fileUploadHandler}>
-								파일찾기
+								파일 찾기
 							</FileButton>
 							<input
 								accept="image/*"

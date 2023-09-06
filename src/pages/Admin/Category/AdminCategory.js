@@ -90,8 +90,8 @@ const AdminCategory = () => {
 	];
 
 	useEffect(() => {
-		console.log(result);
-		if (result.positions && result.positions.length > 0) {
+		// console.log(result);
+		if (result.positions) {
 			setTableData(
 				result.positions.map(item => ({
 					...item,
@@ -100,9 +100,7 @@ const AdminCategory = () => {
 				})),
 			);
 		}
-		if (result.total) {
-			setTotalPages(result.total);
-		}
+		setTotalPages(result.total);
 	}, [result]);
 
 	const memoColumns = useMemo(() => [...columns], [tempData, editingKey]);

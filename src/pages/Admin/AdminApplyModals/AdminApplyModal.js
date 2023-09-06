@@ -24,7 +24,7 @@ const AdminApplyModal = ({
 	approveHandler,
 	refuseHandler,
 }) => {
-	console.log(userInfo);
+	// console.log(userInfo);
 	const outside = useRef();
 	const imageOutside = useRef();
 

@@ -44,13 +44,7 @@ const ContentBox = styled.div`
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	}
 `;
-const ApplyInput = styled(Input)`
-	width: 324px;
-	&::placeholder {
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	}
-`;
+
 const ImageBox = styled.div`
 	margin-top: 32px;
 	display: flex;
@@ -107,7 +101,6 @@ export {
 	ContentArea,
 	SubTitle,
 	ContentBox,
-	ApplyInput,
 	ImageBox,
 	FileButton,
 	ButtonArea,

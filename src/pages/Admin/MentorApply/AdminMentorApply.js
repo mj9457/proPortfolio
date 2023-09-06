@@ -89,10 +89,8 @@ const AdminMentorApply = () => {
 		},
 	];
 	useEffect(() => {
-		// console.log(result);
-		if (result.mentorRequests && result.mentorRequests.length > 0) {
+		if (result.mentorRequests) {
 			const startIndex = (currentPage - 1) * 10;
-
 			setApplyData(
 				result.mentorRequests
 					.filter(item => item.status === 'requested')
@@ -107,23 +105,17 @@ const AdminMentorApply = () => {
 			}));
 			// console.log(newData);
 			setData(newData);
-		}
-
-		if (result.total) {
 			setTotalPages(result.total);
+
+			// if (result.mentorRequests.length === 0) {
+			// }
 		}
 	}, [result]);
 	// console.log(data);
 	const memoColumns = useMemo(() => [], [selectedKey, isOpen]);
 	const memoResult = useMemo(
-		() => (
-			<AdminTable
-				columns={columns}
-				dataSource={applyData}
-				totalPages={totalPages}
-			/>
-		),
-		[applyData, memoColumns, currentPage],
+		() => <AdminTable columns={columns} dataSource={applyData} />,
+		[applyData, memoColumns, currentPage, result],
 	);
 
 	// 자세히 보기
@@ -148,11 +140,12 @@ const AdminMentorApply = () => {
 		if (result.mentorRequests.length === 1) {
 			if (key === 1) {
 				// console.log('key값이 1일때~~~~~~~~~~~');
+				console.log(currentPage);
 				await trigger({
 					params: {
-						skip: (currentPage - 1) * 10 - 10,
 						status: 'requested',
 					},
+					applyResult: true,
 				});
 			} else {
 				await trigger({
@@ -164,7 +157,11 @@ const AdminMentorApply = () => {
 				});
 			}
 
-			setCurrentPage(prev => prev - 1);
+			if (currentPage !== 1) {
+				setCurrentPage(prev => prev - 1);
+			} else {
+				setCurrentPage(1);
+			}
 		} else {
 			await trigger({
 				params: {
@@ -207,12 +204,15 @@ const AdminMentorApply = () => {
 		});
 		if (result.mentorRequests.length === 1) {
 			if (key === 1) {
+				console.log(currentPage);
 				await trigger({
 					params: {
-						skip: (currentPage - 1) * 10 - 10,
+						skip: 0,
 						status: 'requested',
 					},
+					applyResult: true,
 				});
+				setCurrentPage(1);
 			} else {
 				await trigger({
 					params: {

@@ -206,6 +206,9 @@ function Header() {
 							)}
 							{notiBox ? (
 								<S.notiWrap>
+									<S.notiTitle>
+										<span>🕊️ 알림이 왔어요 !</span>
+									</S.notiTitle>
 									{notiData.length !== 0 ? (
 										notiData?.map((item, index) => (
 											<S.notiBox
@@ -219,12 +222,13 @@ function Header() {
 												}}
 											>
 												<span>{item.content}</span>
+												<span>2020-12-10</span>
 											</S.notiBox>
 										))
 									) : (
-										<S.notiBox>
-											<span>알림이 없습니다!</span>
-										</S.notiBox>
+										<S.notiNone>
+											<span>지금은 알림이 없어요.</span>
+										</S.notiNone>
 									)}
 								</S.notiWrap>
 							) : (
