@@ -199,7 +199,7 @@ function Portfolio() {
 	}, [positionResult.positions]);
 
 	const handleClick = () => {
-		if (mentorResult.data.filter(el => el.ownerId === _id).length === 1) {
+		if (mentorResult.data.filter(el => el.ownerId === _id).length >= 1) {
 			alert('멘토링 신청 게시물은 하나만 작성 가능합니다.');
 		} else navigate('/portfolio/apply');
 	};
