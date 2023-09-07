@@ -3,6 +3,7 @@ import StudyInfoCard from '../../../@common/StudyInfoCard/StudyInfoCard';
 import * as H from './StudySlider.styles';
 import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
+import LoadingBar from '../../../@common/Loading/LoadingBar';
 
 function StudySlider({ isLoggedIn, $background, url, slidesToShow }) {
 	const [slide, setSlide] = useState(0);
@@ -39,7 +40,9 @@ function StudySlider({ isLoggedIn, $background, url, slidesToShow }) {
 		<H.Wrap>
 			<H.SliderWrapper>
 				<H.SlideContainer>
-					{studyInfoData && studyInfoData.length > 0 ? (
+					{isLoading ? (
+						<LoadingBar />
+					) : studyInfoData && studyInfoData.length > 0 ? (
 						studyInfoData
 							.slice(
 								slide * slidesToShow,
