@@ -50,7 +50,7 @@ function Review(props) {
 			setUserInfo(userResult);
 		}
 
-		if (result.comments && result.comments.length > 0) {
+		if (result.comments) {
 			setReview(result.comments);
 		}
 	}, [result.comments, userResult]);
@@ -140,6 +140,7 @@ function Review(props) {
 						},
 						applyResult: true,
 					});
+
 					setCurrentPage(prev => prev - 1);
 				} else {
 					await trigger({
