@@ -123,8 +123,8 @@ function PortfolioApply() {
 					data: mentorPost,
 				});
 
-				// alert(MESSAGE.POST.COMPLETE);
-				// navigate('/portfolio');
+				alert(MESSAGE.POST.COMPLETE);
+				navigate('/portfolio');
 
 				// if (response.data.result === 'Conflict') {
 				// 	alert(response.data.reason);
