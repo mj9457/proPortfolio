@@ -9,6 +9,7 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import ScrollToTopButton from '../ScrollToTop/ScrollToTopButton';
 
+const IS_DEBUG = true;
 const excludeAuthPath = ['/signup'];
 const excludeRedirectPath = [
 	{
