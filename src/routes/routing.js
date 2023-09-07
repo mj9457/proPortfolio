@@ -10,25 +10,8 @@ const SignUpDone = lazy(() => import('../pages/SignUp/SignUpDone/SignUpDone'));
 
 // my page
 const MyPage = lazy(() => import('../pages/MyPage/MyPage'));
-const PostListPage = lazy(() =>
-	import('../components/pages/MyPage/RightContent/Mentor/PostList/PostList'),
-);
-const AccountManagePage = lazy(() =>
-	import('../pages/MyPage/AccountManagePage/AccountManagePage'),
-);
-const AccountWithdrawalPage = lazy(() =>
-	import('../pages/MyPage/AccountWithdrawalPage/AccountWithdrawalPage'),
-);
 const MyPageLayout = lazy(() =>
 	import('../components/pages/MyPage/MyPageLayout/MyPageLayout'),
-);
-const MentoringListPage = lazy(() =>
-	import('../pages/MyPage/Mentor/MentoringList/MentoringListPage'),
-);
-const MentoringPostListPage = lazy(() =>
-	import(
-		'../pages/MyPage/Mentor/MentoringPostListPage/MentoringPostListPage'
-	),
 );
 
 // portfolio page
@@ -91,35 +74,10 @@ const router = createBrowserRouter([
 				path: '/usermentorapply',
 				element: <UserMentorApply />,
 			},
+			// 마이페이지
 			{
 				path: 'mypage',
 				element: <MyPageLayout />,
-				children: [
-					{
-						path: '',
-						element: <MyPage />,
-					},
-					{
-						path: 'mentoringlist',
-						element: <MentoringListPage />,
-					},
-					{
-						path: 'mentoringpostlist',
-						element: <MentoringPostListPage />,
-					},
-					{
-						path: 'postlist',
-						element: <PostListPage />,
-					},
-					{
-						path: 'accountmanage',
-						element: <AccountManagePage />,
-					},
-					{
-						path: 'accountwithdrawal',
-						element: <AccountWithdrawalPage />,
-					},
-				],
 			},
 			{
 				path: 'portfolio',
