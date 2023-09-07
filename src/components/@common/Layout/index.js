@@ -75,7 +75,7 @@ function Layout() {
 	}, []);
 
 	useEffect(() => {
-		if (!excludeAuthPath.includes(location.pathname)) return;
+		if (excludeAuthPath.includes(location.pathname)) return;
 		checkAuth();
 	}, [location.pathname]);
 
