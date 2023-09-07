@@ -28,11 +28,7 @@ const mapTypeToApiPath = {
 };
 
 const ApplyMentoringHistory = ({ type }) => {
-	const {
-		result: statusResult,
-		isLoading,
-		trigger: statusTrigger,
-	} = useApi({
+	const { result: statusResult, trigger: statusTrigger } = useApi({
 		path: mapTypeToApiPath[type],
 		shouldFetch: true,
 	});
@@ -127,6 +123,7 @@ const ApplyMentoringHistory = ({ type }) => {
 									setCategory(v.value);
 								}}
 								key={`${v.value}-tab`}
+								isSelected={v.value === category}
 							>
 								{v.label}
 							</AMH.Clicked>

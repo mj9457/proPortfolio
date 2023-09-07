@@ -6,6 +6,7 @@ export const DetailOnboradWrapper = styled.div`
 	align-items: flex-start;
 	gap: 2.5rem;
 	width: 52.5rem;
+	margin-bottom: 5rem;
 `;
 
 export const MainTitleBox = styled.div`

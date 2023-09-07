@@ -107,20 +107,10 @@ export const Clicked = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	cursor: pointer;
-`;
 
-export const NonClicked = styled.div`
-	display: flex;
-	width: 8rem;
-	padding: 0.625rem 1rem;
-	justify-content: center;
-	align-items: center;
-	gap: 0.625rem;
-
-	color: #ccc;
-	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
-	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	cursor: pointer;
+	color: ${({ isSelected }) => (isSelected ? '#000' : '#ccc')};
+	border-bottom: ${({ isSelected }) =>
+		isSelected ? '2px solid #000' : 'none'};
 `;
 
 export const SubContentListBox = styled.div`
