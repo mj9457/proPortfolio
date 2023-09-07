@@ -77,7 +77,7 @@ function Header() {
 			// console.log('handleLogoutClick');
 			await logoutTrigger({});
 			alert('로그아웃이 완료되었습니다.');
-			navigate(0);
+			navigate('/');
 		} catch (error) {
 			alert('로그아웃이 실패 하였습니다.');
 		}

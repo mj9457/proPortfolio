@@ -42,4 +42,3 @@ function StudyInfoCard({
 }
 
 export default StudyInfoCard;
-// 주석추가

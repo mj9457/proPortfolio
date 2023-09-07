@@ -24,8 +24,13 @@ function SignUp() {
 	useEffect(() => {
 		async function fetchUserData() {
 			try {
-				const email = decodeURIComponent(getCookie('email'));
-				setEmail(email);
+				const storedEmail = getCookie('email');
+				if (storedEmail) {
+					const decodedEmail = decodeURIComponent(storedEmail);
+					setEmail(decodedEmail);
+				} else {
+					navigate('/');
+				}
 			} catch (error) {
 				console.error('사용자 정보를 가져오는데 실패했습니다.', error);
 			}

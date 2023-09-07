@@ -52,7 +52,7 @@ export const StatusChip = styled.div`
 	${props =>
 		props.$recruitsStatus === '모집마감' &&
 		css`
-			background-color: ${({ theme }) => theme.PALETTE.gray[100]};
+			background-color: ${({ theme }) => theme.PALETTE.gray[200]};
 		`}
 `;
 
