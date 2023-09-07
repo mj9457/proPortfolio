@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useApi from '../../hooks/useApi';
 import { userAtom } from '../../recoil/atoms/index.atom';
@@ -16,7 +16,8 @@ import LoadingBar from '../../components/@common/Loading/LoadingBar';
 
 function Portfolio() {
 	// 로그인 유저 체크
-	const { isAuth, role } = useRecoilValue(userAtom);
+	const { isAuth, role, _id } = useRecoilValue(userAtom);
+	const navigate = useNavigate();
 
 	// 멘토 체크
 	const [isMentor, setIsMentor] = useState(false);
@@ -91,7 +92,7 @@ function Portfolio() {
 		if (popularMentorResult) {
 			setPopularData(popularMentorResult);
 		}
-	}, [positionResult, popularMentorResult, isAuth]);
+	}, [positionResult, popularMentorResult, isAuth, role]);
 
 	// 무한 스크롤
 	const handleObserver = entries => {
@@ -197,6 +198,12 @@ function Portfolio() {
 		}
 	}, [positionResult.positions]);
 
+	const handleClick = () => {
+		if (mentorResult.data.filter(el => el.ownerId === _id).length === 1) {
+			alert('멘토링 신청 게시물은 하나만 작성 가능합니다.');
+		} else navigate('/portfolio/apply');
+	};
+
 	return (
 		<S.PortfolioBox>
 			<S.BannerBox>
@@ -205,15 +212,16 @@ function Portfolio() {
 
 				{isMentor && (
 					<S.ApplyBox>
-						<Link to="/portfolio/apply">
+						<div>
 							<Button
+								onClick={handleClick}
 								variant={'add'}
 								shape={'default'}
 								size={'normal'}
 							>
 								작성하기
 							</Button>
-						</Link>
+						</div>
 					</S.ApplyBox>
 				)}
 			</S.BannerBox>

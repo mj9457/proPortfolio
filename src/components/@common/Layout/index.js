@@ -27,7 +27,6 @@ function Layout() {
 	const navigate = useNavigate();
 	const { trigger, error } = useApi({ path: '/user', shouldFetch: false });
 	const location = useLocation();
-	console.log({ 'location.pathname': location.pathname });
 
 	const handleInvalidUser = useCallback(() => {
 		setUser(prev => ({

@@ -113,23 +113,22 @@ function PortfolioApply() {
 					path: `/portfolio/${portfolioId}`,
 					data: mentorPost,
 				});
+
 				alert(MESSAGE.POST.EDITFIN);
 				navigate(-1);
 			} else {
-				try {
-					await trigger({
-						method: 'post',
-						path: '/portfolio',
-						data: mentorPost,
-					});
+				await trigger({
+					method: 'post',
+					path: '/portfolio',
+					data: mentorPost,
+				});
 
-					alert(MESSAGE.POST.COMPLETE);
-					navigate('/portfolio');
-				} catch (err) {
-					if (err.response.data.result === 'Conflict') {
-						alert(err.response.data.reason);
-					}
-				}
+				// alert(MESSAGE.POST.COMPLETE);
+				// navigate('/portfolio');
+
+				// if (response.data.result === 'Conflict') {
+				// 	alert(response.data.reason);
+				// }
 			}
 		}
 	};
