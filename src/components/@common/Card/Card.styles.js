@@ -26,6 +26,7 @@ export const PopularCard = styled.div`
 	width: 255px;
 	height: 320px;
 	padding: 20px;
+	border-radius: 10px;
 
 	&:hover {
 		transform: scale(1.05);
@@ -37,7 +38,6 @@ export const CardBox = styled.div`
 	${flexColumn}
 	justify-content: center;
 	gap: 16px;
-	border-radius: 10px;
 	color: ${({ theme }) => theme.PALETTE.black};
 `;
 

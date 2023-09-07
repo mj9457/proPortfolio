@@ -91,7 +91,7 @@ function Portfolio() {
 		if (popularMentorResult) {
 			setPopularData(popularMentorResult);
 		}
-	}, [positionResult, popularMentorResult]);
+	}, [positionResult, popularMentorResult, isAuth]);
 
 	// 무한 스크롤
 	const handleObserver = entries => {

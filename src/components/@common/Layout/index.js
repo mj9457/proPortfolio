@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { includeFooterState, userAtom } from '../../../recoil/atoms/index.atom';
 import useApi from '../../../hooks/useApi';
+import { includeFooterState, userAtom } from '../../../recoil/atoms/index.atom';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import ScrollToTopButton from '../ScrollToTop/ScrollToTopButton';
 
-const excludeAuthPath = ['/signup'];
 const excludeRedirectPath = [
 	{
 		path: '/portfolio/post',
@@ -24,10 +23,11 @@ const excludeRedirectPath = [
 ];
 
 function Layout() {
-	const setUser = useSetRecoilState(userAtom);
+	const [user, setUser] = useRecoilState(userAtom);
 	const navigate = useNavigate();
 	const { trigger, error } = useApi({ path: '/user', shouldFetch: false });
 	const location = useLocation();
+	console.log({ 'location.pathname': location.pathname });
 
 	const handleInvalidUser = useCallback(() => {
 		setUser(prev => ({
@@ -38,6 +38,7 @@ function Layout() {
 			_id: '',
 			isLoading: false,
 		}));
+
 		const notRedirect = excludeRedirectPath.find(ex =>
 			ex.hasParam
 				? location.pathname.includes(ex.path)
@@ -66,16 +67,34 @@ function Layout() {
 				_id: authResult._id,
 				isLoading: false,
 			}));
-			if (error) {
-				handleInvalidUser();
-			}
 		} catch (err) {
 			handleInvalidUser();
 		}
 	}, []);
 
+	//* signup 페이지 한정
+	const signupPrevent = async () => {
+		const authResult = await trigger({
+			path: '/user',
+			applyResult: false,
+			showBoundary: false,
+		});
+		if (authResult) {
+			return navigate('/');
+		}
+	};
+
 	useEffect(() => {
-		if (excludeAuthPath.includes(location.pathname)) return;
+		//* 사용자가 직접 url을 치고 들어오는 경우 대비
+		if (location.pathname === '/signup') {
+			return signupPrevent();
+		}
+		const isPublic = excludeRedirectPath.find(ex =>
+			ex.hasParam
+				? location.pathname.includes(ex.path)
+				: location.pathname === ex.path,
+		);
+		if (isPublic) return;
 		checkAuth();
 	}, [location.pathname]);
 
