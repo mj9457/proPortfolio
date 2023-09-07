@@ -25,7 +25,6 @@ function PostListData() {
 
 	// 게시물 보기
 	const showPost = postId => {
-		console.log(postId);
 		window.open(
 			`/study/detail/${postId}`,
 			'_blank',

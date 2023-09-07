@@ -41,7 +41,6 @@ function RefuseModal({ setRefuseModalOpenState, item }) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
 			// 유저 작성한 신청서 post로 전달
-			console.log(portfolioId, requestId, postsData);
 			trigger({
 				method: 'post',
 				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,

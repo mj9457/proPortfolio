@@ -23,7 +23,6 @@ function AccountWithdrawal() {
 		if (users) {
 			setUser(users);
 		}
-		console.log(user);
 	}, [users]);
 
 	const [Checked, setChecked] = useState(false);

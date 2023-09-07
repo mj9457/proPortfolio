@@ -8,9 +8,6 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 		advice: '',
 		action: 'complete',
 	}); // 작성한 첨삭 내용 (멘토)
-	// const [signupData, setSignupData] = useState([]); // 멘토링 신청 정보 (일반 유저)
-	// const [mentoringData, setMentoringData] = useState([]); // 멘토링 작성 정보 (멘토)
-	// const [error, setError] = useState(null); // 에러 state
 
 	// 멘토가 입력한 정보 change
 	const handleChange = e => {
@@ -42,10 +39,6 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 			alert('변경 내용이 없습니다.');
 			closeModal();
 		} else {
-			// console.log(textareaValue);
-			// console.log('🚀 ~ 멘토가 올린 신청 게시글의 id:', portfolioId);
-			// console.log('🚀 ~ 멘토가 신청 받은 id: ', requestId);
-			// console.log('🚀 ~ 수락할때 보내줄 데이터: ', postData);
 			trigger({
 				method: 'post',
 				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,

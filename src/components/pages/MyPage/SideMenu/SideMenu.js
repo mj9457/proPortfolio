@@ -3,7 +3,6 @@ import * as SM from './SideMenu.styles';
 
 // 왼쪽 메뉴
 function SideMenu({ user, setContent, name }) {
-	console.log(name);
 	useEffect(() => {
 		if (user.role) {
 			setContent(

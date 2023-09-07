@@ -37,8 +37,6 @@ const ApplyMentoringHistory = ({ type }) => {
 		shouldFetch: true,
 	});
 
-	// console.log(statusResult);
-
 	const [tabIndex, setTabIndex] = useState(countTitles[type][0].value);
 
 	const statusObj = useMemo(() => {
@@ -70,7 +68,6 @@ const ApplyMentoringHistory = ({ type }) => {
 				applyResult: false,
 				showBoundary: false,
 			});
-			console.log({ result });
 			setData(result.mentoringRequests);
 			setUserData(result.userInfos || result.UserInfos);
 		} catch (err) {
@@ -95,10 +92,6 @@ const ApplyMentoringHistory = ({ type }) => {
 	const [data, setData] = useState([]);
 	const [userData, setUserData] = useState([]);
 	const [category, setCategory] = useState('requested');
-
-	useEffect(() => {
-		console.log(data);
-	}, [data]);
 
 	return (
 		<AMH.DetailOnboradWrapper>

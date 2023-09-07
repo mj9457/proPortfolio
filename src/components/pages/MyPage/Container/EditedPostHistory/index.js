@@ -17,7 +17,6 @@ const EditedPostHistory = () => {
 		if (postLists) {
 			setPostList(postLists);
 		}
-		console.log(postLists);
 	}, [postLists]);
 
 	// 프로젝트/스터디 게시물 정보 담을 state

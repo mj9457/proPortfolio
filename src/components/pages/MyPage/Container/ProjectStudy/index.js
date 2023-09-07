@@ -17,7 +17,6 @@ const ProjectStudy = () => {
 		if (postLists) {
 			setPostList(postLists);
 		}
-		console.log(postLists);
 	}, [postLists]);
 
 	return (

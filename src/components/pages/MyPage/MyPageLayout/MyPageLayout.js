@@ -41,8 +41,6 @@ function MyPageLayout() {
 	const { role = '', nickName = '' } = useRecoilValue(userAtom);
 	const [content, setContent] = useState();
 
-	// console.log(content);
-
 	return (
 		<>
 			{!user && <Navigate to="/" replace={true} />}

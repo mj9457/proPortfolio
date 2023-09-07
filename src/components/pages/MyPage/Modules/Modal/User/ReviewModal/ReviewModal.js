@@ -21,7 +21,6 @@ function ReviewModal({ setReviewModalOpenState, item }) {
 			textValue.author = userData.nickName;
 			textValue.ownerId = userData._id;
 		}
-		console.log(userData);
 	}, [userData]);
 
 	// 유저가 입력한 정보 change

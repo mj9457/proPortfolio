@@ -1,8 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
 import * as IM from './InfoViewModal.styles';
 import axios from 'axios';
 import MYPAGEOPTION from '../../../../../../../constants/mypage';
-import { useParams } from 'react-router-dom';
 
 // 멘토 - 멘토링 신청서 보기 모달
 function InfoViewModal({ setInfoModalOpenState, item }) {

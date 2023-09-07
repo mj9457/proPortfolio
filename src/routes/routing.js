@@ -9,7 +9,6 @@ const SignUp = lazy(() => import('../pages/SignUp/SignUp'));
 const SignUpDone = lazy(() => import('../pages/SignUp/SignUpDone/SignUpDone'));
 
 // my page
-const MyPage = lazy(() => import('../pages/MyPage/MyPage'));
 const MyPageLayout = lazy(() =>
 	import('../components/pages/MyPage/MyPageLayout/MyPageLayout'),
 );

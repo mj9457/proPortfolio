@@ -34,14 +34,12 @@ function InfoEditModal({ setInfoModalOpenState, nowData }) {
 		) {
 			alert(`항목이 비었습니다.\n다시 한번 확인해주세요.`);
 		} else {
-			console.log(textValue);
 			// 유저 작성한 신청서 put로 전달
 			const { result, trigger, isLoading, error } = useApi({
 				method: 'put',
 				path: `/portfolio/${nowData.userId}/mentoringRequests`,
 				data: textValue,
 			});
-			console.log(result);
 		}
 	};
 

@@ -23,12 +23,10 @@ function MentoringPostListData() {
 		if (postLists) {
 			setPostList(postLists);
 		}
-		console.log(postLists);
 	}, [postLists]);
 
 	// 게시물 보기
 	const showPost = postId => {
-		console.log(postId);
 		navigate(`/portfolio/post/${postId}`); // 멘토링 게시물 (멘토)
 	};
 

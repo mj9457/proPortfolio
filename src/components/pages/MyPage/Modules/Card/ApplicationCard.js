@@ -16,9 +16,6 @@ import { useNavigate } from 'react-router-dom';
 // 카드 리스트
 function ApplicationCard({ item, category, userInfo, type }) {
 	const navigate = useNavigate();
-	useEffect(() => {
-		console.log('item : ', item);
-	}, [item]);
 
 	// 모달창 노출 여부 state
 	const [infoModalOpenState, setInfoModalOpenState] = useState(false);
@@ -51,7 +48,6 @@ function ApplicationCard({ item, category, userInfo, type }) {
 
 	// 멘토가 등록한 멘토링 신청 페이지(유저)
 	const movePageToPortFolio = item => {
-		console.log(item);
 		navigate(`/portfolio/post/${item.portfolioId}`); // 멘토링 게시물 (멘토)
 	};
 
@@ -73,12 +69,10 @@ function ApplicationCard({ item, category, userInfo, type }) {
 
 	// 유저 - 멘토링 신청한 내역 취소하기 /
 	const rejectMentoring = item => {
-		console.log(item);
 		const portfolioId = item.portfolioId; // 멘토가 올린 신청 게시글의 id
 		const requestId = item._id; // 유저가 신청한 id
 		const requestedPostData = { status: 'rejected' }; // 취소할때 보내줄 데이터,
 
-		console.log(portfolioId, requestId, requestedPostData);
 		trigger({
 			method: 'post',
 			path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
@@ -105,7 +99,6 @@ function ApplicationCard({ item, category, userInfo, type }) {
 							<CCS.ApplicationTitle
 								onClick={() => {
 									showInfoModal(item);
-									// nowDataFun(item);
 								}}
 							>
 								{item.title}
