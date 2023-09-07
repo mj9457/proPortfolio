@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../../recoil/atoms/index.atom';
-
 import * as S from './Review.styles';
 
 import Line from '../Line/Line';
@@ -17,9 +14,6 @@ function Review(props) {
 
 	// review && comments 데이터
 	const [review, setReview] = useState([]);
-
-	// 로그인 체크
-	const { isAuth, role, _id } = useRecoilValue(userAtom);
 
 	// 수정시 데이터 보낼 state
 	const [editReview, setEditReview] = useState({
@@ -42,13 +36,18 @@ function Review(props) {
 		shouldFetch: true,
 	});
 
+	const { result: userResult } = useApi({
+		path: '/user',
+		shouldFetch: true,
+	});
+
 	useEffect(() => {
 		if (result.comments) {
 			setReview(result.comments);
 		}
 
-		setUserInfo(_id);
-	}, [result.comments, _id]);
+		setUserInfo(userResult._id);
+	}, [result.comments, userResult]);
 
 	// 댓글 바뀌는 값
 	const handleChange = e => {
