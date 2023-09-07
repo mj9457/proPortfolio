@@ -58,6 +58,11 @@ function Portfolio() {
 		shouldFetch: true,
 	});
 
+	const { result: userResult } = useApi({
+		path: '/user',
+		shouldFetch: true,
+	});
+
 	const { result: popularMentorResult } = useApi({
 		path: '/portfolio/recommend/topMentor',
 		shouldFetch: true,
@@ -76,9 +81,12 @@ function Portfolio() {
 
 	// 멘토 롤 체크 && 카테고리 값 들어오는지 체크
 	useEffect(() => {
-		const mentor = role === 'mentor';
+		// const mentor = role === 'mentor';
 
-		if (mentor) setIsMentor(true);
+		// if (mentor) setIsMentor(true);
+		// else setIsMentor(false);
+
+		if (userResult.role === 'mentor') setIsMentor(true);
 		else setIsMentor(false);
 
 		if (positionResult.positions) {
