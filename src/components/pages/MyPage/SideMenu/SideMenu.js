@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import * as SM from './SideMenu.styles';
 
 // 왼쪽 메뉴
-function SideMenu({ user, setContent }) {
+function SideMenu({ user, setContent, name }) {
+	console.log(name);
 	useEffect(() => {
 		if (user.role) {
 			setContent(
@@ -16,8 +17,8 @@ function SideMenu({ user, setContent }) {
 		<SM.Wrapper>
 			<SM.MainTitle>
 				{user.role === 'mentor'
-					? `${user.nickName} 멘토 님`
-					: `${user.nickName} 님`}
+					? `${name.name} 멘토 님`
+					: `${name.name} 님`}
 			</SM.MainTitle>
 			<SM.SubTitleWrapper>
 				<SM.History>

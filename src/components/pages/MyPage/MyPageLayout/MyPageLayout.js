@@ -47,7 +47,11 @@ function MyPageLayout() {
 		<>
 			{!user && <Navigate to="/" replace={true} />}
 			<M.Wrapper>
-				<SideMenu user={{ role, nickName }} setContent={setContent} />
+				<SideMenu
+					user={{ role, nickName }}
+					setContent={setContent}
+					name={user}
+				/>
 				{content && mapContentToComponent[content]()}
 			</M.Wrapper>
 		</>
