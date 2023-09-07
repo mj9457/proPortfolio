@@ -37,17 +37,38 @@ export const StudyInfoCard = styled.div`
 	padding: 20px;
 	min-width: 254px;
 `;
-export const Category = styled.p`
-	color: ${({ theme }) => theme.PALETTE.white};
+
+export const ChipBox = styled.div`
+	display: flex;
+	gap: 8px;
+`;
+
+export const StatusChip = styled.div`
+	background-color: ${({ theme }) => theme.PALETTE.mainColor};
+	padding: 0.45rem 0.9rem;
+	border-radius: 0.9375rem;
+	width: fit-content;
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			background-color: ${({ theme }) => theme.PALETTE.gray[100]};
+		`}
+`;
+
+export const StatusText = styled.p`
+	color: #fff;
+	font-size: 1rem;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-	padding: 6px 15px;
-	background-color: ${({ theme }) => theme.PALETTE.mainColor};
-	border-radius: 15px;
-	margin-bottom: 16px;
-	width: 80px;
-	text-align: center;
+
+	${props =>
+		props.$recruitsStatus === '모집마감' &&
+		css`
+			color: ${({ theme }) => theme.PALETTE.gray[300]};
+		`}
 `;
+
 export const Title = styled.p`
 	color: ${({ theme }) => theme.PALETTE.black};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};

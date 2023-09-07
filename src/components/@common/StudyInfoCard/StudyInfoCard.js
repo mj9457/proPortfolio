@@ -4,6 +4,7 @@ import Chip from '../Chip/Chip';
 
 function StudyInfoCard({
 	classification,
+	recruitsStatus,
 	title,
 	process,
 	recruits,
@@ -16,7 +17,14 @@ function StudyInfoCard({
 		<H.Container>
 			<Link to={`/study/detail/${postId}`}>
 				<H.StudyInfoCard $background={$background}>
-					<Chip classification={classification} />
+					<H.ChipBox>
+						<Chip classification={classification} />
+						<H.StatusChip $recruitsStatus={recruitsStatus}>
+							<H.StatusText $recruitsStatus={recruitsStatus}>
+								{recruitsStatus}
+							</H.StatusText>
+						</H.StatusChip>
+					</H.ChipBox>
 					<H.Title>{title}</H.Title>
 					<H.Position>{position.join(' / ')}</H.Position>
 					<H.DetailInfoWrapper>
@@ -34,3 +42,4 @@ function StudyInfoCard({
 }
 
 export default StudyInfoCard;
+// 주석추가
