@@ -3,9 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './EditComments.styles';
 import Button from '../../../components/@common/Button/Button';
 import useApi from '../../../hooks/useApi';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../../recoil/atoms/index.atom';
 import MESSAGE from '../../../constants/message';
+import SignUpModal from '../../pages/SignUp/Modal/SignUpModal';
 
 function EditComments({ isLoggedIn, userData, title }) {
+	const [openModal, setOpenModal] = useState(false);
 	const { postId } = useParams();
 	const navigate = useNavigate();
 
@@ -39,9 +43,14 @@ function EditComments({ isLoggedIn, userData, title }) {
 		setComment(newComment);
 	};
 
+	const handleSignupClose = () => {
+		setOpenModal(false);
+	};
+
 	const handleCommentSubmit = async () => {
 		if (!isLoggedIn) {
 			alert(MESSAGE.LOGIN.REQUIRED);
+			setOpenModal(true);
 			return;
 		}
 		if (comment.content.trim() === '') {
@@ -72,26 +81,29 @@ function EditComments({ isLoggedIn, userData, title }) {
 	const particle = title === '후기' ? '를' : '을';
 
 	return (
-		<S.Container>
-			<S.CommentWrapper>
-				<textarea
-					placeholder={`${title}${particle} 등록하세요.`}
-					value={comment.content}
-					maxLength={200}
-					onChange={handleCommentChange}
-				></textarea>
-				<S.ButtonWrapper>
-					<Button
-						variant={'add'}
-						size={'comment'}
-						shape={'medium'}
-						onClick={handleCommentSubmit}
-					>
-						{`${title} 등록`}
-					</Button>
-				</S.ButtonWrapper>
-			</S.CommentWrapper>
-		</S.Container>
+		<>
+			<S.Container>
+				<S.CommentWrapper>
+					<textarea
+						placeholder={`${title}${particle} 등록하세요.`}
+						value={comment.content}
+						maxLength={200}
+						onChange={handleCommentChange}
+					></textarea>
+					<S.ButtonWrapper>
+						<Button
+							variant={'add'}
+							size={'comment'}
+							shape={'medium'}
+							onClick={handleCommentSubmit}
+						>
+							{`${title} 등록`}
+						</Button>
+					</S.ButtonWrapper>
+				</S.CommentWrapper>
+			</S.Container>
+			{openModal && <SignUpModal onClose={handleSignupClose} />}
+		</>
 	);
 }
 
