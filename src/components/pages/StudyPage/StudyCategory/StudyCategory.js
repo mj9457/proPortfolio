@@ -148,7 +148,7 @@ function StudyCategory() {
 		setLimit(6);
 		setCurrentSkip(0);
 
-		console.log({ positionValue });
+		// console.log({ positionValue });
 
 		setSelectedValues(prev => ({
 			...prev,

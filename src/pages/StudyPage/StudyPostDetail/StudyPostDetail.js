@@ -121,38 +121,38 @@ function StudyPostDetail() {
 		}
 	};
 
-	// const handleLinkCopy = async () => {
-	// 	try {
-	// 		await navigator.clipboard.writeText(howContactContent);
-	// 		alert(MESSAGE.LINK.COMPLETE);
-	// 	} catch (error) {
-	// 		console.error(MESSAGE.ERROR.DEFAULT);
-	// 	}
-	// };
-
-	// 링크 복사
-	// https 로 설정 바뀌면 수정 예정 *******
-	const handleLinkCopy = () => {
-		const textToCopy = howContactContent;
-
-		const textArea = document.createElement('textarea');
-		textArea.value = textToCopy;
-		document.body.appendChild(textArea);
-
-		textArea.select();
+	const handleLinkCopy = async () => {
 		try {
-			const successful = document.execCommand('copy');
-			if (successful) {
-				alert(MESSAGE.LINK.COMPLETE);
-			} else {
-				console.error(MESSAGE.ERROR.DEFAULT);
-			}
+			await navigator.clipboard.writeText(howContactContent);
+			alert(MESSAGE.LINK.COMPLETE);
 		} catch (error) {
 			console.error(MESSAGE.ERROR.DEFAULT);
 		}
-
-		document.body.removeChild(textArea);
 	};
+
+	// 링크 복사
+	// https 로 설정 바뀌면 수정 예정 *******
+	// const handleLinkCopy = () => {
+	// 	const textToCopy = howContactContent;
+
+	// 	const textArea = document.createElement('textarea');
+	// 	textArea.value = textToCopy;
+	// 	document.body.appendChild(textArea);
+
+	// 	textArea.select();
+	// 	try {
+	// 		const successful = document.execCommand('copy');
+	// 		if (successful) {
+	// 			alert(MESSAGE.LINK.COMPLETE);
+	// 		} else {
+	// 			console.error(MESSAGE.ERROR.DEFAULT);
+	// 		}
+	// 	} catch (error) {
+	// 		console.error(MESSAGE.ERROR.DEFAULT);
+	// 	}
+
+	// 	document.body.removeChild(textArea);
+	// };
 
 	// console.log(isLoading);
 
