@@ -28,7 +28,7 @@ function SignUp() {
 		if (email !== 'undefined') {
 			setEmail(email);
 		} else {
-			console.log(email);
+			// console.log(email);
 			navigate('/');
 		}
 
@@ -72,9 +72,9 @@ function SignUp() {
 
 	useEffect(() => {
 		if (error) {
-			console.log(error);
+			// console.log(error);
 		}
-		console.log(error);
+		// console.log(error);
 	}, [error]);
 
 	const handleSubmit = async event => {
@@ -107,7 +107,7 @@ function SignUp() {
 					alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
 				}
 			}
-			console.log(err);
+			// console.log(err);
 		}
 	};
 
