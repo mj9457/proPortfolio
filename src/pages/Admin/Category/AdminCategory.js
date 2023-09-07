@@ -10,7 +10,9 @@ import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
 import { PaginationWrap } from '../Home/Admin.styles';
 import LoadingBar from '../../../components/@common/Loading/LoadingBar';
+import { useNavigate } from 'react-router-dom';
 const AdminCategory = () => {
+	const navigate = useNavigate();
 	// 수정 중인 행의 key를 저장
 	const [editingKey, setEditingKey] = useState(null);
 	const [tableData, setTableData] = useState();
@@ -90,7 +92,16 @@ const AdminCategory = () => {
 	];
 
 	useEffect(() => {
-		// console.log(result);
+		if (error && result?.positions?.length === tableData?.length) {
+			if (error?.response?.data?.result === 'MongoServerError') {
+				if (error?.response?.data?.reason.includes('duplicate key')) {
+					alert('이미 사용중인 카테고리 이름입니다.');
+					return;
+					// navigate(0);
+				}
+			}
+		}
+
 		if (result.positions) {
 			setTableData(
 				result.positions.map(item => ({
@@ -112,10 +123,8 @@ const AdminCategory = () => {
 	// Input onChange Handler
 	const handleInputChange = (e, key) => {
 		// 새로운 배열에 값 저장
-		console.log(key);
 		setCategoryInput(e.target.value);
 		setTempData({ ...tempData, [key]: e.target.value });
-		console.log(tempData);
 	};
 	// Button Save Handler
 	const handleSave = async key => {
@@ -123,21 +132,20 @@ const AdminCategory = () => {
 			alert(MESSAGE.CHECK.MODAL);
 			return;
 		}
-		console.log(key);
 		await trigger({
 			path: `/position/${key}`,
 			data: { name: categoryInput },
 			method: 'put',
+			showBoundary: false,
+			applyResult: true,
+		});
+		await trigger({
+			data: {
+				skip: currentPage * 10 - 10,
+			},
 			applyResult: true,
 		});
 		setEditingKey(null);
-
-		// const updatedData = tableData.map(item =>
-		// 	item.key === key ? { ...item, name: tempData[key] } : item,
-		// );
-		// console.log(updatedData);
-		// setTableData(updatedData);
-		// Todo 카테고리 수정 API
 	};
 	// 수정 버튼을 눌렀을 때 Edit 상태 업데이트
 	const handleEdit = key => {
@@ -178,14 +186,27 @@ const AdminCategory = () => {
 	};
 	// 카테고리 추가
 	const addCategoryHandler = async () => {
-		console.log(inputValue);
-		await trigger({
-			method: 'post',
-			data: { name: inputValue },
-			applyResult: true,
-		});
-		setInputValue('');
-		console.log(result);
+		try {
+			if (!inputValue.trim()) {
+				alert('추가 할 카테고리를 입력해주세요.');
+				return;
+			}
+			await trigger({
+				method: 'post',
+				data: { name: inputValue },
+				showBoundary: false,
+				applyResult: true,
+			});
+			await trigger({
+				data: {
+					skip: currentPage * 10 - 10,
+				},
+				applyResult: true,
+			});
+			setInputValue('');
+		} catch (err) {
+			console.log(err);
+		}
 	};
 	// console.log(tableData);
 
@@ -194,8 +215,6 @@ const AdminCategory = () => {
 	} = theme.useToken();
 
 	const pageChange = async pageNumber => {
-		console.log(pageNumber);
-
 		await trigger({
 			path: '/position',
 			data: {
