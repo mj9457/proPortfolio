@@ -9,7 +9,6 @@ import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import ScrollToTopButton from '../ScrollToTop/ScrollToTopButton';
 
-const IS_DEBUG = true;
 const excludeAuthPath = ['/signup'];
 const excludeRedirectPath = [
 	{
@@ -76,7 +75,7 @@ function Layout() {
 	}, []);
 
 	useEffect(() => {
-		if (excludeAuthPath.includes(location.pathname)) return;
+		if (!excludeAuthPath.includes(location.pathname)) return;
 		checkAuth();
 	}, [location.pathname]);
 
