@@ -132,7 +132,7 @@ function PortfolioPost() {
 								/>
 							)}
 
-							{isMentor === false && (
+							{isAuth && isMentor === false && (
 								<Button
 									variant={'primary'}
 									shape={'default'}

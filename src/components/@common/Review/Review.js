@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../../recoil/atoms/index.atom';
+
 import * as S from './Review.styles';
 
 import Line from '../Line/Line';
 import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
 import Textarea from '../Textarea/Textarea';
-import { checkToken } from '../../../utils/cookie';
 import Pagination from '../Pagination/Pagination';
 import LoadingBar from '../Loading/LoadingBar';
 
@@ -17,7 +19,7 @@ function Review(props) {
 	const [review, setReview] = useState([]);
 
 	// 로그인 체크
-	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	const { isAuth, role, _id } = useRecoilValue(userAtom);
 
 	// 수정시 데이터 보낼 state
 	const [editReview, setEditReview] = useState({
@@ -27,7 +29,7 @@ function Review(props) {
 		createdAt: '',
 	});
 
-	const [userInfo, setUserInfo] = useState({});
+	const [userInfo, setUserInfo] = useState();
 	const [edit, setEdit] = useState(false);
 
 	// 페이지네이션
@@ -35,25 +37,18 @@ function Review(props) {
 	const [currentPage, setCurrentPage] = useState(1); // 초기값을 1로 설정
 
 	// api 통신
-	const { result: userResult } = useApi({
-		path: isLoggedIn ? '/user' : '',
-		shouldFetch: isLoggedIn,
-	});
-
-	const { result, trigger, isLoading, error } = useApi({
+	const { result, trigger, isLoading } = useApi({
 		path: `${getUrl}/comments`,
 		shouldFetch: true,
 	});
 
 	useEffect(() => {
-		if (userResult) {
-			setUserInfo(userResult);
-		}
-
 		if (result.comments) {
 			setReview(result.comments);
 		}
-	}, [result.comments, userResult]);
+
+		setUserInfo(_id);
+	}, [result.comments, _id]);
 
 	// 댓글 바뀌는 값
 	const handleChange = e => {
@@ -69,10 +64,11 @@ function Review(props) {
 	const handleEdit = id => {
 		const selectedComment = review.find(comment => comment._id === id);
 		const { ...newEditReview } = selectedComment;
+
 		const alertMessage =
 			title === '후기' ? MESSAGE.REVIEW.EDIT : MESSAGE.COMMENT.EDIT;
 
-		if (selectedComment.ownerId === userInfo._id) {
+		if (selectedComment.ownerId === userInfo) {
 			if (confirm(alertMessage)) {
 				setEditReview(newEditReview);
 				setEdit(id);
@@ -121,7 +117,7 @@ function Review(props) {
 	const handleDelete = async id => {
 		const selectedComment = review.find(comment => comment._id === id);
 
-		if (selectedComment.ownerId === userInfo._id) {
+		if (selectedComment.ownerId === userInfo) {
 			if (confirm(MESSAGE.COMMENT.DELETE)) {
 				await trigger({
 					method: 'delete',
@@ -194,7 +190,6 @@ function Review(props) {
 											{dateAndTime(comment.createdAt)}
 										</span>
 									</S.NamingBox>
-
 									{edit === comment._id ? (
 										<S.Buttons>
 											<button onClick={handleComplete}>

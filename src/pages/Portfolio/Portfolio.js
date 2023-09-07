@@ -160,6 +160,10 @@ function Portfolio() {
 
 			applyResult: true,
 		});
+
+		// if (selectedValues.selectedSort !== value) {
+		// 	setMentorData([]);
+		// }
 	};
 
 	// 포지션 클릭
@@ -182,9 +186,9 @@ function Portfolio() {
 			applyResult: true,
 		});
 
-		// if (selectedValues.position !== positionValue) {
-		// 	setMentorData([]);
-		// }
+		if (selectedValues.position !== positionValue) {
+			setMentorData([]);
+		}
 	};
 
 	useEffect(() => {
@@ -283,33 +287,33 @@ function Portfolio() {
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					{isLoading && <LoadingBar />}
-					{!isLoading && (
-						<>
-							{!mentorData.length ? (
-								<EmptyMessage />
-							) : (
-								<>
-									{mentorData.map(mentor => (
-										<div key={mentor._id}>
-											<MentorCard
-												variant={'white'}
-												mentor={mentor}
-											/>
-										</div>
-									))}
+					{/* {isLoading && <LoadingBar />} */}
+					{/* {!isLoading && ( */}
+					<>
+						{!isLoading && !mentorData.length && <LoadingBar />}
+						{!isLoading && !mentorData.length && <EmptyMessage />}
+						{Array.isArray(mentorData) && mentorData.length > 0 && (
+							<>
+								{mentorData.map(mentor => (
+									<div key={mentor._id}>
+										<MentorCard
+											variant={'white'}
+											mentor={mentor}
+										/>
+									</div>
+								))}
 
-									<div
-										style={{
-											height: '10px',
-											border: '1px solid white',
-										}}
-										ref={observerElement}
-									/>
-								</>
-							)}
-						</>
-					)}
+								<div
+									style={{
+										height: '10px',
+										border: '1px solid white',
+									}}
+									ref={observerElement}
+								/>
+							</>
+						)}
+					</>
+					{/* )} */}
 				</S.MentorCardBox>
 			</S.MentorBox>
 		</S.PortfolioBox>
