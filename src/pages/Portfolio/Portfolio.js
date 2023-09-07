@@ -290,7 +290,7 @@ function Portfolio() {
 					{/* {isLoading && <LoadingBar />} */}
 					{/* {!isLoading && ( */}
 					<>
-						{!isLoading && !mentorData.length && <LoadingBar />}
+						{isLoading && !mentorData.length && <LoadingBar />}
 						{!isLoading && !mentorData.length && <EmptyMessage />}
 						{Array.isArray(mentorData) && mentorData.length > 0 && (
 							<>
