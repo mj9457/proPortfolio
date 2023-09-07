@@ -156,6 +156,20 @@ function StudyPostDetail() {
 
 	// console.log(isLoading);
 
+	const dateAndTime = updatedAt => {
+		const serverDate = new Date(updatedAt);
+		const date = serverDate.toLocaleDateString('ko-KR');
+		const options = {
+			hour: 'numeric',
+			minute: 'numeric',
+			second: 'numeric',
+			hour12: false,
+		};
+		const time = serverDate.toLocaleTimeString('en-US', options);
+
+		return `${date} ${time}`;
+	};
+
 	return (
 		<>
 			<S.Container>
@@ -181,11 +195,7 @@ function StudyPostDetail() {
 								</S.UserProfileContainer>
 								{/* 작성 날짜 */}
 								<S.Date>
-									{createdAt
-										? new Date(postDetail.createdAt)
-												.toLocaleDateString()
-												.replace(/\.$/, '')
-										: ''}
+									{createdAt && dateAndTime(createdAt)}
 								</S.Date>
 							</S.PostInfoContainer>
 						</S.PostDetailTop>

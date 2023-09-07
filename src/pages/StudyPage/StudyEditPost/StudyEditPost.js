@@ -8,8 +8,10 @@ import MultiSelectDropdown from '../../../components/pages/StudyPage/StudyEditPo
 import PostForm from '../../../components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
 import useApi from '../../../hooks/useApi';
 import SelectWithDefault from '../../../components/pages/StudyPage/StudyEditPost/SelectWithDefault/SelectWithDefault';
+import useFooter from '../../../hooks/useFooter';
 
 function StudyEditPost() {
+	useFooter();
 	const [isEdit, setIsEdit] = useState(false);
 	// console.log('isEdit', isEdit);
 	const [selectedOptions, setSelectedOptions] = useState({
