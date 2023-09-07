@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useInsertionEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './StudyPage.styles';
 import Slider from '../../components/@common/Slider/Slider';
@@ -8,13 +8,15 @@ import Button from '../../components/@common/Button/Button';
 import { checkToken } from '../../utils/cookie';
 import MESSAGE from '../../constants/message';
 import StudyCategory from '../../components/pages/StudyPage/StudyCategory/StudyCategory';
+import useApi from '../../hooks/useApi';
 
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../../recoil/atoms/index.atom';
 
 function StudyPage() {
-	const { nickName } = useRecoilValue(userAtom);
-
+	// const { nickName } = useRecoilValue(userAtom);
+	// console.log(nickName);
+	const [userNickName, setUserNickName] = useState('');
 	const navigate = useNavigate();
 	const [openModal, setOpenModal] = useState(false);
 
@@ -29,6 +31,17 @@ function StudyPage() {
 			navigate('/study/post');
 		}
 	};
+
+	const { result: userData } = useApi({
+		path: isLoggedIn ? '/user' : '',
+		shouldFetch: isLoggedIn,
+	});
+
+	useEffect(() => {
+		if (userData) {
+			setUserNickName(userData.nickName);
+		}
+	}, [userData]);
 
 	const handleSignupClose = () => {
 		setOpenModal(false);
@@ -48,8 +61,8 @@ function StudyPage() {
 					<S.TitleWrapper>
 						<S.TopBox>
 							<S.Title>
-								{isLoggedIn && nickName
-									? `🔥 ${nickName} 님 추천 스터디 / 프로젝트`
+								{isLoggedIn && userNickName
+									? `🔥 ${userNickName} 님 추천 스터디 / 프로젝트`
 									: '🔥 추천 스터디 / 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
