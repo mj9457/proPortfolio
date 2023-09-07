@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unneeded-ternary */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -63,7 +64,7 @@ function StudyPostDetail() {
 				result.recruitsStatus === '모집마감' ? true : false,
 			);
 		}
-	}, [result, postDetail]);
+	}, [result, postDetail, isRecruitClosed]);
 
 	const isUser = userData._id === result.ownerId;
 
@@ -85,24 +86,31 @@ function StudyPostDetail() {
 		description,
 	} = postDetail || {};
 
+	// 수정
 	const handleEditClick = () => {
 		if (confirm(MESSAGE.POST.EDIT)) {
 			navigate(`/study/edit/${postId}`);
 		}
 	};
-
+	// 마감
 	const handleDeadLineClick = async () => {
 		if (confirm(MESSAGE.POST.DEADLINE)) {
-			await trigger({
-				method: 'put',
-				path: `/projectStudy/${postId}`,
-				data: {
-					recruitsStatus: '모집마감',
-				},
-			});
+			try {
+				await trigger({
+					method: 'put',
+					path: `/projectStudy/${postId}`,
+					data: {
+						recruitsStatus: '모집마감',
+					},
+					applyResult: true,
+				});
+				setIsRecruitClosed(true);
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	};
-
+	// 삭제
 	const handleDeleteClick = async () => {
 		if (confirm(MESSAGE.POST.DELETE)) {
 			await trigger({
@@ -113,16 +121,40 @@ function StudyPostDetail() {
 		}
 	};
 
-	// console.log('howContactContent', howContactContent);
+	// const handleLinkCopy = async () => {
+	// 	try {
+	// 		await navigator.clipboard.writeText(howContactContent);
+	// 		alert(MESSAGE.LINK.COMPLETE);
+	// 	} catch (error) {
+	// 		console.error(MESSAGE.ERROR.DEFAULT);
+	// 	}
+	// };
 
-	const handleLinkCopy = async () => {
+	// 링크 복사
+	// https 로 설정 바뀌면 수정 예정 *******
+	const handleLinkCopy = () => {
+		const textToCopy = howContactContent;
+
+		const textArea = document.createElement('textarea');
+		textArea.value = textToCopy;
+		document.body.appendChild(textArea);
+
+		textArea.select();
 		try {
-			await navigator.clipboard.writeText(howContactContent);
-			alert(MESSAGE.LINK.COMPLETE);
+			const successful = document.execCommand('copy');
+			if (successful) {
+				alert(MESSAGE.LINK.COMPLETE);
+			} else {
+				console.error(MESSAGE.ERROR.DEFAULT);
+			}
 		} catch (error) {
 			console.error(MESSAGE.ERROR.DEFAULT);
 		}
+
+		document.body.removeChild(textArea);
 	};
+
+	// console.log(isLoading);
 
 	return (
 		<>

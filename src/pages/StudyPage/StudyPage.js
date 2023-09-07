@@ -9,10 +9,14 @@ import { checkToken } from '../../utils/cookie';
 import MESSAGE from '../../constants/message';
 import StudyCategory from '../../components/pages/StudyPage/StudyCategory/StudyCategory';
 
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoil/atoms/index.atom';
+
 function StudyPage() {
+	const { nickName } = useRecoilValue(userAtom);
+
 	const navigate = useNavigate();
 	const [openModal, setOpenModal] = useState(false);
-	const [userNickName, setUserNickName] = useState('');
 
 	const isLoggedIn = checkToken();
 	// console.log('로그인 유무', checkToken());
@@ -23,7 +27,6 @@ function StudyPage() {
 			setOpenModal(true);
 		} else {
 			navigate('/study/post');
-			setUserNickName('');
 		}
 	};
 
@@ -46,7 +49,7 @@ function StudyPage() {
 						<S.TopBox>
 							<S.Title>
 								{isLoggedIn
-									? `🔥 ${userNickName} 님 추천 스터디 / 프로젝트`
+									? `🔥 ${nickName} 님 추천 스터디 / 프로젝트`
 									: '🔥 추천 스터디/ 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
@@ -69,7 +72,6 @@ function StudyPage() {
 					<S.PopularCardWrapper>
 						<StudySlider
 							isLoggedIn={isLoggedIn}
-							setUserNickName={isLoggedIn ? setUserNickName : ''}
 							$background="whiteBackground"
 							url={
 								isLoggedIn

@@ -6,11 +6,12 @@ import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
 import LoadingBar from '../../../@common/Loading/LoadingBar';
 
+const defaultCategories = [
+	{ name: '스터디', id: 0 },
+	{ name: '프로젝트', id: 1 },
+];
+
 function StudyCategory() {
-	const [category, setCategory] = useState([
-		{ name: '스터디', id: 0 },
-		{ name: '프로젝트', id: 1 },
-	]);
 	const [position, setPosition] = useState([]);
 	const [projectStudy, setProjectStudy] = useState([]);
 	const [selectedValues, setSelectedValues] = useState({
@@ -28,7 +29,7 @@ function StudyCategory() {
 	// 포지션 리스트
 	const {
 		trigger,
-		isLoading,
+		isLoading: isLoadingPosition,
 		error,
 		result: positionResult,
 	} = useApi({
@@ -58,19 +59,23 @@ function StudyCategory() {
 		}
 	}, [resultProjectStudy.projectStudies]);
 
-	const handleObserver = entries => {
+	const handleObserver = (entries, observer) => {
 		const target = entries[0];
-
 		if (target.isIntersecting && !isLoadingProjectStudy) {
 			setCurrentSkip(prevSkip => {
 				return prevSkip + limit;
 			});
 
-			if (resultProjectStudy.projectStudies.length === 0) return;
-
+			if (resultProjectStudy.projectStudies.length === 0) {
+				return;
+			}
+			console.log(
+				'handleObserver selectedValues',
+				selectedValues.position,
+			);
 			triggerProjectStudy({
 				path: '/projectStudy',
-				params: {
+				data: {
 					classification: selectedValues.classification,
 					position: selectedValues.position,
 					limit,
@@ -106,6 +111,9 @@ function StudyCategory() {
 			resultProjectStudy.projectStudies &&
 			resultProjectStudy.projectStudies.length === 0
 		) {
+			if (observerElement.current) {
+				observer.current.unobserve(observerElement.current);
+			}
 			observer.current.disconnect();
 		}
 
@@ -140,6 +148,8 @@ function StudyCategory() {
 		setLimit(6);
 		setCurrentSkip(0);
 
+		console.log({ positionValue });
+
 		setSelectedValues(prev => ({
 			...prev,
 			position: positionValue,
@@ -152,7 +162,7 @@ function StudyCategory() {
 
 	useEffect(() => {
 		triggerProjectStudy({
-			params: {
+			data: {
 				classification: selectedValues.classification,
 				position: selectedValues.position,
 				limit,
@@ -177,7 +187,7 @@ function StudyCategory() {
 				>
 					전체
 				</S.CategoryItem>
-				{category.map(el => (
+				{defaultCategories.map(el => (
 					<S.CategoryItem
 						key={el.id}
 						onClick={() => handleCategoryClick(el.name)}
@@ -213,12 +223,34 @@ function StudyCategory() {
 			</S.CategoryBottomList>
 
 			<S.PostCardContainer>
-				{isLoading ? (
-					<LoadingBar />
-				) : !Array.isArray(projectStudy) ||
-				  projectStudy.length === 0 ? (
+				{/* {isLoadingProjectStudy && <LoadingBar />} */}
+				{/* {!isLoadingProjectStudy && !projectStudy.length && (
 					<EmptyMessage />
-				) : (
+				)}
+				{!isLoadingProjectStudy &&
+					Array.isArray(projectStudy) &&
+					projectStudy.length && (
+						<>
+							{projectStudy.map((projectStudy, idx) => (
+								<div key={projectStudy._id + idx}>
+									<PostCard data={projectStudy} />
+								</div>
+							))}
+
+							<div
+								style={{
+									height: '10px',
+									border: '1px solid black',
+								}}
+								ref={observerElement}
+							/>
+						</>
+					)} */}
+
+				{!isLoadingProjectStudy && !projectStudy.length && (
+					<EmptyMessage />
+				)}
+				{Array.isArray(projectStudy) && projectStudy.length > 0 && (
 					<>
 						{projectStudy.map((projectStudy, idx) => (
 							<div key={projectStudy._id + idx}>
@@ -229,7 +261,7 @@ function StudyCategory() {
 						<div
 							style={{
 								height: '10px',
-								border: '1px solid transparent',
+								border: 'none',
 							}}
 							ref={observerElement}
 						/>

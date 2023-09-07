@@ -4,13 +4,8 @@ import * as H from './StudySlider.styles';
 import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
 
-function StudySlider({
-	isLoggedIn,
-	$background,
-	url,
-	slidesToShow,
-	setUserNickName,
-}) {
+function StudySlider({ isLoggedIn, $background, url, slidesToShow }) {
+	console.log('url', url);
 	const [slide, setSlide] = useState(0);
 	const [studyInfoData, setStudyInfoData] = useState([]);
 
@@ -21,9 +16,6 @@ function StudySlider({
 
 	useEffect(() => {
 		if (result && result.projectStudies) {
-			if (isLoggedIn) {
-				setUserNickName(result.nickName);
-			}
 			// console.log(result);
 			// console.log(userNickName);
 			setStudyInfoData(result.projectStudies);
@@ -43,6 +35,7 @@ function StudySlider({
 		setSlide((slide + 1) % totalSlides);
 	};
 
+	// console.log('studyInfoData', studyInfoData);
 	return (
 		<H.Wrap>
 			<H.SliderWrapper>
@@ -63,6 +56,7 @@ function StudySlider({
 										title={data.title}
 										process={data.process}
 										recruits={data.recruits}
+										recruitsStatus={data.recruitsStatus}
 										position={data.position}
 										deadline={data.deadline.split('T')[0]}
 									/>

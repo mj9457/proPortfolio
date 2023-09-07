@@ -37,8 +37,8 @@ function StudyEditPost() {
 
 	// 게시글 정보
 	const { result: postData, trigger: getEditPostData } = useApi({
-		path: '',
-		shouldFetch: false,
+		path: `/projectStudy/${postId}`,
+		shouldFetch: !!postId,
 	});
 
 	// console.log('POSTDATA', postData);
@@ -54,6 +54,9 @@ function StudyEditPost() {
 		}
 	}, [userData]);
 
+	// console.log(selectedOptions);
+	// console.log(userData);
+
 	useEffect(() => {
 		if (postId) {
 			getEditPostData({
@@ -62,6 +65,7 @@ function StudyEditPost() {
 		}
 	}, [postId]);
 
+	// console.log(postData);
 	useEffect(() => {
 		if (postData._id) {
 			setIsEdit(true);
