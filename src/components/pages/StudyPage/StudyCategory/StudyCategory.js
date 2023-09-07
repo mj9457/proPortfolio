@@ -69,10 +69,10 @@ function StudyCategory() {
 			if (resultProjectStudy.projectStudies.length === 0) {
 				return;
 			}
-			console.log(
-				'handleObserver selectedValues',
-				selectedValues.position,
-			);
+			// console.log(
+			// 	'handleObserver selectedValues',
+			// 	selectedValues.position,
+			// );
 			triggerProjectStudy({
 				path: '/projectStudy',
 				data: {
@@ -223,7 +223,9 @@ function StudyCategory() {
 			</S.CategoryBottomList>
 
 			<S.PostCardContainer>
-				{/* {isLoadingProjectStudy && <LoadingBar />} */}
+				{isLoadingProjectStudy && !projectStudy.length && (
+					<LoadingBar />
+				)}
 				{/* {!isLoadingProjectStudy && !projectStudy.length && (
 					<EmptyMessage />
 				)}

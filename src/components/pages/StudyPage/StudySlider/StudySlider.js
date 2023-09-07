@@ -5,7 +5,6 @@ import useApi from '../../../../hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
 
 function StudySlider({ isLoggedIn, $background, url, slidesToShow }) {
-	console.log('url', url);
 	const [slide, setSlide] = useState(0);
 	const [studyInfoData, setStudyInfoData] = useState([]);
 
