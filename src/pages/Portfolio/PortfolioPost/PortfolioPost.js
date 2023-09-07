@@ -63,12 +63,12 @@ function PortfolioPost() {
 			setIsUserId(userData._id);
 		}
 
-		// 로그인 한 유저의 롤이 멘토인지 확인
-		if (userData.role === 'mentor') {
+		if (userData.role === 'user') {
 			setIsMentor(true);
 		} else setIsMentor(false);
 	}, [result, isUserId]);
 
+	// const checkRole = userData.role === 'user';
 	const checkUserId = isUserId === post.ownerId;
 
 	// 버튼 클릭시 → 모달 open
@@ -160,7 +160,7 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						{isLoggedIn && isMentor && checkUserId && (
+						{isLoggedIn && isMentor === false && checkUserId && (
 							<S.ButtonBox>
 								<Button
 									variant={'primary'}
