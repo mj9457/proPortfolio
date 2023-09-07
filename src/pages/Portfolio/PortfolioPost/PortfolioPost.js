@@ -25,7 +25,7 @@ function PortfolioPost() {
 	const path = params._id;
 
 	// 로그인 유저 체크
-	const { isAuth, role, _id } = useRecoilValue(userAtom);
+	const { isAuth } = useRecoilValue(userAtom);
 
 	// post list
 	const [post, setPost] = useState({});
@@ -33,8 +33,8 @@ function PortfolioPost() {
 	// role === mentor
 	const [isMentor, setIsMentor] = useState(false);
 
-	// user._id === post.ownerId
-	const [check, setCheck] = useState(false);
+	// userId
+	const [isUserId, setIsUserId] = useState('');
 
 	// modal open state
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,21 +45,29 @@ function PortfolioPost() {
 		shouldFetch: true,
 	});
 
+	const { result: userResult } = useApi({
+		path: '/user',
+		shouldFetch: true,
+	});
+
 	useEffect(() => {
 		if (result) {
 			setPost(result);
 		}
 
+		if (userResult) {
+			setIsUserId(userResult._id);
+		}
+
 		// 로그인 한 아이디와 글 주인의 아이디가 같은지 확인
-		if (_id === post.ownerId) {
-			setCheck(true);
-		} else setCheck(false);
 
 		// 로그인 한 유저의 롤이 멘토인지 확인
-		if (role === 'mentor') {
+		if (userResult.role === 'mentor') {
 			setIsMentor(true);
 		} else setIsMentor(false);
-	}, [result, _id, role]);
+	}, [result, isUserId]);
+
+	const checkUserId = isUserId === post.ownerId;
 
 	// 버튼 클릭시 → 모달 open
 	const handleOpenModal = () => {
@@ -150,7 +158,7 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						{isAuth && isMentor && check && (
+						{isAuth && isMentor && checkUserId && (
 							<S.ButtonBox>
 								<Button
 									variant={'primary'}
