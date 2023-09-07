@@ -20,6 +20,8 @@ const excludeRedirectPath = [
 		hasParam: true,
 	},
 	{ path: '/study', hasParam: false },
+	{ path: '/signup', hasParam: false },
+	{ path: '/signup/done', hasParam: false },
 ];
 
 function Layout() {
@@ -71,22 +73,10 @@ function Layout() {
 		}
 	}, []);
 
-	//* signup 페이지 한정
-	const signupPrevent = async () => {
-		const authResult = await trigger({
-			path: '/user',
-			applyResult: false,
-			showBoundary: false,
-		});
-		if (authResult) {
-			return navigate('/');
-		}
-	};
-
 	useEffect(() => {
 		//* 사용자가 직접 url을 치고 들어오는 경우 대비
 		if (location.pathname === '/signup') {
-			return signupPrevent();
+			// return signupPrevent();
 		}
 		const isPublic = excludeRedirectPath.find(ex =>
 			ex.hasParam

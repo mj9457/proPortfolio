@@ -19,23 +19,26 @@ function SignUp() {
 	const navigate = useNavigate();
 	useFooter();
 
-	const { trigger } = useApi({});
+	const { trigger, error } = useApi({});
 
-	useEffect(() => {
-		async function fetchUserData() {
-			try {
-				const storedEmail = getCookie('email');
-				if (storedEmail) {
-					const decodedEmail = decodeURIComponent(storedEmail);
-					setEmail(decodedEmail);
-				} else {
-					navigate('/');
-				}
-			} catch (error) {
-				console.error('사용자 정보를 가져오는데 실패했습니다.', error);
-			}
+	function fetchUserData() {
+		const email = decodeURIComponent(getCookie('email'));
+		console.log({ email });
+		// 비유저가 들어왔을 때
+		if (email !== 'undefined') {
+			setEmail(email);
+		} else {
+			console.log(email);
+			navigate('/');
 		}
 
+		// 유저가 들어왔을 때
+		const isUser = getCookie('isUser');
+		if (isUser) {
+			navigate('/');
+		}
+	}
+	useEffect(() => {
 		fetchUserData();
 	}, []);
 
@@ -67,6 +70,13 @@ function SignUp() {
 		setPosition(event.target.value);
 	};
 
+	useEffect(() => {
+		if (error) {
+			console.log(error);
+		}
+		console.log(error);
+	}, [error]);
+
 	const handleSubmit = async event => {
 		event.preventDefault();
 
@@ -85,6 +95,8 @@ function SignUp() {
 					nickName,
 					position,
 				},
+				// showBoundary: false,
+				applyResult: true,
 			});
 			navigate('/signup/done');
 		} catch (err) {
@@ -95,6 +107,7 @@ function SignUp() {
 					alert('회원가입에 실패하였습니다. 다시 시도해 주세요.');
 				}
 			}
+			console.log(err);
 		}
 	};
 

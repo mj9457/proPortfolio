@@ -48,9 +48,9 @@ function StudyPage() {
 					<S.TitleWrapper>
 						<S.TopBox>
 							<S.Title>
-								{isLoggedIn
+								{isLoggedIn && nickName
 									? `🔥 ${nickName} 님 추천 스터디 / 프로젝트`
-									: '🔥 추천 스터디/ 프로젝트'}
+									: '🔥 추천 스터디 / 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
 								{isLoggedIn
