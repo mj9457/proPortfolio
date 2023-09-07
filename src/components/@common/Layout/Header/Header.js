@@ -11,7 +11,7 @@ import { userAtom } from '../../../../recoil/atoms/index.atom';
 function Header() {
 	const [openModal, setOpenModal] = useState(false);
 	const { isLoading, isAuth, role } = useRecoilValue(userAtom);
-	// const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const navigate = useNavigate();
 
 	// 알림 표시 상태
@@ -28,7 +28,7 @@ function Header() {
 
 	const { result: notiResult, trigger: notiTrigger } = useApi({
 		path: '/notification',
-		shouldFetch: isAuth,
+		shouldFetch: isLoggedIn,
 	});
 	const bellImg = '/assets/img/icons/bell.png';
 	const dotBellImg = '/assets/img/icons/dotbell.png';
@@ -39,8 +39,7 @@ function Header() {
 		// if(notiData.)
 	};
 	useEffect(() => {
-		// console.log(isAuth);
-		if (isAuth) {
+		if (isLoggedIn) {
 			if (notiResult?.notifications?.length > 0) {
 				setNotiData(notiResult.notifications);
 
@@ -51,7 +50,9 @@ function Header() {
 			}
 
 			const fetchNotificationData = () => {
-				notiTrigger({});
+				notiTrigger({
+					applyResult: true,
+				});
 			};
 			// 1분마다 호출
 			const intervalId = setInterval(fetchNotificationData, 60000); // 60000 밀리초 = 1분

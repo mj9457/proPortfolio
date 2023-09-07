@@ -129,7 +129,7 @@ const AdminMentorApply = () => {
 	};
 	// 거절
 	const refuseHandler = async (requestId, key) => {
-		// console.log(key);
+		console.log(key);
 
 		await trigger({
 			path: `/mentorRequest/${requestId}`,

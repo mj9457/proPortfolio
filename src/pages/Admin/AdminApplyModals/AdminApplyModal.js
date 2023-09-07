@@ -24,6 +24,7 @@ const AdminApplyModal = ({
 	approveHandler,
 	refuseHandler,
 }) => {
+	console.log(userInfo);
 	// console.log(userInfo);
 	const outside = useRef();
 	const imageOutside = useRef();
@@ -98,14 +99,18 @@ const AdminApplyModal = ({
 					<ButtonArea>
 						<button
 							onClick={() => {
-								refuseHandler(userInfo._id);
+								refuseHandler(userInfo._id, userInfo.key);
 							}}
 						>
 							거절
 						</button>
 						<button
 							onClick={() => {
-								approveHandler(userInfo.userId, userInfo._id);
+								approveHandler(
+									userInfo.userId,
+									userInfo._id,
+									userInfo.key,
+								);
 							}}
 						>
 							승인
