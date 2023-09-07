@@ -84,11 +84,11 @@ function Portfolio() {
 			setPositions(positionResult.positions);
 		}
 
-		if (mentorResult.data && mentorResult.data.length > 0) {
+		if (mentorResult.data) {
 			setMentorData(mentorResult.data);
 		}
 
-		if (popularMentorResult && popularMentorResult.length > 0) {
+		if (popularMentorResult) {
 			setPopularData(popularMentorResult);
 		}
 	}, [positionResult, popularMentorResult]);
