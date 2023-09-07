@@ -91,12 +91,13 @@ function Header() {
 			navigate('/usermentorapply');
 		}
 	};
+	// mapContentToComponent처럼 리팩토링 예정
 	const notiClickHandler = async (value, notiId, studyId) => {
 		switch (value) {
 			case '멘토링 신청 요청이 왔습니다!':
-			case 'Your mentoring request has been completed.':
+			case '멘토링 신청이 거절되었습니다.':
 			case '멘토링 신청서 상태가 변경되었습니다.':
-			case 'Your mentoring request has been rejectd.':
+			case '멘토링 신청이 수락되었습니다.':
 				// 해당 알람 삭제 후
 				// 마이페이지로 이동
 				await notiTrigger({
@@ -220,7 +221,12 @@ function Header() {
 												}}
 											>
 												<span>{item.content}</span>
-												<span>2020-12-10</span>
+												<span>
+													{item.createdAt.slice(
+														0,
+														10,
+													)}
+												</span>
 											</S.notiBox>
 										))
 									) : (
