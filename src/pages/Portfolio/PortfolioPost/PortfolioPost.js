@@ -1,8 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 
-import { userAtom } from '../../../recoil/atoms/index.atom';
 import useFooter from '../../../hooks/useFooter';
 import useApi from '../../../hooks/useApi';
 import MESSAGE from '../../../constants/message';
@@ -14,6 +12,7 @@ import Review from '../../../components/@common/Review/Review';
 import Line from '../../../components/@common/Line/Line';
 import Button from '../../../components/@common/Button/Button';
 import ApplyModal from '../../../components/@common/ApplyModal/ApplyModal';
+import { checkToken } from '../../../utils/cookie';
 
 function PortfolioPost() {
 	useFooter();
@@ -25,7 +24,7 @@ function PortfolioPost() {
 	const path = params._id;
 
 	// 로그인 유저 체크
-	const { isAuth, role } = useRecoilValue(userAtom);
+	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 
 	// post list
 	const [post, setPost] = useState({});
@@ -40,29 +39,32 @@ function PortfolioPost() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// api 통신
+	const { result: userData } = useApi({
+		path: isLoggedIn ? '/user' : '',
+		shouldFetch: isLoggedIn,
+	});
+
 	const { result, trigger, isLoading } = useApi({
 		path: `/portfolio/${path}`,
 		shouldFetch: true,
 	});
 
-	const { result: userResult } = useApi({
-		path: '/user',
-		shouldFetch: true,
-	});
+	useEffect(() => {
+		const tokenStatus = checkToken();
+		setIsLoggedIn(tokenStatus);
+	}, []);
 
 	useEffect(() => {
 		if (result) {
 			setPost(result);
 		}
 
-		if (userResult) {
-			setIsUserId(userResult._id);
+		if (userData) {
+			setIsUserId(userData._id);
 		}
 
-		// 로그인 한 아이디와 글 주인의 아이디가 같은지 확인
-
 		// 로그인 한 유저의 롤이 멘토인지 확인
-		if (userResult.role === 'mentor') {
+		if (userData.role === 'mentor') {
 			setIsMentor(true);
 		} else setIsMentor(false);
 	}, [result, isUserId]);
@@ -140,7 +142,7 @@ function PortfolioPost() {
 								/>
 							)}
 
-							{isAuth && isMentor === false && (
+							{isLoggedIn && isMentor && (
 								<Button
 									variant={'primary'}
 									shape={'default'}
@@ -158,7 +160,7 @@ function PortfolioPost() {
 
 						<Line size={'small'} />
 
-						{isAuth && isMentor && checkUserId && (
+						{isLoggedIn && isMentor && checkUserId && (
 							<S.ButtonBox>
 								<Button
 									variant={'primary'}
