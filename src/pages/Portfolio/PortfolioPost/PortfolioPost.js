@@ -25,7 +25,7 @@ function PortfolioPost() {
 	const path = params._id;
 
 	// 로그인 유저 체크
-	const { isAuth } = useRecoilValue(userAtom);
+	const { isAuth, role } = useRecoilValue(userAtom);
 
 	// post list
 	const [post, setPost] = useState({});
@@ -62,7 +62,7 @@ function PortfolioPost() {
 		// 로그인 한 아이디와 글 주인의 아이디가 같은지 확인
 
 		// 로그인 한 유저의 롤이 멘토인지 확인
-		if (userResult.role === 'mentor') {
+		if (role === 'mentor') {
 			setIsMentor(true);
 		} else setIsMentor(false);
 	}, [result, isUserId]);
