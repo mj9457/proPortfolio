@@ -14,4 +14,4 @@ RUN npm install
 COPY . .
 
 # React 프로젝트 빌드
-RUN npm run build
+RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
