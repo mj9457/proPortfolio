@@ -19,7 +19,7 @@ const useApi = ({
 	data: initData = {}, // 초기 데이터 (선택사항)
 	shouldFetch = false, // 컴포넌트 마운트 시 자동으로 요청
 	// params: initParams = {},
-	showBoundary = true, // 비동기에러 표시여부
+	showBoundary = true, // 비동기 에러 표시 여부
 }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -75,7 +75,6 @@ const useApi = ({
 					handleError(err);
 				} else {
 					// 비동기 에러 검출 가능
-
 					setError(err);
 				}
 			}
