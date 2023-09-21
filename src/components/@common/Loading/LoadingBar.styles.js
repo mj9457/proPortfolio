@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { flexCenter } from '../../../styles/common';
+import { flexCenter } from 'styles/common';
 
 export const BarBox = styled.div`
 	${flexCenter}

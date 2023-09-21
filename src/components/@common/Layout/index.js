@@ -2,8 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import useApi from '../../../hooks/useApi';
-import { includeFooterState, userAtom } from '../../../recoil/atoms/index.atom';
+import useApi from 'hooks/useApi';
+import { includeFooterState, userAtom } from 'recoil/atoms/index.atom';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';

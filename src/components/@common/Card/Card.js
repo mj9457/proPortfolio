@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import useApi from '../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 
 import * as S from './Card.styles';
 
-import EmptyMessage from '../EmptyMessage/EmptyMessage';
+import EmptyMessage from 'components/@common/EmptyMessage/EmptyMessage';
 
 function MentorCard(props) {
 	const { variant, url } = props;

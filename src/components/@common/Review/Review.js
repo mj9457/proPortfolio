@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 
 import * as S from './Review.styles';
 
+import useApi from 'hooks/useApi';
+import MESSAGE from 'constants/message';
+
 import Line from '../Line/Line';
-import useApi from '../../../hooks/useApi';
-import MESSAGE from '../../../constants/message';
 import Textarea from '../Textarea/Textarea';
 import Pagination from '../Pagination/Pagination';
 import LoadingBar from '../Loading/LoadingBar';

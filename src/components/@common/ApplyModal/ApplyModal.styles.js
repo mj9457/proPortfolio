@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-	ModalBackground,
-	flexCenter,
-	flexColumn,
-} from '../../../styles/common';
+import { ModalBackground, flexCenter, flexColumn } from 'styles/common';
 
 export const Modal = styled.div`
 	${flexCenter}

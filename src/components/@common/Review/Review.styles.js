@@ -3,7 +3,7 @@ import {
 	flexAlignCenter,
 	flexColumn,
 	flexSpaceBetweenCenter,
-} from '../../../styles/common';
+} from 'styles/common';
 
 export const ReviewBox = styled.div`
 	margin: 70px 0 10px 0;

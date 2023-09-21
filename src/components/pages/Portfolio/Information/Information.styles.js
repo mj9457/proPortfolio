@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { flexAlignCenter, flexColumn } from '../../../../styles/common';
+import { flexAlignCenter, flexColumn } from 'styles/common';
 
 export const InfoBox = styled.div`
 	${flexColumn}

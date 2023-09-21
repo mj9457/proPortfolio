@@ -1,14 +1,14 @@
 import styled, { css, keyframes } from 'styled-components';
-import { flexCenter, flexColumn } from '../../../../styles/common';
+import { flexCenter, flexColumn } from 'styles/common';
 import { Link } from 'react-router-dom';
 
 const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 `;
 
 const variantCSS = {

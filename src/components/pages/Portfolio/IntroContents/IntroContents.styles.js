@@ -1,9 +1,5 @@
 import { styled } from 'styled-components';
-import {
-	flexCenter,
-	flexColumn,
-	flexSpaceBetweenCenter,
-} from '../../../../styles/common';
+import { flexCenter, flexColumn, flexSpaceBetweenCenter } from 'styles/common';
 
 export const IntroBox = styled.div`
 	${flexColumn}

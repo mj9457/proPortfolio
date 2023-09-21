@@ -2,17 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import useApi from '../../hooks/useApi';
-import { userAtom } from '../../recoil/atoms/index.atom';
+import useApi from 'hooks/useApi';
+import { userAtom } from 'recoil/atoms/index.atom';
 
 import * as S from './Portfolio.styles';
 
-import Line from '../../components/@common/Line/Line';
-import MentorCard from '../../components/pages/Portfolio/PortfolioCard/Card';
-import Button from '../../components/@common/Button/Button';
-import Select from '../../components/@common/Select/Select';
-import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
-import LoadingBar from '../../components/@common/Loading/LoadingBar';
+import Line from 'components/@common/Line/Line';
+import MentorCard from 'components/pages/Portfolio/PortfolioCard/Card';
+import Button from 'components/@common/Button/Button';
+import Select from 'components/@common/Select/Select';
+import EmptyMessage from 'components/@common/EmptyMessage/EmptyMessage';
+import LoadingBar from 'components/@common/Loading/LoadingBar';
 
 function Portfolio() {
 	// 로그인 유저 체크
@@ -58,15 +58,12 @@ function Portfolio() {
 		shouldFetch: true,
 	});
 
-	const { result: userResult } = useApi({
-		path: '/user',
-		shouldFetch: true,
-	});
-
-	const { result: popularMentorResult } = useApi({
-		path: '/portfolio/recommend/topMentor',
-		shouldFetch: true,
-	});
+	const { result: popularMentorResult, isLoading: popularIsLoading } = useApi(
+		{
+			path: '/portfolio/recommend/topMentor',
+			shouldFetch: true,
+		},
+	);
 
 	useEffect(() => {
 		if (mentorResult.data && Array.isArray(mentorResult.data)) {
@@ -81,12 +78,7 @@ function Portfolio() {
 
 	// 멘토 롤 체크 && 카테고리 값 들어오는지 체크
 	useEffect(() => {
-		// const mentor = role === 'mentor';
-
-		// if (mentor) setIsMentor(true);
-		// else setIsMentor(false);
-
-		if (userResult.role === 'mentor') setIsMentor(true);
+		if (role === 'mentor') setIsMentor(true);
 		else setIsMentor(false);
 
 		if (positionResult.positions) {
@@ -169,10 +161,6 @@ function Portfolio() {
 
 			applyResult: true,
 		});
-
-		// if (selectedValues.selectedSort !== value) {
-		// 	setMentorData([]);
-		// }
 	};
 
 	// 포지션 클릭
@@ -268,6 +256,7 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 4개 출력 */}
 				<S.MentorCardBox>
+					{popularIsLoading && <LoadingBar />}
 					{!Array.isArray(popularData) || popularData.length === 0 ? (
 						<EmptyMessage />
 					) : (

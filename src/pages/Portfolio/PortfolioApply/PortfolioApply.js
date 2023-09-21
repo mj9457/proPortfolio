@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import useFooter from '../../../hooks/useFooter';
-import useApi from '../../../hooks/useApi';
-import { check } from '../../../utils/check';
-import MESSAGE from '../../../constants/message';
+import useFooter from 'hooks/useFooter';
+import useApi from 'hooks/useApi';
+import { check } from 'utils/check';
+import MESSAGE from 'constants/message';
 
 import * as S from './PortfolioApply.styles';
 
-import Information from '../../../components/pages/Portfolio/Information/Information';
-import Button from '../../../components/@common/Button/Button';
-import Textarea from '../../../components/@common/Textarea/Textarea';
-import Input from '../../../components/@common/Input/Input';
+import Information from 'components/pages/Portfolio/Information/Information';
+import Button from 'components/@common/Button/Button';
+import Textarea from 'components/@common/Textarea/Textarea';
+import Input from 'components/@common/Input/Input';
 
 function PortfolioApply() {
 	useFooter();
@@ -125,10 +125,6 @@ function PortfolioApply() {
 
 				alert(MESSAGE.POST.COMPLETE);
 				navigate('/portfolio');
-
-				// if (response.data.result === 'Conflict') {
-				// 	alert(response.data.reason);
-				// }
 			}
 		}
 	};

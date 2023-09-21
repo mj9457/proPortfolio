@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import useApi from '../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 
 import * as S from './ApplyModal.styles';
 
-import Textarea from '../Textarea/Textarea';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import MESSAGE from '../../../constants/message';
-import { checkModal } from '../../../utils/check';
+import Textarea from '../Textarea/Textarea';
+
+import { checkModal } from 'utils/check';
+import MESSAGE from 'constants/message';
 
 function ApplyModal(props) {
 	// path 가 params 에 있는 아이디 값 - 확인하려면 portfolioPost.js 확인 바람
