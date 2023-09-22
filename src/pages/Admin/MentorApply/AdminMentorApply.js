@@ -1,16 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Button, Pagination, Space, theme } from 'antd';
-import {
-	AdminContent,
-	Removetag,
-} from '../../../components/pages/Admin/Common/Common.styles';
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
+import AdminTable from 'components/pages/Admin/Table/AdminTable';
 import { Atags, HandlerButton } from './AdminMentorApply.styles';
 import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
-import useApi from '../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
-import LoadingBar from '../../../components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading/LoadingBar';
 
 const AdminMentorApply = () => {
 	const { result, trigger, isLoading, error } = useApi({

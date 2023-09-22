@@ -2,16 +2,12 @@ import { Pagination, Select, Space, theme } from 'antd';
 
 import { useEffect, useMemo, useState } from 'react';
 
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import {
-	AdminContent,
-	Removetag,
-} from '../../../components/pages/Admin/Common/Common.styles';
-import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
-import useApi from '../../../hooks/useApi';
+import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
+import useApi from 'hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from '../Home/Admin.styles';
-import LoadingBar from '../../../components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading/LoadingBar';
 
 const AdminStudyProject = () => {
 	// const { Option } = Select;

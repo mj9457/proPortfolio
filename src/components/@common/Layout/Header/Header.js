@@ -11,7 +11,7 @@ import { userAtom } from '../../../../recoil/atoms/index.atom';
 function Header() {
 	const [openModal, setOpenModal] = useState(false);
 	const { isLoading, isAuth, role } = useRecoilValue(userAtom);
-	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	// const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const navigate = useNavigate();
 
 	// 알림 표시 상태
@@ -28,7 +28,7 @@ function Header() {
 
 	const { result: notiResult, trigger: notiTrigger } = useApi({
 		path: '/notification',
-		shouldFetch: isLoggedIn,
+		shouldFetch: isAuth,
 	});
 	const bellImg = '/assets/img/icons/bell.png';
 	const dotBellImg = '/assets/img/icons/dotbell.png';
@@ -39,7 +39,7 @@ function Header() {
 		// if(notiData.)
 	};
 	useEffect(() => {
-		if (isLoggedIn) {
+		if (isAuth) {
 			if (notiResult?.notifications?.length > 0) {
 				setNotiData(notiResult.notifications);
 

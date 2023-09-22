@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Pagination, Space, theme } from 'antd';
 
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import { AdminContent } from '../../../components/pages/Admin/Common/Common.styles';
-import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
+import { SearchInput } from 'components/pages/Admin/Searchbar/Searchbar.styles';
 import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
-import useApi from '../../../hooks/useApi';
-import MESSAGE from '../../../constants/message';
 import { PaginationWrap } from '../Home/Admin.styles';
-import LoadingBar from '../../../components/@common/Loading/LoadingBar';
 import { useNavigate } from 'react-router-dom';
+import MESSAGE from 'constants/message';
+import useApi from 'hooks/useApi';
+import LoadingBar from 'components/@common/Loading/LoadingBar';
 const AdminCategory = () => {
 	const navigate = useNavigate();
 	// 수정 중인 행의 key를 저장

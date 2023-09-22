@@ -1,15 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pagination, Space, theme } from 'antd';
-import {
-	AdminContent,
-	Removetag,
-} from '../../../components/pages/Admin/Common/Common.styles';
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import Searchbar from '../../../components/pages/Admin/Searchbar/Searchbar';
-import useApi from '../../../hooks/useApi';
+import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
+import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import useApi from 'hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from './Admin.styles';
-import LoadingBar from '../../../components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading/LoadingBar';
 
 const AdminHome = () => {
 	const { result, trigger, isLoading, error } = useApi({
@@ -76,7 +72,7 @@ const AdminHome = () => {
 
 		// console.log('한 페이지 Length', result?.users?.length);
 	}, [result]);
-	const memoColumns = useMemo(() => [], [currentPage]);
+	// const memoColumns = useMemo(() => [], [currentPage]);
 	const memoResult = useMemo(
 		() => (
 			<AdminTable
@@ -85,7 +81,7 @@ const AdminHome = () => {
 				totalPages={totalPages}
 			/>
 		),
-		[userData, totalPages, memoColumns],
+		[userData, totalPages],
 	);
 
 	const removeHandler = async userId => {

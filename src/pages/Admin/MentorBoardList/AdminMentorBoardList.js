@@ -2,16 +2,12 @@ import { Pagination, Select, Space, theme } from 'antd';
 
 import { useEffect, useMemo, useState } from 'react';
 
-import AdminTable from '../../../components/pages/Admin/Table/AdminTable';
-import {
-	AdminContent,
-	Removetag,
-} from '../../../components/pages/Admin/Common/Common.styles';
-import { SearchInput } from '../../../components/pages/Admin/Searchbar/Searchbar.styles';
+import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
-import useApi from '../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
-import LoadingBar from '../../../components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading/LoadingBar';
 
 const AdminMentorBoardList = () => {
 	const [tableData, setTableData] = useState();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
 	AuditOutlined,
@@ -70,6 +70,7 @@ const Sidebar = () => {
 				break;
 		}
 	};
+
 	pathCheck(tab);
 
 	const navigate = useNavigate();
@@ -83,7 +84,6 @@ const Sidebar = () => {
 		// const result = e.key.toLowerCase();
 		// Tabs key로 구분
 		const result = pathName[navList.indexOf(e.key)]; // pathName에서 해당 탭의 index를 찾아 사용
-		// console.log(result);
 		navigate(`/admin/${result}`);
 	};
 
