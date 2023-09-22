@@ -7,13 +7,12 @@ import { STUDYOPTIONS } from '../../../constants/study';
 import MultiSelectDropdown from '../../../components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
 import PostForm from '../../../components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
 import useApi from '../../../hooks/useApi';
-import SelectWithDefault from '../../../components/pages/StudyPage/StudyEditPost/SelectWithDefault/SelectWithDefault';
+import SelectWithDefault from '../../../components/@common/SelectWithDefault/SelectWithDefault';
 import useFooter from '../../../hooks/useFooter';
 
 function StudyEditPost() {
 	useFooter();
 	const [isEdit, setIsEdit] = useState(false);
-	// console.log('isEdit', isEdit);
 	const [selectedOptions, setSelectedOptions] = useState({
 		classification: '',
 		process: '',
@@ -43,7 +42,6 @@ function StudyEditPost() {
 		shouldFetch: !!postId,
 	});
 
-	// console.log('POSTDATA', postData);
 	useEffect(() => {
 		if (userData) {
 			setSelectedOptions(prevOptions => ({
@@ -56,9 +54,6 @@ function StudyEditPost() {
 		}
 	}, [userData]);
 
-	// console.log(selectedOptions);
-	// console.log(userData);
-
 	useEffect(() => {
 		if (postId) {
 			getEditPostData({
@@ -67,7 +62,6 @@ function StudyEditPost() {
 		}
 	}, [postId]);
 
-	// console.log(postData);
 	useEffect(() => {
 		if (postData._id) {
 			setIsEdit(true);
@@ -110,14 +104,10 @@ function StudyEditPost() {
 							<S.SelectTitle>모집 구분</S.SelectTitle>
 							<SelectWithDefault
 								options={STUDYOPTIONS.CLASSIFICATION}
-								selectedValue={selectedOptions.classification}
-								defaultValue="모집 구분"
-								onChange={e =>
-									handleOptionChange(
-										'classification',
-										e.target.value,
-									)
-								}
+								selectedOption={selectedOptions.classification}
+								selectText="모집 구분"
+								name="classification"
+								onChange={handleOptionChange}
 							/>
 						</S.SelectBox>
 
@@ -125,14 +115,10 @@ function StudyEditPost() {
 							<S.SelectTitle>진행 방식</S.SelectTitle>
 							<SelectWithDefault
 								options={STUDYOPTIONS.PROCESS}
-								selectedValue={selectedOptions.process}
-								defaultValue="진행 방식"
-								onChange={e =>
-									handleOptionChange(
-										'process',
-										e.target.value,
-									)
-								}
+								selectedOption={selectedOptions.process}
+								selectText="진행 방식"
+								name="process"
+								onChange={handleOptionChange}
 							/>
 						</S.SelectBox>
 					</S.SelectWrapper>
@@ -153,14 +139,10 @@ function StudyEditPost() {
 							<S.SelectTitle>모집 인원</S.SelectTitle>
 							<SelectWithDefault
 								options={STUDYOPTIONS.RECRUITS}
-								selectedValue={selectedOptions.recruits}
-								defaultValue="모집 인원"
-								onChange={e =>
-									handleOptionChange(
-										'recruits',
-										e.target.value,
-									)
-								}
+								selectedOption={selectedOptions.recruits}
+								selectText="모집 인원"
+								name="recruits"
+								onChange={handleOptionChange}
 							/>
 						</S.SelectBox>
 					</S.SelectWrapper>
@@ -184,19 +166,16 @@ function StudyEditPost() {
 							<S.SelectTitle>연락 방법</S.SelectTitle>
 							<SelectWithDefault
 								options={STUDYOPTIONS.CONTACT}
-								selectedValue={selectedOptions.howContactTitle}
-								defaultValue="연락 방법"
-								onChange={e =>
-									handleOptionChange(
-										'howContactTitle',
-										e.target.value,
-									)
-								}
+								selectedOption={selectedOptions.howContactTitle}
+								selectText="연락 방법"
+								name="howContactTitle"
+								onChange={handleOptionChange}
 							/>
 						</S.SelectBox>
 					</S.SelectWrapper>
 					<S.Input
 						placeholder="연락 가능한 링크를 입력해 주세요. ex) 오픈채팅 링크"
+						name="howContactContent"
 						onChange={e =>
 							handleOptionChange(
 								'howContactContent',

@@ -45,8 +45,8 @@ export const ChipBox = styled.div`
 
 export const StatusChip = styled.div`
 	background-color: ${({ theme }) => theme.PALETTE.mainColor};
-	padding: 0.45rem 0.9rem;
-	border-radius: 0.9375rem;
+	padding: 7px 14px;
+	border-radius: 15px;
 	width: fit-content;
 
 	${props =>
@@ -58,7 +58,7 @@ export const StatusChip = styled.div`
 
 export const StatusText = styled.p`
 	color: #fff;
-	font-size: 1rem;
+	font-size: 16px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 

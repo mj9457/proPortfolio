@@ -4,7 +4,8 @@ import { flexAlignCenter, flexColumn } from '../../../../../styles/common';
 export const MultiselectContainer = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-	width: 400px;
+	/* width: 400px; */
+	width: 100%;
 	border-radius: 4px;
 	cursor: pointer;
 `;
@@ -15,10 +16,10 @@ export const SelectBox = styled.div`
 	border-radius: 4px;
 
 	> select {
-		padding-left: 8px;
+		padding-left: 11px;
 		width: 100%;
 		height: 42px;
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
 		border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 		border-radius: 4px;
 	}
@@ -28,6 +29,7 @@ export const CheckBoxContainer = styled.div`
 	z-index: 10;
 	background-color: ${({ theme }) => theme.PALETTE.white};
 	${flexColumn}
+	/* width: 100%; */
 	width: 400px;
 	max-height: 150px;
 	overflow-y: scroll;
@@ -38,7 +40,7 @@ export const CheckBoxContainer = styled.div`
 `;
 export const Label = styled.label`
 	${flexAlignCenter}
-	padding: 0.8rem 0.6rem;
+	padding: 12px 9px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 

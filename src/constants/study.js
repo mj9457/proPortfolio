@@ -1,25 +1,25 @@
 export const STUDYOPTIONS = {
 	CLASSIFICATION: [
 		{
-			value: 'study',
+			value: '스터디',
 			name: '스터디',
 		},
 		{
-			value: 'project',
+			value: '프로젝트',
 			name: '프로젝트',
 		},
 	],
 	PROCESS: [
 		{
-			value: 'online',
+			value: '온라인',
 			name: '온라인',
 		},
 		{
-			value: 'offline',
+			value: '오프라인',
 			name: '오프라인',
 		},
 		{
-			value: 'onoffline',
+			value: '온/오프라인',
 			name: '온/오프라인',
 		},
 	],
@@ -48,45 +48,45 @@ export const STUDYOPTIONS = {
 	],
 	RECRUITS: [
 		{
-			value: 'one',
+			value: '1명',
 			name: '1명',
 		},
 		{
-			value: 'two',
+			value: '2명',
 			name: '2명',
 		},
 		{
-			value: 'three',
+			value: '3명',
 			name: '3명',
 		},
 		{
-			value: 'four',
+			value: '4명',
 			name: '4명',
 		},
 		{
-			value: 'five',
+			value: '5명',
 			name: '5명',
 		},
 		{
-			value: 'six',
+			value: '6명',
 			name: '6명',
 		},
 		{
-			value: 'etc',
+			value: '7명 이상',
 			name: '7명 이상',
 		},
 	],
 	CONTACT: [
 		{
-			value: 'discord',
+			value: '디스코드',
 			name: '디스코드',
 		},
 		{
-			value: 'openchat',
+			value: '오픈채팅',
 			name: '오픈채팅',
 		},
 		{
-			value: 'etc',
+			value: '기타',
 			name: '기타',
 		},
 	],

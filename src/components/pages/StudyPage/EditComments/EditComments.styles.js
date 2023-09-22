@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { flexAlignCenter } from '../../../styles/common';
+import { flexAlignCenter } from '../../../../styles/common';
 
 export const Container = styled.div``;
 export const Title = styled.div`

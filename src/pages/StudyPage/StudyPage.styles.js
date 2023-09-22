@@ -22,11 +22,11 @@ export const Container = styled.div`
 `;
 
 export const PopularContents = styled.div`
-	padding-bottom: 10rem;
+	padding-bottom: 160px;
 `;
 
 export const Title = styled.h2`
-	margin-bottom: 0.5rem;
+	margin-bottom: 8px;
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
@@ -40,7 +40,7 @@ export const TopBox = styled.div``;
 export const PopularCardWrapper = styled.div``;
 
 export const TitleWrapper = styled.div`
-	margin-bottom: 2.5rem;
+	margin-bottom: 40px;
 	${flexAlignCenter}
 	justify-content: space-between;
 `;
@@ -49,8 +49,8 @@ export const StudyContents = styled.div``;
 
 export const CategoryList = styled.ul`
 	${flexAlignCenter}
-	gap: 2rem;
-	margin-bottom: 2rem;
+	gap: 32px;
+	margin-bottom: 32px;
 `;
 
 export const CategoryItem = styled.button`
@@ -67,13 +67,13 @@ export const CategoryItem = styled.button`
 
 export const PositionCategoryList = styled.ul`
 	${flexAlignCenter}
-	gap: 1rem;
+	gap: 16px;
 `;
 
 export const WritePostButton = styled.div``;
 
 export const CategoryBottomList = styled.div`
-	margin-bottom: 3.5rem;
+	margin-bottom: 56px;
 	${flexAlignCenter}
 	justify-content: space-between;
 `;

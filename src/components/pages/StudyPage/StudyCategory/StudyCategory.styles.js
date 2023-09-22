@@ -7,8 +7,8 @@ import {
 
 export const CategoryList = styled.ul`
 	${flexAlignCenter}
-	gap: 2rem;
-	margin-bottom: 2rem;
+	gap:32px;
+	margin-bottom: 32px;
 `;
 
 export const CategoryItem = styled.button`
@@ -29,7 +29,7 @@ export const CategoryItem = styled.button`
 export const PositionCategoryList = styled.ul`
 	${flexAlignCenter}
 	flex-wrap: wrap;
-	gap: 1rem;
+	gap: 16px;
 `;
 
 export const PositionCategoryItem = styled.button`
@@ -53,7 +53,7 @@ export const PositionCategoryItem = styled.button`
 `;
 
 export const CategoryBottomList = styled.div`
-	margin-bottom: 3.5rem;
+	margin-bottom: 56px;
 	${flexAlignCenter}
 	justify-content: space-between;
 `;

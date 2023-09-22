@@ -32,13 +32,13 @@ const variantCSS = {
 
 const shapeCSS = {
 	default: css`
-		border-radius: 0.25rem;
+		border-radius: 4px;
 	`,
 	medium: css`
-		border-radius: 0.625rem;
+		border-radius: 10px;
 	`,
 	round: css`
-		border-radius: 3.125rem;
+		border-radius: 50px;
 	`,
 };
 
@@ -49,11 +49,11 @@ const sizeCSS = {
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	small: css`
-		padding: 0.38rem 0.94rem;
+		padding: 6px 15px;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	normal: css`
-		padding: 0.8rem 3rem;
+		padding: 12px 48px;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	medium: css`
@@ -61,16 +61,16 @@ const sizeCSS = {
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	big: css`
-		padding: 1rem 4.25rem;
+		padding: 16px 68px;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	bigger: css`
-		padding: 1rem 5.25rem;
+		padding: 16px 84px;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 	full: css`
 		width: 100%;
-		padding: 0.94rem 10.75rem;
+		padding: 15px 172px;
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	`,
 };

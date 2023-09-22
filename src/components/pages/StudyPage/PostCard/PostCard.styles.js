@@ -17,7 +17,7 @@ const fadeIn = keyframes`
 export const Container = styled.div`
 	cursor: pointer;
 	width: 100%;
-	padding: 1.875rem;
+	padding: 30px;
 	border: 2px solid ${({ theme }) => theme.PALETTE.gray[100]};
 	${flexColumn}
 	border-radius: 15px;
@@ -32,13 +32,13 @@ export const Container = styled.div`
 export const ChipWrapper = styled.div`
 	${flexAlignCenter}
 	gap: 8px;
-	margin-bottom: 1rem;
+	margin-bottom: 16px;
 `;
 
 export const ChipBox = styled.div`
 	background-color: ${({ theme }) => theme.PALETTE.mainColor};
-	padding: 0.45rem 0.9rem;
-	border-radius: 0.9375rem;
+	padding: 7px 14px;
+	border-radius: 15px;
 	width: fit-content;
 
 	${props =>
@@ -50,7 +50,7 @@ export const ChipBox = styled.div`
 
 export const ChipText = styled.p`
 	color: #fff;
-	font-size: 1rem;
+	font-size: 16px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 
@@ -64,7 +64,7 @@ export const ChipText = styled.p`
 export const Title = styled.span`
 	font-size: ${({ theme }) => theme.FONT_SIZE.big};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
-	margin-bottom: 1.56rem;
+	margin-bottom: 25px;
 	display: block;
 `;
 
@@ -78,7 +78,6 @@ export const PostText = styled.p`
 
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 	line-height: 1.5;
-	/* height: 67px; */
 	margin-bottom: 25px;
 `;
 

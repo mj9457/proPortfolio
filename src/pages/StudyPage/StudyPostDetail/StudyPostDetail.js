@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './StudyPostDetail.styles';
 import Button from '../../../components/@common/Button/Button';
-import EditComments from '../../../components/@common/EditComments/EditComments';
+import EditComments from '../../../components/pages/StudyPage/EditComments/EditComments';
 import useApi from '../../../hooks/useApi';
 import { checkToken } from '../../../utils/cookie';
 import useFooter from '../../../hooks/useFooter';
@@ -129,32 +129,6 @@ function StudyPostDetail() {
 			console.error(MESSAGE.ERROR.DEFAULT);
 		}
 	};
-
-	// 링크 복사
-	// https 로 설정 바뀌면 수정 예정 *******
-	// const handleLinkCopy = () => {
-	// 	const textToCopy = howContactContent;
-
-	// 	const textArea = document.createElement('textarea');
-	// 	textArea.value = textToCopy;
-	// 	document.body.appendChild(textArea);
-
-	// 	textArea.select();
-	// 	try {
-	// 		const successful = document.execCommand('copy');
-	// 		if (successful) {
-	// 			alert(MESSAGE.LINK.COMPLETE);
-	// 		} else {
-	// 			console.error(MESSAGE.ERROR.DEFAULT);
-	// 		}
-	// 	} catch (error) {
-	// 		console.error(MESSAGE.ERROR.DEFAULT);
-	// 	}
-
-	// 	document.body.removeChild(textArea);
-	// };
-
-	// console.log(isLoading);
 
 	const dateAndTime = updatedAt => {
 		const serverDate = new Date(updatedAt);

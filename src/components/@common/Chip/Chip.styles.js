@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import { flexAlignCenter } from '../../../styles/common';
 
 export const ChipBox = styled.div`
-	padding: 0.45rem 0.9rem;
-	border-radius: 0.9375rem;
+	padding: 7px 14px;
+	border-radius: 15px;
 	width: fit-content;
 
 	/* 프로젝트*/
@@ -24,7 +24,7 @@ export const ChipBox = styled.div`
 `;
 
 export const ChipText = styled.p`
-	font-size: 1rem;
+	font-size: 16px;
 	font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;

@@ -17,19 +17,19 @@ const fadeIn = keyframes`
 export const Container = styled.div`
 	animation: ${fadeIn} 0.5s ease forwards;
 	${bodyContainer}
-	padding-top: 5.25rem;
+	padding-top: 84px;
 `;
 
 export const TitleContainer = styled.div`
 	${flexAlignCenter}
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};
-	font-size: 1.875rem;
-	margin-bottom: 2.66rem;
+	font-size: 30px;
+	margin-bottom: 42px;
 `;
 
 // 모집 상태
 export const RecruitmentStatus = styled.h3`
-	padding-right: 1rem;
+	padding-right: 16px;
 	border-right: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 	color: ${({ theme }) => theme.PALETTE.mainColor};
 	min-width: 100px;
@@ -42,7 +42,7 @@ export const RecruitmentStatus = styled.h3`
 `;
 
 export const PostTitle = styled.p`
-	padding-left: 1rem;
+	padding-left: 16px;
 `;
 
 export const PostInfoContainer = styled.div`
@@ -51,40 +51,40 @@ export const PostInfoContainer = styled.div`
 
 export const UserProfileContainer = styled.div`
 	${flexAlignCenter}
-	gap: 1rem;
+	gap: 16px;
 `;
 
 export const UserProfileImage = styled.img`
-	width: 2.5rem;
-	height: 2.5rem;
-	border-radius: 2.5rem;
+	width: 40px;
+	height: 40px;
+	border-radius: 40px;
 `;
 
 export const UserName = styled.p`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
-	padding-right: 1rem;
+	padding-right: 16px;
 	border-right: 1px solid ${({ theme }) => theme.PALETTE.black};
 `;
 
 export const Date = styled.p`
-	padding-left: 1rem;
+	padding-left: 16px;
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	font-size: ${({ theme }) => theme.FONT_SIZE.md};
 `;
 
 export const PostDetailTop = styled.div`
-	padding-bottom: 2rem;
+	padding-bottom: 32px;
 	border-bottom: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 `;
 
 export const PostDetailBottom = styled.div`
-	padding: 4rem 0 8rem;
+	padding: 64px 0 128px;
 	border-bottom: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
 `;
 
 export const PostDetailBasic = styled.div`
-	padding-bottom: 8rem;
+	padding-bottom: 128px;
 `;
 
 export const PostDetailMainTextBox = styled.div`
@@ -103,22 +103,22 @@ export const PostDetailMainText = styled.p`
 export const PostDetailBottomTitle = styled.p`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
-	margin-bottom: 3rem;
+	margin-bottom: 48px;
 `;
 
 export const PostDetailBasicContainer = styled.div`
 	display: flex;
-	gap: 23rem;
+	gap: 368px;
 `;
 
 export const PostDetailBasicList = styled.ul`
 	${flexColumn}
-	gap: 1.7rem;
+	gap: 27px;
 `;
 
 export const PostDetailBasicItem = styled.li`
 	${flexAlignCenter}
-	gap: 2rem;
+	gap: 32px;
 
 	p {
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
