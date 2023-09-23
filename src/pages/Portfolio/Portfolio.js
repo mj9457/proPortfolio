@@ -251,7 +251,10 @@ function Portfolio() {
 			<div>
 				{/* 지금 인기 있는 멘토들 제목 */}
 				<S.TitleBox>
-					<span>✨ 지금 인기 있는 멘토</span>
+					<span>
+						<img src="assets/img/icons/stars.svg" /> 지금 인기 있는
+						멘토
+					</span>
 				</S.TitleBox>
 
 				{/* 지금 인기 있는 멘토들 목록 4개 출력 */}
@@ -279,7 +282,9 @@ function Portfolio() {
 			<S.MentorBox>
 				{/* 모든 멘토 제목 */}
 				<S.MentorTitleBox>
-					<span>🌟 모든 멘토</span>
+					<span>
+						<img src="assets/img/icons/star.svg" /> 모든 멘토
+					</span>
 
 					<Select
 						variant={'none'}

@@ -3,7 +3,7 @@ import {
 	bodyContainer,
 	flexColumn,
 	flexSpaceBetweenCenter,
-} from '../../../styles/common';
+} from 'styles/common';
 
 export const PostBox = styled.div`
 	${bodyContainer}

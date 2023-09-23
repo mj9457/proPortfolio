@@ -17,7 +17,10 @@ function MentorCard(props) {
 		<S.StyledLink to={`/portfolio/post/${data._id}`}>
 			<S.PopularCard variant={variant}>
 				<S.CoachNumBox>
-					<span>👊 코칭 {data.coachingCount}회</span>
+					<span>
+						<img src="assets/img/icons/fite.svg" /> 코칭{' '}
+						{data.coachingCount}회
+					</span>
 				</S.CoachNumBox>
 
 				<S.ImgBox>

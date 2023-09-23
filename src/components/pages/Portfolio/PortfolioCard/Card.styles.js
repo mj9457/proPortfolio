@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import { flexCenter, flexColumn } from 'styles/common';
+import { flexAlignCenter, flexCenter, flexColumn } from 'styles/common';
 import { Link } from 'react-router-dom';
 
 const fadeIn = keyframes`
@@ -50,6 +50,15 @@ export const PopularCard = styled.div`
 
 export const CoachNumBox = styled.div`
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+
+	> span {
+		${flexAlignCenter}
+
+		> img {
+			height: 18px;
+			margin-right: 4px;
+		}
+	}
 `;
 
 export const ImgBox = styled.div`

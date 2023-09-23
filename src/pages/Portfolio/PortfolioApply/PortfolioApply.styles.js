@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { bodyContainer, flexColumn } from '../../../styles/common';
+import { bodyContainer, flexColumn } from 'styles/common';
 
 export const ApplyBox = styled.div`
 	${bodyContainer}

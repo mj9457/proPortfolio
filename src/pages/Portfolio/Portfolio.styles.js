@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-	bodyContainer,
-	flexAlignCenter,
-	flexColumn,
-} from '../../styles/common';
+import { bodyContainer, flexAlignCenter, flexColumn } from 'styles/common';
 
 export const PortfolioBox = styled.div`
 	${bodyContainer}
@@ -28,6 +24,11 @@ export const TitleBox = styled.div`
 	& span {
 		font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
+		${flexAlignCenter}
+	}
+	& img {
+		height: 24px;
+		margin-right: 4px;
 	}
 `;
 
