@@ -25,6 +25,13 @@ export const NewStudy = styled.div`
 	width: 100%;
 	margin-bottom: 64px;
 `;
+export const TitleWrap = styled.div`
+	display: flex;
+	> img {
+		height: 24px;
+		margin-right: 8px;
+	}
+`;
 export const TitleBox = styled.div`
 	width: 100%;
 	${flexSpaceBetweenCenter};

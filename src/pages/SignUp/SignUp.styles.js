@@ -31,6 +31,7 @@ export const RegisterForm = styled.form`
 			padding: 0 12px 0 6px;
 			border: 1px solid #0000001a;
 			border-radius: 4px;
+			color: ${({ theme }) => theme.PALETTE.gray[300]};
 		}
 	}
 	> button {
@@ -39,6 +40,15 @@ export const RegisterForm = styled.form`
 	}
 `;
 
+export const NickNameCheck = styled.div`
+	display: flex;
+	gap: 8px;
+	> button {
+		width: 80px;
+		height: 42px;
+		padding: 0;
+	}
+`;
 export const StyledError = styled.span`
 	color: ${({ theme }) => theme.PALETTE.mainColor};
 	font-size: ${({ theme }) => theme.FONT_SIZE.sm};
