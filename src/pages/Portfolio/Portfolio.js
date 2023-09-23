@@ -292,33 +292,28 @@ function Portfolio() {
 				</S.MentorTitleBox>
 
 				<S.MentorCardBox>
-					{/* {isLoading && <LoadingBar />} */}
-					{/* {!isLoading && ( */}
-					<>
-						{isLoading && !mentorData.length && <LoadingBar />}
-						{!isLoading && !mentorData.length && <EmptyMessage />}
-						{Array.isArray(mentorData) && mentorData.length > 0 && (
-							<>
-								{mentorData.map(mentor => (
-									<div key={mentor._id}>
-										<MentorCard
-											variant={'white'}
-											mentor={mentor}
-										/>
-									</div>
-								))}
+					{isLoading && !mentorData.length && <LoadingBar />}
+					{!isLoading && !mentorData.length && <EmptyMessage />}
+					{Array.isArray(mentorData) && mentorData.length > 0 && (
+						<>
+							{mentorData.map(mentor => (
+								<div key={mentor._id}>
+									<MentorCard
+										variant={'white'}
+										mentor={mentor}
+									/>
+								</div>
+							))}
 
-								<div
-									style={{
-										height: '10px',
-										border: '1px solid white',
-									}}
-									ref={observerElement}
-								/>
-							</>
-						)}
-					</>
-					{/* )} */}
+							<div
+								style={{
+									height: '10px',
+									border: '1px solid white',
+								}}
+								ref={observerElement}
+							/>
+						</>
+					)}
 				</S.MentorCardBox>
 			</S.MentorBox>
 		</S.PortfolioBox>

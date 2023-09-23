@@ -244,12 +244,16 @@ function Review(props) {
 				)}
 			</S.BottomBox>
 
-			<Pagination
-				itemsPerPage={itemsPerPage}
-				totalItems={result.totalPages}
-				currentPage={currentPage}
-				onPageChange={handlePageChange}
-			/>
+			{review.length === 0 ? (
+				<></>
+			) : (
+				<Pagination
+					itemsPerPage={itemsPerPage}
+					totalItems={result.totalPages}
+					currentPage={currentPage}
+					onPageChange={handlePageChange}
+				/>
+			)}
 		</S.ReviewBox>
 	);
 }

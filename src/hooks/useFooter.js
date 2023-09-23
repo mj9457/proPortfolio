@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { includeFooterState } from '../recoil/atoms/index.atom';
+import { includeFooterState } from 'recoil/atoms/index.atom';
 import { useEffect } from 'react';
 
 const useFooter = () => {

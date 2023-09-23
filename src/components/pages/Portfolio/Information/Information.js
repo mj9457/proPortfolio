@@ -13,9 +13,9 @@ function Information(props) {
 				<S.ContentsTitle>직무</S.ContentsTitle>
 
 				<Position
-					variant={'default'}
+					$variant={'default'}
 					size={'regular'}
-					font={'regular'}
+					$font={'regular'}
 					value={mentorPost.position}
 					onChange={handleChange}
 				/>

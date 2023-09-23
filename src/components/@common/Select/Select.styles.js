@@ -30,7 +30,6 @@ const fontCSS = {
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
 	`,
-
 	medium: css`
 		font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.medium};

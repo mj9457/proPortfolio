@@ -1,4 +1,4 @@
-import MESSAGE from '../constants/message';
+import MESSAGE from 'constants/message';
 
 export const check = ex => {
 	return [

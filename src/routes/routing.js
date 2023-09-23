@@ -1,55 +1,53 @@
 import React, { lazy } from 'react';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
-const Layout = lazy(() => import('../components/@common/Layout'));
+const Layout = lazy(() => import('components/@common/Layout'));
 
 // home and signup page
-const Home = lazy(() => import('../pages/Home/Home'));
-const SignUp = lazy(() => import('../pages/SignUp/SignUp'));
-const SignUpDone = lazy(() => import('../pages/SignUp/SignUpDone/SignUpDone'));
+const Home = lazy(() => import('pages/Home/Home'));
+const SignUp = lazy(() => import('pages/SignUp/SignUp'));
+const SignUpDone = lazy(() => import('pages/SignUp/SignUpDone/SignUpDone'));
 
 // my page
 const MyPageLayout = lazy(() =>
-	import('../components/pages/MyPage/MyPageLayout/MyPageLayout'),
+	import('components/pages/MyPage/MyPageLayout/MyPageLayout'),
 );
 
 // portfolio page
-const Portfolio = lazy(() => import('../pages/Portfolio/Portfolio'));
+const Portfolio = lazy(() => import('pages/Portfolio/Portfolio'));
 const PortfolioApply = lazy(() =>
-	import('../pages/Portfolio/PortfolioApply/PortfolioApply'),
+	import('pages/Portfolio/PortfolioApply/PortfolioApply'),
 );
 const PortfolioPost = lazy(() =>
-	import('../pages/Portfolio/PortfolioPost/PortfolioPost'),
+	import('pages/Portfolio/PortfolioPost/PortfolioPost'),
 );
 
 // study page
-const StudyPage = lazy(() => import('../pages/StudyPage/StudyPage'));
+const StudyPage = lazy(() => import('pages/StudyPage/StudyPage'));
 const StudyEditPost = lazy(() =>
-	import('../pages/StudyPage/StudyEditPost/StudyEditPost'),
+	import('pages/StudyPage/StudyEditPost/StudyEditPost'),
 );
 const StudyPostDetail = lazy(() =>
-	import('../pages/StudyPage/StudyPostDetail/StudyPostDetail'),
+	import('pages/StudyPage/StudyPostDetail/StudyPostDetail'),
 );
 
 // user mentor apply page
 const UserMentorApply = lazy(() =>
-	import('../pages/UserMentoApply/UserMentorApply'),
+	import('pages/UserMentoApply/UserMentorApply'),
 );
 
 // admin
-const AdminCategory = lazy(() =>
-	import('../pages/Admin/Category/AdminCategory'),
-);
-const AdminHome = lazy(() => import('../pages/Admin/Home/Admin'));
-const AdminLayout = lazy(() => import('../components/pages/Admin'));
+const AdminCategory = lazy(() => import('pages/Admin/Category/AdminCategory'));
+const AdminHome = lazy(() => import('pages/Admin/Home/Admin'));
+const AdminLayout = lazy(() => import('components/pages/Admin'));
 const AdminMentorApply = lazy(() =>
-	import('../pages/Admin/MentorApply/AdminMentorApply'),
+	import('pages/Admin/MentorApply/AdminMentorApply'),
 );
 const AdminStudyProject = lazy(() =>
-	import('../pages/Admin/StudyProject/AdminStudyProject'),
+	import('pages/Admin/StudyProject/AdminStudyProject'),
 );
 const AdminMentorBoardList = lazy(() =>
-	import('../pages/Admin/MentorBoardList/AdminMentorBoardList'),
+	import('pages/Admin/MentorBoardList/AdminMentorBoardList'),
 );
 
 const router = createBrowserRouter([

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { deleteApi, getApi, patchApi, postApi, putApi } from '../utils/api';
+import { deleteApi, getApi, patchApi, postApi, putApi } from 'utils/api';
 import { useErrorBoundary } from 'react-error-boundary';
 
 /**

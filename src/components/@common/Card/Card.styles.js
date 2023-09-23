@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { flexCenter, flexColumn } from '../../../styles/common';
+import { flexCenter, flexColumn } from 'styles/common';
 import { Link } from 'react-router-dom';
 
 const variantCSS = {

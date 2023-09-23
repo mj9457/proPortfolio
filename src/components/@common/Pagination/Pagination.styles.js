@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import { styled } from 'styled-components';
 import { flexCenter } from 'styles/common';
 
@@ -6,7 +7,12 @@ export const PaginationBox = styled.div`
 	gap: 10px;
 `;
 
-export const Number = styled.div``;
+export const Number = styled.div`
+	margin: 5px;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-size: large;
+`;
 
 export const Button = styled.div`
 	& img {
