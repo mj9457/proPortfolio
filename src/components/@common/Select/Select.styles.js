@@ -41,8 +41,8 @@ const fontCSS = {
 };
 
 export const Selected = styled.select`
-	${({ variant }) => variantCSS[variant]}
-	${({ font }) => fontCSS[font]}
+	${({ $variant }) => variantCSS[$variant]}
+	${({ $font }) => fontCSS[$font]}
 	${({ size }) => sizeCSS[size]}
 	height: 42px;
 	padding: 0 8px;

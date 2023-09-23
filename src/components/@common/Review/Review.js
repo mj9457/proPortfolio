@@ -16,7 +16,7 @@ import Button from '../Button/Button';
 function Review(props) {
 	const { title, getUrl } = props;
 
-	const { _id, nickName, isAuth } = useRecoilValue(userAtom);
+	const { _id, isAuth } = useRecoilValue(userAtom);
 
 	// review && comments 데이터
 	const [review, setReview] = useState([]);
@@ -46,12 +46,6 @@ function Review(props) {
 			setReview(result.comments);
 		}
 
-		setEditReview(prev => ({
-			...prev,
-			author: nickName,
-			ownerId: _id,
-		}));
-
 		setUserInfo(_id);
 	}, [result.comments, _id, isAuth]);
 
@@ -62,33 +56,6 @@ function Review(props) {
 		setEditReview(prevState => ({
 			...prevState,
 			[name]: value,
-		}));
-	};
-
-	// 댓글 작성
-	const handleCommentSubmit = async () => {
-		if (editReview.content.trim() === '') {
-			alert(MESSAGE.CHECK.DESCRIPTION);
-			return;
-		}
-
-		if (editReview.content.length > 200) {
-			alert(MESSAGE.CHECK.DESCRIPTIONLENGTH);
-			return;
-		}
-
-		const editReviewData = {
-			...editReview,
-		};
-
-		await trigger({
-			method: 'post',
-			data: editReviewData,
-		});
-
-		setEditReview(prevComment => ({
-			...prevComment,
-			content: '',
 		}));
 	};
 
@@ -203,31 +170,10 @@ function Review(props) {
 
 	return (
 		<S.ReviewBox>
-			{title === '댓글' && (
-				<S.TopBox>
-					<textarea
-						placeholder="댓글을 등록하세요."
-						name="content"
-						maxLength={200}
-						onChange={handleChange}
-					></textarea>
-					<S.ButtonBox>
-						<Button
-							variant={'add'}
-							size={'comment'}
-							shape={'medium'}
-							onClick={handleCommentSubmit}
-						>
-							댓글 등록
-						</Button>
-					</S.ButtonBox>
-				</S.TopBox>
-			)}
-
-			<S.SemiTopBox>
+			<S.TopBox>
 				<strong>{title}</strong>
 				<span>{result.total}</span>
-			</S.SemiTopBox>
+			</S.TopBox>
 			{isLoading ? (
 				<LoadingBar />
 			) : (

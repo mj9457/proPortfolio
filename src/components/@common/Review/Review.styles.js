@@ -10,7 +10,7 @@ export const ReviewBox = styled.div`
 	gap: 16px;
 `;
 
-export const SemiTopBox = styled.div`
+export const TopBox = styled.div`
 	margin: 70px 0 10px 0;
 	${flexAlignCenter}
 	gap: 8px;
@@ -95,22 +95,4 @@ export const Title = styled.div`
 		font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 		color: #ccc;
 	}
-`;
-export const TopBox = styled.div`
-	width: 100%;
-
-	textarea {
-		width: 100%;
-		height: 100px;
-		font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
-		border: 1px solid ${({ theme }) => theme.PALETTE.gray[200]};
-		border-radius: 5px;
-		padding: 13px 12px;
-		resize: none;
-		margin-bottom: 16px;
-	}
-`;
-
-export const ButtonBox = styled.div`
-	text-align: end;
 `;

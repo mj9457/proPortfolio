@@ -8,7 +8,8 @@ import { userAtom } from 'recoil/atoms/index.atom';
 import * as S from './Portfolio.styles';
 
 import Line from 'components/@common/Line/Line';
-import MentorCard from 'components/pages/Portfolio/PortfolioCard/Card';
+import PortfolioCard from 'components/pages/Portfolio/PortfolioCard/PortfolioCard';
+import MentorCard from 'components/@common/Card/Card';
 import Button from 'components/@common/Button/Button';
 import Select from 'components/@common/Select/Select';
 import EmptyMessage from 'components/@common/EmptyMessage/EmptyMessage';
@@ -58,13 +59,6 @@ function Portfolio() {
 		shouldFetch: true,
 	});
 
-	const { result: popularMentorResult, isLoading: popularIsLoading } = useApi(
-		{
-			path: '/portfolio/recommend/topMentor',
-			shouldFetch: true,
-		},
-	);
-
 	useEffect(() => {
 		if (mentorResult.data && Array.isArray(mentorResult.data)) {
 			setMentorData(prev => [...prev, ...mentorResult.data]);
@@ -88,11 +82,7 @@ function Portfolio() {
 		if (mentorResult.data) {
 			setMentorData(mentorResult.data);
 		}
-
-		if (popularMentorResult) {
-			setPopularData(popularMentorResult);
-		}
-	}, [positionResult, popularMentorResult, isAuth, role]);
+	}, [positionResult, isAuth, role]);
 
 	// 무한 스크롤
 	const handleObserver = entries => {
@@ -259,21 +249,10 @@ function Portfolio() {
 
 				{/* 지금 인기 있는 멘토들 목록 4개 출력 */}
 				<S.MentorCardBox>
-					{popularIsLoading && <LoadingBar />}
-					{!Array.isArray(popularData) || popularData.length === 0 ? (
-						<EmptyMessage />
-					) : (
-						<>
-							{popularData.map(mentor => (
-								<div key={mentor._id}>
-									<MentorCard
-										variant={'blue'}
-										mentor={mentor}
-									/>
-								</div>
-							))}
-						</>
-					)}
+					<MentorCard
+						$variant={'blue'}
+						url={'/portfolio/recommend/topMentor'}
+					/>
 				</S.MentorCardBox>
 			</div>
 
@@ -287,8 +266,8 @@ function Portfolio() {
 					</span>
 
 					<Select
-						variant={'none'}
-						font={'large'}
+						$variant={'none'}
+						$font={'large'}
 						onChange={handleChangeSelect}
 					>
 						<option value="newest">최신순</option>
@@ -303,10 +282,7 @@ function Portfolio() {
 						<>
 							{mentorData.map(mentor => (
 								<div key={mentor._id}>
-									<MentorCard
-										variant={'white'}
-										mentor={mentor}
-									/>
+									<PortfolioCard mentor={mentor} />
 								</div>
 							))}
 

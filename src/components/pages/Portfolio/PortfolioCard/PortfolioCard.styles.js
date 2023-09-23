@@ -11,17 +11,6 @@ const fadeIn = keyframes`
 	}
 `;
 
-const variantCSS = {
-	blue: css`
-		background: ${({ theme }) => theme.PALETTE.primary[100]};
-		box-shadow: 1px 4px 4px 0px rgba(67, 108, 255, 0.25);
-	`,
-
-	white: css`
-		background-color: ${({ theme }) => theme.PALETTE.hover};
-	`,
-};
-
 export const StyledLink = styled(Link)`
 	text-decoration: none;
 
@@ -31,7 +20,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const PopularCard = styled.div`
-	${({ variant }) => variantCSS[variant]}
+	background-color: ${({ theme }) => theme.PALETTE.hover};
 	${flexColumn}
 	width: 255px;
 	height: 320px;

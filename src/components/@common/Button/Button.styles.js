@@ -78,7 +78,7 @@ const sizeCSS = {
 export const Button = styled.button`
 	cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 
-	${({ variant }) => variantCSS[variant]}
+	${({ $variant }) => variantCSS[$variant]}
 	${({ shape }) => shapeCSS[shape]}
-  ${({ size }) => sizeCSS[size]}
+	${({ size }) => sizeCSS[size]}
 `;

@@ -5,7 +5,7 @@ function Button(props) {
 	return (
 		<S.Button
 			disabled={disabled}
-			variant={variant}
+			$variant={variant}
 			shape={shape}
 			size={size}
 			{...rest}
