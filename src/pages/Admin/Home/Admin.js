@@ -67,10 +67,6 @@ const AdminHome = () => {
 			);
 		}
 		setTotalPages(result.totalCount);
-
-		// console.log(currentPage);
-
-		// console.log('한 페이지 Length', result?.users?.length);
 	}, [result]);
 	// const memoColumns = useMemo(() => [], [currentPage]);
 	const memoResult = useMemo(

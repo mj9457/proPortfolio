@@ -271,16 +271,20 @@ const AdminMentorApply = () => {
 				) : (
 					<>
 						{memoResult}
-						<PaginationWrap>
-							<Pagination
-								current={currentPage}
-								defaultCurrent={currentPage}
-								total={totalPages}
-								onChange={e => {
-									pageChange(e);
-								}}
-							/>
-						</PaginationWrap>
+						{totalPages === 0 ? (
+							''
+						) : (
+							<PaginationWrap>
+								<Pagination
+									current={currentPage}
+									defaultCurrent={currentPage}
+									total={totalPages}
+									onChange={e => {
+										pageChange(e);
+									}}
+								/>
+							</PaginationWrap>
+						)}
 					</>
 				)}
 			</AdminContent>

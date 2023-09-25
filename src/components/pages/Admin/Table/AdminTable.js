@@ -1,7 +1,5 @@
 import React from 'react';
 import { MyTable } from './AdminTable.styles';
-import { Pagination } from 'antd';
-import { PaginationWrap } from '../../../../pages/Admin/Home/Admin.styles';
 
 const AdminTable = ({ dataSource, columns, totalPages }) => {
 	return (
@@ -13,9 +11,6 @@ const AdminTable = ({ dataSource, columns, totalPages }) => {
 				// defaultCurrent={1}
 				// total={totalPages}
 			/>
-			{/* <PaginationWrap>
-				<Pagination defaultCurrent={1} total={totalPages} />
-			</PaginationWrap> */}
 		</>
 	);
 };

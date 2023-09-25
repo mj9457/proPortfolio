@@ -11,6 +11,10 @@ import ScrollToTopButton from '../ScrollToTop/ScrollToTopButton';
 
 const excludeRedirectPath = [
 	{
+		path: '/',
+		hasParam: false,
+	},
+	{
 		path: '/portfolio/post',
 		hasParam: true,
 	},
@@ -83,6 +87,8 @@ function Layout() {
 				? location.pathname.includes(ex.path)
 				: location.pathname === ex.path,
 		);
+		console.log(isPublic);
+
 		if (isPublic) return;
 		checkAuth();
 	}, [location.pathname]);

@@ -1,3 +1,4 @@
+import SignInAccess from 'pages/SignInAccess';
 import React, { lazy } from 'react';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
 			{
 				path: '/signup/done',
 				element: <SignUpDone />,
+			},
+			{
+				path: '/signinaccess',
+				element: <SignInAccess />,
 			},
 			{
 				path: '/usermentorapply',

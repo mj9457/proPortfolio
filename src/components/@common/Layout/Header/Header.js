@@ -5,12 +5,13 @@ import * as S from './Header.styles';
 import SignupModal from '../../../pages/SignUp/Modal/SignUpModal';
 import Button from '../../Button/Button';
 import useApi from '../../../../hooks/useApi';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { userAtom } from '../../../../recoil/atoms/index.atom';
 
 function Header() {
 	const [openModal, setOpenModal] = useState(false);
 	const { isLoading, isAuth, role } = useRecoilValue(userAtom);
+	const [user, setUser] = useRecoilState(userAtom);
 	// const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
 	const navigate = useNavigate();
 
@@ -77,6 +78,14 @@ function Header() {
 			// console.log('handleLogoutClick');
 			await logoutTrigger({});
 			alert('로그아웃이 완료되었습니다.');
+			setUser(prev => ({
+				...prev,
+				isAuth: false,
+				nickName: '',
+				role: '',
+				_id: '',
+				isLoading: false,
+			}));
 			navigate(0);
 		} catch (error) {
 			alert('로그아웃이 실패 하였습니다.');
