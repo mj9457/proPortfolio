@@ -27,7 +27,7 @@ export const TitleBox = styled.div`
 		${flexAlignCenter}
 	}
 	& img {
-		height: 24px;
+		height: 30px;
 		margin-right: 4px;
 	}
 `;

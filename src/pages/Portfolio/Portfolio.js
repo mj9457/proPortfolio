@@ -247,7 +247,6 @@ function Portfolio() {
 					</span>
 				</S.TitleBox>
 
-				{/* 지금 인기 있는 멘토들 목록 4개 출력 */}
 				<S.MentorCardBox>
 					<MentorCard
 						$variant={'blue'}
