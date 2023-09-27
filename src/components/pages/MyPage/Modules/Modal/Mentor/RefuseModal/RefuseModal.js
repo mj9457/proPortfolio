@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RM from './RefuseModal.styles';
-import axios from 'axios';
-import Textarea from '../../../../../../@common/Textarea/Textarea';
-import useApi from '../../../../../../../hooks/useApi';
+import Textarea from 'components/@common/Textarea/Textarea';
+import useApi from 'hooks/useApi';
 import { useNavigate } from 'react-router-dom';
 
 // 멘토 - 멘토링 거절 사유 작성 모달

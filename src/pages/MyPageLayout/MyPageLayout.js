@@ -1,18 +1,18 @@
 import { Navigate } from 'react-router-dom';
-import SideMenu from '../SideMenu/SideMenu';
+import SideMenu from 'components/pages/MyPage/SideMenu/SideMenu';
 import * as M from './MyPageLayout.Styles';
-import useFooter from '../../../../hooks/useFooter';
+import useFooter from 'hooks/useFooter';
 import { useEffect, useState } from 'react';
-import useApi from '../../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../../../recoil/atoms/index.atom';
+import { userAtom } from 'recoil/atoms/index.atom';
 import {
 	ApplyMentoringHistory,
 	AccountManage,
 	AccountWithdrawal,
 	ProjectStudy,
 	EditedPostHistory,
-} from '../Container';
+} from 'components/pages/MyPage/Container';
 const mapContentToComponent = {
 	receivedMentoringHistory: () => <ApplyMentoringHistory type={'mentor'} />, // 멘토링 신청 받은 내역(멘토)
 	applyMentoringHistory: () => <ApplyMentoringHistory type={'user'} />, // 멘토링 신청 내역(유저)

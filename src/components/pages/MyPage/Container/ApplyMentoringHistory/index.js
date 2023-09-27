@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import useApi from '../../../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import * as AMH from './ApplyMentoringHistory.styles';
-import MYPAGEOPTION from '../../../../../constants/mypage';
+import MYPAGEOPTION from 'constants/mypage';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../../../../recoil/atoms/index.atom';
-import MESSAGE from '../../../../../constants/message';
+import { userAtom } from 'recoil/atoms/index.atom';
+import MESSAGE from 'constants/message';
 import ApplicationCard from '../../Modules/Card/ApplicationCard';
 
 const countTitles = {

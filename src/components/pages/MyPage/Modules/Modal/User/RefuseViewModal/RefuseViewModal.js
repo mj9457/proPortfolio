@@ -1,5 +1,5 @@
 import * as RVM from './RefuseViewModal.styles';
-import Textarea from '../../../../../../@common/Textarea/Textarea';
+import Textarea from 'components/@common/Textarea/Textarea';
 
 // 멘티 - 거절 사유 보기 모달
 function RefuseViewModal({ setRefuseModalOpenState, item }) {

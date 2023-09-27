@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
+	height: 8.875rem;
 	display: flex;
 	width: 16.875rem;
 	justify-content: space-between;

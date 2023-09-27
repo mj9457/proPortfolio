@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import * as CCS from './ApplicationCard.styles';
 
-import InfoViewModal from '../Modal/Mentor/InfoViewModal/InfoViewModal';
-import EditModal from '../Modal/Mentor/EditModal/EditModal';
-import EditViewModal from '../Modal/User/EditViewModal/EditViewModal';
-import ReviewModal from '../Modal/User/ReviewModal/ReviewModal';
-import RefuseModal from '../Modal/Mentor/RefuseModal/RefuseModal';
-import RefuseViewModal from '../Modal/User/RefuseViewModal/RefuseViewModal';
+import InfoViewModal from 'components/pages/MyPage/Modules/Modal/Mentor/InfoViewModal/InfoViewModal';
+import EditModal from 'components/pages/MyPage/Modules/Modal/Mentor/EditModal/EditModal';
+import EditViewModal from 'components/pages/MyPage/Modules/Modal/User/EditViewModal/EditViewModal';
+import ReviewModal from 'components/pages/MyPage/Modules/Modal/User/ReviewModal/ReviewModal';
+import RefuseModal from 'components/pages/MyPage/Modules/Modal/Mentor/RefuseModal/RefuseModal';
+import RefuseViewModal from 'components/pages/MyPage/Modules/Modal/User/RefuseViewModal/RefuseViewModal';
 
-import MYPAGEOPTION from '../../../../../constants/mypage';
-import MESSAGE from '../../../../../constants/message';
-import useApi from '../../../../../hooks/useApi';
+import MYPAGEOPTION from 'constants/mypage';
+import MESSAGE from 'constants/message';
+import useApi from 'hooks/useApi';
 import { useNavigate } from 'react-router-dom';
 
 // 카드 리스트

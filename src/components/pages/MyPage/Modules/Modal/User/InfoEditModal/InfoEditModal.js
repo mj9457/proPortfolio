@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import * as IEM from './InfoEditModal.styles';
-import Textarea from '../../../../../../@common/Textarea/Textarea';
-import Input from '../../../../../../@common/Input/Input';
-import useApi from '../../../../../../../hooks/useApi';
+import Textarea from '@common/Textarea/Textarea';
+import Input from '@common/Input/Input';
+import useApi from 'hooks/useApi';
 
 function InfoEditModal({ setInfoModalOpenState, nowData }) {
 	// 유저가 입력한 정보 state

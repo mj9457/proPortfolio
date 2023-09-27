@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import * as AM from './AccountManage.styles';
-import MYPAGEOPTION from '../../../../../constants/mypage';
-import Button from '../../../../@common/Button/Button';
-import useApi from '../../../../../hooks/useApi';
-import MESSAGE from '../../../../../constants/message';
+import MYPAGEOPTION from 'constants/mypage';
+import Button from 'components/@common/Button/Button';
+import useApi from 'hooks/useApi';
+import MESSAGE from 'constants/message';
 import AWS from 'aws-sdk';
 import { useNavigate } from 'react-router-dom';
 
@@ -205,7 +205,7 @@ function AccountManage() {
 				) : undefined}
 				<Button
 					disabled={''}
-					variant={'primary'}
+					$variant={'primary'}
 					shape={'default'}
 					size={'full'}
 					onClick={handleSubmit}

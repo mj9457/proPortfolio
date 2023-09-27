@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import MentoringPostListData from '../../Modules/MentoringPostListData/MentoringPostListData';
-import useApi from '../../../../../hooks/useApi';
+import MentoringPostListData from 'components/pages/MyPage/Modules/MentoringPostListData/MentoringPostListData';
+import useApi from 'hooks/useApi';
 import * as EPH from './EditedPostHistory.Styles';
-import PostListData from '../../Modules/PostListData/PostListData';
+import PostListData from 'components/pages/MyPage/Modules/PostListData/PostListData';
 
 const EditedPostHistory = () => {
 	// 멘토링 신청 게시글 정보 담을 state

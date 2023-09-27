@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import * as AM from './AccountWithdrawal.styles';
-import MYPAGEOPTION from '../../../../../constants/mypage';
-import { Button } from '../../../../@common/Button/Button.styles';
-import MESSAGE from '../../../../../constants/message';
-import useApi from '../../../../../hooks/useApi';
+import MYPAGEOPTION from 'constants/mypage';
+import { Button } from 'components/@common/Button/Button.styles';
+import MESSAGE from 'constants/message';
+import useApi from 'hooks/useApi';
 
 function AccountWithdrawal() {
 	// 유저 정보 담을 state
@@ -84,7 +84,7 @@ function AccountWithdrawal() {
 				<AM.ButtonBox>
 					{Checked ? (
 						<Button
-							variant={'primary'}
+							$variant={'primary'}
 							size={'full'}
 							shape={'default'}
 							opacity={'0.3'}
@@ -95,7 +95,7 @@ function AccountWithdrawal() {
 					) : (
 						<Button
 							disabled
-							variant={'cancel'}
+							$variant={'cancel'}
 							size={'full'}
 							shape={'default'}
 						>

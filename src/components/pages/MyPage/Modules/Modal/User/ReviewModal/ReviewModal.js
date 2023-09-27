@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RVM from './ReviewModal.styles';
-import Textarea from '../../../../../../@common/Textarea/Textarea';
-import useApi from '../../../../../../../hooks/useApi';
+import Textarea from 'components/@common/Textarea/Textarea';
+import useApi from 'hooks/useApi';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { userAtom } from '../../../../../../../recoil/atoms/index.atom';
+import { userAtom } from 'recoil/atoms/index.atom';
 
 // 멘토 - 멘토링 거절 사유 작성 모달
 function ReviewModal({ setReviewModalOpenState, item }) {

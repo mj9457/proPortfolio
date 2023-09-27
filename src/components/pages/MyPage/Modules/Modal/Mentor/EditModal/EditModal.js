@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import * as EM from './EditModal.styles';
-import Textarea from '../../../../../../@common/Textarea/Textarea';
-import useApi from '../../../../../../../hooks/useApi';
+import Textarea from 'components/@common/Textarea/Textarea';
+import useApi from 'hooks/useApi';
 
 function EditModal({ categoryKey, setEditModalOpenState, item }) {
 	const [textareaValue, setTextareaValue] = useState({

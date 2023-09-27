@@ -1,4 +1,4 @@
-import useApi from '../../../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import * as PLD from './PostListData.styles';
 import { useEffect, useState } from 'react';
 

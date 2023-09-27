@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import useApi from '../../../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import * as MPLD from './MentoringPostListData.styles';
 import { useEffect, useState } from 'react';
 

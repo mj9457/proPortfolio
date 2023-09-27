@@ -1,6 +1,6 @@
 import * as IM from './InfoViewModal.styles';
 import axios from 'axios';
-import MYPAGEOPTION from '../../../../../../../constants/mypage';
+import MYPAGEOPTION from 'constants/mypage';
 
 // 멘토 - 멘토링 신청서 보기 모달
 function InfoViewModal({ setInfoModalOpenState, item }) {
