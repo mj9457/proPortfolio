@@ -7,7 +7,7 @@ import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import useApi from 'hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
-import LoadingBar from 'components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading';
 
 const AdminMentorBoardList = () => {
 	const [tableData, setTableData] = useState();

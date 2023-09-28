@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RVM from './ReviewModal.styles';
-import Textarea from 'components/@common/Textarea/Textarea';
+import Textarea from 'components/@common/Textarea';
 import useApi from 'hooks/useApi';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';

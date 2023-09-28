@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as AM from './AccountManage.styles';
 import MYPAGEOPTION from 'constants/mypage';
-import Button from 'components/@common/Button/Button';
+import Button from 'components/@common/Button';
 import useApi from 'hooks/useApi';
 import MESSAGE from 'constants/message';
 import AWS from 'aws-sdk';

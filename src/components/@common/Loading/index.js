@@ -1,4 +1,4 @@
-import * as S from './LoadingBar.styles';
+import * as S from './index.styles';
 
 function LoadingBar() {
 	return (

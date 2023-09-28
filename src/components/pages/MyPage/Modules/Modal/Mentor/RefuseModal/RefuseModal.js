@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import * as RM from './RefuseModal.styles';
-import Textarea from 'components/@common/Textarea/Textarea';
+import Textarea from 'components/@common/Textarea';
 import useApi from 'hooks/useApi';
 import { useNavigate } from 'react-router-dom';
 

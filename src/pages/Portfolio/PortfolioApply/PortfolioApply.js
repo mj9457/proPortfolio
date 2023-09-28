@@ -9,9 +9,9 @@ import MESSAGE from 'constants/message';
 import * as S from './PortfolioApply.styles';
 
 import Information from 'components/pages/Portfolio/Information/Information';
-import Button from 'components/@common/Button/Button';
-import Textarea from 'components/@common/Textarea/Textarea';
-import Input from 'components/@common/Input/Input';
+import Button from 'components/@common/Button';
+import Textarea from 'components/@common/Textarea';
+import Input from 'components/@common/Input';
 
 function PortfolioApply() {
 	useFooter();
@@ -41,12 +41,12 @@ function PortfolioApply() {
 
 	// api 통신
 	const { result, trigger } = useApi({
-		path: '/user',
+		path: '/users',
 		shouldFetch: true,
 	});
 
 	const { result: postResult, trigger: postTrigger } = useApi({
-		path: portfolioId ? `/portfolio/${portfolioId}` : '',
+		path: portfolioId ? `/portfolios/${portfolioId}` : '',
 		shouldFetch: portfolioId,
 	});
 
@@ -110,7 +110,7 @@ function PortfolioApply() {
 			if (portfolioId) {
 				await postTrigger({
 					method: 'put',
-					path: `/portfolio/${portfolioId}`,
+					path: `/portfolios/${portfolioId}`,
 					data: mentorPost,
 				});
 
@@ -119,7 +119,7 @@ function PortfolioApply() {
 			} else {
 				await trigger({
 					method: 'post',
-					path: '/portfolio',
+					path: '/portfolios',
 					data: mentorPost,
 				});
 

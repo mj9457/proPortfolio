@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import StudyInfoCard from '../../../@common/StudyInfoCard/StudyInfoCard';
+import StudyInfoCard from '../../../@common/StudyInfoCard';
 import * as H from './StudySlider.styles';
 import useApi from '../../../../hooks/useApi';
-import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
-import LoadingBar from '../../../@common/Loading/LoadingBar';
+import EmptyMessage from '../../../@common/EmptyMessage';
+import LoadingBar from '../../../@common/Loading';
 
 function StudySlider({ isLoggedIn, $background, url, slidesToShow }) {
 	const [slide, setSlide] = useState(0);

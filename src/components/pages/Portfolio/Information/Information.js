@@ -1,7 +1,7 @@
 import * as S from './Information.styles';
 
-import Position from 'components/@common/Position/Position';
-import Input from 'components/@common/Input/Input';
+import Position from 'components/@common/Position';
+import Input from 'components/@common/Input';
 
 function Information(props) {
 	const { handleChange, user, mentorPost, portfolioId } = props;

@@ -1,6 +1,6 @@
 import * as S from './SignUpDone.styles';
-import Button from '../../../components/@common/Button/Button';
-import useFooter from '../../../hooks/useFooter';
+import Button from 'components/@common/Button';
+import useFooter from 'hooks/useFooter';
 
 function SignUpDone() {
 	useFooter();

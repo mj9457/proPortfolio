@@ -10,7 +10,7 @@ import { PaginationWrap } from '../Home/Admin.styles';
 import { useNavigate } from 'react-router-dom';
 import MESSAGE from 'constants/message';
 import useApi from 'hooks/useApi';
-import LoadingBar from 'components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading';
 const AdminCategory = () => {
 	const navigate = useNavigate();
 	// 수정 중인 행의 key를 저장

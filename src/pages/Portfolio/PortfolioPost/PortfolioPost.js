@@ -10,10 +10,10 @@ import MESSAGE from 'constants/message';
 import * as S from './PortfolioPost.styles';
 
 import IntroContents from 'components/pages/Portfolio/IntroContents/IntroContents';
-import Review from 'components/@common/Review/Review';
-import Line from 'components/@common/Line/Line';
-import Button from 'components/@common/Button/Button';
-import ApplyModal from 'components/@common/ApplyModal/ApplyModal';
+import Review from 'components/@common/Review';
+import Line from 'components/@common/Line';
+import Button from 'components/@common/Button';
+import ApplyModal from 'components/@common/ApplyModal';
 
 function PortfolioPost() {
 	useFooter();
@@ -31,7 +31,7 @@ function PortfolioPost() {
 
 	// api 통신
 	const { result, trigger, isLoading } = useApi({
-		path: `/portfolio/${path}`,
+		path: `/portfolios/${path}`,
 		shouldFetch: true,
 	});
 
@@ -144,7 +144,7 @@ function PortfolioPost() {
 							</S.ButtonBox>
 						)}
 
-						<Review title={'후기'} getUrl={`/portfolio/${path}`} />
+						<Review title={'후기'} getUrl={`/portfolios/${path}`} />
 					</S.ContentsBox>
 				</S.PostBox>
 			)}

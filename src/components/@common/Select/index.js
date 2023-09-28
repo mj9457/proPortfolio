@@ -1,4 +1,4 @@
-import * as S from './Select.styles';
+import * as S from './index.styles';
 
 function Select(props) {
 	const { children, $variant, size, $font, ...rest } = props;

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import { bodyContainer } from '../../styles/common';
-import Input from '../../components/@common/Input/Input';
+import { bodyContainer } from 'styles/common';
+import Input from 'components/@common/Input';
 
 const Container = styled.div`
 	${bodyContainer}

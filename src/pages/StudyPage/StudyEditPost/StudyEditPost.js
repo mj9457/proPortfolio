@@ -7,7 +7,7 @@ import { STUDYOPTIONS } from '../../../constants/study';
 import MultiSelectDropdown from '../../../components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
 import PostForm from '../../../components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
 import useApi from '../../../hooks/useApi';
-import SelectWithDefault from '../../../components/@common/SelectWithDefault/SelectWithDefault';
+import SelectWithDefault from '../../../components/@common/SelectWithDefault';
 import useFooter from '../../../hooks/useFooter';
 
 function StudyEditPost() {

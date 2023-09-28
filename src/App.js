@@ -9,7 +9,7 @@ import GlobalStyles from 'styles/global';
 
 import router from 'routes/routing';
 import Loading from 'components/@common/Loading/Loading';
-import ErrorFallback from 'components/@common/Error/ErrorFallback';
+import ErrorFallback from 'components/@common/Error';
 
 function App() {
 	return (

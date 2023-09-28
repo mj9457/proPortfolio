@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as S from './Pagination.styles';
+import * as S from './index.styles';
 
 function Pagination(props) {
 	const { totalItems, currentPage, onPageChange } = props;

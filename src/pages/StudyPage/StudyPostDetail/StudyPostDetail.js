@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './StudyPostDetail.styles';
-import Button from '../../../components/@common/Button/Button';
+import Button from '../../../components/@common/Button';
 import EditComments from '../../../components/pages/StudyPage/EditComments/EditComments';
 import useApi from '../../../hooks/useApi';
 import { checkToken } from '../../../utils/cookie';
 import useFooter from '../../../hooks/useFooter';
 import MESSAGE from '../../../constants/message';
-import Review from '../../../components/@common/Review/Review';
-import LoadingBar from '../../../components/@common/Loading/LoadingBar';
+import Review from '../../../components/@common/Review';
+import LoadingBar from '../../../components/@common/Loading';
 
 function StudyPostDetail() {
 	useFooter();

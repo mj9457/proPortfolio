@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Button from '../../components/@common/Button/Button';
+import Button from 'components/@common/Button';
 import AWS from 'aws-sdk';
 import {
 	ApplyCard,
@@ -12,11 +12,11 @@ import {
 	SubTitle,
 	Title,
 } from './UserMentorApply.styles';
-import useFooter from '../../hooks/useFooter';
-import MESSAGE from '../../constants/message';
-import useApi from '../../hooks/useApi';
+import useFooter from 'hooks/useFooter';
+import MESSAGE from 'constants/message';
+import useApi from 'hooks/useApi';
 import { useNavigate } from 'react-router-dom';
-import Input from '../../components/@common/Input/Input';
+import Input from 'components/@common/Input';
 
 const UserMentorApply = () => {
 	useFooter();

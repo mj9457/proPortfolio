@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as H from './Home.styles';
-import RecommendCard from '../../components/pages/Home/RecommendCard/RecommendCard';
-import MentorCard from '../../components/@common/Card/Card';
+import RecommendCard from 'components/pages/Home/RecommendCard/RecommendCard';
+import MentorCard from 'components/@common/Card';
 import RollingSlider from './SlideBanner/SlideBanner';
-import Slider from '../../components/@common/Slider/Slider';
-import useApi from '../../hooks/useApi';
-import EmptyMessage from '../../components/@common/EmptyMessage/EmptyMessage';
+import Slider from 'components/@common/Slider';
+import useApi from 'hooks/useApi';
+import EmptyMessage from 'components/@common/EmptyMessage';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../recoil/atoms/index.atom';
-import LoadingBar from '../../../src/components/@common/Loading/LoadingBar';
+import { userAtom } from 'recoil/atoms/index.atom';
+import LoadingBar from 'components/@common/Loading';
 
 function Home() {
 	const [recommendedMentors, setRecommendedMentors] = useState([]);

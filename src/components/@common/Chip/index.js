@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import * as S from './Chip.styles';
+import * as S from './index.styles';
 
 function Chip({ classification }) {
 	return (

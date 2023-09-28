@@ -6,7 +6,7 @@ import { Atags, HandlerButton } from './AdminMentorApply.styles';
 import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
 import useApi from 'hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
-import LoadingBar from 'components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading';
 
 const AdminMentorApply = () => {
 	const { result, trigger, isLoading, error } = useApi({

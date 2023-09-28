@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as S from './PostForm.style';
-import Button from '../../../../@common/Button/Button';
-import Textarea from '../../../../@common/Textarea/Textarea';
+import Button from '../../../../@common/Button';
+import Textarea from '../../../../@common/Textarea';
 import useApi from '../../../../../hooks/useApi';
 import MESSAGE from '../../../../../constants/message';
 

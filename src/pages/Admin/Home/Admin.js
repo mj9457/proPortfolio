@@ -5,7 +5,7 @@ import AdminTable from 'components/pages/Admin/Table/AdminTable';
 import useApi from 'hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from './Admin.styles';
-import LoadingBar from 'components/@common/Loading/LoadingBar';
+import LoadingBar from 'components/@common/Loading';
 
 const AdminHome = () => {
 	const { result, trigger, isLoading, error } = useApi({

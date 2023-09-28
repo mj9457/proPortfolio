@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as S from './SelectWithDefault.styles';
+import * as S from './index.styles';
 
 function SelectWithDefault({
 	onChange,

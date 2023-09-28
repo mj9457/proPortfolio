@@ -1,4 +1,4 @@
-import * as S from './Button.styles';
+import * as S from './index.styles';
 
 function Button(props) {
 	const { variant, shape, size, disabled, children, ...rest } = props;

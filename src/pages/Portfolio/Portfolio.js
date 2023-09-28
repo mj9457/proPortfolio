@@ -7,13 +7,13 @@ import { userAtom } from 'recoil/atoms/index.atom';
 
 import * as S from './Portfolio.styles';
 
-import Line from 'components/@common/Line/Line';
+import Line from 'components/@common/Line';
 import PortfolioCard from 'components/pages/Portfolio/PortfolioCard/PortfolioCard';
-import MentorCard from 'components/@common/Card/Card';
-import Button from 'components/@common/Button/Button';
-import Select from 'components/@common/Select/Select';
-import EmptyMessage from 'components/@common/EmptyMessage/EmptyMessage';
-import LoadingBar from 'components/@common/Loading/LoadingBar';
+import MentorCard from 'components/@common/Card';
+import Button from 'components/@common/Button';
+import Select from 'components/@common/Select';
+import EmptyMessage from 'components/@common/EmptyMessage';
+import LoadingBar from 'components/@common/Loading';
 
 function Portfolio() {
 	// 로그인 유저 체크
@@ -26,9 +26,6 @@ function Portfolio() {
 	// 모든 멘토 데이터
 	const [mentorData, setMentorData] = useState([]);
 	const [mentorDataTotal, setMentorDataTotal] = useState(0);
-
-	// 인기 멘토
-	const [popularData, setPopularData] = useState([]);
 
 	// 포지션 === 카테고리 관리
 	const [positions, setPositions] = useState([]);
@@ -46,7 +43,7 @@ function Portfolio() {
 
 	// api 통신 1. 포지션 === 카테고리 정보 / 2. 모든 멘토 데이터 호출
 	const { result: positionResult } = useApi({
-		path: '/position',
+		path: '/positions',
 		shouldFetch: true,
 	});
 
@@ -55,7 +52,7 @@ function Portfolio() {
 		isLoading,
 		trigger,
 	} = useApi({
-		path: '/portfolio',
+		path: '/portfolios',
 		shouldFetch: true,
 	});
 
@@ -250,7 +247,7 @@ function Portfolio() {
 				<S.MentorCardBox>
 					<MentorCard
 						$variant={'blue'}
-						url={'/portfolio/recommend/topMentor'}
+						url={'/portfolios/recommend/topMentor'}
 					/>
 				</S.MentorCardBox>
 			</div>

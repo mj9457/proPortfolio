@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import Line from '../../Line/Line';
-import * as S from './Footer.styles';
+import Line from '../../Line';
+import * as S from './index.styles';
 
 function Footer() {
 	return (

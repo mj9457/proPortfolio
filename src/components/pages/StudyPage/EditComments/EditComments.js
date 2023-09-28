@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './EditComments.styles';
-import Button from '../../../../components/@common/Button/Button';
+import Button from '../../../@common/Button';
 import useApi from '../../../../hooks/useApi';
 
 import MESSAGE from '../../../../constants/message';

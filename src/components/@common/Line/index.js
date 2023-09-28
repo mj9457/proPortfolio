@@ -1,4 +1,4 @@
-import * as S from './Line.styles';
+import * as S from './index.styles';
 
 function Line({ size }) {
 	return <S.Lines size={size} />;

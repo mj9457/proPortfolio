@@ -1,4 +1,4 @@
-import * as S from './Textarea.styles';
+import * as S from './index.styles';
 
 function Textarea(props) {
 	const { size, placeholder, name, ...rest } = props;

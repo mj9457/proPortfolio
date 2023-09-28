@@ -1,4 +1,4 @@
-import * as S from './Input.styles';
+import * as S from './index.styles';
 
 function Input(props) {
 	const { size, ...rest } = props;

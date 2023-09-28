@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as S from './StudyCategory.styles';
 import PostCard from '../PostCard/PostCard';
 import useApi from '../../../../hooks/useApi';
-import EmptyMessage from '../../../@common/EmptyMessage/EmptyMessage';
-import LoadingBar from '../../../@common/Loading/LoadingBar';
+import EmptyMessage from '../../../@common/EmptyMessage';
+import LoadingBar from '../../../@common/Loading';
 
 const defaultCategories = [
 	{ name: '스터디', id: 0 },
