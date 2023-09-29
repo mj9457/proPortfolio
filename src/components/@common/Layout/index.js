@@ -31,7 +31,7 @@ const excludeRedirectPath = [
 function Layout() {
 	const [user, setUser] = useRecoilState(userAtom);
 	const navigate = useNavigate();
-	const { trigger, error } = useApi({ path: '/user', shouldFetch: false });
+	const { trigger, error } = useApi({ path: '/users', shouldFetch: false });
 	const location = useLocation();
 
 	const handleInvalidUser = useCallback(() => {

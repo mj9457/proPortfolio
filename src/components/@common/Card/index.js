@@ -25,7 +25,7 @@ function MentorCard(props) {
 	return (
 		<>
 			{isLoading && <LoadingBar />}
-			{mentorData.length === 0 && <EmptyMessage />}
+			{!isLoading && mentorData.length === 0 && <EmptyMessage />}
 			{mentorData.map((mentor, idx) => (
 				<S.StyledLink to={`/portfolio/post/${mentor._id}`} key={idx}>
 					<S.PopularCard $variant={$variant}>
