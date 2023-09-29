@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './EditComments.styles';
 import Button from '../../../@common/Button';
-import useApi from '../../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 
-import MESSAGE from '../../../../constants/message';
+import MESSAGE from 'constants/message';
 import SignUpModal from '../../../pages/SignUp/Modal/SignUpModal';
 
 function EditComments({ isLoggedIn, userData, title }) {
@@ -28,8 +28,8 @@ function EditComments({ isLoggedIn, userData, title }) {
 		}
 	}, [userData]);
 
-	const { trigger, isLoading, error, result } = useApi({
-		path: `/projectStudy/${postId}/comments`,
+	const { trigger } = useApi({
+		path: `/projectStudies/${postId}/comments`,
 		method: 'post',
 		shouldFetch: false,
 	});

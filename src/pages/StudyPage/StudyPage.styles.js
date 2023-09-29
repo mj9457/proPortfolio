@@ -29,10 +29,15 @@ export const Title = styled.h2`
 	margin-bottom: 8px;
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+	${flexAlignCenter}
+
+	img {
+		margin-right: 8px;
+	}
 `;
 
 export const SubTitle = styled.h3`
-	text-indent: 40px;
+	text-indent: 35px;
 `;
 
 export const TopBox = styled.div``;

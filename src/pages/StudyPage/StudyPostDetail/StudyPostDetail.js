@@ -1,21 +1,24 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unneeded-ternary */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './StudyPostDetail.styles';
-import Button from '../../../components/@common/Button';
-import EditComments from '../../../components/pages/StudyPage/EditComments/EditComments';
-import useApi from '../../../hooks/useApi';
-import { checkToken } from '../../../utils/cookie';
-import useFooter from '../../../hooks/useFooter';
-import MESSAGE from '../../../constants/message';
-import Review from '../../../components/@common/Review';
-import LoadingBar from '../../../components/@common/Loading';
+import Button from 'components/@common/Button';
+import EditComments from 'components/pages/StudyPage/EditComments/EditComments';
+import useApi from 'hooks/useApi';
+
+import { useRecoilValue } from 'recoil';
+import { userAtom } from 'recoil/atoms/index.atom';
+
+import useFooter from 'hooks/useFooter';
+import MESSAGE from 'constants/message';
+import Review from 'components/@common/Review';
+import LoadingBar from 'components/@common/Loading';
 
 function StudyPostDetail() {
 	useFooter();
+	const { isAuth } = useRecoilValue(userAtom);
 	const { postId } = useParams();
-	const [isLoggedIn, setIsLoggedIn] = useState(checkToken());
+	const [isLoggedIn, setIsLoggedIn] = useState(isAuth);
 
 	// console.log('isLoggedIn', isLoggedIn);
 
@@ -25,8 +28,8 @@ function StudyPostDetail() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const tokenStatus = checkToken();
-		setIsLoggedIn(tokenStatus);
+		// const tokenStatus = checkToken();
+		// setIsLoggedIn(tokenStatus);
 	}, []);
 
 	const { result: userData } = useApi({
@@ -51,7 +54,7 @@ function StudyPostDetail() {
 	// }, [userData]);
 
 	const { trigger, isLoading, error, result } = useApi({
-		path: `/projectStudy/${postId}`,
+		path: `/projectStudies/${postId}`,
 		shouldFetch: true,
 	});
 
@@ -98,7 +101,7 @@ function StudyPostDetail() {
 			try {
 				await trigger({
 					method: 'put',
-					path: `/projectStudy/${postId}`,
+					path: `/projectStudies/${postId}`,
 					data: {
 						recruitsStatus: '모집마감',
 					},
@@ -308,7 +311,7 @@ function StudyPostDetail() {
 								/>
 								<Review
 									title={'댓글'}
-									getUrl={`/projectStudy/${postId}`}
+									getUrl={`/projectStudies/${postId}`}
 								/>
 							</S.CommentContainer>
 						</S.PostDetailBottom>

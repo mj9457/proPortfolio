@@ -1,30 +1,30 @@
-import React, { useState, useEffect, useRef, useInsertionEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './StudyPage.styles';
-import Slider from '../../components/@common/Slider';
-import StudySlider from '../../components/pages/StudyPage/StudySlider/StudySlider';
-import SignupModal from '../../components/pages/SignUp/Modal/SignUpModal';
-import Button from '../../components/@common/Button';
-import { checkToken } from '../../utils/cookie';
-import MESSAGE from '../../constants/message';
-import StudyCategory from '../../components/pages/StudyPage/StudyCategory/StudyCategory';
-import useApi from '../../hooks/useApi';
+
+import StudySlider from 'components/pages/StudyPage/StudySlider/StudySlider';
+import SignupModal from 'components/pages/SignUp/Modal/SignUpModal';
+import Button from 'components/@common/Button';
+import MESSAGE from 'constants/message';
+import StudyCategory from 'components/pages/StudyPage/StudyCategory/StudyCategory';
+import PostCardList from 'components/pages/StudyPage/PostCardList/PostCardList';
+
+import useApi from 'hooks/useApi';
 
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../recoil/atoms/index.atom';
+import { userAtom } from 'recoil/atoms/index.atom';
 
 function StudyPage() {
-	// const { nickName } = useRecoilValue(userAtom);
-	// console.log(nickName);
+	const { isAuth } = useRecoilValue(userAtom);
 	const [userNickName, setUserNickName] = useState('');
 	const navigate = useNavigate();
 	const [openModal, setOpenModal] = useState(false);
 
-	const isLoggedIn = checkToken();
+	// const isLoggedIn = checkToken();
 	// console.log('로그인 유무', checkToken());
 
 	const onClickAddPost = () => {
-		if (!isLoggedIn) {
+		if (!isAuth) {
 			alert(MESSAGE.LOGIN.REQUIRED);
 			setOpenModal(true);
 		} else {
@@ -33,8 +33,8 @@ function StudyPage() {
 	};
 
 	const { result: userData } = useApi({
-		path: isLoggedIn ? '/user' : '',
-		shouldFetch: isLoggedIn,
+		path: isAuth ? '/user' : '',
+		shouldFetch: isAuth,
 	});
 
 	useEffect(() => {
@@ -61,12 +61,16 @@ function StudyPage() {
 					<S.TitleWrapper>
 						<S.TopBox>
 							<S.Title>
-								{isLoggedIn && userNickName
-									? `🔥 ${userNickName} 님 추천 스터디 / 프로젝트`
-									: '🔥 추천 스터디 / 프로젝트'}
+								<img
+									src="assets/img/icons/fire.svg"
+									alt="불 아이콘"
+								/>
+								{isAuth && userNickName
+									? `${userNickName} 님 추천 스터디 / 프로젝트`
+									: '추천 스터디 / 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
-								{isLoggedIn
+								{isAuth
 									? '포지션에 맞는 스터디, 프로젝트를 확인해 보세요!'
 									: '로그인하고 스터디, 프로젝트에 참여해 보세요!'}
 							</S.SubTitle>
@@ -84,12 +88,12 @@ function StudyPage() {
 
 					<S.PopularCardWrapper>
 						<StudySlider
-							isLoggedIn={isLoggedIn}
+							isLoggedIn={isAuth}
 							$background="whiteBackground"
 							url={
-								isLoggedIn
-									? '/projectStudy/recommend/recommendProjectStudy'
-									: '/projectStudy/recommend/recommendProjectStudyForGuest'
+								isAuth
+									? '/projectStudies/recommend/recommendProjectStudy'
+									: '/projectStudies/recommend/recommendProjectStudyForGuest'
 							}
 							slidesToShow={4}
 						/>
@@ -98,12 +102,19 @@ function StudyPage() {
 
 				<S.StudyContents>
 					<S.TitleWrapper>
-						<S.Title>✨ 함께 성장할 동료를 찾아보세요!</S.Title>
+						<S.Title>
+							<img
+								src="assets/img/icons/stars.svg"
+								alt="별 아이콘"
+							/>{' '}
+							함께 성장할 동료를 찾아보세요!
+						</S.Title>
 					</S.TitleWrapper>
 
 					{/* 필터 카테고리 버튼 영역 */}
 					<S.CategoryContainer>
 						<StudyCategory />
+						<PostCardList />
 					</S.CategoryContainer>
 				</S.StudyContents>
 			</S.Container>

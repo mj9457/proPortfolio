@@ -1,7 +1,6 @@
 import * as S from './PostCard.styles';
 import { Link } from 'react-router-dom';
 import Chip from '../../../@common/Chip';
-import { useEffect } from 'react';
 
 function PostCard({ data }) {
 	const {

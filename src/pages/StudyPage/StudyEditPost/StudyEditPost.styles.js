@@ -10,11 +10,16 @@ export const Container = styled.div`
 	${bodyContainer}
 `;
 export const Title = styled.h2`
+	${flexAlignCenter}
 	padding-bottom: 32px;
 	margin-bottom: 32px;
 	font-family: ${({ theme }) => theme.FONT_WEIGHT.bold};
 	font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 	border-bottom: 1px solid ${({ theme }) => theme.PALETTE.gray[100]};
+
+	img {
+		margin-right: 8px;
+	}
 `;
 export const SelectContainer = styled.div`
 	${flexColumn}

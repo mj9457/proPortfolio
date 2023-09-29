@@ -1,10 +1,10 @@
-/* eslint-disable no-useless-return */
 import React, { useState, useEffect, useRef } from 'react';
 import * as S from './StudyCategory.styles';
 import PostCard from '../PostCard/PostCard';
-import useApi from '../../../../hooks/useApi';
+import useApi from 'hooks/useApi';
 import EmptyMessage from '../../../@common/EmptyMessage';
 import LoadingBar from '../../../@common/Loading';
+import PostCardList from '../PostCardList/PostCardList';
 
 const defaultCategories = [
 	{ name: '스터디', id: 0 },
@@ -33,7 +33,7 @@ function StudyCategory() {
 		error,
 		result: positionResult,
 	} = useApi({
-		path: '/position',
+		path: '/positions',
 		shouldFetch: true,
 	});
 
@@ -44,7 +44,7 @@ function StudyCategory() {
 		error: errorProjectStudy,
 		result: resultProjectStudy,
 	} = useApi({
-		path: '/projectStudy',
+		path: '/projectStudies',
 		shouldFetch: true,
 	});
 
@@ -74,7 +74,7 @@ function StudyCategory() {
 			// 	selectedValues.position,
 			// );
 			triggerProjectStudy({
-				path: '/projectStudy',
+				path: '/projectStudies',
 				data: {
 					classification: selectedValues.classification,
 					position: selectedValues.position,
@@ -222,54 +222,7 @@ function StudyCategory() {
 				</S.PositionCategoryList>
 			</S.CategoryBottomList>
 
-			<S.PostCardContainer>
-				{isLoadingProjectStudy && !projectStudy.length && (
-					<LoadingBar />
-				)}
-				{/* {!isLoadingProjectStudy && !projectStudy.length && (
-					<EmptyMessage />
-				)}
-				{!isLoadingProjectStudy &&
-					Array.isArray(projectStudy) &&
-					projectStudy.length && (
-						<>
-							{projectStudy.map((projectStudy, idx) => (
-								<div key={projectStudy._id + idx}>
-									<PostCard data={projectStudy} />
-								</div>
-							))}
-
-							<div
-								style={{
-									height: '10px',
-									border: '1px solid black',
-								}}
-								ref={observerElement}
-							/>
-						</>
-					)} */}
-
-				{!isLoadingProjectStudy && !projectStudy.length && (
-					<EmptyMessage />
-				)}
-				{Array.isArray(projectStudy) && projectStudy.length > 0 && (
-					<>
-						{projectStudy.map((projectStudy, idx) => (
-							<div key={projectStudy._id + idx}>
-								<PostCard data={projectStudy} />
-							</div>
-						))}
-
-						<div
-							style={{
-								height: '10px',
-								border: 'none',
-							}}
-							ref={observerElement}
-						/>
-					</>
-				)}
-			</S.PostCardContainer>
+			<S.PostCardContainer></S.PostCardContainer>
 		</>
 	);
 }

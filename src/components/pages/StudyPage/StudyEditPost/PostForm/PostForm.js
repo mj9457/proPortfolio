@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as S from './PostForm.style';
 import Button from '../../../../@common/Button';
 import Textarea from '../../../../@common/Textarea';
-import useApi from '../../../../../hooks/useApi';
-import MESSAGE from '../../../../../constants/message';
+import useApi from 'hooks/useApi';
+import MESSAGE from 'constants/message';
 
 function PostForm({ selectedOptions, postId, postData }) {
 	const navigate = useNavigate();
@@ -73,7 +72,7 @@ function PostForm({ selectedOptions, postId, postData }) {
 	];
 
 	const { trigger, isLoading, error, result } = useApi({
-		path: '/projectStudy',
+		path: '/projectStudies',
 		method: 'post',
 	});
 
@@ -97,13 +96,13 @@ function PostForm({ selectedOptions, postId, postData }) {
 
 			if (postId) {
 				await trigger({
-					path: `/projectStudy/${postId}`,
+					path: `/projectStudies/${postId}`,
 					method: 'put',
 					data: postData,
 				});
 			} else {
 				await trigger({
-					path: '/projectStudy',
+					path: '/projectStudies',
 					method: 'post',
 					data: postData,
 				});

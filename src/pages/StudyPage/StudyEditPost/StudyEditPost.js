@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './StudyEditPost.styles';
-import { STUDYOPTIONS } from '../../../constants/study';
-import MultiSelectDropdown from '../../../components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
-import PostForm from '../../../components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
-import useApi from '../../../hooks/useApi';
-import SelectWithDefault from '../../../components/@common/SelectWithDefault';
-import useFooter from '../../../hooks/useFooter';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
+
+import { STUDYOPTIONS } from 'constants/study';
+
+import MultiSelectDropdown from 'components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
+import PostForm from 'components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
+import useApi from 'hooks/useApi';
+import SelectWithDefault from 'components/@common/SelectWithDefault';
+import useFooter from 'hooks/useFooter';
 
 function StudyEditPost() {
 	useFooter();
@@ -38,7 +40,7 @@ function StudyEditPost() {
 
 	// 게시글 정보
 	const { result: postData, trigger: getEditPostData } = useApi({
-		path: `/projectStudy/${postId}`,
+		path: `/projectStudies/${postId}`,
 		shouldFetch: !!postId,
 	});
 
@@ -57,7 +59,7 @@ function StudyEditPost() {
 	useEffect(() => {
 		if (postId) {
 			getEditPostData({
-				path: `/projectStudy/${postId}`,
+				path: `/projectStudies/${postId}`,
 			});
 		}
 	}, [postId]);
@@ -96,7 +98,8 @@ function StudyEditPost() {
 		<S.Container>
 			<S.BasicInfoBox>
 				<S.Title>
-					✨ 스터디 / 프로젝트 기본 정보를 작성해 주세요.
+					<img src="/assets/img/icons/stars.svg" alt="별 아이콘" />
+					스터디 / 프로젝트 기본 정보를 작성해 주세요.
 				</S.Title>
 				<S.SelectContainer>
 					<S.SelectWrapper>
@@ -190,7 +193,11 @@ function StudyEditPost() {
 
 			{/* 상세 설명 */}
 			<S.PostBox>
-				<S.Title>✨ 스터디 / 프로젝트를 소개해 주세요.</S.Title>
+				<S.Title>
+					{' '}
+					<img src="/assets/img/icons/stars.svg" alt="별 아이콘" />
+					스터디 / 프로젝트를 소개해 주세요.
+				</S.Title>
 				<PostForm
 					selectedOptions={selectedOptions}
 					postId={postId}
