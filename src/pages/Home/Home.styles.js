@@ -28,7 +28,7 @@ export const NewStudy = styled.div`
 export const TitleWrap = styled.div`
 	display: flex;
 	> img {
-		height: 24px;
+		height: 26px;
 		margin-right: 8px;
 	}
 `;

@@ -16,12 +16,15 @@ function Slider({ $background, url, slidesToShow }) {
 	});
 
 	useEffect(() => {
-		setIsLoading(true);
-		if (result && result.length > 0) {
-			setStudyInfoData([...result]);
-			setIsLoading(false);
+		if (result) {
+			const dataToUse = result.projectStudies || result;
+			setStudyInfoData(dataToUse);
 		}
 	}, [result]);
+
+	useEffect(() => {
+		setIsLoading(!studyInfoData.length);
+	}, [studyInfoData]);
 
 	const totalSlides = Math.ceil(studyInfoData.length / slidesToShow);
 	const handlePrevClick = () => {
@@ -38,26 +41,28 @@ function Slider({ $background, url, slidesToShow }) {
 				<H.SlideContainer>
 					{isLoading ? (
 						<LoadingBar />
-					) : studyInfoData.length > 0 ? (
+					) : studyInfoData && studyInfoData.length > 0 ? (
 						studyInfoData
 							.slice(
 								slide * slidesToShow,
 								(slide + 1) * slidesToShow,
 							)
-							.map((studyInfo, index) => (
-								<StudyInfoCard
-									key={index}
-									postId={studyInfo._id}
-									classification={studyInfo.classification}
-									recruitsStatus={studyInfo.recruitsStatus}
-									$background={$background}
-									title={studyInfo.title}
-									process={studyInfo.process}
-									recruits={studyInfo.recruits}
-									position={studyInfo.position}
-									deadline={studyInfo.deadline.split('T')[0]}
-								/>
-							))
+							.map((data, index) => {
+								return (
+									<StudyInfoCard
+										key={index}
+										postId={data._id}
+										classification={data.classification}
+										$background={$background}
+										title={data.title}
+										process={data.process}
+										recruits={data.recruits}
+										recruitsStatus={data.recruitsStatus}
+										position={data.position}
+										deadline={data.deadline.split('T')[0]}
+									/>
+								);
+							})
 					) : (
 						<EmptyMessage />
 					)}

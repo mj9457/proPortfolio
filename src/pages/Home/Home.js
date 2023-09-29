@@ -18,7 +18,7 @@ function Home() {
 	const [loading, setLoading] = useState(true);
 
 	const { trigger: recommandTrigger } = useApi({
-		path: '/portfolio/recommend/recommendMentor',
+		path: '/portfolios/recommend/recommendMentor',
 		shouldFetch: false,
 	});
 
@@ -37,6 +37,7 @@ function Home() {
 			getRecommandMentors();
 		}
 	}, [isAuth]);
+	console.log(isAuth);
 
 	return (
 		<H.Wrap>
@@ -46,7 +47,7 @@ function Home() {
 					<H.RecommendMentor>
 						<H.TitleWrap>
 							<img
-								src="/assets/img/icons/eyes.png"
+								src="/assets/img/icons/eyes.svg"
 								alt="눈아이콘"
 							/>
 							<H.Title>{nickName} 님에게 추천하는 멘토</H.Title>
@@ -74,7 +75,7 @@ function Home() {
 				)}
 				<H.NewStudy>
 					<H.TitleWrap>
-						<img src="/assets/img/icons/fire.png" alt="불아이콘" />
+						<img src="/assets/img/icons/fire.svg" alt="불아이콘" />
 						<H.TitleBox>
 							<H.Title>방금 올라온 스터디 / 프로젝트</H.Title>
 							<Link to="/study">
@@ -92,14 +93,14 @@ function Home() {
 					<H.SlideStudyCard>
 						<Slider
 							$background="lightBlueBackground"
-							url={'/projectStudy/recommend/latestProjectStudy'}
+							url={'/projectStudies/recommend/latestProjectStudy'}
 							slidesToShow={2}
 						/>
 					</H.SlideStudyCard>
 				</H.NewStudy>
 				<H.PopularMento>
 					<H.TitleWrap>
-						<img src="/assets/img/icons/star.png" alt="별아이콘" />
+						<img src="/assets/img/icons/star.svg" alt="별아이콘" />
 						<H.TitleBox>
 							<H.Title>지금 인기 있는 멘토</H.Title>
 							<Link to="/portfolio">
@@ -115,8 +116,8 @@ function Home() {
 					</H.TitleWrap>
 					<H.PopularCards>
 						<MentorCard
-							variant={'white'}
-							url={'/portfolio/recommend/topMentor'}
+							$variant={'white'}
+							url={'/portfolios/recommend/topMentor'}
 						/>
 					</H.PopularCards>
 				</H.PopularMento>
