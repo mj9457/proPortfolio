@@ -4,24 +4,20 @@ import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 const Layout = lazy(() => import('components/@common/Layout'));
 
-// home and signup page
-const Home = lazy(() => import('pages/Home/Home'));
-const SignUp = lazy(() => import('pages/SignUp/SignUp'));
-const SignUpDone = lazy(() => import('pages/SignUp/SignUpDone/SignUpDone'));
+// home & signup
+const Home = lazy(() => import('pages/Home'));
+const SignUp = lazy(() => import('pages/SignUp'));
+const SignUpDone = lazy(() => import('pages/SignUp/SignUpDone'));
 
-// my page
-const MyPageLayout = lazy(() => import('pages/MyPageLayout/MyPageLayout'));
+// my
+const MyPageLayout = lazy(() => import('pages/MyPageLayout'));
 
-// portfolio page
-const Portfolio = lazy(() => import('pages/Portfolio/Portfolio'));
-const PortfolioApply = lazy(() =>
-	import('pages/Portfolio/PortfolioApply/PortfolioApply'),
-);
-const PortfolioPost = lazy(() =>
-	import('pages/Portfolio/PortfolioPost/PortfolioPost'),
-);
+// portfolio
+const Portfolio = lazy(() => import('pages/Portfolio'));
+const PortfolioApply = lazy(() => import('pages/Portfolio/PortfolioApply'));
+const PortfolioPost = lazy(() => import('pages/Portfolio/PortfolioPost'));
 
-// study page
+// study
 const StudyPage = lazy(() => import('pages/StudyPage/StudyPage'));
 const StudyEditPost = lazy(() =>
 	import('pages/StudyPage/StudyEditPost/StudyEditPost'),
@@ -31,9 +27,7 @@ const StudyPostDetail = lazy(() =>
 );
 
 // user mentor apply page
-const UserMentorApply = lazy(() =>
-	import('pages/UserMentoApply/UserMentorApply'),
-);
+const UserMentorApply = lazy(() => import('pages/UserMentoApply'));
 
 // admin
 const AdminCategory = lazy(() => import('pages/Admin/Category/AdminCategory'));

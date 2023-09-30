@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useApi from 'hooks/useApi';
-import * as PL from './ProjectStudy.styles';
-import PostListData from 'components/pages/MyPage/Modules/PostListData/PostListData';
+import * as PL from './index.styles';
+import PostListData from 'components/pages/MyPage/Modules/PostListData';
 
 // 사용자가 작성한 게시글 리스트(프로젝트/스터디 모집글)
 const ProjectStudy = () => {

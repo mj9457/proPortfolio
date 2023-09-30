@@ -36,7 +36,8 @@ function SelectWithDefault({
 					value={internalSelectedOption}
 					onChange={onChange}
 				>
-					{internalSelectedOption || `${selectText}을(를) 선택하세요`}
+					{internalSelectedOption ||
+						`${selectText}을(를) 선택해 주세요.`}
 				</S.SelectDefaultOption>
 
 				<span className="material-symbols-outlined">

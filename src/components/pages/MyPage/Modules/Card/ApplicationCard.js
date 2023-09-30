@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import * as CCS from './ApplicationCard.styles';
 
-import InfoViewModal from 'components/pages/MyPage/Modules/Modal/Mentor/InfoViewModal/InfoViewModal';
-import EditModal from 'components/pages/MyPage/Modules/Modal/Mentor/EditModal/EditModal';
-import EditViewModal from 'components/pages/MyPage/Modules/Modal/User/EditViewModal/EditViewModal';
-import ReviewModal from 'components/pages/MyPage/Modules/Modal/User/ReviewModal/ReviewModal';
-import RefuseModal from 'components/pages/MyPage/Modules/Modal/Mentor/RefuseModal/RefuseModal';
-import RefuseViewModal from 'components/pages/MyPage/Modules/Modal/User/RefuseViewModal/RefuseViewModal';
+import InfoViewModal from 'components/pages/MyPage/Modules/Modal/Mentor/InfoViewModal';
+import EditModal from 'components/pages/MyPage/Modules/Modal/Mentor/EditModal';
+import EditViewModal from 'components/pages/MyPage/Modules/Modal/User/EditViewModal';
+import ReviewModal from 'components/pages/MyPage/Modules/Modal/User/ReviewModal';
+import RefuseModal from 'components/pages/MyPage/Modules/Modal/Mentor/RefuseModal';
+import RefuseViewModal from 'components/pages/MyPage/Modules/Modal/User/RefuseViewModal';
 
 import MYPAGEOPTION from 'constants/mypage';
 import MESSAGE from 'constants/message';

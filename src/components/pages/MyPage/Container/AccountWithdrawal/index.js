@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import * as AM from './AccountWithdrawal.styles';
+import * as AM from './index.styles';
 import MYPAGEOPTION from 'constants/mypage';
 import { Button } from 'components/@common/Button/index.styles';
 import MESSAGE from 'constants/message';

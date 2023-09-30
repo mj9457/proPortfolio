@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pagination, Space, theme } from 'antd';
 import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
-import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import AdminTable from 'components/pages/Admin/Table';
 import useApi from 'hooks/useApi';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from './Admin.styles';

@@ -2,7 +2,7 @@ import { Pagination, Select, Space, theme } from 'antd';
 
 import { useEffect, useMemo, useState } from 'react';
 
-import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import AdminTable from 'components/pages/Admin/Table';
 import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import useApi from 'hooks/useApi';

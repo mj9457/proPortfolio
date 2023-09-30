@@ -6,8 +6,8 @@ import DatePicker from 'react-datepicker';
 
 import { STUDYOPTIONS } from 'constants/study';
 
-import MultiSelectDropdown from 'components/pages/StudyPage/StudyEditPost/MultiSelectDropdown/MultiSelectDropdown';
-import PostForm from 'components/pages/StudyPage/StudyEditPost/PostForm/PostForm';
+import MultiSelectDropdown from 'components/pages/StudyPage/StudyEditPost/MultiSelectDropdown';
+import PostForm from 'components/pages/StudyPage/StudyEditPost/PostForm';
 import useApi from 'hooks/useApi';
 import SelectWithDefault from 'components/@common/SelectWithDefault';
 import useFooter from 'hooks/useFooter';

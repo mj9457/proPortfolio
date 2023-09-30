@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as S from './index.styles';
-import SignupModal from 'components/pages/SignUp/Modal/SignUpModal';
+import SignupModal from 'components/pages/SignUp/Modal';
 import Button from '../../Button';
 import useApi from 'hooks/useApi';
 import { useRecoilState, useRecoilValue } from 'recoil';

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import * as AM from './AccountManage.styles';
+import * as AM from './index.styles';
 import MYPAGEOPTION from 'constants/mypage';
 import Button from 'components/@common/Button';
 import useApi from 'hooks/useApi';

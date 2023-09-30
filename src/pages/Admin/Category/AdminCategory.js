@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Pagination, Space, theme } from 'antd';
 
-import AdminTable from 'components/pages/Admin/Table/AdminTable';
+import AdminTable from 'components/pages/Admin/Table';
 import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
-import { SearchInput } from 'components/pages/Admin/Searchbar/Searchbar.styles';
+import { SearchInput } from 'components/pages/Admin/Searchbar/index.styles';
 import { CancelButton, SaveButton, TableInput } from './AdminCategory.styles';
 import { HandlerButton } from '../MentorApply/AdminMentorApply.styles';
 import { PaginationWrap } from '../Home/Admin.styles';

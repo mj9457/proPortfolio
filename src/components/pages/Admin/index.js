@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import Sidebar from './Layout/Sidebar/Sidebar';
+import Sidebar from './Layout/Sidebar';
 import { Layout } from 'antd';
 import useApi from 'hooks/useApi';
 import ErrorFallback from 'components/@common/Error';

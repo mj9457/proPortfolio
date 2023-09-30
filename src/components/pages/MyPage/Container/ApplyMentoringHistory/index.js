@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import useApi from 'hooks/useApi';
-import * as AMH from './ApplyMentoringHistory.styles';
+import * as AMH from './index.styles';
 import MYPAGEOPTION from 'constants/mypage';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from 'recoil/atoms/index.atom';
