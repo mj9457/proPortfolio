@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import useApi from 'hooks/useApi';
 
-import Select from '../Select';
+import SelectWithDefault from '../SelectWithDefault';
 
 function Position(props) {
-	const { onChange, size, font, variant, value, ...rest } = props;
+	const { onChange, value } = props;
 
-	const [positions, setPositions] = useState([]);
+	const [positions, setPositions] = useState([
+		{
+			value: '',
+			name: '',
+		},
+	]);
 
 	const { result } = useApi({
 		path: '/positions',
@@ -16,26 +21,18 @@ function Position(props) {
 	useEffect(() => {
 		if (result.positions && result.positions.length > 0) {
 			setPositions(result.positions);
+			console.log(positions);
 		}
 	}, [result.positions]);
 
 	return (
-		<Select
-			size={size}
-			font={font}
-			variant={variant}
-			value={value}
+		<SelectWithDefault
+			options={positions}
+			selectedValue={value}
+			selectText="직무"
 			onChange={onChange}
 			name="position"
-			{...rest}
-		>
-			<option hidden>직무를 선택해 주세요.</option>
-			{positions.map((el, idx) => (
-				<option value={el.name} key={idx}>
-					{el.name}
-				</option>
-			))}
-		</Select>
+		/>
 	);
 }
 

@@ -25,7 +25,7 @@ function ApplyModal(props) {
 
 	// axios 통신 → 화면에 그려주는 작업
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/portfolio/', // 본인이 신청한 글 볼 수 있는 api
+		path: '/portfolios/', // 본인이 신청한 글 볼 수 있는 api
 		shouldFetch: true,
 	});
 
@@ -62,7 +62,7 @@ function ApplyModal(props) {
 			// action 이 완료일 때는 api method 가 post
 			trigger({
 				method: 'post',
-				path: `/portfolio/${path}/mentoringRequests`,
+				path: `/portfolios/${path}/mentoringRequests`,
 				data: textValue,
 			});
 

@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
+import { HelmetProvider } from 'react-helmet-async';
 
 import { ThemeProvider } from 'styled-components';
 import theme from 'styles/theme';
@@ -16,10 +17,12 @@ function App() {
 		<ErrorBoundary FallbackComponent={ErrorFallback}>
 			<Suspense fallback={<Loading />}>
 				<RecoilRoot>
-					<ThemeProvider theme={theme}>
-						<GlobalStyles />
-						<RouterProvider router={router} />
-					</ThemeProvider>
+					<HelmetProvider>
+						<ThemeProvider theme={theme}>
+							<GlobalStyles />
+							<RouterProvider router={router} />
+						</ThemeProvider>
+					</HelmetProvider>
 				</RecoilRoot>
 			</Suspense>
 		</ErrorBoundary>

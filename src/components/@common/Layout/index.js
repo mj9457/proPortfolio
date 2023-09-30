@@ -8,6 +8,7 @@ import { includeFooterState, userAtom } from 'recoil/atoms/index.atom';
 import Header from './Header';
 import Footer from './Footer';
 import ScrollToTopButton from '../ScrollToTop';
+import Seo from '../Seo/Seo';
 
 const excludeRedirectPath = [
 	{
@@ -97,6 +98,7 @@ function Layout() {
 	return (
 		<>
 			<Header />
+			<Seo />
 			<Outlet />
 			<ScrollToTopButton />
 			{includeFooter && <Footer />}

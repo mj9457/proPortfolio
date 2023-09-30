@@ -11,7 +11,8 @@
 			"recoil/*": ["recoil/*"],
 			"routes/*": ["routes/*"],
 			"styles/*": ["styles/*"],
-			"utils/*": ["utils/*"]
+			"utils/*": ["utils/*"],
+			"data/*": ["data/*"]
 		}
 	}
 }
