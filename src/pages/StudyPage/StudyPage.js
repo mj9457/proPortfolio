@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
 import * as S from './StudyPage.styles';
 
-import StudySlider from 'components/pages/StudyPage/StudySlider/StudySlider';
+import Slider from 'components/@common/Slider';
 import SignupModal from 'components/pages/SignUp/Modal/SignUpModal';
 import Button from 'components/@common/Button';
 import MESSAGE from 'constants/message';
@@ -11,18 +12,29 @@ import PostCardList from 'components/pages/StudyPage/PostCardList/PostCardList';
 
 import useApi from 'hooks/useApi';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { userAtom } from 'recoil/atoms/index.atom';
+import { studyPageState } from 'recoil/atoms/studyPageAtoms';
 
 function StudyPage() {
-	const { isAuth } = useRecoilValue(userAtom);
-	const [userNickName, setUserNickName] = useState('');
 	const navigate = useNavigate();
+
+	const { isAuth, nickName } = useRecoilValue(userAtom);
+
 	const [openModal, setOpenModal] = useState(false);
+	const [limit, setLimit] = useState(6);
+	const [currentSkip, setCurrentSkip] = useState(6);
 
-	// const isLoggedIn = checkToken();
-	// console.log('로그인 유무', checkToken());
+	// 카테고리 (스터디, 프로젝트 / 포지션) 클릭
+	const [selectedValues, setSelectedValues] = useState({
+		classification: '',
+		position: '',
+	});
 
+	// 스터디 프로젝트 데이터
+	const [data, setData] = useRecoilState(studyPageState);
+
+	// 글작성 버튼
 	const onClickAddPost = () => {
 		if (!isAuth) {
 			alert(MESSAGE.LOGIN.REQUIRED);
@@ -32,21 +44,49 @@ function StudyPage() {
 		}
 	};
 
-	const { result: userData } = useApi({
-		path: isAuth ? '/user' : '',
-		shouldFetch: isAuth,
+	// 카테고리에 맞는 스터디 프로젝트
+	const {
+		trigger: triggerProjectStudy,
+		isLoading: isLoadingProjectStudy,
+		error: errorProjectStudy,
+		result: resultProjectStudy,
+	} = useApi({
+		path: '/projectStudies',
+		shouldFetch: true,
 	});
 
+	// 카테고리 선택해서 바뀔 때 마다 (selectedValues가 바뀔 때 마다) trigger 호출
 	useEffect(() => {
-		if (userData) {
-			setUserNickName(userData.nickName);
-		}
-	}, [userData]);
+		triggerProjectStudy({
+			path: '/projectStudies',
+			data: {
+				classification: selectedValues.classification,
+				position: selectedValues.position,
+				limit,
+				skip: 0,
+			},
+			applyResult: true,
+		});
 
+		setLimit(6);
+		setCurrentSkip(0);
+	}, [selectedValues]);
+
+	// trigger 호출해서 불러오는 데이터가 바뀔 때 마다 새롭게 데이터 set
+	// 1. 처음 페이지 들어왔을 때 데이터 업데이트 (shouldFetch : true => 데이터 호출 => setData)
+	// 2. 카테고리 변경 클릭해서 skip이 초기화 될 때
+	useEffect(() => {
+		if (resultProjectStudy.projectStudies && currentSkip <= 6) {
+			setData(resultProjectStudy.projectStudies);
+		}
+	}, [resultProjectStudy]);
+
+	// 로그인 모달
 	const handleSignupClose = () => {
 		setOpenModal(false);
 	};
 
+	// 스크롤 맨 위로
 	const { pathname } = useLocation();
 
 	useEffect(() => {
@@ -65,8 +105,8 @@ function StudyPage() {
 									src="assets/img/icons/fire.svg"
 									alt="불 아이콘"
 								/>
-								{isAuth && userNickName
-									? `${userNickName} 님 추천 스터디 / 프로젝트`
+								{isAuth && nickName
+									? `${nickName} 님 추천 스터디 / 프로젝트`
 									: '추천 스터디 / 프로젝트'}
 							</S.Title>
 							<S.SubTitle>
@@ -87,8 +127,7 @@ function StudyPage() {
 					</S.TitleWrapper>
 
 					<S.PopularCardWrapper>
-						<StudySlider
-							isLoggedIn={isAuth}
+						<Slider
 							$background="whiteBackground"
 							url={
 								isAuth
@@ -112,9 +151,23 @@ function StudyPage() {
 					</S.TitleWrapper>
 
 					{/* 필터 카테고리 버튼 영역 */}
+
+					{/* 프롭스로 전달하는 state가 너무 많은데, 어떤 식으로 관리를 하면 좋을지 */}
+					{/* recoil =>  studyPageAtoms => 게시글 리스트 데이터 부분만 관리하고 있는데,  selectedValues 등의 값도 같이 관리하는 게 나은지?  */}
 					<S.CategoryContainer>
-						<StudyCategory />
-						<PostCardList />
+						<StudyCategory
+							selectedValues={selectedValues}
+							setSelectedValues={setSelectedValues}
+						/>
+						<PostCardList
+							trigger={triggerProjectStudy}
+							isLoadingProjectStudy={isLoadingProjectStudy}
+							result={resultProjectStudy}
+							limit={limit}
+							currentSkip={currentSkip}
+							setCurrentSkip={setCurrentSkip}
+							selectedValues={selectedValues}
+						/>
 					</S.CategoryContainer>
 				</S.StudyContents>
 			</S.Container>

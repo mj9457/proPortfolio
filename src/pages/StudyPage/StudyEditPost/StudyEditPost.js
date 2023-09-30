@@ -34,7 +34,7 @@ function StudyEditPost() {
 
 	// 유저 정보
 	const { result: userData, trigger: getUserData } = useApi({
-		path: '/user',
+		path: '/users',
 		shouldFetch: true,
 	});
 

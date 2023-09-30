@@ -1,4 +1,3 @@
-/* eslint-disable no-unneeded-ternary */
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as S from './StudyPostDetail.styles';
@@ -20,52 +19,31 @@ function StudyPostDetail() {
 	const { postId } = useParams();
 	const [isLoggedIn, setIsLoggedIn] = useState(isAuth);
 
-	// console.log('isLoggedIn', isLoggedIn);
-
 	const [postDetail, setPostDetail] = useState(null);
 	const [user, setUser] = useState(null);
 	const [isRecruitClosed, setIsRecruitClosed] = useState(null);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		// const tokenStatus = checkToken();
-		// setIsLoggedIn(tokenStatus);
-	}, []);
-
 	const { result: userData } = useApi({
-		path: isLoggedIn ? '/user' : '',
+		path: isLoggedIn ? '/users' : '',
 		shouldFetch: isLoggedIn,
 	});
 
-	// console.log('USERDATA', userData, user);
-
 	useEffect(() => {
 		if (userData) {
-			// console.log('USERDATA', userData);
 			setUser(userData);
-			// console.log('USER', user);
 		}
 	}, [userData]);
-
-	// console.log('user', user);
-
-	// useEffect(() => {
-	// 	setUser(userData);
-	// }, [userData]);
 
 	const { trigger, isLoading, error, result } = useApi({
 		path: `/projectStudies/${postId}`,
 		shouldFetch: true,
 	});
 
-	// console.log('postDetail', postDetail);
-
 	useEffect(() => {
 		if (result) {
 			setPostDetail(result);
-			setIsRecruitClosed(
-				result.recruitsStatus === '모집마감' ? true : false,
-			);
+			setIsRecruitClosed(result.recruitsStatus === '모집마감');
 		}
 	}, [result, postDetail, isRecruitClosed]);
 
@@ -118,7 +96,7 @@ function StudyPostDetail() {
 		if (confirm(MESSAGE.POST.DELETE)) {
 			await trigger({
 				method: 'delete',
-				path: `/projectStudy/${postId}`,
+				path: `/projectStudies/${postId}`,
 			});
 			navigate('/study');
 		}
