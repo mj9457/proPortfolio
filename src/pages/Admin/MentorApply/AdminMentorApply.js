@@ -10,7 +10,7 @@ import LoadingBar from 'components/@common/Loading';
 
 const AdminMentorApply = () => {
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/mentorRequest',
+		path: '/mentorRequests',
 		shouldFetch: true,
 		data: {
 			status: 'requested',
@@ -125,10 +125,8 @@ const AdminMentorApply = () => {
 	};
 	// 거절
 	const refuseHandler = async (requestId, key) => {
-		console.log(key);
-
 		await trigger({
-			path: `/mentorRequest/${requestId}`,
+			path: `/mentorRequests/${requestId}`,
 			method: 'put',
 			data: { status: 'rejected' },
 			applyResult: true,
@@ -191,7 +189,7 @@ const AdminMentorApply = () => {
 			},
 		});
 		await trigger({
-			path: `/mentorRequest/${requestId}`,
+			path: `/mentorRequests/${requestId}`,
 			method: 'put',
 			data: {
 				status: 'accepted',
@@ -239,7 +237,7 @@ const AdminMentorApply = () => {
 		// console.log(pageNumber);
 
 		await trigger({
-			path: '/mentorRequest',
+			path: '/mentorRequests',
 			data: {
 				skip: pageNumber * 10 - 10,
 				status: 'requested',

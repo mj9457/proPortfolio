@@ -16,7 +16,7 @@ const AdminMentorBoardList = () => {
 
 	// select option이 변경될 때
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/admin/portfolio',
+		path: '/admin/portfolios',
 		shouldFetch: true,
 	});
 	const columns = [
@@ -100,7 +100,7 @@ const AdminMentorBoardList = () => {
 		// console.log(pageNumber);
 
 		await trigger({
-			path: '/admin/portfolio',
+			path: '/admin/portfolios',
 			data: {
 				skip: pageNumber * 10 - 10,
 			},

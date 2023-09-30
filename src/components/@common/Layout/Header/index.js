@@ -126,6 +126,7 @@ function Header() {
 					path: `/notifications/${notiId}`,
 					method: 'delete',
 				});
+				navigate('/signinaccess');
 				window.location.reload();
 
 				break;

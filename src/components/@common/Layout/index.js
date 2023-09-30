@@ -87,8 +87,6 @@ function Layout() {
 				? location.pathname.includes(ex.path)
 				: location.pathname === ex.path,
 		);
-		console.log(isPublic);
-
 		if (isPublic) return;
 		checkAuth();
 	}, [location.pathname]);

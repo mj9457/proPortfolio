@@ -23,7 +23,7 @@ const AdminCategory = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/position',
+		path: '/positions',
 		shouldFetch: true,
 	});
 
@@ -133,7 +133,7 @@ const AdminCategory = () => {
 			return;
 		}
 		await trigger({
-			path: `/position/${key}`,
+			path: `/positions/${key}`,
 			data: { name: categoryInput },
 			method: 'put',
 			showBoundary: false,
@@ -164,7 +164,7 @@ const AdminCategory = () => {
 	const removeHandler = async key => {
 		await trigger({
 			method: 'delete',
-			path: `/position/${key}`,
+			path: `/positions/${key}`,
 			applyResult: true,
 		});
 		if (result.positions.length === 1) {
@@ -216,7 +216,7 @@ const AdminCategory = () => {
 
 	const pageChange = async pageNumber => {
 		await trigger({
-			path: '/position',
+			path: '/positions',
 			data: {
 				skip: pageNumber * 10 - 10,
 			},

@@ -9,7 +9,7 @@ import { useSetRecoilState } from 'recoil';
 
 function AdminLayout() {
 	const setUser = useSetRecoilState(userAtom);
-	const { trigger, error } = useApi({ path: '/user', shouldFetch: false });
+	const { trigger, error } = useApi({ path: '/users', shouldFetch: false });
 	const location = useLocation();
 	const [userRole, setUserRole] = useState('');
 
@@ -28,7 +28,7 @@ function AdminLayout() {
 		try {
 			setUser(prev => ({ ...prev, isLoading: true }));
 			const authResult = await trigger({
-				path: '/user',
+				path: '/users',
 				applyResult: false,
 				showBoundary: false,
 			});

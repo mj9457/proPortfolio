@@ -33,7 +33,7 @@ const UserMentorApply = () => {
 		secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
 	});
 	const { trigger } = useApi({
-		path: '/mentorRequest',
+		path: '/mentorRequests',
 		method: 'post',
 	});
 	const fileUploadHandler = () => {

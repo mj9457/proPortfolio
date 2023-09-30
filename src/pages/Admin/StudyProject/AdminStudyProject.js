@@ -150,7 +150,7 @@ const AdminStudyProject = () => {
 	};
 	const removeHandler = async (key, index) => {
 		await trigger({
-			path: `/admin/${key}`,
+			path: `/admin/projectStudies/${key}`,
 			method: 'delete',
 			applyResult: true,
 		});

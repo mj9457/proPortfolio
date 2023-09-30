@@ -9,7 +9,7 @@ import LoadingBar from 'components/@common/Loading';
 
 const AdminHome = () => {
 	const { result, trigger, isLoading, error } = useApi({
-		path: '/admin/user',
+		path: '/admin/users',
 		shouldFetch: true,
 	});
 	const columns = [
@@ -55,7 +55,7 @@ const AdminHome = () => {
 	 */
 
 	useEffect(() => {
-		// console.log(result);
+		console.log(result);
 		if (result.users) {
 			const startIndex = (currentPage - 1) * 10;
 			// console.log(result.users.length);
@@ -113,7 +113,7 @@ const AdminHome = () => {
 		// console.log(pageNumber);
 
 		await trigger({
-			path: '/admin/user',
+			path: '/admin/users',
 			data: {
 				skip: pageNumber * 10 - 10,
 			},
