@@ -37,7 +37,6 @@ function Home() {
 			getRecommandMentors();
 		}
 	}, [isAuth]);
-	console.log(isAuth);
 
 	return (
 		<H.Wrap>
