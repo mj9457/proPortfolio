@@ -16,6 +16,7 @@ function SignUp() {
 	const [position, setPosition] = useState('');
 	const [nameError, setNameError] = useState('');
 	const [nicknameError, setNicknameError] = useState('');
+	const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
 	const [checkingNickname, setCheckingNickname] = useState(false);
 	const navigate = useNavigate();
 	useFooter();
@@ -24,6 +25,7 @@ function SignUp() {
 
 	function fetchUserData() {
 		const email = decodeURIComponent(getCookie('email'));
+
 		// 비유저가 들어왔을 때
 		if (email !== 'undefined') {
 			setEmail(email);
@@ -56,6 +58,7 @@ function SignUp() {
 	const handleNicknameChange = event => {
 		const userNickName = event.target.value;
 		setNickName(userNickName);
+		setIsNicknameAvailable(null);
 		if (VALIDATE.nickName.test(userNickName)) {
 			setNickName(userNickName);
 			setNicknameError('');
@@ -83,12 +86,15 @@ function SignUp() {
 			setCheckingNickname(false);
 
 			if (response && response.message === '사용 가능한 닉네임입니다.') {
+				setIsNicknameAvailable(true);
 				alert('사용 가능한 닉네임입니다.');
 			} else {
+				setIsNicknameAvailable(false);
 				alert('이미 사용중인 닉네임입니다.');
 			}
 		} else {
 			alert('닉네임을 입력해 주세요.');
+			setIsNicknameAvailable(null);
 		}
 	};
 
@@ -97,6 +103,16 @@ function SignUp() {
 
 		if (!name || !email || !nickName || !position || checkingNickname) {
 			alert('모든 필수 정보를 입력해 주세요.');
+			return;
+		}
+
+		if (isNicknameAvailable === null) {
+			alert('닉네임 중복 확인이 필요합니다.');
+			return;
+		}
+
+		if (isNicknameAvailable === false) {
+			alert('이미 사용중인 닉네임입니다. 다른 닉네임을 이용하세요.');
 			return;
 		}
 
