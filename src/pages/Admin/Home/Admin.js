@@ -101,7 +101,7 @@ const AdminHome = () => {
 				data: {
 					skip: currentPage * 10 - 10,
 				},
-				applyResult: true,
+				// applyResult: true,
 			});
 		}
 	};
@@ -117,6 +117,7 @@ const AdminHome = () => {
 			data: {
 				skip: pageNumber * 10 - 10,
 			},
+
 			applyResult: true,
 		});
 		setCurrentPage(pageNumber);
@@ -131,16 +132,20 @@ const AdminHome = () => {
 			) : (
 				<>
 					{memoResult}
-					<PaginationWrap>
-						<Pagination
-							current={currentPage}
-							defaultCurrent={currentPage}
-							total={totalPages}
-							onChange={e => {
-								pageChange(e);
-							}}
-						/>
-					</PaginationWrap>
+					{totalPages === 0 ? (
+						''
+					) : (
+						<PaginationWrap>
+							<Pagination
+								current={currentPage}
+								defaultCurrent={currentPage}
+								total={totalPages}
+								onChange={e => {
+									pageChange(e);
+								}}
+							/>
+						</PaginationWrap>
+					)}
 				</>
 			)}
 		</AdminContent>

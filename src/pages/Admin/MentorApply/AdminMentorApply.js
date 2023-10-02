@@ -3,7 +3,7 @@ import { Button, Pagination, Space, theme } from 'antd';
 import { AdminContent } from 'components/pages/Admin/Common/Common.styles';
 import AdminTable from 'components/pages/Admin/Table';
 import { Atags, HandlerButton } from './AdminMentorApply.styles';
-import AdminApplyModal from '../AdminApplyModals/AdminApplyModal';
+import AdminApplyModal from '../AdminApplyModals';
 import useApi from 'hooks/useApi';
 import { PaginationWrap } from '../Home/Admin.styles';
 import LoadingBar from 'components/@common/Loading';

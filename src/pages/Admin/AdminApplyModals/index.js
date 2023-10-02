@@ -15,7 +15,7 @@ import {
 	SubTitle,
 	TextArea,
 	TextWrap,
-} from './AdminApplyModal.styles';
+} from './index.styles';
 // import IMG from 'assets/img/banner/banner01.png';
 
 const AdminApplyModal = ({
