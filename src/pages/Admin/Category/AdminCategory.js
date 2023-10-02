@@ -92,16 +92,6 @@ const AdminCategory = () => {
 	];
 
 	useEffect(() => {
-		if (error && result?.positions?.length === tableData?.length) {
-			if (error?.response?.data?.result === 'MongoServerError') {
-				if (error?.response?.data?.reason.includes('duplicate key')) {
-					alert('이미 사용중인 카테고리 이름입니다.');
-					return;
-					// navigate(0);
-				}
-			}
-		}
-
 		if (result.positions) {
 			setTableData(
 				result.positions.map(item => ({
@@ -130,6 +120,17 @@ const AdminCategory = () => {
 	const handleSave = async key => {
 		if (!categoryInput.trim()) {
 			alert(MESSAGE.CHECK.MODAL);
+			return;
+		}
+
+		const categoryVerify = await trigger({
+			path: 'positions/validate-position',
+			showBoundary: false,
+			method: 'post',
+			data: { position: categoryInput },
+		});
+		if (!categoryVerify) {
+			alert('중복된 카테고리 입니다.');
 			return;
 		}
 		await trigger({
@@ -191,6 +192,17 @@ const AdminCategory = () => {
 				alert('추가 할 카테고리를 입력해주세요.');
 				return;
 			}
+			const categoryVerify = await trigger({
+				path: 'positions/validate-position',
+				showBoundary: false,
+				method: 'post',
+				data: { position: inputValue },
+			});
+			if (!categoryVerify) {
+				alert('중복된 카테고리 입니다.');
+				return;
+			}
+
 			await trigger({
 				method: 'post',
 				data: { name: inputValue },

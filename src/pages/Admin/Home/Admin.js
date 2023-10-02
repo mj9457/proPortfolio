@@ -55,7 +55,7 @@ const AdminHome = () => {
 	 */
 
 	useEffect(() => {
-		console.log(result);
+		// console.log(result);
 		if (result.users) {
 			const startIndex = (currentPage - 1) * 10;
 			// console.log(result.users.length);
