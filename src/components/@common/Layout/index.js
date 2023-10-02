@@ -97,8 +97,8 @@ function Layout() {
 
 	return (
 		<>
-			<Header />
 			<Seo />
+			<Header />
 			<Outlet />
 			<ScrollToTopButton />
 			{includeFooter && <Footer />}

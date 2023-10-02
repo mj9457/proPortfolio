@@ -6,6 +6,7 @@ import useApi from 'hooks/useApi';
 import ErrorFallback from 'components/@common/Error';
 import { userAtom } from 'recoil/atoms/index.atom';
 import { useSetRecoilState } from 'recoil';
+import Seo from 'components/@common/Seo/Seo';
 
 function AdminLayout() {
 	const setUser = useSetRecoilState(userAtom);
@@ -56,10 +57,13 @@ function AdminLayout() {
 	}, [location.pathname]);
 
 	return userRole === 'admin' ? (
-		<Layout>
-			<Sidebar />
-			<Outlet />
-		</Layout>
+		<>
+			<Seo />
+			<Layout>
+				<Sidebar />
+				<Outlet />
+			</Layout>
+		</>
 	) : (
 		<ErrorFallback />
 	);
