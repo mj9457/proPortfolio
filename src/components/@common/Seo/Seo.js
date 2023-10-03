@@ -28,13 +28,13 @@ const Seo = () => {
 			title = '포폴 : 포트폴리오 리뷰 상세';
 			desc = '여기는 포트폴리오 상세 페이지입니다.';
 		} else if (location.pathname.includes('/portfolio/edit')) {
-			title = '포폴 : 포트폴리오 글 편집';
+			title = '포폴 : 포트폴리오 리뷰 글 수정';
 			desc = '여기는 포트폴리오 편집하는 페이지입니다.';
 		} else if (location.pathname.includes('/study/detail')) {
-			title = '포폴 : 스터디 / 프로젝트 상세';
+			title = '포폴 : 스터디 / 프로젝트 모집 상세';
 			desc = '여기는 스터디 / 프로젝트 상세 페이지입니다.';
 		} else if (location.pathname.includes('/study/edit')) {
-			title = '포폴 : 스터디 / 프로젝트 글 편집';
+			title = '포폴 : 스터디 / 프로젝트 모집 글 수정';
 			desc = '여기는 스터디 / 프로젝트 글 편집하는 페이지입니다.';
 		} else {
 			title = route.title;
@@ -49,6 +49,7 @@ const Seo = () => {
 
 	return (
 		<Helmet>
+			{/* <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> */}
 			<title>{title}</title>
 			<meta name="description" content={desc} />
 			<meta name="og:title" content={title} />

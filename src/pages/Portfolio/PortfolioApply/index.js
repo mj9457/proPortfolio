@@ -88,6 +88,13 @@ function PortfolioApply() {
 		}
 	}, [postResult]);
 
+	const handlePositionChange = (name, value) => {
+		setMentorPost(prevState => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
 	const handleChange = e => {
 		const { name, value } = e.target;
 
@@ -139,7 +146,7 @@ function PortfolioApply() {
 				<S.ContentsBox>
 					<p>1. 멘토 님의 기본 정보를 작성해 주세요.</p>
 					<Information
-						handleChange={handleChange}
+						handleChange={handlePositionChange}
 						user={user}
 						portfolioId={portfolioId}
 						mentorPost={mentorPost}

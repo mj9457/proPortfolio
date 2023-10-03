@@ -23,12 +23,12 @@ function Position(props) {
 			setPositions(result.positions);
 			console.log(positions);
 		}
-	}, [result.positions]);
+	}, [result.positions, value]);
 
 	return (
 		<SelectWithDefault
 			options={positions}
-			selectedValue={value}
+			selectedOption={value}
 			selectText="직무"
 			onChange={onChange}
 			name="position"
