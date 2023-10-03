@@ -3,7 +3,7 @@ import * as S from './index.styles';
 import useApi from 'hooks/useApi';
 
 import { useRecoilState } from 'recoil';
-import { studyPageState } from 'recoil/atoms/studyPageAtoms';
+import { studyPageState } from 'recoil/atoms/studyPage.atom';
 
 const defaultCategories = [
 	{ name: '스터디', id: 0 },
