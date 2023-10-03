@@ -4,7 +4,7 @@ import * as S from './index.styles';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 import { useRecoilState } from 'recoil';
-import { studyPageState } from 'recoil/atoms/studyPageAtoms';
+import { studyPageState } from 'recoil/atoms/studyPage.atom';
 
 import LoadingBar from 'components/@common/Loading';
 import EmptyMessage from 'components/@common/EmptyMessage';

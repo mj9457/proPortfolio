@@ -14,7 +14,7 @@ import useApi from 'hooks/useApi';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userAtom } from 'recoil/atoms/index.atom';
-import { studyPageState } from 'recoil/atoms/studyPageAtoms';
+import { studyPageState } from 'recoil/atoms/studyPage.atom';
 
 function StudyPage() {
 	const navigate = useNavigate();
