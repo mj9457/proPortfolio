@@ -48,7 +48,7 @@ function SelectWithDefault({
 				<S.OptionList>
 					{options.map(el => (
 						<S.Option
-							key={el.value}
+							key={el.value ? el.value : el._id}
 							onClick={() => handleSelect(el)}
 						>
 							{el.name}

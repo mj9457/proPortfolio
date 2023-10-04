@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import * as S from './StudyPage.styles';
+import * as S from './index.styles';
 
 import Slider from 'components/@common/Slider';
 import SignupModal from 'components/pages/SignUp/Modal';

@@ -18,13 +18,9 @@ const PortfolioApply = lazy(() => import('pages/Portfolio/PortfolioApply'));
 const PortfolioPost = lazy(() => import('pages/Portfolio/PortfolioPost'));
 
 // study
-const StudyPage = lazy(() => import('pages/StudyPage/StudyPage'));
-const StudyEditPost = lazy(() =>
-	import('pages/StudyPage/StudyEditPost/StudyEditPost'),
-);
-const StudyPostDetail = lazy(() =>
-	import('pages/StudyPage/StudyPostDetail/StudyPostDetail'),
-);
+const StudyPage = lazy(() => import('pages/StudyPage'));
+const StudyEditPost = lazy(() => import('pages/StudyPage/StudyEditPost'));
+const StudyPostDetail = lazy(() => import('pages/StudyPage/StudyPostDetail'));
 
 // user mentor apply page
 const UserMentorApply = lazy(() => import('pages/UserMentoApply'));

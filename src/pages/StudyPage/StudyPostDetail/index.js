@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import * as S from './StudyPostDetail.styles';
+import * as S from './index.styles';
 import Button from 'components/@common/Button';
 import EditComments from 'components/pages/StudyPage/EditComments';
 import useApi from 'hooks/useApi';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import * as S from './StudyEditPost.styles';
+import * as S from './index.styles';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
 
@@ -11,6 +11,7 @@ import PostForm from 'components/pages/StudyPage/StudyEditPost/PostForm';
 import useApi from 'hooks/useApi';
 import SelectWithDefault from 'components/@common/SelectWithDefault';
 import useFooter from 'hooks/useFooter';
+import Calendar from 'components/pages/StudyPage/Calendar';
 
 function StudyEditPost() {
 	useFooter();
@@ -153,7 +154,8 @@ function StudyEditPost() {
 					<S.SelectWrapper>
 						<S.SelectBox>
 							<S.Deadline>모집 마감일</S.Deadline>
-							<DatePicker
+							<Calendar />
+							{/* <DatePicker
 								selected={new Date(selectedOptions.deadline)}
 								onChange={date =>
 									handleOptionChange('deadline', date)
@@ -162,7 +164,7 @@ function StudyEditPost() {
 								minDate={new Date()}
 								popperPlacement="bottom"
 								name="deadline"
-							/>
+							/> */}
 						</S.SelectBox>
 
 						<S.SelectBox>
