@@ -4,10 +4,16 @@ import MYPAGEOPTION from 'constants/mypage';
 import { Button } from 'components/@common/Button/index.styles';
 import MESSAGE from 'constants/message';
 import useApi from 'hooks/useApi';
+import { useRecoilState } from 'recoil';
+import { userAtom } from 'recoil/atoms/index.atom';
+import { Navigate } from 'react-router-dom';
 
 function AccountWithdrawal() {
 	// 유저 정보 담을 state
 	const [user, setUser] = useState({});
+	const [del, setDel] = useRecoilState(userAtom);
+	const navigate = Navigate();
+
 	// 유저 정보 통신(GET)
 	const {
 		result: users,
@@ -37,7 +43,18 @@ function AccountWithdrawal() {
 				method: 'delete',
 				shouldFetch: true,
 			});
+			// 추가된 부분
+			setDel(prev => ({
+				...prev,
+				isAuth: false,
+				nickName: '',
+				role: '',
+				_id: '',
+				isLoading: false,
+			}));
+
 			alert(MESSAGE.MYPAGE.ACCOUNT.THANKS);
+			navigate('/');
 		} catch (err) {
 			console.log(err);
 		}
