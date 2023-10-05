@@ -37,7 +37,7 @@ function InfoEditModal({ setInfoModalOpenState, nowData }) {
 			// 유저 작성한 신청서 put로 전달
 			const { result, trigger, isLoading, error } = useApi({
 				method: 'put',
-				path: `/portfolio/${nowData.userId}/mentoringRequests`,
+				path: `/portfolios/${nowData.userId}/mentoringRequests`,
 				data: textValue,
 			});
 		}

@@ -12,7 +12,7 @@ function PostListData() {
 		trigger: postListsT,
 		// isLoading: postListsL,
 	} = useApi({
-		path: `/projectStudy/mypage`,
+		path: `/projectStudies/mypage`,
 		shouldFetch: true,
 	});
 
@@ -36,12 +36,12 @@ function PostListData() {
 	const onDelete = async targetId => {
 		await postListsT({
 			method: 'delete',
-			path: `/projectStudy/${targetId}`,
+			path: `/projectStudies/${targetId}`,
 		});
 		alert('삭제 되었습니다.');
 		await postListsT({
 			method: 'get',
-			path: `/projectStudy/mypage`,
+			path: `/projectStudies/mypage`,
 		});
 	};
 

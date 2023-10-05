@@ -9,7 +9,7 @@ const EditedPostHistory = () => {
 	const [postList, setPostList] = useState([]);
 	// 멘토링 신청 게시글 정보 통신(GET)
 	const { result: postLists } = useApi({
-		path: `/portfolio/mypage`,
+		path: `/portfolios/mypage`,
 		shouldFetch: true,
 	});
 
@@ -23,7 +23,7 @@ const EditedPostHistory = () => {
 	const [studyPostList, setStudyPostList] = useState([]);
 	// 프로젝트/스터디 게시물 정보 통신(GET)
 	const { result: studyPostLists } = useApi({
-		path: `/projectStudy/mypage`,
+		path: `/projectStudies/mypage`,
 		shouldFetch: true,
 	});
 

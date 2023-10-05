@@ -14,7 +14,7 @@ function MentoringPostListData() {
 		trigger: postListsT,
 		// isLoading: postListsL,
 	} = useApi({
-		path: `/portfolio/mypage`,
+		path: `/portfolios/mypage`,
 		shouldFetch: true,
 	});
 
@@ -27,19 +27,19 @@ function MentoringPostListData() {
 
 	// 게시물 보기
 	const showPost = postId => {
-		navigate(`/portfolio/post/${postId}`); // 멘토링 게시물 (멘토)
+		navigate(`/portfolios/post/${postId}`); // 멘토링 게시물 (멘토)
 	};
 
 	// 게시글 삭제
 	const onDelete = async targetId => {
 		await postListsT({
 			method: 'delete',
-			path: `/portfolio/${targetId}`,
+			path: `/portfolios/${targetId}`,
 		});
 		alert('삭제 되었습니다.');
 		await postListsT({
 			method: 'get',
-			path: `/portfolio/mypage`,
+			path: `/portfolios/mypage`,
 		});
 	};
 

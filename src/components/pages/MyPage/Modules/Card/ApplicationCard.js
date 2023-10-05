@@ -61,7 +61,7 @@ function ApplicationCard({ item, category, userInfo, type }) {
 
 		trigger({
 			method: 'post',
-			path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
+			path: `/portfolios/updateMentoringRequest/${portfolioId}/${requestId}`,
 			data: acceptedPostData,
 			shouldFetch: true,
 		});
@@ -75,7 +75,7 @@ function ApplicationCard({ item, category, userInfo, type }) {
 
 		trigger({
 			method: 'post',
-			path: `/portfolio/updateMentoringRequest/${portfolioId}/${requestId}`,
+			path: `/portfolios/updateMentoringRequest/${portfolioId}/${requestId}`,
 			data: requestedPostData,
 			shouldFetch: true,
 		});

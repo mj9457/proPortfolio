@@ -22,7 +22,7 @@ function RefuseModal({ setRefuseModalOpenState, item }) {
 	};
 
 	const { result, trigger } = useApi({
-		path: `/user`,
+		path: `/users`,
 		shouldFetch: true,
 	});
 
@@ -42,7 +42,7 @@ function RefuseModal({ setRefuseModalOpenState, item }) {
 			// 유저 작성한 신청서 post로 전달
 			trigger({
 				method: 'post',
-				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
+				path: `/portfolios/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
 				data: postsData,
 				shouldFetch: true,
 			});

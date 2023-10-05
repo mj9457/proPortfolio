@@ -9,7 +9,7 @@ const ProjectStudy = () => {
 	const [postList, setPostList] = useState([]);
 	// 프로젝트/스터디 정보 통신(GET)
 	const { result: postLists } = useApi({
-		path: `/projectStudy/mypage`,
+		path: `/projectStudies/mypage`,
 		shouldFetch: true,
 	});
 

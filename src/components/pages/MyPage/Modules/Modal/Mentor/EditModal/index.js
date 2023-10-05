@@ -20,7 +20,7 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 
 	// 유저 정보 통신(GET)
 	const { result, trigger } = useApi({
-		path: `/user`,
+		path: `/users`,
 		shouldFetch: true,
 	});
 
@@ -41,7 +41,7 @@ function EditModal({ categoryKey, setEditModalOpenState, item }) {
 		} else {
 			trigger({
 				method: 'post',
-				path: `/portfolio/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
+				path: `/portfolios/mentor/respondToMentoringRequest/${portfolioId}/${requestId}`,
 				data: postData,
 				shouldFetch: true,
 			});

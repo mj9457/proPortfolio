@@ -19,7 +19,7 @@ function AccountManage() {
 	const [user, setUser] = useState();
 	// 유저 정보 통신(GET)
 	const { result: users, trigger: usersT } = useApi({
-		path: `/user`,
+		path: `/users`,
 		shouldFetch: true,
 	});
 	useEffect(() => {
@@ -30,7 +30,7 @@ function AccountManage() {
 	// 직무 담을 state
 	const [position, setPosition] = useState([]);
 	const { result: positions } = useApi({
-		path: '/position',
+		path: '/positions',
 		shouldFetch: true,
 	});
 	// 포지션 정보가 변경될 때 리렌더링

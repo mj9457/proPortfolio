@@ -15,7 +15,7 @@ function AccountWithdrawal() {
 		isLoading: usersL,
 		error: usersE,
 	} = useApi({
-		path: `/user`,
+		path: `/users`,
 		shouldFetch: true,
 	});
 

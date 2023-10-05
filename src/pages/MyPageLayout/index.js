@@ -30,7 +30,7 @@ function MyPageLayout() {
 	const [user, setUser] = useState({});
 	// 유저 정보 통신(GET)
 	const { result: users } = useApi({
-		path: `/user`,
+		path: `/users`,
 		shouldFetch: true,
 	});
 

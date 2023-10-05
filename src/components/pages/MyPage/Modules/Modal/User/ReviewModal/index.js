@@ -51,7 +51,7 @@ function ReviewModal({ setReviewModalOpenState, item }) {
 			console.log(portfolioId, requestId, postsData);
 			trigger({
 				method: 'post',
-				path: `/portfolio/${portfolioId}/comments`,
+				path: `/portfolios/${portfolioId}/comments`,
 				data: postsData,
 				shouldFetch: true,
 			});

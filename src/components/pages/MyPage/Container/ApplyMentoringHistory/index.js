@@ -23,8 +23,8 @@ const countTitles = {
 };
 
 const mapTypeToApiPath = {
-	user: '/portfolio/user/myMentoringRequests',
-	mentor: '/portfolio/mentor/mentoringRequests',
+	user: '/portfolios/user/myMentoringRequests',
+	mentor: '/portfolios/mentor/mentoringRequests',
 };
 
 const ApplyMentoringHistory = ({ type }) => {
