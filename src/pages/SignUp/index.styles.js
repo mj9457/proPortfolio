@@ -21,17 +21,13 @@ export const RegisterForm = styled.form`
 		text-align: left;
 		gap: 16px;
 		margin-bottom: 16px;
-
+		> div {
+			font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+			font-family: ${({ theme }) => theme.FONT_WEIGHT.regular};
+			color: ${({ theme }) => theme.PALETTE.gray[300]};
+		}
 		> label {
 			font-size: ${({ theme }) => theme.FONT_SIZE.md};
-		}
-		> select {
-			width: 360px;
-			height: 42px;
-			padding: 0 12px 0 6px;
-			border: 1px solid #0000001a;
-			border-radius: 4px;
-			color: ${({ theme }) => theme.PALETTE.gray[300]};
 		}
 	}
 	> button {

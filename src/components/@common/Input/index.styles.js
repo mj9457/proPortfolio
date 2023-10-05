@@ -27,7 +27,6 @@ export const TextInput = styled.input`
 
 	&:read-only {
 		background-color: ${({ theme }) => theme.PALETTE.gray[200]};
-		color: ${({ theme }) => theme.PALETTE.gray[300]};
 		pointer-events: none;
 	}
 `;

@@ -69,10 +69,12 @@ function SignUp() {
 		}
 	};
 
-	const handleJobChange = event => {
-		setPosition(event.target.value);
+	const handlePositionChange = (name, value) => {
+		setPosition(prevState => ({
+			...prevState,
+			[name]: value,
+		}));
 	};
-
 	const checkNicknameAvailable = async () => {
 		if (nickName) {
 			setCheckingNickname(true);
@@ -100,6 +102,8 @@ function SignUp() {
 
 	const handleSubmit = event => {
 		event.preventDefault();
+		const positionValues = Object.values(position).join(', ');
+		console.log(positionValues);
 
 		if (!name || !email || !nickName || !position || checkingNickname) {
 			alert('모든 필수 정보를 입력해 주세요.');
@@ -123,12 +127,11 @@ function SignUp() {
 				name,
 				email,
 				nickName,
-				position,
+				position: positionValues,
 			},
 		});
 		navigate('/signup/done');
 	};
-
 	return (
 		<S.Wrap>
 			<S.RegisterForm onSubmit={handleSubmit}>
@@ -177,10 +180,8 @@ function SignUp() {
 				<div>
 					<label>직무</label>
 					<Position
-						onChange={handleJobChange}
+						onChange={handlePositionChange}
 						position={position}
-						size={'regular'}
-						font={'regular'}
 					/>
 				</div>
 				<Button
