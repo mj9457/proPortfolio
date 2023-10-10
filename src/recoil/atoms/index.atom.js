@@ -18,5 +18,6 @@ export const userAtom = atom({
 		_id: '',
 		isLoading: false,
 	},
+
 	effects_UNSTABLE: [persistAtom],
 });

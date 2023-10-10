@@ -1,10 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { deleteApi, getApi, patchApi, postApi, putApi } from 'utils/api';
 import { useErrorBoundary } from 'react-error-boundary';
+import { isAxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * TODO React swr로 리팩토링
  */
+
 const mapMethodToFetcher = {
 	get: (...args) => getApi(...args),
 	post: (...args) => postApi(...args),
@@ -27,6 +30,7 @@ const useApi = ({
 	// params: initParams = {},
 	showBoundary = true, // 비동기 에러 표시 여부
 }) => {
+	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [result, setResult] = useState({});
@@ -79,6 +83,15 @@ const useApi = ({
 			} catch (err) {
 				// 비동기 에러 검출 가능
 				if (showBoundary) {
+					if (isAxiosError(err)) {
+						const {
+							request: { status },
+						} = err;
+						if (status === 401) {
+							localStorage.removeItem('recoil-persist');
+							return navigate(0);
+						}
+					}
 					handleError(err);
 				} else {
 					// 비동기 에러 검출 가능

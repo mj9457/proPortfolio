@@ -83,11 +83,13 @@ function Layout() {
 		if (location.pathname === '/signup') {
 			// return signupPrevent();
 		}
+
 		const isPublic = excludeRedirectPath.find(ex =>
 			ex.hasParam
 				? location.pathname.includes(ex.path)
 				: location.pathname === ex.path,
 		);
+
 		if (isPublic) return;
 		checkAuth();
 	}, [location.pathname]);
