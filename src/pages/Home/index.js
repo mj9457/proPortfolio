@@ -17,13 +17,13 @@ function Home() {
 	const [nickName, setNickName] = useState('');
 	const [loading, setLoading] = useState(true);
 
-	const { trigger: recommandTrigger } = useApi({
+	const { trigger: recommendTrigger } = useApi({
 		path: '/portfolios/recommend/recommendMentor',
 		shouldFetch: false,
 	});
 
-	const getRecommandMentors = async () => {
-		const getResult = await recommandTrigger({ applyResult: false });
+	const getRecommendMentors = async () => {
+		const getResult = await recommendTrigger({ applyResult: false });
 
 		if (getResult && getResult.portfolios && getResult.portfolios.length) {
 			setNickName(getResult.nickName);
@@ -34,7 +34,7 @@ function Home() {
 
 	useEffect(() => {
 		if (isAuth) {
-			getRecommandMentors();
+			getRecommendMentors();
 		}
 	}, [isAuth]);
 
