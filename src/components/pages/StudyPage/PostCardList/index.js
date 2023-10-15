@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import PostCard from '../PostCard';
 import * as S from './index.styles';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
@@ -13,33 +13,44 @@ function PostCardList({
 	isLoadingProjectStudy,
 	selectedValues,
 	trigger,
-	result,
 	setCurrentSkip,
 	currentSkip,
 	limit,
 }) {
 	const [data, setData] = useRecoilState(studyPageState);
+	const [disableLoadData, setDisableLoadData] = useState(false);
+	const observerRef = useRef();
 
-	const loadData = () => {
-		console.log('통과할 때 콜백함수');
-		setCurrentSkip(prevSkip => {
-			return prevSkip + limit;
-		});
-
-		trigger({
+	const loadData = async () => {
+		if (disableLoadData) return;
+		const nextSkip = currentSkip + limit;
+		setCurrentSkip(nextSkip);
+		const addedData = await trigger({
 			path: '/projectStudies',
 			data: {
 				classification: selectedValues.classification,
 				position: selectedValues.position,
 				limit,
-				skip: currentSkip,
+				skip: nextSkip,
 			},
-			applyResult: true,
+			applyResult: false,
 		});
-
-		setData(prev => [...prev, ...result.projectStudies]);
+		if (addedData && !addedData.projectStudies.length) {
+			setDisableLoadData(true);
+			return;
+		}
+		// console.log(data);
+		setData(prev => [...prev, ...addedData.projectStudies]);
 	};
-	const { observeElement } = useInfiniteScroll(loadData);
+
+	const { setTargetRef } = useInfiniteScroll(loadData, disableLoadData, [
+		currentSkip,
+	]);
+	useEffect(() => {
+		if (observerRef?.current) {
+			setTargetRef(observerRef);
+		}
+	}, [observerRef.current]);
 
 	return (
 		<>
@@ -53,15 +64,16 @@ function PostCardList({
 								<PostCard data={data} />
 							</div>
 						))}
-
-						<div
-							style={{
-								height: '10px',
-								border: 'none',
-							}}
-							ref={observeElement}
-						/>
 					</>
+				)}
+				{(!isLoadingProjectStudy || currentSkip) && (
+					<div
+						style={{
+							height: '10px',
+							border: 'none',
+						}}
+						ref={observerRef}
+					/>
 				)}
 			</S.PostCardContainer>
 		</>

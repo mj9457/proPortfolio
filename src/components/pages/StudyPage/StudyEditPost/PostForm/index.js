@@ -77,6 +77,10 @@ function PostForm({ selectedOptions, postId, postData }) {
 	});
 
 	const handleSubmit = async e => {
+		const submitDeadline = new Date(
+			selectedOptions.deadline.getTime() + 3600 * 9 * 1000,
+		);
+
 		const validationFailures = validationChecks.filter(
 			condition => condition.check,
 		);
@@ -92,6 +96,7 @@ function PostForm({ selectedOptions, postId, postData }) {
 				...selectedOptions,
 				title: values.title,
 				description: values.description,
+				deadline: submitDeadline,
 			};
 
 			if (postId) {

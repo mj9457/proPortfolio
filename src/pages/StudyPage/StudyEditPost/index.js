@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as S from './index.styles';
-import 'react-datepicker/dist/react-datepicker.css';
-import DatePicker from 'react-datepicker';
 
 import { STUDYOPTIONS } from 'constants/study';
 
@@ -15,7 +13,10 @@ import Calendar from 'components/pages/StudyPage/Calendar';
 
 function StudyEditPost() {
 	useFooter();
-	const [isEdit, setIsEdit] = useState(false);
+	const [selectedCalendarDate, setSelectedCalendarDate] = useState(
+		new Date(),
+	);
+
 	const [selectedOptions, setSelectedOptions] = useState({
 		classification: '',
 		process: '',
@@ -23,7 +24,7 @@ function StudyEditPost() {
 		recruits: '',
 		howContactTitle: '',
 		howContactContent: '',
-		deadline: new Date(),
+		deadline: selectedCalendarDate,
 		nickName: '',
 		name: '',
 		recruitsStatus: '모집중',
@@ -58,6 +59,13 @@ function StudyEditPost() {
 	}, [userData]);
 
 	useEffect(() => {
+		setSelectedOptions(prevOptions => ({
+			...prevOptions,
+			deadline: selectedCalendarDate,
+		}));
+	}, [selectedCalendarDate]);
+
+	useEffect(() => {
 		if (postId) {
 			getEditPostData({
 				path: `/projectStudies/${postId}`,
@@ -67,9 +75,13 @@ function StudyEditPost() {
 
 	useEffect(() => {
 		if (postData._id) {
-			setIsEdit(true);
+			const deadlineDate = new Date(postData.deadline);
+			setSelectedCalendarDate(deadlineDate);
+		}
+	}, [postData._id]);
 
-			const initialDeadline = new Date(selectedOptions.deadline);
+	useEffect(() => {
+		if (postData._id) {
 			setSelectedOptions(prevOptions => ({
 				...prevOptions,
 				classification: postData.classification,
@@ -78,7 +90,7 @@ function StudyEditPost() {
 				recruits: postData.recruits,
 				howContactTitle: postData.howContactTitle,
 				howContactContent: postData.howContactContent,
-				deadline: initialDeadline,
+				deadline: selectedCalendarDate,
 				nickName: userData.nickName,
 				name: userData.name,
 				ownerId: userData._id,
@@ -87,6 +99,13 @@ function StudyEditPost() {
 			}));
 		}
 	}, [postData._id]);
+
+	// console.log(
+	// 	'selectedCalendarDate',
+	// 	selectedCalendarDate,
+	// 	'selectedOptions',
+	// 	selectedOptions,
+	// );
 
 	const handleOptionChange = (name, value) => {
 		setSelectedOptions(prevOptions => ({
@@ -154,17 +173,12 @@ function StudyEditPost() {
 					<S.SelectWrapper>
 						<S.SelectBox>
 							<S.Deadline>모집 마감일</S.Deadline>
-							<Calendar />
-							{/* <DatePicker
-								selected={new Date(selectedOptions.deadline)}
-								onChange={date =>
-									handleOptionChange('deadline', date)
+							<Calendar
+								selectedCalendarDate={selectedCalendarDate}
+								setSelectedCalendarDate={
+									setSelectedCalendarDate
 								}
-								dateFormat="yyyy-MM-dd"
-								minDate={new Date()}
-								popperPlacement="bottom"
-								name="deadline"
-							/> */}
+							/>
 						</S.SelectBox>
 
 						<S.SelectBox>

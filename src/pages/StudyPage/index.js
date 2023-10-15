@@ -152,8 +152,6 @@ function StudyPage() {
 
 					{/* 필터 카테고리 버튼 영역 */}
 
-					{/* 프롭스로 전달하는 state가 너무 많은데, 어떤 식으로 관리를 하면 좋을지 */}
-					{/* recoil =>  studyPageAtoms => 게시글 리스트 데이터 부분만 관리하고 있는데,  selectedValues 등의 값도 같이 관리하는 게 나은지?  */}
 					<S.CategoryContainer>
 						<StudyCategory
 							selectedValues={selectedValues}

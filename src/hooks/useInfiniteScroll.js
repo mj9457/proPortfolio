@@ -1,43 +1,29 @@
 import { useState, useEffect, useRef } from 'react';
 
-function useInfiniteScroll(loadData) {
-	const observer = useRef();
+function useInfiniteScroll(func, pause, deps) {
+	const [targetRef, setTargetRef] = useState(useRef(null));
+
+	const intersectionObserver = new IntersectionObserver(entries => {
+		const target = entries[0];
+		if(pause) return;
+		if (target.isIntersecting) {
+			intersectionObserver.unobserve(targetRef.current);
+			func();
+		}
+	});
 
 	useEffect(() => {
-		const options = {
-			root: null,
-			rootMargin: '0px',
-			threshold: 1.0,
-		};
-
-		observer.current = new IntersectionObserver(entries => {
-			const target = entries[0];
-			// console.log(target, 'target', entries);
-			if (target.isIntersecting) {
-				loadData();
-			}
-		}, options);
-
-		return () => {
-			if (observer.current) {
-				observer.current.disconnect();
-			}
-		};
-	}, [loadData]);
-
-	const observeElement = useRef(null);
-	useEffect(() => {
-		if (observeElement.current && observer.current) {
-			observer.current.observe(observeElement.current);
+		if (targetRef?.current) {
+			intersectionObserver.observe(targetRef.current);
 		}
 		return () => {
-			if (observeElement.current && observer.current) {
-				observer.current.unobserve(observeElement.current);
+			if (targetRef?.current && targetRef.current) {
+				intersectionObserver.disconnect();
 			}
 		};
-	}, [observeElement]);
+	}, [targetRef.current, ...deps]);
 
-	return { observeElement };
+	return { setTargetRef };
 }
 
 export default useInfiniteScroll;

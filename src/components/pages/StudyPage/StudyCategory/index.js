@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './index.styles';
 import useApi from 'hooks/useApi';
-
-import { useRecoilState } from 'recoil';
-import { studyPageState } from 'recoil/atoms/studyPage.atom';
 
 const defaultCategories = [
 	{ name: '스터디', id: 0 },
@@ -11,8 +8,6 @@ const defaultCategories = [
 ];
 
 function StudyCategory({ selectedValues, setSelectedValues }) {
-	const [data, setData] = useRecoilState(studyPageState);
-
 	const [position, setPosition] = useState([]);
 	// 포지션 리스트
 	const { result: positionResult } = useApi({
@@ -32,22 +27,14 @@ function StudyCategory({ selectedValues, setSelectedValues }) {
 			...prev,
 			classification: classificationValue,
 		}));
-
-		if (selectedValues.classificationValue !== classificationValue) {
-			setData([]);
-		}
 	};
 
-	// 포지션 클릭
+	// // 포지션 클릭
 	const handlePositionClick = positionValue => {
 		setSelectedValues(prev => ({
 			...prev,
 			position: positionValue,
 		}));
-
-		if (selectedValues.position !== positionValue) {
-			setData([]);
-		}
 	};
 
 	return (
