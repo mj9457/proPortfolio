@@ -209,32 +209,6 @@ function Portfolio() {
 				)}
 			</S.BannerBox>
 
-			<S.ButtonBox>
-				<div>
-					<S.PositionCategoryItem
-						onClick={() => handlePositionClick('')}
-						$isSelected={selectedValues.position === ''}
-					>
-						전체
-					</S.PositionCategoryItem>
-
-					{positions &&
-						positions.map(position => (
-							<S.PositionCategoryItem
-								key={position._id}
-								onClick={() =>
-									handlePositionClick(position.name)
-								}
-								$isSelected={
-									selectedValues.position === position.name
-								}
-							>
-								{position.name}
-							</S.PositionCategoryItem>
-						))}
-				</div>
-			</S.ButtonBox>
-
 			<div>
 				{/* 지금 인기 있는 멘토들 제목 */}
 				<S.TitleBox>
@@ -270,6 +244,33 @@ function Portfolio() {
 						<option value="popular">인기순</option>
 					</Select>
 				</S.MentorTitleBox>
+
+				<S.ButtonBox>
+					<div>
+						<S.PositionCategoryItem
+							onClick={() => handlePositionClick('')}
+							$isSelected={selectedValues.position === ''}
+						>
+							전체
+						</S.PositionCategoryItem>
+
+						{positions &&
+							positions.map(position => (
+								<S.PositionCategoryItem
+									key={position._id}
+									onClick={() =>
+										handlePositionClick(position.name)
+									}
+									$isSelected={
+										selectedValues.position ===
+										position.name
+									}
+								>
+									{position.name}
+								</S.PositionCategoryItem>
+							))}
+					</div>
+				</S.ButtonBox>
 
 				<S.MentorCardBox>
 					{isLoading && !mentorData.length && <LoadingBar />}

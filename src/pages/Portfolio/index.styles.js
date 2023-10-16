@@ -35,6 +35,7 @@ export const TitleBox = styled.div`
 export const ButtonBox = styled.div`
 	${flexColumn}
 	justify-content: space-between;
+	margin-bottom: 56px;
 
 	& div {
 		display: flex;
