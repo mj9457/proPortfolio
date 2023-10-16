@@ -6,13 +6,13 @@ import MESSAGE from 'constants/message';
 import useApi from 'hooks/useApi';
 import { useRecoilState } from 'recoil';
 import { userAtom } from 'recoil/atoms/index.atom';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function AccountWithdrawal() {
 	// 유저 정보 담을 state
 	const [user, setUser] = useState({});
 	const [del, setDel] = useRecoilState(userAtom);
-	const navigate = Navigate();
+	const navigate = useNavigate();
 
 	// 유저 정보 통신(GET)
 	const {
