@@ -17,6 +17,7 @@ function AccountManage() {
 	});
 	// 유저 정보 담을 state
 	const [user, setUser] = useState();
+	const nickRef = useRef();
 	// 유저 정보 통신(GET)
 	const { result: users, trigger: usersT } = useApi({
 		path: `/users`,
@@ -79,9 +80,15 @@ function AccountManage() {
 			[name]: value,
 		}));
 	};
+
 	const handleSubmit = async e => {
 		e.preventDefault();
 		// 데이터 유효성 검사, 데이터가 바뀌지 않으면 기존 유저의 데이터 값 전달
+		if (nickRef.current.value.length === 0) {
+			alert('수정 할 닉네임을 입력하세요.');
+			return;
+		}
+
 		Object.entries(formData).forEach(([key, value]) => {
 			if (value === '' || value === 0 || value === user[key]) {
 				formData[key] = user[key];
@@ -108,14 +115,23 @@ function AccountManage() {
 				return;
 			}
 		}
-		usersT({
-			method: 'put',
-			data: {
-				...formData,
-				profileImageUrl,
-			},
+		const response = await usersT({
+			path: `/auth/validate-nickname/${formData.nickName}`,
+			method: 'get',
+			showBoundary: false,
 		});
-		alert(MESSAGE.MYPAGE.EDIT.COMPLETE);
+		if (response && response.message === '사용 가능한 닉네임입니다.') {
+			usersT({
+				method: 'put',
+				data: {
+					...formData,
+					profileImageUrl,
+				},
+			});
+			alert(MESSAGE.MYPAGE.EDIT.COMPLETE);
+		} else {
+			alert('이미 사용중인 닉네임입니다.');
+		}
 	};
 	return (
 		<AM.DetailOnboradWrapper>
@@ -160,6 +176,7 @@ function AccountManage() {
 						label="#nickName"
 						placeholder={MESSAGE.MYPAGE.NICKNAME}
 						onChange={handleChange}
+						ref={nickRef}
 					/>
 				</AM.SubTitleBox>
 				<AM.SubTitleBox>
