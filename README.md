@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# pro포폴
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+신입 개발자의 포트폴리오 개선을 돕고자 하는 시니어 개발자와, 포트폴리오 향상을 희망하는 신입 개발자를 연결하는 멘토링 서비스입니다.
 
-## Available Scripts
+## 목차
 
-In the project directory, you can run:
+1. [프로젝트 소개](#🖥️-프로젝트-소개)
+2. [개발 기간](#🕰️-개발-기간)
+3. [주요 기능](#📌-주요-기능)
 
-### `npm start`
+## 🖥️ 프로젝트 소개
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+pro포폴은 신입 개발자의 포트폴리오 개선을 돕고자 하는 시니어 개발자와, 포트폴리오 향상을 희망하는 신입 개발자를 연결하는 멘토링 서비스입니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<a href="https://github.com/mj9457/proPortfolio/blob/dev/pro%ED%8F%AC%ED%8F%B4%20%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf">발표 자료</a>
 
-### `npm test`
+## 🕰️ 개발 기간
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   23.08 ~ 23.09
 
-### `npm run build`
+### 🧑‍🤝‍🧑 맴버구성
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   팀장 : 김현규 <a href="#">[백엔드]</a> - 백엔드 
+-   팀원1 : 박민준 <a href="https://github.com/mj9457">[프론트엔드]</a> - 마이페이지, 멘토링 신청(받은)내역, 공용 모달 구현, 멘토링 신청 게시물 작성 내역, 스터디/ 프로젝트 게시물 관리, 멘토링 신청글 상세페이지 댓글, 내정보 및 프로필 이미지 수정, 회원탈퇴
+-   팀원2 : 김기범 <a href="#">[프론트엔드]</a> 
+-   팀원3 : 이혜진 <a href="#">[프론트엔드]</a>
+-   팀원4 : 예은선 <a href="#">[프론트엔드]</a> 
+-   팀원5 : 조아연 <a href="#">[프론트엔드]</a>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### ⚙️ 개발 환경
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+프론트엔드
+- React
+- Recoil
+- Styled Components
+- Ant Design
+- axios
 
-### `npm run eject`
+백엔드
+- TypeScript
+- Node.js
+- mongoDB
+- mongoose.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+협업 툴
+- GitLab
+- Discord
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+기타 라이브러리
+- Jenkins
+- JWT
+- PM2
+- NGINX
+- Amazon S3
+- Amazon EC2
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📌 주요 기능
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 1. 네이버 소셜 로그인
 
-## Learn More
+-  네이버 간단 로그인을 활용하여 회원가입 및 로그인
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. 메인 페이지
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   pro포폴의 주요 서비스를 소개 및 유저 직무에 맞는 멘토 추천
+-   스터디 프로젝트 최신 글과 인기 있는 멘토 소개
 
-### Code Splitting
+### 3. 일반 유저의 멘토 전환 신청
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+-   파일 업로드
+-   관리자의 승인 완료 시 멘토로 활동 가능
 
-### Analyzing the Bundle Size
+### 4. 직무별 멘토 선택 및 포트폴리오 리뷰 글 작성
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+-   직무에 맞는 멘토 리스트 무한스크롤
+-   멘토의 경우, 게시글 작성
 
-### Making a Progressive Web App
+### 4-1. 멘토의 멘토링 신청 게시물 작성
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+-   멘토링 소개 제목 과 내용 작성
+-   멘토링 내용 소개글 작성
 
-### Advanced Configuration
+### 4-2. 멘토링 신청글 상세 페이지
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+-   멘토가 작성한 신청글 확인
+-   유저는 멘토링 신청
+-   멘토링 받은 유저의 후기 확인
 
-### Deployment
+### 4-3. 유저의 멘토링 신청서 작성
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+-   멘토에게 포트폴리오 리뷰 신청
 
-### `npm run build` fails to minify
+### 5. 유저 직무 추천 스터디 / 프로젝트
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-   유저 직무에 맞는 스터디와 프로젝트 추천
+-   글을 작성하여 팀원 모집
+-   게시글 리스트 무한 스크롤
+
+### 5-1. 스터디 / 프로젝트 글 작성
+
+-   기본 정도 선택 및 스터디, 프로젝트의 상세 내용 입력
+-   스터디, 프로젝트의 상세 내용 확인, 수정, 삭제, 모집 마감
+
+### 6. 마이페이지
+
+-   유저의 경우 멘토링 신청내역 및 멘토링 확인
+-   멘토의 경우 멘토링 진행내역 및 리뷰 확인
+-   공통 스터디 / 프로젝트 작성글 확인
+-   내 정보 관리 및 회원 탈퇴
+
+### 6. 관리자 페이지
+-   유저 리스트 확인 및 삭제
+-   멘토 전환 신청 내역 관리 및 증명 이미지 확인
+-   카테고리 편집
+-   스터디 / 프로젝트 게시글 및 멘토 게시글 관리
+
+### 7. 알림
+-   멘토링 신청, 유저와 관련된 중요한 이벤트 및 상태 변화에 대한 정보를 실시간 알림
